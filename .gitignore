@@ -50,3 +50,8 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+/HappyHomeDesigner/HappyHomeDesigner.sdf
+/HappyHomeDesigner/Debug
+/HappyHomeDesigner/.vs
+/HappyHomeDesigner/HappyHomeDesigner/Debug
+/HappyHomeDesigner/HappyHomeDesigner.opensdf
