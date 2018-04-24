@@ -1,8 +1,27 @@
-﻿2018/04/24 12:48:31 にビルドを開始しました。
+﻿2018/04/24 13:01:47 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /Od /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt field.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /Od /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt Light.cpp calculate.cpp camera.cpp collision.cpp debugproc.cpp fade.cpp field.cpp game.cpp input.cpp main.cpp sound.cpp stage.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp
          field.cpp
+         コードを生成中...
+         スキップ中... (関連する変更は検出されませんでした)
+         workYamaguchi.cpp
+         workSon.cpp
+         workSekiguchi.cpp
+         workMatsuo.cpp
+         workImagawa.cpp
+         workChisaka.cpp
+         stage.cpp
+         sound.cpp
+         main.cpp
+         input.cpp
+         game.cpp
+         fade.cpp
+         debugproc.cpp
+         collision.cpp
+         camera.cpp
+         calculate.cpp
+         Light.cpp
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.lib" /MACHINE:X64 x64\Debug\calculate.obj
          x64\Debug\camera.obj
@@ -36,4 +55,4 @@
 
 ビルドに成功しました。
 
-経過時間 00:00:01.62
+経過時間 00:00:02.65

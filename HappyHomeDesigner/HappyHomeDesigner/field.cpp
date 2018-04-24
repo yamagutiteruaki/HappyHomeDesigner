@@ -25,8 +25,6 @@ D3DXVECTOR3				g_rotField;					// 地面の向き(回転)
 D3DXVECTOR3				g_sclField;					// 地面の大きさ(スケール)
 
 
-D3DXMATRIX				g_mtxView;					// ビューマトリックス
-D3DXMATRIX				g_mtxProjection;			// プロジェクションマトリックス
 D3DXMATRIX				g_mtxWorld;					// ワールドマトリックス
 
 
