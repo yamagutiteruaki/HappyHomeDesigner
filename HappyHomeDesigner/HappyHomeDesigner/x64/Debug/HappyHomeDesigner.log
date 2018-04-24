@@ -1,7 +1,10 @@
-﻿2018/4/24 上午 09:47:38 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
-     1>Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.lib" /MACHINE:X64 x64\Debug\calculate.obj
+﻿2018/04/24 12:48:31 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /Od /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MT /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt field.cpp
+         field.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.lib" /MACHINE:X64 x64\Debug\calculate.obj
          x64\Debug\camera.obj
          x64\Debug\collision.obj
          x64\Debug\debugproc.obj
@@ -28,9 +31,9 @@
          x64\Debug\workSekiguchi.obj
          x64\Debug\workSon.obj
          x64\Debug\workYamaguchi.obj
-         HappyHomeDesigner.vcxproj -> C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe
-     1>プロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
+         HappyHomeDesigner.vcxproj -> C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe
+     1>プロジェクト "C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:01.52
+経過時間 00:00:01.62
