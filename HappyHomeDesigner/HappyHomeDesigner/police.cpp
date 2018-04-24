@@ -1,2 +1,1 @@
 // Ø‚êÇYAMAGUTI
-//kiresyo
