@@ -10,6 +10,7 @@
 #include "fade.h"
 
 // 今川担当分で必要なインクルード
+#include "field.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,6 +31,7 @@
 //=============================================================================
 HRESULT InitWorkImagawa(int nType)
 {
+	InitField();
 	return S_OK;
 }
 
@@ -38,6 +40,8 @@ HRESULT InitWorkImagawa(int nType)
 //=============================================================================
 void UninitWorkImagawa(void)
 {
+	UninitField();
+
 }
 
 //=============================================================================
@@ -50,6 +54,7 @@ void UpdateWorkImagawa(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+		UpdateField();
 		break;
 	case STAGE_RESULT:
 		break;
@@ -67,6 +72,7 @@ void DrawWorkImagawa(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+		DrawField();
 		break;
 	case STAGE_RESULT:
 		break;

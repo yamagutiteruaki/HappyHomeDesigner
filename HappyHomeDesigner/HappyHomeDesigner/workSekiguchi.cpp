@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 関口担当分 [workSekiguchi.cpp]
-// Author GP12B295 29 山口輝明
+// Author GP12B295 ⑫ 関口昂平
 //
 //=============================================================================
 #include "workSekiguchi.h"
@@ -10,6 +10,8 @@
 #include "fade.h"
 
 // 関口担当分で必要なインクルード
+#include "result.h"
+#include "resultlogo.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,6 +32,11 @@
 //=============================================================================
 HRESULT InitWorkSekiguchi(int nType)
 {
+
+	InitResult();
+
+	InitResultlogo(nType);
+
 	return S_OK;
 }
 
@@ -38,6 +45,9 @@ HRESULT InitWorkSekiguchi(int nType)
 //=============================================================================
 void UninitWorkSekiguchi(void)
 {
+	UninitResult();
+
+	UninitResultlogo();
 }
 
 //=============================================================================
@@ -52,9 +62,13 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_GAME:
 		break;
 	case STAGE_RESULT:
+
+		 UpdateResult();
+
+		 UpdateResultlogo();
+
 		break;
 	}
-
 }
 
 //=============================================================================
@@ -69,6 +83,11 @@ void DrawWorkSekiguchi(void)
 	case STAGE_GAME:
 		break;
 	case STAGE_RESULT:
+
+		 DrawResult();
+
+		 DrawResultlogo();
+
 		break;
 	}
 }
