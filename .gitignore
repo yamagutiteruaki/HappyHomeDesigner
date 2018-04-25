@@ -55,5 +55,21 @@ dkms.conf
 /HappyHomeDesigner/.vs
 /HappyHomeDesigner/HappyHomeDesigner/Debug
 /HappyHomeDesigner/HappyHomeDesigner.opensdf
+<<<<<<< HEAD
 /HappyHomeDesigner/HappyHomeDesigner.VC.db
 /HappyHomeDesigner/x64
+=======
+/HappyHomeDesigner/HappyHomeDesigner.VC.db<<<<<<< .mine
+/HappyHomeDesigner/HappyHomeDesigner.VC.db
+/HappyHomeDesigner/HappyHomeDesigner.VC.db
+
+
+=======
+/HappyHomeDesigner/HappyHomeDesigner.VC.db
+/HappyHomeDesigner/*.db
+/HappyHomeDesigner/HappyHomeDesigner.VC.db
+/HappyHomeDesigner/HappyHomeDesigner.VC.db
+>>>>>>> .theirs
+/HappyHomeDesigner/HappyHomeDesigner/x64
+>>>>>>> 9f0b7be87141ef80384e83227d9bbb8805b28c85
+/HappyHomeDesigner/HappyHomeDesigner/x64
