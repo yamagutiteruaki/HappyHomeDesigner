@@ -11,6 +11,7 @@
 
 /* Stage */
 #include "game.h"
+#include "result.h"
 
 /* Camera */
 #include "camera.h"
@@ -77,6 +78,7 @@ HRESULT InitStageEach(int nType)
 {
 	InitCamera();				// カメラ
 	InitGame(nType);			// ゲーム
+	InitResult(nType);			//リザルト
 	InitWorkChisaka(nType);
 	InitWorkSon(nType);
 	InitWorkSekiguchi(nType);
@@ -98,7 +100,7 @@ void UninitStage(void)
 	UninitSound();					// サウンド
 	UninitFade();					// フェード
 	UninitGame();					// ゲーム
-
+	UninitResult();					// リザルト
 
 #ifdef _DEBUG
 	UninitDebugProc();				// デバッグ表示処理の終了処理
@@ -184,6 +186,7 @@ void UpdateStage(void)
 		SetSoundBgm(STAGE_GAME);
 		break;
 	case STAGE_RESULT:
+		UpdateResult();
 		SetSoundBgm(STAGE_RESULT);
 		break;
 	}
@@ -208,6 +211,7 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
+		DrawResult();
 		break;
 	}
 
