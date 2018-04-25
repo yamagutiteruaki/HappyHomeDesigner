@@ -1,81 +1,118 @@
-﻿  workYamaguchi.cpp
-  workSon.cpp
-  workSekiguchi.cpp
-  workMatsuo.cpp
-  workImagawa.cpp
-  workChisaka.cpp
-  wall.cpp
-  titlelogo.cpp
-  title.cpp
-  stage.cpp
-  sound.cpp
-  resultlogo.cpp
-  result.cpp
-  police.cpp
-  player.cpp
-  main.cpp
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(235): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(236): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
-  Light.cpp
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  input.cpp
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  house.cpp
-  game.cpp
-  コードを生成中...
-  コンパイル中...
-  furniture.cpp
-  field.cpp
-  fade.cpp
-  debugproc.cpp
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(76): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(76): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(122): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(127): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(132): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(142): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(147): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(155): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(164): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  c:\program files (x86)\windows kits\10\include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
-  collision.cpp
-  camera.cpp
-  calculate.cpp
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-d:\users\chisakakouta\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-  コードを生成中...
-calculate.obj : error LNK2019: 未解決の外部シンボル D3DXQuaternionRotationAxis が関数 "void __cdecl QuaternionCalculate(struct D3DXVECTOR3 *,struct D3DXVECTOR3 *,float,struct D3DXVECTOR3 *)" (?QuaternionCalculate@@YAXPEAUD3DXVECTOR3@@0M0@Z) で参照されました。
-calculate.obj : error LNK2019: 未解決の外部シンボル D3DXQuaternionMultiply が関数 "void __cdecl QuaternionCalculate(struct D3DXVECTOR3 *,struct D3DXVECTOR3 *,float,struct D3DXVECTOR3 *)" (?QuaternionCalculate@@YAXPEAUD3DXVECTOR3@@0M0@Z) で参照されました。
-camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixLookAtLH が関数 "void __cdecl SetCamera(void)" (?SetCamera@@YAXXZ) で参照されました。
-camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixPerspectiveFovLH が関数 "void __cdecl SetCamera(void)" (?SetCamera@@YAXXZ) で参照されました。
-debugproc.obj : error LNK2019: 未解決の外部シンボル D3DXCreateFontA が関数 "long __cdecl InitDebugProc(void)" (?InitDebugProc@@YAJXZ) で参照されました。
-input.obj : error LNK2019: 未解決の外部シンボル DirectInput8Create が関数 "long __cdecl InitInput(struct HINSTANCE__ *,struct HWND__ *)" (?InitInput@@YAJPEAUHINSTANCE__@@PEAUHWND__@@@Z) で参照されました。
-input.obj : error LNK2001: 外部シンボル "IID_IDirectInput8A" は未解決です。
-input.obj : error LNK2001: 外部シンボル "GUID_SysMouse" は未解決です。
-input.obj : error LNK2001: 外部シンボル "GUID_SysKeyboard" は未解決です。
-input.obj : error LNK2001: 外部シンボル "c_dfDIMouse2" は未解決です。
-input.obj : error LNK2001: 外部シンボル "c_dfDIKeyboard" は未解決です。
-input.obj : error LNK2001: 外部シンボル "c_dfDIJoystick2" は未解決です。
-Light.obj : error LNK2019: 未解決の外部シンボル D3DXVec3Normalize が関数 "void __cdecl InitLight(void)" (?InitLight@@YAXXZ) で参照されました。
-main.obj : error LNK2019: 未解決の外部シンボル Direct3DCreate9 が関数 "long __cdecl Init(struct HINSTANCE__ *,struct HWND__ *,int)" (?Init@@YAJPEAUHINSTANCE__@@PEAUHWND__@@H@Z) で参照されました。
-sound.obj : error LNK2019: 未解決の外部シンボル DirectSoundCreate8 が関数 "long __cdecl InitSound(struct HWND__ *)" (?InitSound@@YAJPEAUHWND__@@@Z) で参照されました。
-sound.obj : error LNK2001: 外部シンボル "IID_IDirectSoundBuffer8" は未解決です。
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dxguid.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dinput8.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
-C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dsound.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
-D:\Users\chisakakouta\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe : fatal error LNK1120: 16 件の未解決の外部参照
+﻿2018/04/25 10:18:39 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\CL.exe /c /ZI /nologo /W3 /WX- /Od /D _DEBUG /D _WINDOWS /D _MBCS /Gm /EHsc /RTC1 /MTd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"x64\Debug\\" /Fd"x64\Debug\vc140.pdb" /Gd /TP /errorReport:prompt calculate.cpp camera.cpp collision.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp house.cpp input.cpp Light.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp sound.cpp stage.cpp title.cpp titlelogo.cpp wall.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp
+         workYamaguchi.cpp
+         workSon.cpp
+         workSekiguchi.cpp
+         workMatsuo.cpp
+         workImagawa.cpp
+         workChisaka.cpp
+         wall.cpp
+         titlelogo.cpp
+         title.cpp
+         stage.cpp
+         sound.cpp
+         resultlogo.cpp
+         result.cpp
+         police.cpp
+         player.cpp
+         main.cpp
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(235): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\main.cpp(236): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+         Light.cpp
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+         input.cpp
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+         house.cpp
+         game.cpp
+         コードを生成中...
+         コンパイル中...
+         furniture.cpp
+         field.cpp
+         fade.cpp
+         debugproc.cpp
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(76): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(76): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(122): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(127): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(132): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(142): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(147): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(155): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\debugproc.cpp(164): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+         c:\program files (x86)\windows kits\10\include\10.0.10150.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+         collision.cpp
+         camera.cpp
+         calculate.cpp
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+         コードを生成中...
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\x86_amd64\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe" /INCREMENTAL /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.lib" /MACHINE:X64 x64\Debug\calculate.obj
+         x64\Debug\camera.obj
+         x64\Debug\collision.obj
+         x64\Debug\debugproc.obj
+         x64\Debug\fade.obj
+         x64\Debug\field.obj
+         x64\Debug\furniture.obj
+         x64\Debug\game.obj
+         x64\Debug\house.obj
+         x64\Debug\input.obj
+         x64\Debug\Light.obj
+         x64\Debug\main.obj
+         x64\Debug\player.obj
+         x64\Debug\police.obj
+         x64\Debug\result.obj
+         x64\Debug\resultlogo.obj
+         x64\Debug\sound.obj
+         x64\Debug\stage.obj
+         x64\Debug\title.obj
+         x64\Debug\titlelogo.obj
+         x64\Debug\wall.obj
+         x64\Debug\workChisaka.obj
+         x64\Debug\workImagawa.obj
+         x64\Debug\workMatsuo.obj
+         x64\Debug\workSekiguchi.obj
+         x64\Debug\workSon.obj
+         x64\Debug\workYamaguchi.obj
+     1>calculate.obj : error LNK2019: 未解決の外部シンボル D3DXQuaternionRotationAxis が関数 "void __cdecl QuaternionCalculate(struct D3DXVECTOR3 *,struct D3DXVECTOR3 *,float,struct D3DXVECTOR3 *)" (?QuaternionCalculate@@YAXPEAUD3DXVECTOR3@@0M0@Z) で参照されました。
+     1>calculate.obj : error LNK2019: 未解決の外部シンボル D3DXQuaternionMultiply が関数 "void __cdecl QuaternionCalculate(struct D3DXVECTOR3 *,struct D3DXVECTOR3 *,float,struct D3DXVECTOR3 *)" (?QuaternionCalculate@@YAXPEAUD3DXVECTOR3@@0M0@Z) で参照されました。
+     1>camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixLookAtLH が関数 "void __cdecl SetCamera(void)" (?SetCamera@@YAXXZ) で参照されました。
+     1>camera.obj : error LNK2019: 未解決の外部シンボル D3DXMatrixPerspectiveFovLH が関数 "void __cdecl SetCamera(void)" (?SetCamera@@YAXXZ) で参照されました。
+     1>debugproc.obj : error LNK2019: 未解決の外部シンボル D3DXCreateFontA が関数 "long __cdecl InitDebugProc(void)" (?InitDebugProc@@YAJXZ) で参照されました。
+     1>input.obj : error LNK2019: 未解決の外部シンボル DirectInput8Create が関数 "long __cdecl InitInput(struct HINSTANCE__ *,struct HWND__ *)" (?InitInput@@YAJPEAUHINSTANCE__@@PEAUHWND__@@@Z) で参照されました。
+     1>input.obj : error LNK2001: 外部シンボル "IID_IDirectInput8A" は未解決です。
+     1>input.obj : error LNK2001: 外部シンボル "GUID_SysMouse" は未解決です。
+     1>input.obj : error LNK2001: 外部シンボル "GUID_SysKeyboard" は未解決です。
+     1>input.obj : error LNK2001: 外部シンボル "c_dfDIMouse2" は未解決です。
+     1>input.obj : error LNK2001: 外部シンボル "c_dfDIKeyboard" は未解決です。
+     1>input.obj : error LNK2001: 外部シンボル "c_dfDIJoystick2" は未解決です。
+     1>Light.obj : error LNK2019: 未解決の外部シンボル D3DXVec3Normalize が関数 "void __cdecl InitLight(void)" (?InitLight@@YAXXZ) で参照されました。
+     1>main.obj : error LNK2019: 未解決の外部シンボル Direct3DCreate9 が関数 "long __cdecl Init(struct HINSTANCE__ *,struct HWND__ *,int)" (?Init@@YAJPEAUHINSTANCE__@@PEAUHWND__@@H@Z) で参照されました。
+     1>sound.obj : error LNK2019: 未解決の外部シンボル DirectSoundCreate8 が関数 "long __cdecl InitSound(struct HWND__ *)" (?InitSound@@YAJPEAUHWND__@@@Z) で参照されました。
+     1>sound.obj : error LNK2001: 外部シンボル "IID_IDirectSoundBuffer8" は未解決です。
+     1>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3d9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+     1>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\d3dx9.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+     1>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dxguid.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+     1>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dinput8.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+     1>C:\Program Files (x86)\Microsoft DirectX SDK (June 2010)\Lib\x86\dsound.lib : warning LNK4272: ライブラリのコンピューターの種類 'X86' がターゲットのコンピューターの種類' x64' と競合しています
+     1>C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\x64\Debug\HappyHomeDesigner.exe : fatal error LNK1120: 16 件の未解決の外部参照
+     1>プロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが終了しました -- 失敗。
+
+ビルドに失敗しました。
+
+経過時間 00:00:23.14
