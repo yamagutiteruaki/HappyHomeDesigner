@@ -178,6 +178,7 @@ void UpdateStage(void)
 	switch (g_nStage)
 	{
 	case STAGE_TITLE:
+		UpdateTitle();				// ÉQÅ[ÉÄ
 		SetSoundBgm(STAGE_TITLE);
 		break;
 	case STAGE_GAME:
@@ -204,6 +205,7 @@ void DrawStage(void)
 	switch (g_nStage)
 	{
 	case STAGE_TITLE:
+		DrawGame();					// ÉQÅ[ÉÄ
 		break;
 	case STAGE_GAME:
 		DrawGame();					// ÉQÅ[ÉÄ

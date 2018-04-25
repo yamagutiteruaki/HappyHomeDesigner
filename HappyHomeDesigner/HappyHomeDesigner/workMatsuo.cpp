@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // 松尾担当分 [workMatsuo.cpp]
-// Author GP12B295 29 山口輝明
+// Author GP12A295 28 松尾公平
 //
 //=============================================================================
 #include "workMatsuo.h"
@@ -10,6 +10,8 @@
 #include "fade.h"
 
 // 松尾担当分で必要なインクルード
+#include "title.h"
+#include "titlelogo.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,6 +32,8 @@
 //=============================================================================
 HRESULT InitWorkMatsuo(int nType)
 {
+	InitTitle();
+
 	return S_OK;
 }
 
@@ -38,6 +42,7 @@ HRESULT InitWorkMatsuo(int nType)
 //=============================================================================
 void UninitWorkMatsuo(void)
 {
+	UninitTitle();
 }
 
 //=============================================================================
@@ -48,10 +53,14 @@ void UpdateWorkMatsuo(void)
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
+		UpdateTitle();
+
 		break;
 	case STAGE_GAME:
+
 		break;
 	case STAGE_RESULT:
+
 		break;
 	}
 
@@ -65,8 +74,10 @@ void DrawWorkMatsuo(void)
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
+		DrawTitle();
 		break;
 	case STAGE_GAME:
+
 		break;
 	case STAGE_RESULT:
 		break;
