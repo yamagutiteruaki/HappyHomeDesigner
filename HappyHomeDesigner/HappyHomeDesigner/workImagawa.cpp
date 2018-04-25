@@ -11,6 +11,7 @@
 
 // 今川担当分で必要なインクルード
 #include "field.h"
+
 // デバッグ用
 #ifdef _DEBUG
 #include "debugproc.h"
