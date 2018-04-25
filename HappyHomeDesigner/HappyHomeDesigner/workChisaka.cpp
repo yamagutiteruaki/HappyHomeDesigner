@@ -10,6 +10,7 @@
 #include "fade.h"
 
 // 千坂担当分で必要なインクルード
+#include "police.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,6 +31,7 @@
 //=============================================================================
 HRESULT InitWorkChisaka(int nType)
 {
+	InitPolice(nType);
 	return S_OK;
 }
 
@@ -38,6 +40,7 @@ HRESULT InitWorkChisaka(int nType)
 //=============================================================================
 void UninitWorkChisaka(void)
 {
+	UninitPolice();
 }
 
 //=============================================================================
@@ -50,6 +53,7 @@ void UpdateWorkChisaka(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+		UpdatePolice();
 		break;
 	case STAGE_RESULT:
 		break;
@@ -67,6 +71,7 @@ void DrawWorkChisaka(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+		DrawPolice();
 		break;
 	case STAGE_RESULT:
 		break;

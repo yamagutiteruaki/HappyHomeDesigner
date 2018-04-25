@@ -82,6 +82,15 @@ void UpdateCamera(void)
 		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
 	}
 
+	if (GetKeyboardPress(DIK_W))
+	{// 視点移動「ズームイン」
+		camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
+	}
+	if (GetKeyboardPress(DIK_S))
+	{// 視点移動「ズームアウト」
+		camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+	}
+
 #endif
 }
 
