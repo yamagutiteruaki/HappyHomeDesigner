@@ -28,6 +28,7 @@ enum
 {	// ステージ
 	STAGE_TITLE,
 	STAGE_GAME,
+	STAGE_GAME_END,
 	STAGE_RESULT,
 	STAGE_MAX
 };
