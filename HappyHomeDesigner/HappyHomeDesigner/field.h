@@ -16,8 +16,8 @@
 //*****************************************************************************
 #define	TEXTURE_FIELD	"data/TEXTURE/field000.jpg"						// 読み込むテクスチャファイル名
 
-#define	FIELD_SIZE_X			(200.0f)										// 地面のサイズ(X方向)
-#define	FIELD_SIZE_Z			(200.0f)										// 地面のサイズ(Z方向)
+#define	FIELD_SIZE_X			(600.0f)										// 地面のサイズ(X方向)
+#define	FIELD_SIZE_Z			(600.0f)										// 地面のサイズ(Z方向)
 
 #define FIELD_MAX				(1)
 
