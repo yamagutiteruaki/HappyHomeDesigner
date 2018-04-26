@@ -26,15 +26,13 @@
 // ÉOÉçÅ[ÉoÉãïœêî
 //*****************************************************************************
 
-
 //=============================================================================
 // èâä˙âªèàóù
 //=============================================================================
 HRESULT InitWorkSekiguchi(int nType)
 {
 
-
-	InitResultlogo(nType);
+	InitResultLogo();
 
 	return S_OK;
 }
@@ -44,8 +42,7 @@ HRESULT InitWorkSekiguchi(int nType)
 //=============================================================================
 void UninitWorkSekiguchi(void)
 {
-
-	UninitResultlogo();
+	UninitResultLogo();
 }
 
 //=============================================================================
@@ -61,8 +58,7 @@ void UpdateWorkSekiguchi(void)
 		break;
 	case STAGE_RESULT:
 
-
-		 UpdateResultlogo();
+		 UpdateResultLogo();
 
 		break;
 	}
@@ -81,8 +77,7 @@ void DrawWorkSekiguchi(void)
 		break;
 	case STAGE_RESULT:
 
-
-		 DrawResultlogo();
+		 DrawResultLogo();
 
 		break;
 	}
