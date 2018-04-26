@@ -16,6 +16,7 @@
 //*****************************************************************************
 #define START_STAGE		(STAGE_TITLE)	// 開始時のステージ
 #define STR(var) #var					// 引数にした変数を変数名を示す文字列リテラルとして返すマクロ関数
+#define START_PRICE		(0)				//初期金額
 
 /*******************************************************************************
 * 構造体定義
@@ -26,10 +27,14 @@
 *******************************************************************************/
 enum
 {	// ステージ
-	STAGE_TITLE,
-	STAGE_GAME,
-	STAGE_GAME_END,
-	STAGE_RESULT,
+	STAGE_TITLE,		//タイトル
+	STAGE_GAME,			//ゲーム
+	STAGE_GAME_END,		//ゲーム終了時演出
+	STAGE_RESULT,		//リザルト
+	STAGE_HOUSE1,		//家1
+	STAGE_HOUSE2,		//家2
+	STAGE_HOUSE3,		//家3
+	STAGE_HOUSE4,		//家4
 	STAGE_MAX
 };
 
@@ -39,12 +44,6 @@ enum
 	STAGE_INIT_LOOP
 };
 
-enum
-{
-	STAGE_WIN_NON,
-	STAGE_WIN_1P,
-	STAGE_WIN_2P
-};
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -57,8 +56,7 @@ void		DrawStage(void);
 
 void		SetStage(int nStage);
 int			GetStage(void);
-
-void		SetStageWinPlayer(int nPlayer);
-int			GetStageWinPlayer(void);
+int			GetPrice(void);
+void		AddPrice(int price);
 
 #endif

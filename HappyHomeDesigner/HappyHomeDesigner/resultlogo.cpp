@@ -148,7 +148,7 @@ void UpdateResultlogo(void)
 	}
 
 
-	SetTextureResultlogologo(GetStageWinPlayer());
+	//SetTextureResultlogologo(GetStageWinPlayer());
 	//SetTextureResultlogologo(1);
 
 

@@ -11,6 +11,8 @@
 
 /* Stage */
 #include "game.h"
+#include "title.h"
+#include "result.h"
 
 /* Camera */
 #include "camera.h"
@@ -43,7 +45,7 @@
 // グローバル変数
 //*****************************************************************************
 int					g_nStage;				// 初期ステージ
-int					g_nPlayerWin;			// 勝利プレイヤー
+int					g_nPrice;				//盗難金額
 
 #ifdef _DEBUG
 bool				g_bDispDebug = true;	// デバッグ表示ON/OFF
@@ -56,7 +58,7 @@ HRESULT InitStage(HINSTANCE hInstance, HWND hWnd)
 {
 	// グローバル変数の初期化
 	g_nStage = START_STAGE;			// 初期ステージを設定
-	g_nPlayerWin = STAGE_WIN_NON;	// 勝利プレイヤーを初期化
+	g_nPrice = START_PRICE;			//初期金額設定
 
 	InitInput(hInstance, hWnd);		// 入力
 	InitSound(hWnd);				// サウンド
@@ -76,7 +78,9 @@ HRESULT InitStage(HINSTANCE hInstance, HWND hWnd)
 HRESULT InitStageEach(int nType)
 {
 	InitCamera();				// カメラ
+	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
+	InitResult();				//リザルト
 	InitWorkChisaka(nType);
 	InitWorkSon(nType);
 	InitWorkSekiguchi(nType);
@@ -98,6 +102,8 @@ void UninitStage(void)
 	UninitSound();					// サウンド
 	UninitFade();					// フェード
 	UninitGame();					// ゲーム
+	UninitTitle();					// タイトル
+	UninitResult();					//リザルト
 
 
 #ifdef _DEBUG
@@ -176,7 +182,7 @@ void UpdateStage(void)
 	switch (g_nStage)
 	{
 	case STAGE_TITLE:
-		UpdateTitle();				// ゲーム
+		UpdateTitle();				// タイトル
 		SetSoundBgm(STAGE_TITLE);
 		break;
 	case STAGE_GAME:
@@ -184,6 +190,7 @@ void UpdateStage(void)
 		SetSoundBgm(STAGE_GAME);
 		break;
 	case STAGE_RESULT:
+		UpdateResult();				//リザルト
 		SetSoundBgm(STAGE_RESULT);
 		break;
 	}
@@ -202,12 +209,13 @@ void DrawStage(void)
 	switch (g_nStage)
 	{
 	case STAGE_TITLE:
-		DrawGame();					// ゲーム
+		DrawTitle();					// タイトル
 		break;
 	case STAGE_GAME:
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
+		DrawResult();				//リザルト
 		break;
 	}
 
@@ -238,17 +246,17 @@ int GetStage(void)
 }
 
 //=============================================================================
-// 勝利プレイヤー設定関数
+//盗難金額取得関数
 //=============================================================================
-void SetStageWinPlayer(int nPlayer)
+int GetPrice(void)
 {
-	g_nPlayerWin = nPlayer;
+	return g_nPrice;
 }
 
 //=============================================================================
-// 勝利プレイヤー取得関数
+//盗難金額加算関数
 //=============================================================================
-int GetStageWinPlayer(void)
+void AddPrice(int price)
 {
-	return (g_nPlayerWin);
+	g_nPrice += price;
 }

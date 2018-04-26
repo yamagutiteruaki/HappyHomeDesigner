@@ -13,171 +13,189 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="ソース ファイル\work">
+      <UniqueIdentifier>{7e28a749-b41b-4a94-8f02-36f08f225b28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\stage">
+      <UniqueIdentifier>{5ddacd29-c7ea-403d-8d80-fb4608afde5c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\stage\title">
+      <UniqueIdentifier>{afcc0be6-f22c-4fdd-b0aa-bf46ac57bad3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\stage\game">
+      <UniqueIdentifier>{57f4203a-9366-45fa-9516-36569dbf0f79}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\stage\result">
+      <UniqueIdentifier>{629670dd-585c-4bca-89ad-2a6aeae070d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\system">
+      <UniqueIdentifier>{09a7f92d-5105-4df4-84b7-06956ea5399a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="sound.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="stage.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="title.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="titlelogo.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="wall.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="workChisaka.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="workImagawa.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="workMatsuo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="workSekiguchi.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="workSon.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="workYamaguchi.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="calculate.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="collision.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="debugproc.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="fade.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClCompile>
     <ClCompile Include="field.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="furniture.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="game.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="house.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="input.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Light.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="player.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="police.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
+    <ClCompile Include="wall.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
     <ClCompile Include="result.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
     </ClCompile>
     <ClCompile Include="resultlogo.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
+    </ClCompile>
+    <ClCompile Include="title.cpp">
+      <Filter>ソース ファイル\stage\title</Filter>
+    </ClCompile>
+    <ClCompile Include="titlelogo.cpp">
+      <Filter>ソース ファイル\stage\title</Filter>
+    </ClCompile>
+    <ClCompile Include="stage.cpp">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="calculate.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="collision.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="debugproc.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="fade.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="camera.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="input.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
+    <ClCompile Include="sound.cpp">
+      <Filter>ソース ファイル\system</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="sound.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="stage.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="title.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="titlelogo.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="wall.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="workChisaka.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="workImagawa.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="workMatsuo.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="workSekiguchi.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="workSon.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="workYamaguchi.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="calculate.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="camera.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="collision.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="debugproc.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="fade.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\work</Filter>
     </ClInclude>
     <ClInclude Include="field.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="furniture.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="house.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="input.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Light.h">
-      <Filter>ソース ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="main.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="police.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClInclude>
+    <ClInclude Include="wall.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="result.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
     </ClInclude>
     <ClInclude Include="resultlogo.h">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
+    </ClInclude>
+    <ClInclude Include="title.h">
+      <Filter>ソース ファイル\stage\title</Filter>
+    </ClInclude>
+    <ClInclude Include="titlelogo.h">
+      <Filter>ソース ファイル\stage\title</Filter>
+    </ClInclude>
+    <ClInclude Include="stage.h">
+      <Filter>ソース ファイル\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="calculate.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="collision.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="debugproc.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="fade.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="camera.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="input.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="main.h">
+      <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="sound.h">
+      <Filter>ソース ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
