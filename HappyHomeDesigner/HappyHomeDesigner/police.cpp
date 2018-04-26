@@ -83,9 +83,9 @@ HRESULT InitPolice(int nType)
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ポリスの視点(位置座標)の初期化
-		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		police->Eye = D3DXVECTOR3(-40.0f, 0.0f, 0.0f);
 		// ポリスの注視点の初期化
-		police->At = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		police->At = D3DXVECTOR3(40.0f, 0.0f, 0.0f);
 		// ポリスの上方向の初期化
 		police->Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		// ポリスの向きの初期化
@@ -94,7 +94,7 @@ HRESULT InitPolice(int nType)
 		police->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// ポリスのスケールの初期化
-		police->scl = D3DXVECTOR3(10.9f, 10.9f, 10.9f);
+		police->scl = D3DXVECTOR3(2.0f, 2.0f, 2.0f);
 
 		// useフラグをtrueに設定
 		police->use = true;
@@ -143,7 +143,9 @@ void UpdatePolice(void)
 {
 	POLICE *police = &policeWk[0];
 	CAMERA *camera = GetCamera();
+	PLAYER *player = GetPlayer(0);
 
+	police->At = player->Eye;
 
 	// デバッグ時に手動でポリス移動
 #ifdef _DEBUG
