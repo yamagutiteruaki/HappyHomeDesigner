@@ -31,9 +31,9 @@ float					g_fAlphaLogo = 0.0f;			//
 int						g_nCountDisp = 0;				// 
 bool					g_bDispStart = false;			// スタートが出てくるまで
 int						g_nConutDemo = 0;				//
-bool					g_bStamp;
-float					A;
-
+bool					g_bStamp;						//スタンプの有無
+float					BaseAngle;						//中心
+float					Radius;							//半径
 //***********************************************************
 // 初期化処理
 //***********************************************************
@@ -47,7 +47,11 @@ HRESULT InitTitle(void)
 	g_bDispStart = false;
 	g_nConutDemo = 0;
 	g_bStamp = false;
-	A = 0;
+
+	D3DXVECTOR2 temp = D3DXVECTOR2(STAMP_HEIGHT, STAMP_WIDTH);
+
+	Radius = D3DXVec2Length(&temp);					// エネミーの半径を初期化
+	BaseAngle = atan2f(STAMP_HEIGHT, STAMP_WIDTH);	// エネミーの角度を初期化
 
 	 //頂点情報の作成
 	MakeVertexTitle(pDevice);
@@ -171,10 +175,9 @@ void UpdateTitle(void)
 		}
 	}
 
-	if (GetKeyboardTrigger(DIK_A))
+	if (GetKeyboardTrigger(DIK_A))//スタンプを　T=押してる　F=押してない
 	{
-		A += 0.1f;
-		g_bStamp = true;
+		g_bStamp = g_bStamp ? false : true;
 	}
 	if (GetKeyboardTrigger(DIK_RETURN))
 	{
@@ -191,6 +194,12 @@ void UpdateTitle(void)
 		{// ゲームへ
 
 		}
+	}
+
+	if (g_bStamp == true)				//スタンプが押されてる時
+	{
+		g_bDispStart = true;
+		SetColorTitleLogo();
 	}
 }
 
@@ -421,20 +430,20 @@ HRESULT MakeVertexTitle(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffStamp->Lock(0, 0, (void**)&pVtx, 0);
 
 		// 頂点座標の設定
-		pVtx[0].vtx.x = STAMP_POS_X - cosf(A + ROT_STAMP*D3DX_PI) * STAMP_WIDTH / 2;
-		pVtx[0].vtx.y = STAMP_POS_Y - cosf(A + ROT_STAMP*D3DX_PI) * STAMP_HEIGHT / 2;
+		pVtx[0].vtx.x = STAMP_POS_X - cosf(BaseAngle + ROT_STAMP) * Radius;
+		pVtx[0].vtx.y = STAMP_POS_Y - sinf(BaseAngle + ROT_STAMP) * Radius;
 		pVtx[0].vtx.z = 0.0f;
 
-		pVtx[1].vtx.x = STAMP_POS_X + cosf(A + ROT_STAMP*D3DX_PI) *STAMP_WIDTH / 2;
-		pVtx[1].vtx.y = STAMP_POS_Y - cosf(A + ROT_STAMP*D3DX_PI) *STAMP_HEIGHT / 2;
+		pVtx[1].vtx.x = STAMP_POS_X + cosf(BaseAngle - ROT_STAMP) *Radius;
+		pVtx[1].vtx.y = STAMP_POS_Y - sinf(BaseAngle - ROT_STAMP) *Radius;
 		pVtx[1].vtx.z = 0.0f;
 
-		pVtx[2].vtx.x = STAMP_POS_X - cosf(A + ROT_STAMP*D3DX_PI) *STAMP_WIDTH / 2;
-		pVtx[2].vtx.y = STAMP_POS_Y + cosf(A + ROT_STAMP*D3DX_PI) *STAMP_HEIGHT / 2;
+		pVtx[2].vtx.x = STAMP_POS_X - cosf(BaseAngle - ROT_STAMP) *Radius;
+		pVtx[2].vtx.y = STAMP_POS_Y + sinf(BaseAngle - ROT_STAMP) *Radius;
 		pVtx[2].vtx.z = 0.0f;
 
-		pVtx[3].vtx.x = STAMP_POS_X + cosf(A + ROT_STAMP*D3DX_PI) *STAMP_WIDTH / 2;
-		pVtx[3].vtx.y = STAMP_POS_Y + cosf(A + ROT_STAMP*D3DX_PI) *STAMP_HEIGHT / 2;
+		pVtx[3].vtx.x = STAMP_POS_X + cosf(BaseAngle + ROT_STAMP) *Radius;
+		pVtx[3].vtx.y = STAMP_POS_Y + sinf(BaseAngle + ROT_STAMP) *Radius;
 		pVtx[3].vtx.z = 0.0f;
 
 
