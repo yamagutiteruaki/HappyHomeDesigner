@@ -12,6 +12,7 @@
 #include "player.h"
 #include "police.h"
 #include "stage.h"
+#include "field.h"
 //#include "shadow.h"
 
 
@@ -71,6 +72,7 @@ HRESULT InitPolice(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	POLICE *police = &policeWk[0];
+	FIELD *field = GetField(0);
 
 	if (nType == STAGE_INIT_FAST)
 	{
@@ -110,7 +112,7 @@ HRESULT InitPolice(int nType)
 	{
 		//PANEL *panel = GetPanel(GetPanelNumber(1, 8));
 		// ポリスの視点の初期化
-		//police->Eye = panel->Pos;
+		police->Eye = field->Pos;
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ポリスの上方向の初期化
