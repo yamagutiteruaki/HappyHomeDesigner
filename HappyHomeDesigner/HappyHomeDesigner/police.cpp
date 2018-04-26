@@ -147,11 +147,6 @@ HRESULT InitPolice(int nType)
 		// ランダムで最初に追尾するプレイヤーを選ぶ
 		//key = rand() % PLAYER_MAX;
 
-		// シャドウ用
-		police->nIdxShadow = 0;
-		police->fSizeShadow = 0.0f;
-		police->colShadow = D3DXCOLOR(0.5f, 0.5f, 0.5f, 0.8f);
-		police->bShadow = false;
 	}
 
 

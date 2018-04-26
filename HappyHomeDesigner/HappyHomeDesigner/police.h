@@ -39,8 +39,8 @@ typedef struct		// ポリス構造体
 
 	D3DXVECTOR3		scl;							// スケール
 
-	D3DXVECTOR3		Eye;							// ポリスの視点
-	D3DXVECTOR3		At;								// ポリスの注視点
+	D3DXVECTOR3		Eye;							// ポリスの視点(位置座標)
+	D3DXVECTOR3		At;								// ポリスの注視点(ポリスが見ている座標)
 	D3DXVECTOR3		Up;								// ポリスの上方向
 	D3DXVECTOR3		rot;							// ポリスの向き
 	D3DXVECTOR3		move;							// ポリスの移動量
@@ -51,11 +51,6 @@ typedef struct		// ポリス構造体
 
 	float			speed;							// 移動速度係数
 
-													// シャドウ用
-	int				nIdxShadow;
-	float			fSizeShadow;
-	D3DXCOLOR		colShadow;
-	bool			bShadow;
 } POLICE;
 
 
