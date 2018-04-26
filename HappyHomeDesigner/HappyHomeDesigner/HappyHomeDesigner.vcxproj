@@ -150,6 +150,7 @@
   <ItemGroup>
     <ClCompile Include="calculate.cpp" />
     <ClCompile Include="camera.cpp" />
+    <ClCompile Include="clock.cpp" />
     <ClCompile Include="collision.cpp" />
     <ClCompile Include="debugproc.cpp" />
     <ClCompile Include="fade.cpp" />
@@ -179,6 +180,7 @@
   <ItemGroup>
     <ClInclude Include="calculate.h" />
     <ClInclude Include="camera.h" />
+    <ClInclude Include="clock.h" />
     <ClInclude Include="collision.h" />
     <ClInclude Include="debugproc.h" />
     <ClInclude Include="fade.h" />

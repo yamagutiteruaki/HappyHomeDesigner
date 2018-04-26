@@ -82,44 +82,25 @@ HRESULT InitPolice(int nType)
 	// ポリスの初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		//PANEL *panel = GetPanel(GetPanelNumber(1, 8));
 		// ポリスの視点(位置座標)の初期化
-		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-
+		police->Eye = D3DXVECTOR3(-40.0f, 0.0f, 0.0f);
 		// ポリスの注視点の初期化
-		police->At = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		police->At = D3DXVECTOR3(40.0f, 0.0f, 0.0f);
 		// ポリスの上方向の初期化
 		police->Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
 		// ポリスの向きの初期化
 		police->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ポリスの移動量の初期化
 		police->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// ポリスのスケールの初期化
-		police->scl = D3DXVECTOR3(1.9f, 1.9f, 1.9f);
+		police->scl = D3DXVECTOR3(2.0f, 2.0f, 2.0f);
 
 		// useフラグをtrueに設定
 		police->use = true;
 
 		// ポリスの移動速度初期化
 		police->speed = VALUE_MOVE_POLICE;
-
-		// アニメーション番号初期化
-		// 最初は直立状態に設定
-		police->anim = 0;
-
-		// アニメーションカウント初期化
-		animCnt = 0;
-
-		// 更新頻度初期化
-		sp_Update = 0;
-
-		// 追尾プレイヤー番号初期化
-		key = 0;
-		// ランダムで最初に追尾するプレイヤーを選ぶ
-		//key = rand() % PLAYER_MAX;
 
 	}
 
@@ -162,7 +143,9 @@ void UpdatePolice(void)
 {
 	POLICE *police = &policeWk[0];
 	CAMERA *camera = GetCamera();
+	PLAYER *player = GetPlayer(0);
 
+	police->At = player->Eye;
 
 	// デバッグ時に手動でポリス移動
 #ifdef _DEBUG
@@ -213,9 +196,7 @@ void UpdatePolice(void)
 		police->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
 	}
 
-
-
-
+	
 #endif
 
 	// ポリス移動処理
@@ -266,6 +247,8 @@ void UpdatePolice(void)
 	police = &policeWk[0];
 #ifdef _DEBUG
 	PrintDebugProc("[ポリスの位置  ：(%f : %f : %f)]\n", police->Eye.x, police->Eye.y, police->Eye.z);
+	PrintDebugProc("[ポリスの使用状態  ：(%d)]\n", police->use);
+
 #endif
 }
 //=============================================================================
