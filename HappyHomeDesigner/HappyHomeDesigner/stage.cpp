@@ -79,7 +79,8 @@ HRESULT InitStageEach(int nType)
 	InitCamera();				// カメラ
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
-	InitResult();				//リザルト	InitWorkChisaka(nType);
+	InitResult(nType);				//リザルト
+	InitWorkChisaka(nType);
 	InitWorkSon(nType);
 	InitWorkSekiguchi(nType);
 	InitWorkMatsuo(nType);
