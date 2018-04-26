@@ -174,7 +174,7 @@ void SetFade(FADE fade, int next )
 	switch (fade)
 	{
 	case FADE_OUT:
-		g_color = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+		g_color = D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.0f);
 		break;
 	case FADE_OUT_HALF:
 		g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
