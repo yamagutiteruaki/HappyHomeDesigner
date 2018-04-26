@@ -94,6 +94,10 @@ HRESULT InitPlayer(int nType)
 
 		// プレイヤーの向きの初期化
 		player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		// プレイヤーの目的の向きの初期化
+		player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 		// プレイヤーの移動量の初期化
 		player->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
@@ -247,22 +251,30 @@ void PlayerMove(void)
 	PLAYER *player = &playerWk[0];
 	CAMERA *camera = GetCamera();
 
+	float fDiffRotY;
+
 	if (GetKeyboardPress(DIK_LEFT))
 	{
 		if (GetKeyboardPress(DIK_UP))
 		{// 左前移動
 			player->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
+		
+			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
 		}
 		else if (GetKeyboardPress(DIK_DOWN))
 		{// 左後移動
 			player->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
+		
+			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.25f;
 		}
 		else
 		{// 左移動
 			player->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
+			
+			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
 		}
 	}
 	else if (GetKeyboardPress(DIK_RIGHT))
@@ -271,27 +283,37 @@ void PlayerMove(void)
 		{// 右前移動
 			player->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
+		
+			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
 		}
 		else if (GetKeyboardPress(DIK_DOWN))
 		{// 右後移動
 			player->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
+		
+			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.25f;
 		}
 		else
 		{// 右移動
 			player->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
+		
+			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
 		}
 	}
 	else if (GetKeyboardPress(DIK_UP))
 	{// 前移動
 		player->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
+
+		player->rotDest.y = D3DX_PI + camera->rotCamera.y;
 	}
 	else if (GetKeyboardPress(DIK_DOWN))
 	{// 後移動
 		player->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
+
+		player->rotDest.y = camera->rotCamera.y;
 	}
 
 	// 移動量に慣性をかける
@@ -303,5 +325,27 @@ void PlayerMove(void)
 	player->Eye.x += player->move.x;
 	player->Eye.y += player->move.y;
 	player->Eye.z += player->move.z;
+
+	// 目的の角度までの差分
+	fDiffRotY = player->rotDest.y - player->rot.y;
+	if (fDiffRotY > D3DX_PI)
+	{
+		fDiffRotY -= D3DX_PI * 2.0f;
+	}
+	if (fDiffRotY < -D3DX_PI)
+	{
+		fDiffRotY += D3DX_PI * 2.0f;
+	}
+
+	// 目的の角度まで慣性をかける
+	player->rot.y += fDiffRotY * RATE_ROTATE_PLAYER;
+	if (player->rot.y > D3DX_PI)
+	{
+		player->rot.y -= D3DX_PI * 2.0f;
+	}
+	if (player->rot.y < -D3DX_PI)
+	{
+		player->rot.y += D3DX_PI * 2.0f;
+	}
 
 }
