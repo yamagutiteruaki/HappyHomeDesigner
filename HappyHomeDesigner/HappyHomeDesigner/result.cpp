@@ -1,38 +1,51 @@
 //=============================================================================
 //
-// リザルト画面処理 [result.cpp]
-// Author : GP12B295 ⑫ 関口昂平
+// ゲーム処理 [result.cpp]
+// Author : GP12B295 29 山口輝明
 //
 //=============================================================================
-#include "main.h"
 #include "result.h"
+#include "stage.h"
 #include "input.h"
+#include "fade.h"
+
+// ゲームで必要なインクルード
+
+
+// 担当ワーク
+#include "workChisaka.h"
+#include "workMatsuo.h"
+#include "workSon.h"
+#include "workImagawa.h"
+#include "workSekiguchi.h"
+#include "workYamaguchi.h"
+
+// デバッグ用
+#ifdef _DEBUG
+#include "debugproc.h"
+#endif
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT MakeVertexResult(void);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		g_pD3DTextureResult = NULL;		// テクスチャへのポインタ
 
-VERTEX_2D				g_vertexWkResult[NUM_VERTEX];			// 頂点情報格納ワーク
 
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitResult(void)
+HRESULT InitResult(int nType)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
-		TEXTURE_RESULT,										// ファイルの名前
-		&g_pD3DTextureResult);								// 読み込むメモリー
-
-	MakeVertexResult();										// 頂点情報の作成
+	InitWorkChisaka(0);
+	InitWorkSon(0);
+	InitWorkSekiguchi(0);
+	InitWorkMatsuo(0);
+	InitWorkImagawa(0);
+	InitWorkYamaguchi(0);
 
 	return S_OK;
 }
@@ -42,11 +55,13 @@ HRESULT InitResult(void)
 //=============================================================================
 void UninitResult(void)
 {
-	if (g_pD3DTextureResult != NULL)
-	{// テクスチャの開放
-		g_pD3DTextureResult->Release();
-		g_pD3DTextureResult = NULL;
-	}
+	UninitWorkChisaka();
+	UninitWorkSon();
+	UninitWorkSekiguchi();
+	UninitWorkMatsuo();
+	UninitWorkImagawa();
+	UninitWorkYamaguchi();
+
 }
 
 //=============================================================================
@@ -55,6 +70,12 @@ void UninitResult(void)
 void UpdateResult(void)
 {
 
+	UpdateWorkChisaka();
+	UpdateWorkSon();
+	UpdateWorkSekiguchi();
+	UpdateWorkMatsuo();
+	UpdateWorkImagawa();
+	UpdateWorkYamaguchi();
 }
 
 //=============================================================================
@@ -62,46 +83,12 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	// 頂点フォーマットの設定
-	pDevice->SetFVF(FVF_VERTEX_2D);
-
-	// テクスチャの設定
-	pDevice->SetTexture(0, g_pD3DTextureResult);
-
-	// ポリゴンの描画
-	pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_POLYGON, g_vertexWkResult, sizeof(VERTEX_2D));
+	DrawWorkChisaka();
+	DrawWorkSon();
+	DrawWorkSekiguchi();
+	DrawWorkMatsuo();
+	DrawWorkImagawa();
+	DrawWorkYamaguchi();
 }
 
-//=============================================================================
-// 頂点の作成
-//=============================================================================
-HRESULT MakeVertexResult(void)
-{
-	// 頂点座標の設定
-	g_vertexWkResult[0].vtx = D3DXVECTOR3(RESULT_POS_X, RESULT_POS_Y, 0.0f);
-	g_vertexWkResult[1].vtx = D3DXVECTOR3(RESULT_POS_X + RESULT_SIZE_X, RESULT_POS_Y, 0.0f);
-	g_vertexWkResult[2].vtx = D3DXVECTOR3(RESULT_POS_X, RESULT_POS_Y + RESULT_SIZE_Y, 0.0f);
-	g_vertexWkResult[3].vtx = D3DXVECTOR3(RESULT_POS_X + RESULT_SIZE_X, RESULT_POS_Y + RESULT_SIZE_Y, 0.0f);
-
-	// テクスチャのパースペクティブコレクト用
-	g_vertexWkResult[0].rhw =
-	g_vertexWkResult[1].rhw =
-	g_vertexWkResult[2].rhw =
-	g_vertexWkResult[3].rhw = 1.0f;
-
-	// 反射光の設定
-	g_vertexWkResult[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	g_vertexWkResult[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	g_vertexWkResult[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	g_vertexWkResult[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-
-	// テクスチャ座標の設定
-	g_vertexWkResult[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	g_vertexWkResult[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	g_vertexWkResult[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	g_vertexWkResult[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-
-	return S_OK;
-}

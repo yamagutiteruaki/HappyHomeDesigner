@@ -13,7 +13,6 @@
 #include "game.h"
 #include "title.h"
 #include "result.h"
-
 /* Camera */
 #include "camera.h"
 
@@ -80,8 +79,7 @@ HRESULT InitStageEach(int nType)
 	InitCamera();				// カメラ
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
-	InitResult();				//リザルト
-	InitWorkChisaka(nType);
+	InitResult();				//リザルト	InitWorkChisaka(nType);
 	InitWorkSon(nType);
 	InitWorkSekiguchi(nType);
 	InitWorkMatsuo(nType);
@@ -104,8 +102,6 @@ void UninitStage(void)
 	UninitGame();					// ゲーム
 	UninitTitle();					// タイトル
 	UninitResult();					//リザルト
-
-
 #ifdef _DEBUG
 	UninitDebugProc();				// デバッグ表示処理の終了処理
 #endif
@@ -190,8 +186,7 @@ void UpdateStage(void)
 		SetSoundBgm(STAGE_GAME);
 		break;
 	case STAGE_RESULT:
-		UpdateResult();				//リザルト
-		SetSoundBgm(STAGE_RESULT);
+		UpdateResult();				//リザルト		SetSoundBgm(STAGE_RESULT);
 		break;
 	}
 	UpdateCamera();					// カメラ
@@ -215,8 +210,7 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
-		DrawResult();				//リザルト
-		break;
+		DrawResult();				//リザルト		break;
 	}
 
 	DrawFade();						// フェード

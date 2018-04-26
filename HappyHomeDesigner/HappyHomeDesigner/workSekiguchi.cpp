@@ -33,7 +33,7 @@
 HRESULT InitWorkSekiguchi(int nType)
 {
 
-	InitResult();
+	InitResult(nType);
 
 	InitResultlogo(nType);
 

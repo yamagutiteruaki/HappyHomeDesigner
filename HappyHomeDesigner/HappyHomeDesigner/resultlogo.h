@@ -1,5 +1,3 @@
-#pragma once
-
 //=============================================================================
 //
 // リザルト画面処理 [resultlogo.h]
@@ -15,7 +13,7 @@
 // マクロ定義
 //*****************************************************************************
 #define	TEXTURE_RESULTLOGO			"data/TEXTURE/result.png"			// 読み込むテクスチャファイル名
-#define	TEXTURE_RESULTLOGO_LOGO	 	"data/TEXTURE/ガメオベラ.png"	// 読み込むテクスチャファイル名
+#define	TEXTURE_RESULTLOGO_LOGO	 	"data/TEXTURE/result_logo.png"	// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULTLOGO_LOGO2	"data/TEXTURE/ロゴ.png"		// 読み込むテクスチャファイル名
 
 #define	RESULTLOGO_LOGO_POS_X	(SCREEN_CENTER_X)		// リザルトロゴの位置(X座標)
