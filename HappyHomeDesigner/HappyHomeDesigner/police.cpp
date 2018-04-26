@@ -13,7 +13,6 @@
 #include "police.h"
 #include "stage.h"
 #include "field.h"
-//#include "shadow.h"
 
 
 //*****************************************************************************
@@ -23,47 +22,24 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void SetPoliceAnimation(int sec);
 D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp);
-void SetPoliceHoming(int no, int frequency, float speedup);
 
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9	g_pD3DTexturePolice[POLICE_ANIM_MAX];			// テクスチャ読み込み場所
-LPD3DXMESH			g_pD3DXMeshPolice[POLICE_ANIM_MAX];			// ID3DXMeshインターフェイスへのポインタ
-LPD3DXBUFFER		g_pD3DXBuffMatPolice[POLICE_ANIM_MAX];		// メッシュのマテリアル情報を格納
-DWORD				g_nNumMatPolice[POLICE_ANIM_MAX];				// 属性情報の総数
+LPDIRECT3DTEXTURE9	g_pD3DTexturePolice;			// テクスチャ読み込み場所
+LPD3DXMESH			g_pD3DXMeshPolice;			// ID3DXMeshインターフェイスへのポインタ
+LPD3DXBUFFER		g_pD3DXBuffMatPolice;		// メッシュのマテリアル情報を格納
+DWORD				g_nNumMatPolice;				// 属性情報の総数
 
 D3DXMATRIX			g_mtxWorldPolice;							// ワールドマトリックス
-
-float				g_fSizeShadowE;								// 影のサイズ
-D3DXCOLOR			g_colShadowE;								// 影の色
 
 POLICE				policeWk[POLICE_MAX];							// ポリス格納ワーク
 
 int					animCnt;									// アニメカウント
 int					key;										// フレームカウント
 int					sp_Update;									// 更新頻度計算用
-
-
-const char *FileNamePolice[POLICE_ANIM_MAX] =
-{
-	"data/MODEL/POLICE/police_a00.x",		// 直立
-	"data/MODEL/POLICE/police_a01.x",		// 左足前１
-	"data/MODEL/POLICE/police_a02.x",		// 左足前２
-	"data/MODEL/POLICE/police_a03.x",		// 左足前３
-	"data/MODEL/POLICE/police_a02.x",		// 左足前２
-	"data/MODEL/POLICE/police_a01.x",		// 左足前１
-	"data/MODEL/POLICE/police_a00.x",		// 直立
-	"data/MODEL/POLICE/police_a11.x",		// 右足前１
-	"data/MODEL/POLICE/police_a12.x",		// 右足前２
-	"data/MODEL/POLICE/police_a13.x",		// 右足前３
-	"data/MODEL/POLICE/police_a12.x",		// 右足前２
-	"data/MODEL/POLICE/police_a11.x"		// 右足前１
-
-};
 
 //=============================================================================
 // 初期化処理
@@ -76,22 +52,20 @@ HRESULT InitPolice(int nType)
 
 	if (nType == STAGE_INIT_FAST)
 	{
-		for (int nCntPoliceAnim = 0; nCntPoliceAnim < POLICE_ANIM_MAX; nCntPoliceAnim++)
-		{
-			g_pD3DTexturePolice[nCntPoliceAnim] = NULL;
-			g_pD3DXMeshPolice[nCntPoliceAnim] = NULL;
-			g_pD3DXBuffMatPolice[nCntPoliceAnim] = NULL;
+			g_pD3DTexturePolice = NULL;
+			g_pD3DXMeshPolice = NULL;
+			g_pD3DXBuffMatPolice = NULL;
 
 
 			// Xファイルの読み込み
-			if (FAILED(D3DXLoadMeshFromX(FileNamePolice[nCntPoliceAnim],
+			if (FAILED(D3DXLoadMeshFromX(POLICE_MODEL,
 				D3DXMESH_SYSTEMMEM,
 				pDevice,
 				NULL,
-				&g_pD3DXBuffMatPolice[nCntPoliceAnim],
+				&g_pD3DXBuffMatPolice,
 				NULL,
-				&g_nNumMatPolice[nCntPoliceAnim],
-				&g_pD3DXMeshPolice[nCntPoliceAnim])))
+				&g_nNumMatPolice,
+				&g_pD3DXMeshPolice)))
 			{
 				return E_FAIL;
 			}
@@ -103,16 +77,16 @@ HRESULT InitPolice(int nType)
 				&g_pD3DTextureModel);	// 読み込むメモリー
 #endif
 
-		}
-
 	}
 
 	// ポリスの初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		//PANEL *panel = GetPanel(GetPanelNumber(1, 8));
-		// ポリスの視点の初期化
-		police->Eye = field->Pos;
+		// ポリスの視点(位置座標)の初期化
+		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ポリスの上方向の初期化
@@ -124,7 +98,7 @@ HRESULT InitPolice(int nType)
 		police->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		// ポリスのスケールの初期化
-		police->scl = D3DXVECTOR3(0.9f, 0.9f, 0.9f);
+		police->scl = D3DXVECTOR3(1.9f, 1.9f, 1.9f);
 
 		// useフラグをtrueに設定
 		police->use = true;
@@ -159,24 +133,24 @@ HRESULT InitPolice(int nType)
 //=============================================================================
 void UninitPolice(void)
 {
-	for (int nCntPoliceAnim = 0; nCntPoliceAnim < POLICE_ANIM_MAX; nCntPoliceAnim++)
+	for (int nCntPoliceAnim = 0; nCntPoliceAnim < POLICE_MAX; nCntPoliceAnim++)
 	{
-		if (g_pD3DTexturePolice[nCntPoliceAnim] != NULL)
+		if (g_pD3DTexturePolice != NULL)
 		{// テクスチャの開放
-			g_pD3DTexturePolice[nCntPoliceAnim]->Release();
-			g_pD3DTexturePolice[nCntPoliceAnim] = NULL;
+			g_pD3DTexturePolice->Release();
+			g_pD3DTexturePolice = NULL;
 		}
 
-		if (g_pD3DXMeshPolice[nCntPoliceAnim] != NULL)
+		if (g_pD3DXMeshPolice != NULL)
 		{// メッシュの開放
-			g_pD3DXMeshPolice[nCntPoliceAnim]->Release();
-			g_pD3DXMeshPolice[nCntPoliceAnim] = NULL;
+			g_pD3DXMeshPolice->Release();
+			g_pD3DXMeshPolice = NULL;
 		}
 
-		if (g_pD3DXBuffMatPolice[nCntPoliceAnim] != NULL)
+		if (g_pD3DXBuffMatPolice != NULL)
 		{// マテリアルの開放
-			g_pD3DXBuffMatPolice[nCntPoliceAnim]->Release();
-			g_pD3DXBuffMatPolice[nCntPoliceAnim] = NULL;
+			g_pD3DXBuffMatPolice->Release();
+			g_pD3DXBuffMatPolice = NULL;
 		}
 	}
 }
@@ -188,41 +162,6 @@ void UpdatePolice(void)
 {
 	POLICE *police = &policeWk[0];
 	CAMERA *camera = GetCamera();
-	//PANEL *panel = GetPanel(0);
-	//PLAYER *player = GetPlayer(0);
-
-	// アニメーション
-	SetPoliceAnimation(POLICE_ANIM_SEC);
-
-
-	// ボタンで追尾対象切り替える
-#ifdef _DEBUG
-	if (GetKeyboardTrigger(DIK_1))
-	{
-		key = 0;
-	}
-	if (GetKeyboardTrigger(DIK_2))
-	{
-		key = 1;
-	}
-#endif
-
-
-	// ゲージの少ないほうを追尾
-	//if (player[0].item < player[1].item)
-	//{	// 1Pのほうがゲージが少ない場合
-
-	//	// 1Pを追尾
-	//	key = 0;
-	//}
-	//if (player[0].item > player[1].item)
-	//{	// 2Pのほうがゲージが少ない場合
-
-	//	// 2Pを追尾
-	//	key = 1;
-	//}
-	// 追尾をセット
-	SetPoliceHoming(key, POLICE_SPEED_FREQUENCY, POLICE_SPEEDUP);
 
 
 	// デバッグ時に手動でポリス移動
@@ -327,24 +266,7 @@ void UpdatePolice(void)
 	police = &policeWk[0];
 #ifdef _DEBUG
 	PrintDebugProc("[ポリスの位置  ：(%f : %f : %f)]\n", police->Eye.x, police->Eye.y, police->Eye.z);
-	//PrintDebugProc("\n");
 #endif
-
-	// シャドウ
-	//if (!police->bShadow)
-	//{	// シャドウ設置
-	//	police->nIdxShadow = CreateShadow(police->Eye, 25.0f, 25.0f);
-	//	police->fSizeShadow = POLICE_SHADOW_SIZE;
-	//	police->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
-	//	police->bShadow = true;
-	//}
-	//else
-	//{
-	//	// シャドウ管理
-	//	SetPositionShadow(police->nIdxShadow, D3DXVECTOR3(police->Eye.x, 0.2f, police->Eye.z));
-	//	SetVertexShadow(police->nIdxShadow, police->fSizeShadow, police->fSizeShadow);
-	//	SetColorShadow(police->nIdxShadow, police->colShadow);
-	//}
 }
 //=============================================================================
 // 描画処理
@@ -384,7 +306,7 @@ void DrawPolice(void)
 
 			D3DXMatrixMultiply(&g_mtxWorldPolice, &g_mtxWorldPolice, &mtxRot);
 
-			//// 移動を反映
+			// 移動を反映
 			D3DXMatrixTranslation(&mtxTranslate, police->Eye.x, police->Eye.y, police->Eye.z);
 			D3DXMatrixMultiply(&g_mtxWorldPolice, &g_mtxWorldPolice, &mtxTranslate);
 
@@ -395,19 +317,18 @@ void DrawPolice(void)
 			pDevice->GetMaterial(&matDef);
 
 			// マテリアル情報に対するポインタを取得
-			// 今は直立を設定してる０
-			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatPolice[police->anim]->GetBufferPointer();
+			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatPolice->GetBufferPointer();
 
-			for (int nCntMat = 0; nCntMat < (int)g_nNumMatPolice[police->anim]; nCntMat++)
+			for (int nCntMat = 0; nCntMat < (int)g_nNumMatPolice; nCntMat++)
 			{
 				// マテリアルの設定
 				pDevice->SetMaterial(&pD3DXMat[nCntMat].MatD3D);
 
 				// テクスチャの設定
-				pDevice->SetTexture(0, g_pD3DTexturePolice[police->anim]);
+				pDevice->SetTexture(0, g_pD3DTexturePolice);
 
 				// 描画
-				g_pD3DXMeshPolice[police->anim]->DrawSubset(nCntMat);
+				g_pD3DXMeshPolice->DrawSubset(nCntMat);
 
 			}
 
@@ -455,67 +376,4 @@ D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 
 	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
 
 	return pout;
-}
-//=============================================================================
-// ポリスアニメーション設定関数
-// 引数：アニメーション一巡にかかる秒数）
-//=============================================================================
-void SetPoliceAnimation(int sec)
-{
-	POLICE *police = &policeWk[0];
-
-	// アニメーションカウント
-	animCnt++;
-
-	// 秒数の絶対値を求める
-	sec = abs(sec);
-
-	// アニメーションを切り替えるフレーム数を求める
-	sec = (60 * sec) / POLICE_ANIM_MAX;
-
-	if (animCnt % sec == 0)
-	{	// アニメーションを切り替える
-		police->anim++;
-		if (police->anim >= POLICE_ANIM_MAX)
-		{	// 一巡したら最初に戻す
-			police->anim = 0;
-		}
-	}
-
-}
-//=============================================================================
-// ポリス追尾設定関数
-// 引数１：追尾したいプレイヤー番号
-// 引数２：移動速度の更新頻度（とりまフレーム数渡す）
-// 引数３：更新一回当たりの移動速度の変化量
-//=============================================================================
-void SetPoliceHoming(int no, int frequency, float speedup)
-{
-	POLICE *police = &policeWk[0];
-
-	// 移動速度更新頻度カウント
-	sp_Update++;
-
-	// 追尾対象にポリスの注視点をセット
-	//police->At = GetPosPlayer(no);
-
-	// 追尾対象への移動ベクトルを求める
-	//police->move = GetPosPlayer(no) - police->Eye;
-
-	// 移動ベクトルを正規化
-	D3DXVec3Normalize(&police->move, &police->move);
-
-	// ポリスの速度調整
-
-	// 速度を一定間隔で更新
-	if (sp_Update % frequency == 0)
-	{	// 速度up
-		police->speed += speedup;
-		// 移動速度更新頻度カウントをゼロに戻す
-		sp_Update = 0;
-	}
-
-	// 速度設定
-	police->move *= police->speed;
-
 }
