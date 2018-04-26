@@ -80,7 +80,7 @@ HRESULT InitStageEach(int nType)
 	InitCamera();				// カメラ
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
-	InitResult(nType);			//リザルト
+	InitResult();				//リザルト
 
 
 	InitWorkChisaka(nType);

@@ -114,6 +114,9 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="clock.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -196,6 +199,9 @@
     </ClInclude>
     <ClInclude Include="main.h">
       <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="clock.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
