@@ -40,12 +40,6 @@
 HRESULT InitGame(int nType)
 {
 
-	InitWorkChisaka(0);
-	InitWorkSon(0);
-	InitWorkSekiguchi(0);
-	InitWorkMatsuo(0);
-	InitWorkImagawa(0);
-	InitWorkYamaguchi(0);
 
 	return S_OK;
 }
@@ -55,12 +49,6 @@ HRESULT InitGame(int nType)
 //=============================================================================
 void UninitGame(void)
 {
-	UninitWorkChisaka();
-	UninitWorkSon();
-	UninitWorkSekiguchi();
-	UninitWorkMatsuo();
-	UninitWorkImagawa();
-	UninitWorkYamaguchi();
 
 }
 

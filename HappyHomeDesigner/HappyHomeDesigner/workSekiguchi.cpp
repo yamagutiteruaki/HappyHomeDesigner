@@ -33,7 +33,6 @@
 HRESULT InitWorkSekiguchi(int nType)
 {
 
-	InitResult(nType);
 
 	InitResultlogo(nType);
 
@@ -45,7 +44,6 @@ HRESULT InitWorkSekiguchi(int nType)
 //=============================================================================
 void UninitWorkSekiguchi(void)
 {
-	UninitResult();
 
 	UninitResultlogo();
 }
@@ -63,7 +61,6 @@ void UpdateWorkSekiguchi(void)
 		break;
 	case STAGE_RESULT:
 
-		 UpdateResult();
 
 		 UpdateResultlogo();
 
@@ -84,7 +81,6 @@ void DrawWorkSekiguchi(void)
 		break;
 	case STAGE_RESULT:
 
-		 DrawResult();
 
 		 DrawResultlogo();
 
