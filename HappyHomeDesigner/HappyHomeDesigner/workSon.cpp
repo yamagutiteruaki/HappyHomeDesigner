@@ -10,6 +10,8 @@
 #include "input.h"
 #include "fade.h"
 
+#include "player.h"
+
 // 宋担当分で必要なインクルード
 
 // デバッグ用
@@ -31,6 +33,7 @@
 //=============================================================================
 HRESULT InitWorkSon(int nType)
 {
+	InitPlayer(nType);
 
 	return S_OK;
 }
@@ -40,6 +43,8 @@ HRESULT InitWorkSon(int nType)
 //=============================================================================
 void UninitWorkSon(void)
 {
+	UninitPlayer();
+
 }
 
 //=============================================================================
@@ -52,7 +57,7 @@ void UpdateWorkSon(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
-
+		UpdatePlayer();
 		break;
 	case STAGE_RESULT:
 		break;
@@ -70,7 +75,7 @@ void DrawWorkSon(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
-
+		DrawPlayer();
 		break;
 	case STAGE_RESULT:
 		break;
