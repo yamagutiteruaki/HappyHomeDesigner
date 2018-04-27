@@ -8,6 +8,7 @@
 #include "input.h"
 #include "main.h"
 #include "calculate.h"
+#include "player.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -17,6 +18,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
+void CameraWork(D3DXVECTOR3 *at);
 
 //*****************************************************************************
 // グローバル変数
@@ -55,8 +57,10 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 
+
 #ifdef _DEBUG
 	CAMERA *camera = GetCamera();
+	PLAYER *player = GetPlayer(0);
 
 	//デバッグ時にZCでカメラ回転
 	if (GetKeyboardPress(DIK_Z))
@@ -91,7 +95,33 @@ void UpdateCamera(void)
 		camera->posCameraEye.y += CAMERA_MOVE_SPEED;
 	}
 
+	// カメラワーク
+	CameraWork(&(player->Eye));
+
 #endif
+}
+
+//=============================================================================
+// カメラワーク
+//=============================================================================
+void CameraWork(D3DXVECTOR3 *at)
+{
+	D3DXVECTOR3 vec(0.0f, 0.25f, -1.0f);		// 正規化された注視点からの向き
+	D3DXMATRIX	mtx;
+	CAMERA *camera = GetCamera();
+
+	camera->posCameraAt = *at;
+
+	// カメラの相対的な回転角度を行列に変換する
+	D3DXMatrixRotationYawPitchRoll(&mtx, camera->rotCamera.y, camera->rotCamera.x, camera->rotCamera.z);
+
+	// 正規化された点に回転行列を掛ける
+	D3DXVec3TransformCoord(&vec, &vec, &mtx);
+
+	// カメラの位置 = カメラの注視点 + (注視点からの角度 * 視点までの距離)
+	camera->posCameraEye = camera->posCameraAt + (vec * camera->fLength);
+
+
 }
 
 //=============================================================================

@@ -27,7 +27,7 @@
 #define CAMERA_MARGIN_SPEED		(D3DX_PI / 180)
 #define CAMERA_LENGTH_SPEED			(10.0f)
 #define CAMERA_LENGTH_AUTO_SPEED	(30.0f)
-#define CAMERA_LENGTH			(800.0f)
+#define CAMERA_LENGTH			(200.0f)
 
 #define CAMERA_ROT_MOUSE_X			(0.002f)
 #define CAMERA_ROT_MOUSE_Y			(0.002f)
@@ -36,7 +36,7 @@
 #define ROOT_2					(1.414213f)
 
 #define	POS_X_CAM				(0.0f)					// カメラの初期位置(X座標)
-#define	POS_Y_CAM				(500.0f)										// カメラの初期位置(Y座標)
+#define	POS_Y_CAM				(50.0f)										// カメラの初期位置(Y座標)
 #define	POS_Z_CAM				(-100.0f)										// カメラの初期位置(Z座標)
 
 #define	POS_X_CAM_AT			(POS_X_CAM)
