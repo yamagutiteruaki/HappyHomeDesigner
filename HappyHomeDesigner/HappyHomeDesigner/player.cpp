@@ -14,7 +14,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	VALUE_MOVE_PLAYER		(2.00f)						// 移動速度係数
+#define	VALUE_MOVE_PLAYER		(1.00f)						// 移動速度係数
 #define	RATE_MOVE_PLAYER		(0.20f)						// 移動慣性係数
 #define	VALUE_ROTATE_PLAYER		(D3DX_PI * 0.05f)			// 回転速度
 #define	RATE_ROTATE_PLAYER		(0.20f)						// 回転慣性係数

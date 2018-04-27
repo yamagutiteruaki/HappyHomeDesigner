@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\system">
       <UniqueIdentifier>{09a7f92d-5105-4df4-84b7-06956ea5399a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\stage\game\UI">
+      <UniqueIdentifier>{cb84ec26-9241-4dd1-94fb-ebea56763fa3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="workChisaka.cpp">
@@ -114,8 +117,11 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="weight.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>
     <ClCompile Include="clock.cpp">
-      <Filter>ソース ファイル\stage\game</Filter>
+      <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -200,8 +206,11 @@
     <ClInclude Include="main.h">
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
+    <ClInclude Include="weight.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClInclude>
     <ClInclude Include="clock.h">
-      <Filter>ソース ファイル\stage\game</Filter>
+      <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
