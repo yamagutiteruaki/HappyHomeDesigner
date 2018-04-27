@@ -32,7 +32,7 @@
 //=============================================================================
 HRESULT InitWorkMatsuo(int nType)
 {
-	InitTitle();
+	InitTitlelogo();
 
 	return S_OK;
 }
@@ -42,7 +42,7 @@ HRESULT InitWorkMatsuo(int nType)
 //=============================================================================
 void UninitWorkMatsuo(void)
 {
-	UninitTitle();
+	UninitTitlelogo();
 }
 
 //=============================================================================
@@ -53,7 +53,7 @@ void UpdateWorkMatsuo(void)
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
-		UpdateTitle();
+		UpdateTitlelogo();
 
 		break;
 	case STAGE_GAME:
@@ -74,7 +74,7 @@ void DrawWorkMatsuo(void)
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
-		DrawTitle();
+		DrawTitlelogo();
 		break;
 	case STAGE_GAME:
 

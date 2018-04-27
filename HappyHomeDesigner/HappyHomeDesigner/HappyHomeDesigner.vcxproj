@@ -170,6 +170,7 @@
     <ClCompile Include="title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
     <ClCompile Include="wall.cpp" />
+    <ClCompile Include="weight.cpp" />
     <ClCompile Include="workChisaka.cpp" />
     <ClCompile Include="workImagawa.cpp" />
     <ClCompile Include="workMatsuo.cpp" />
@@ -200,6 +201,7 @@
     <ClInclude Include="title.h" />
     <ClInclude Include="titlelogo.h" />
     <ClInclude Include="wall.h" />
+    <ClInclude Include="weight.h" />
     <ClInclude Include="workChisaka.h" />
     <ClInclude Include="workImagawa.h" />
     <ClInclude Include="workMatsuo.h" />
