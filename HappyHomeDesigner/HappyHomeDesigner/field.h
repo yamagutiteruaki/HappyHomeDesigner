@@ -41,6 +41,7 @@ typedef struct // フィールド構造体
 {
 	D3DXMATRIX		world;						// ワールドマトリックス
 	D3DXVECTOR3		Pos;						// ポリゴン表示位置の中心座標
+	D3DXVECTOR3		Rot;
 
 }HOME;
 

@@ -6,6 +6,7 @@
 //=============================================================================
 #include "fade.h"
 #include "stage.h"
+#include "debugproc.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -22,6 +23,7 @@ VERTEX_2D				g_vertexWkFade[NUM_VERTEX];		// 頂点情報格納ワーク
 D3DXCOLOR				g_color;		// フェードカラー
 FADE					g_eFade;		// フェード種類
 int						g_nState;		// 次に飛ぶ予定のステート
+bool					fadeflag;		//フェードフラグ
 
 //=============================================================================
 // 初期化処理
@@ -32,6 +34,7 @@ HRESULT InitFade(void)
 
 	g_eFade = FADE_IN;
 	g_nState = STAGE_TITLE;			// 次に飛ぶ予定のステート
+	fadeflag = false;
 
 	// 頂点情報の設定
 	MakeVertexFade();
@@ -55,17 +58,24 @@ void UninitFade(void)
 //=============================================================================
 void UpdateFade(void)
 {
+	
+	PrintDebugProc("[フェード状態  ：(%d)]\n", g_eFade);
+
 	if(g_eFade != FADE_NONE)
 	{// フェード処理中
-		if(g_eFade == FADE_OUT)
+		if (g_eFade == FADE_OUT)
 		{// フェードアウト処理
 			g_color.a += FADE_RATE;		// α値を加算して画面を消していく
 			if(g_color.a >= 1.0f)
 			{
+				fadeflag = false;		//フェードフラグをoff
+
 				// 状態を切り替え
 				SetStage(g_nState);
-				InitStageEach(STAGE_INIT_LOOP);
-
+				if (g_nState == STAGE_TITLE)
+				{
+					InitStageEach(STAGE_INIT_LOOP);
+				}
 				// フェードイン処理に切り替え
 				g_color.a = 1.0f;
 				SetFade(FADE_IN, STAGE_MAX);
@@ -94,6 +104,7 @@ void UpdateFade(void)
 				// フェード処理終了
 				g_color.a = 0.0f;
 				SetFade(FADE_NONE, STAGE_MAX);
+				fadeflag = false;		//フェードフラグをoff
 			}
 
 			// 色を設定
@@ -171,17 +182,24 @@ void SetColor(D3DCOLOR col)
 //=============================================================================
 void SetFade(FADE fade, int next )
 {
-	switch (fade)
+
+	if (fadeflag == false)
 	{
-	case FADE_OUT:
-		g_color = D3DXCOLOR(0.1f, 0.1f, 0.1f, 0.0f);
-		break;
-	case FADE_OUT_HALF:
-		g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-		break;
+		fadeflag = true;			//フェードフラグをON
+
+		switch (fade)
+		{
+		case FADE_OUT:
+			g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			break;
+		case FADE_OUT_HALF:
+			g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			break;
+		}
+
+		g_eFade = fade;
+		g_nState = next;
 	}
-	g_eFade = fade;
-	g_nState = next;
 }
 
 //=============================================================================

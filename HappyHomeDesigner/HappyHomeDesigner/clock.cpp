@@ -56,7 +56,8 @@ HRESULT InitClock(int type)
 
 		D3DXVECTOR2 temp = D3DXVECTOR2(TEXTURE_CLOCK_SIZE_X, TEXTURE_CLOCK_SIZE_Y);
 		clock->Radius = D3DXVec2Length(&temp);					// タイマーの半径を初期化
-		clock->BaseAngle =1.0f* D3DX_PI;	// タイマーの角度を初期化
+		clock->BaseAngle = atan2f(TEXTURE_CLOCK_SIZE_Y, TEXTURE_CLOCK_SIZE_X);	// タイマーの角度を初期化
+		clock->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 		clock->Texture = g_pD3DTextureClock;					// テクスチャ情報
 		MakeVertexClock(i);										// 頂点情報の作成
@@ -97,7 +98,7 @@ void UpdateClock(void)
 		{
 			// アニメーション
 			
-				clock->rot.z -= 1.0f;
+				clock->rot.z -= 0.1f;
 			
 			SetVertexClock(i);	// 移動後の座標で頂点を設定
 		}
@@ -175,20 +176,20 @@ void SetVertexClock(int no)
 	CLOCK *clock = &clockWk[no];			// タイマーのポインターを初期化
 
 	// 頂点座標の設定
-	clock->vertexWk[0].vtx.x = clock->pos.x - cosf(clock->BaseAngle) * clock->Radius;
-	clock->vertexWk[0].vtx.y = clock->pos.y - sinf(clock->BaseAngle) * clock->Radius;
+	clock->vertexWk[0].vtx.x = clock->pos.x - cosf(clock->BaseAngle+clock->rot.z) * clock->Radius;
+	clock->vertexWk[0].vtx.y = clock->pos.y - sinf(clock->BaseAngle + clock->rot.z) * clock->Radius;
 	clock->vertexWk[0].vtx.z = 0.0f;
 
-	clock->vertexWk[1].vtx.x = clock->pos.x + cosf(clock->BaseAngle) * clock->Radius;
-	clock->vertexWk[1].vtx.y = clock->pos.y - sinf(clock->BaseAngle) * clock->Radius;
+	clock->vertexWk[1].vtx.x = clock->pos.x + cosf(clock->BaseAngle - clock->rot.z) * clock->Radius;
+	clock->vertexWk[1].vtx.y = clock->pos.y - sinf(clock->BaseAngle - clock->rot.z) * clock->Radius;
 	clock->vertexWk[1].vtx.z = 0.0f;
 
-	clock->vertexWk[2].vtx.x = clock->pos.x - cosf(clock->BaseAngle) * clock->Radius;
-	clock->vertexWk[2].vtx.y = clock->pos.y + sinf(clock->BaseAngle) * clock->Radius;
+	clock->vertexWk[2].vtx.x = clock->pos.x - cosf(clock->BaseAngle - clock->rot.z) * clock->Radius;
+	clock->vertexWk[2].vtx.y = clock->pos.y + sinf(clock->BaseAngle - clock->rot.z) * clock->Radius;
 	clock->vertexWk[2].vtx.z = 0.0f;
 
-	clock->vertexWk[3].vtx.x = clock->pos.x + cosf(clock->BaseAngle) * clock->Radius;
-	clock->vertexWk[3].vtx.y = clock->pos.y + sinf(clock->BaseAngle) * clock->Radius;
+	clock->vertexWk[3].vtx.x = clock->pos.x + cosf(clock->BaseAngle + clock->rot.z) * clock->Radius;
+	clock->vertexWk[3].vtx.y = clock->pos.y + sinf(clock->BaseAngle + clock->rot.z) * clock->Radius;
 	clock->vertexWk[3].vtx.z = 0.0f;
 }
 
