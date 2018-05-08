@@ -59,38 +59,39 @@ HRESULT InitResultLogo(void)
 void UninitResultLogo(void)
 {
 	if (g_pD3DTextureResult != NULL)
-	{// テクスチャの開放
+	{	// テクスチャの開放
 		g_pD3DTextureResult->Release();
 		g_pD3DTextureResult = NULL;
 	}
 
 	if (g_pD3DVtxBuffResult != NULL)
-	{// 頂点バッファの開放
+	{	// 頂点バッファの開放
 		g_pD3DVtxBuffResult->Release();
 		g_pD3DVtxBuffResult = NULL;
 	}
 
 
 	if (g_pD3DTextureResultLogo != NULL)
-	{// テクスチャの開放
+	{	// テクスチャの開放
 		g_pD3DTextureResultLogo->Release();
 		g_pD3DTextureResultLogo = NULL;
 	}
 
 	if (g_pD3DVtxBuffResultLogo != NULL)
-	{// 頂点バッファの開放
+	{	// 頂点バッファの開放
 		g_pD3DVtxBuffResultLogo->Release();
 		g_pD3DVtxBuffResultLogo = NULL;
 	}
 
+
 	if (g_pD3DTextureResultLogo2 != NULL)
-	{// テクスチャの開放
+	{	// テクスチャの開放
 		g_pD3DTextureResultLogo2->Release();
 		g_pD3DTextureResultLogo2 = NULL;
 	}
 
 	if (g_pD3DVtxBuffResultLogo2 != NULL)
-	{// 頂点バッファの開放
+	{	// 頂点バッファの開放
 		g_pD3DVtxBuffResultLogo2->Release();
 		g_pD3DVtxBuffResultLogo2 = NULL;
 	}
@@ -181,9 +182,9 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
-			pVtx[1].rhw =
-			pVtx[2].rhw =
-			pVtx[3].rhw = 1.0f;
+		pVtx[1].rhw =
+		pVtx[2].rhw =
+		pVtx[3].rhw = 1.0f;
 
 		// 反射光の設定
 		pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
@@ -224,6 +225,7 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[1].vtx = D3DXVECTOR3(RESULT_LOGO_POS_X + RESULT_LOGO_WIDTH, RESULT_LOGO_POS_Y - RESULT_LOGO_HEIGHT, 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(RESULT_LOGO_POS_X - RESULT_LOGO_WIDTH, RESULT_LOGO_POS_Y + RESULT_LOGO_HEIGHT, 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(RESULT_LOGO_POS_X + RESULT_LOGO_WIDTH, RESULT_LOGO_POS_Y + RESULT_LOGO_HEIGHT, 0.0f);
+
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
 		pVtx[1].rhw =
@@ -294,4 +296,4 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 	return S_OK;
 }
 
-															
+	
