@@ -219,7 +219,8 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
-		DrawResult();				//リザルト		break;
+		DrawResult();				//リザルト
+		break;
 	}
 
 	DrawFade();						// フェード
