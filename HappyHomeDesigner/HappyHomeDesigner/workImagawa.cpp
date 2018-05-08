@@ -11,7 +11,7 @@
 
 // 今川担当分で必要なインクルード
 #include "field.h"
-
+#include "wall.h"
 // デバッグ用
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -32,6 +32,7 @@
 HRESULT InitWorkImagawa(int nType)
 {
 	InitField();
+	InitWall();
 	return S_OK;
 }
 
@@ -41,7 +42,7 @@ HRESULT InitWorkImagawa(int nType)
 void UninitWorkImagawa(void)
 {
 	UninitField();
-
+	UninitWall();
 }
 
 //=============================================================================
@@ -55,6 +56,7 @@ void UpdateWorkImagawa(void)
 		break;
 	case STAGE_GAME:
 		UpdateField();
+		UpdateWall();
 		break;
 	case STAGE_RESULT:
 		break;
@@ -73,6 +75,7 @@ void DrawWorkImagawa(void)
 		break;
 	case STAGE_GAME:
 		DrawField();
+		DrawWall();
 		break;
 	case STAGE_RESULT:
 		break;
