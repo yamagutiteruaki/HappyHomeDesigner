@@ -137,11 +137,6 @@ void UpdateStage(void)
 	{
 	case STAGE_TITLE:
 		PrintDebugProc("%s (%d)\n", STR(STAGE_TITLE), g_nStage);
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetFade(FADE_OUT, STAGE_GAME);
-		}
-
 		break;
 	case STAGE_GAME:
 		PrintDebugProc("%s (%d)\n", STR(STAGE_GAME), g_nStage);

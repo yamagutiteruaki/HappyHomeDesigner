@@ -10,6 +10,7 @@
 #include "fade.h"
 
 // 関口担当分で必要なインクルード
+#include "clock.h"
 #include "result.h"
 #include "resultlogo.h"
 
@@ -32,6 +33,8 @@
 HRESULT InitWorkSekiguchi(int nType)
 {
 
+	InitClock(0);
+
 	InitResultLogo();
 
 	return S_OK;
@@ -42,6 +45,8 @@ HRESULT InitWorkSekiguchi(int nType)
 //=============================================================================
 void UninitWorkSekiguchi(void)
 {
+	UninitClock();
+
 	UninitResultLogo();
 }
 
@@ -55,6 +60,9 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+
+		UpdateClock();
+
 		break;
 	case STAGE_RESULT:
 
@@ -74,6 +82,9 @@ void DrawWorkSekiguchi(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+
+		DrawClock();
+
 		break;
 	case STAGE_RESULT:
 

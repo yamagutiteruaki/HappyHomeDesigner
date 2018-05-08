@@ -8,6 +8,8 @@
 #include "title.h"
 #include "titlelogo.h"
 #include "input.h"
+#include "fade.h"
+#include "stage.h"
 
 //***********************************************************
 // プロトタイプ宣言
@@ -27,6 +29,7 @@ LPDIRECT3DTEXTURE9		g_pD3DTextureStamp = NULL;		// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffStamp = NULL;		// 頂点バッファインターフェースへのポインタ
 
 int						g_nCountAppearStart = 0;		//
+int						stampCount;
 float					g_fAlphaLogo = 0.0f;			//
 int						g_nCountDisp = 0;				// 
 bool					g_bDispStart = false;			// スタートが出てくるまで
@@ -34,6 +37,7 @@ int						g_nConutDemo = 0;				//
 bool					g_bStamp;						//スタンプの有無
 float					BaseAngle;						//中心
 float					Radius;							//半径
+
 
 //***********************************************************
 // 初期化処理
@@ -48,6 +52,7 @@ HRESULT InitTitlelogo(void)
 	g_bDispStart = false;
 	g_nConutDemo = 0;
 	g_bStamp = false;
+	stampCount = 0;
 
 	D3DXVECTOR2 temp = D3DXVECTOR2(STAMP_HEIGHT, STAMP_WIDTH);
 
@@ -182,7 +187,6 @@ void UpdateTitlelogo(void)
 	}
 	if (GetKeyboardTrigger(DIK_RETURN))
 	{
-		g_bStamp = true;
 
 		if (g_nCountAppearStart == 0)
 		{// タイトル登場スキップ
@@ -193,13 +197,26 @@ void UpdateTitlelogo(void)
 		}
 		else
 		{// ゲームへ
+			g_bStamp = true;
 
 		}
 	}
 
+	if (g_bStamp == true)
+	{
+		stampCount++;
+	}
+	if (stampCount >= 60)
+	{
+		SetFade(FADE_OUT, STAGE_GAME);
+		
+	}
+	
+
 	if (g_bStamp == true)				//スタンプが押されてる時
 	{
 		g_bDispStart = true;
+
 		SetColorTitleLogo();
 	}
 }
@@ -431,20 +448,20 @@ HRESULT MakeVertexTitlelogo(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffStamp->Lock(0, 0, (void**)&pVtx, 0);
 
 		// 頂点座標の設定
-		pVtx[0].vtx.x = STAMP_POS_X - cosf(BaseAngle + ROT_STAMP) * Radius;
-		pVtx[0].vtx.y = STAMP_POS_Y - sinf(BaseAngle + ROT_STAMP) * Radius;
+		pVtx[0].vtx.x = STAMP_POS_X - cosf(BaseAngle +ROT_STAMP) * Radius;
+		pVtx[0].vtx.y = STAMP_POS_Y - sinf(BaseAngle +ROT_STAMP) * Radius;
 		pVtx[0].vtx.z = 0.0f;
 
-		pVtx[1].vtx.x = STAMP_POS_X + cosf(BaseAngle - ROT_STAMP) *Radius;
-		pVtx[1].vtx.y = STAMP_POS_Y - sinf(BaseAngle - ROT_STAMP) *Radius;
+		pVtx[1].vtx.x = STAMP_POS_X + cosf(BaseAngle- ROT_STAMP) *Radius;
+		pVtx[1].vtx.y = STAMP_POS_Y - sinf(BaseAngle-ROT_STAMP) *Radius;
 		pVtx[1].vtx.z = 0.0f;
 
-		pVtx[2].vtx.x = STAMP_POS_X - cosf(BaseAngle - ROT_STAMP) *Radius;
-		pVtx[2].vtx.y = STAMP_POS_Y + sinf(BaseAngle - ROT_STAMP) *Radius;
+		pVtx[2].vtx.x = STAMP_POS_X - cosf(BaseAngle-ROT_STAMP) *Radius;
+		pVtx[2].vtx.y = STAMP_POS_Y + sinf(BaseAngle-ROT_STAMP) *Radius;
 		pVtx[2].vtx.z = 0.0f;
 
-		pVtx[3].vtx.x = STAMP_POS_X + cosf(BaseAngle + ROT_STAMP) *Radius;
-		pVtx[3].vtx.y = STAMP_POS_Y + sinf(BaseAngle + ROT_STAMP) *Radius;
+		pVtx[3].vtx.x = STAMP_POS_X + cosf(BaseAngle+ ROT_STAMP) *Radius;
+		pVtx[3].vtx.y = STAMP_POS_Y + sinf(BaseAngle+ ROT_STAMP) *Radius;
 		pVtx[3].vtx.z = 0.0f;
 
 
@@ -490,6 +507,8 @@ void SetColorTitleLogo(void)
 		pVtx[1].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fAlphaLogo);
 		pVtx[2].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fAlphaLogo);
 		pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, g_fAlphaLogo);
+
+
 
 		// 頂点データをアンロックする
 		g_pD3DVtxBuffTitleLogo->Unlock();
