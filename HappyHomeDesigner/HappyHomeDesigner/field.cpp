@@ -45,10 +45,10 @@ DWORD				g_nNumMatHome[HOME_MAX];				// 属性情報の総数
 
 const char *FileNameHome[HOME_MAX] =
 {
-	"data/MODEL/PLAYER/player02.x",		// 家1
-	"data/MODEL/ITEM/item000.x",		// 家2
-	"data/MODEL/ITEM/item001.x",		// 家3
-	"data/MODEL/ITEM/item002.x",		// 自宅
+	"data/MODEL/HOUSE/house00.x",		// 家1
+	"data/MODEL/HOUSE/house00.x",		// 家2
+	"data/MODEL/HOUSE/house00.x",		// 家3
+	"data/MODEL/HOUSE/house00.x",		// 自宅
 };
 
 //=============================================================================
@@ -97,11 +97,12 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		home->Pos.x = -150.0f+i%2*300;	//X座標の設定
-		home->Pos.y = 10.0f;//Y座標の設定
-		home->Pos.z = 150.0f + i / 2 * (-300);	//Z座標の設定
+		home->Pos.x = -120.0f+i%2*240;	//X座標の設定
+		home->Pos.y = 0.0f;//Y座標の設定
+		home->Pos.z = 150.0f + i / 2 * (-240);	//Z座標の設定
 
-		home->Rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		home->Rot.y = D3DX_PI / 2 ;
+	;
 
 	}
 
@@ -158,12 +159,6 @@ void UninitField(void)
 //=============================================================================
 void UpdateField(void)
 {
-	HOME *home = GetHome(0);
-
-	for (int i = 0; i < HOME_MAX; i++,home++)
-	{
-		home->Rot.y += 0.1f;
-	}
 }
 
 //=============================================================================
