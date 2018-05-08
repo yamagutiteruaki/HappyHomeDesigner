@@ -3,8 +3,11 @@
 // カメラ処理 [camera.cpp]
 // Author : GP12B295 29 山口輝明
 //			GP11B243　32 山口輝明
+<<<<<<< HEAD
 //          宋彦霖
 //
+=======
+>>>>>>> f9fac8b410ab72b3256d181bb5869294c61f3cc3
 //=============================================================================
 #include "camera.h"
 #include "input.h"
@@ -90,6 +93,7 @@ void UpdateCamera(void)
 
 	if (GetKeyboardPress(DIK_W))
 	{// 視点移動「ズームイン」
+<<<<<<< HEAD
 		//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
 		camera->fLength -= CAMERA_MOVE_SPEED;
 
@@ -120,6 +124,15 @@ void UpdateCamera(void)
 		camera->rotCamera.y = player->rot.y + D3DX_PI;
 	}
 	
+=======
+		camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
+	}
+	if (GetKeyboardPress(DIK_S))
+	{// 視点移動「ズームアウト」
+		camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+	}
+
+>>>>>>> f9fac8b410ab72b3256d181bb5869294c61f3cc3
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
