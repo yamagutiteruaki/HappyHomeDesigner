@@ -3,6 +3,8 @@
 // カメラ処理 [camera.cpp]
 // Author : GP12B295 29 山口輝明
 //			GP11B243　32 山口輝明
+//          宋彦霖
+//
 //=============================================================================
 #include "camera.h"
 #include "input.h"
@@ -88,13 +90,36 @@ void UpdateCamera(void)
 
 	if (GetKeyboardPress(DIK_W))
 	{// 視点移動「ズームイン」
-		camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
-	}
-	if (GetKeyboardPress(DIK_S))
-	{// 視点移動「ズームアウト」
-		camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+		//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
+		camera->fLength -= CAMERA_MOVE_SPEED;
+
+		// 移動制限
+		if (camera->fLength < CAMERA_LENGTH_MIN)
+		{
+			camera->fLength = CAMERA_LENGTH_MIN;
+		}
+
 	}
 
+	if (GetKeyboardPress(DIK_S))
+	{// 視点移動「ズームアウト」
+		//camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+		camera->fLength += CAMERA_MOVE_SPEED;
+
+		// 移動制限
+		if (camera->fLength > CAMERA_LENGTH_MAX)
+		{
+			camera->fLength = CAMERA_LENGTH_MAX;
+		}
+
+	}
+
+	// カメラリセット
+	if (GetKeyboardTrigger(DIK_X))
+	{
+		camera->rotCamera.y = player->rot.y + D3DX_PI;
+	}
+	
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
@@ -111,6 +136,7 @@ void CameraWork(D3DXVECTOR3 *at)
 	CAMERA *camera = GetCamera();
 
 	camera->posCameraAt = *at;
+	camera->posCameraAt.y += 40;
 
 	// カメラの相対的な回転角度を行列に変換する
 	D3DXMatrixRotationYawPitchRoll(&mtx, camera->rotCamera.y, camera->rotCamera.x, camera->rotCamera.z);
