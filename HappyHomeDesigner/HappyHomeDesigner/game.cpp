@@ -74,9 +74,9 @@ void DrawGame(void)
 
 	DrawWorkChisaka();
 	DrawWorkSon();
-	DrawWorkSekiguchi();
 	DrawWorkMatsuo();
 	DrawWorkImagawa();
 	DrawWorkYamaguchi();
+	DrawWorkSekiguchi();
 }
 

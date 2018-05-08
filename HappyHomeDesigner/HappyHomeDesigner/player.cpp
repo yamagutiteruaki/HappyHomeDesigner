@@ -275,6 +275,7 @@ void PlayerMove(void)
 			player->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 			
 			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
+
 		}
 	}
 	else if (GetKeyboardPress(DIK_RIGHT))
