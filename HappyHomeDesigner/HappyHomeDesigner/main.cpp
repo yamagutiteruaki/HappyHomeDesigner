@@ -27,6 +27,8 @@ void Draw(void);
 LPDIRECT3D9			g_pD3D = NULL;			// Direct3Dオブジェクト
 LPDIRECT3DDEVICE9	g_pD3DDevice = NULL;	// デバイスオブジェクト(描画に必要)
 int					g_nCountFPS = 0;		// FPSカウンタ
+bool modeflag = false;						// フルスクリーンモードで初期化
+
 
 //=============================================================================
 // メイン関数
@@ -77,14 +79,13 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NULL);
 
 	// DirectXの初期化(ウィンドウを作成してから行う)
-	bool flag = false; // フルスクリーンモードで初期化
 	if (MessageBox(hWnd, "ウィンドウモードで起動しますか？", "起動確認", MB_YESNO) == IDYES)
 	{
-		flag = true;
+		modeflag = true;
 	}
 
 	// 初期化処理(ウィンドウを作成してから行う)
-	if (FAILED(Init(hInstance, hWnd, flag)))
+	if (FAILED(Init(hInstance, hWnd, modeflag)))
 	{
 		return -1;
 	}

@@ -1,0 +1,64 @@
+﻿  calculate.cpp
+calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+  camera.cpp
+  clock.cpp
+  collision.cpp
+  debugproc.cpp
+debugproc.cpp(76): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+debugproc.cpp(76): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+debugproc.cpp(155): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+debugproc.cpp(164): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
+debugproc.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(122): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(127): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(132): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(142): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(147): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+debugproc.cpp(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
+  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
+  fade.cpp
+  field.cpp
+  furniture.cpp
+  game.cpp
+  house.cpp
+  input.cpp
+input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+  Light.cpp
+Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+  main.cpp
+main.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+main.cpp(235): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+main.cpp(236): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+  player.cpp
+  police.cpp
+  result.cpp
+  resultlogo.cpp
+  sound.cpp
+  stage.cpp
+  title.cpp
+  コンパイル中...
+  titlelogo.cpp
+  wall.cpp
+  weight.cpp
+  workChisaka.cpp
+  workImagawa.cpp
+  workMatsuo.cpp
+  workSekiguchi.cpp
+  workSon.cpp
+  workYamaguchi.cpp
+  コード生成しています。
+  All 156 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  コード生成が終了しました。
+  HappyHomeDesigner.vcxproj -> D:\Users\chisakakouta\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+  HappyHomeDesigner.vcxproj -> D:\Users\chisakakouta\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)

@@ -2,7 +2,8 @@
 //
 // カメラ処理 [camera.cpp]
 // Author : GP12B295 29 山口輝明
-//			GP11B243　32 山口輝明
+//          宋彦霖
+//
 //=============================================================================
 #include "camera.h"
 #include "input.h"
@@ -28,19 +29,23 @@ CAMERA					cameraWk;
 //=============================================================================
 // 初期化処理
 //=============================================================================
-void InitCamera(void)
+
+HRESULT InitCamera(int nType)
 {
 	CAMERA *camera = &cameraWk;
 
 	camera->posCameraEye = D3DXVECTOR3(POS_X_CAM, POS_Y_CAM, POS_Z_CAM);
 	camera->posCameraAt = D3DXVECTOR3(POS_X_CAM_AT, POS_Y_CAM_AT, POS_Z_CAM_AT);
 	camera->vecCameraUp = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	camera->fVAngle = CAMERA_V_ANGLE * 1.3f;
 	camera->fHAngle = CAMERA_H_ANGLE;
 	camera->fHAngleMargin = 0.0f;
 	camera->fLength = CAMERA_LENGTH;
 	camera->fLengthTemp = 0;
+
+	return S_OK;
 }
 
 //=============================================================================
@@ -88,13 +93,36 @@ void UpdateCamera(void)
 
 	if (GetKeyboardPress(DIK_W))
 	{// 視点移動「ズームイン」
-		camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
-	}
-	if (GetKeyboardPress(DIK_S))
-	{// 視点移動「ズームアウト」
-		camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+		//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
+		camera->fLength -= CAMERA_MOVE_SPEED;
+
+		// 移動制限
+		if (camera->fLength < CAMERA_LENGTH_MIN)
+		{
+			camera->fLength = CAMERA_LENGTH_MIN;
+		}
+
 	}
 
+	if (GetKeyboardPress(DIK_S))
+	{// 視点移動「ズームアウト」
+		//camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+		camera->fLength += CAMERA_MOVE_SPEED;
+
+		// 移動制限
+		if (camera->fLength > CAMERA_LENGTH_MAX)
+		{
+			camera->fLength = CAMERA_LENGTH_MAX;
+		}
+
+	}
+
+	// カメラリセット
+	if (GetKeyboardTrigger(DIK_X))
+	{
+		camera->rotCamera.y = player->rot.y + D3DX_PI;
+	}
+	
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
@@ -111,6 +139,7 @@ void CameraWork(D3DXVECTOR3 *at)
 	CAMERA *camera = GetCamera();
 
 	camera->posCameraAt = *at;
+	camera->posCameraAt.y += 40;
 
 	// カメラの相対的な回転角度を行列に変換する
 	D3DXMatrixRotationYawPitchRoll(&mtx, camera->rotCamera.y, camera->rotCamera.x, camera->rotCamera.z);
@@ -130,7 +159,7 @@ void CameraWork(D3DXVECTOR3 *at)
 void SetCamera(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	CAMERA	*camera = &cameraWk;
+	CAMERA *camera = &cameraWk;
 	/******************** ビューイング変換 ********************/
 	// ビューマトリクスの初期化
 	D3DXMatrixIdentity(&camera->mtxView);
@@ -158,6 +187,7 @@ void SetCamera(void)
 
 							// プロジェクションマトリクスの設定
 	pDevice->SetTransform(D3DTS_PROJECTION, &camera->mtxProjection);
+
 }
 
 //=============================================================================

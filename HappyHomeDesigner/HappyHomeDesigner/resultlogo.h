@@ -15,7 +15,7 @@
 //*****************************************************************************
 #define	TEXTURE_RESULT			"data/TEXTURE/aiueo.jpg"		// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULT_LOGO		"data/TEXTURE/result.png"		// 読み込むテクスチャファイル名
-#define	TEXTURE_RESULT_LOGO2	"data/TEXTURE/rank.png"			// 読み込むテクスチャファイル名
+#define	TEXTURE_RESULT_LOGO2	"data/TEXTURE/被害総額.png"			// 読み込むテクスチャファイル名
 
 #define	RESULT_LOGO_POS_X	(SCREEN_CENTER_X)					// リザルトロゴの位置(X座標)
 #define	RESULT_LOGO_POS_Y	(100*SCREEN_SCALE)					// リザルトロゴの位置(Y座標)
