@@ -8,6 +8,7 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "weight.h"
 
 // 松尾担当分で必要なインクルード
 #include "title.h"
@@ -33,7 +34,7 @@
 HRESULT InitWorkMatsuo(int nType)
 {
 	InitTitlelogo();
-
+	InitWeight(0);
 	return S_OK;
 }
 
@@ -43,6 +44,7 @@ HRESULT InitWorkMatsuo(int nType)
 void UninitWorkMatsuo(void)
 {
 	UninitTitlelogo();
+	UninitWeight();
 }
 
 //=============================================================================
@@ -57,7 +59,7 @@ void UpdateWorkMatsuo(void)
 
 		break;
 	case STAGE_GAME:
-
+		UpdateWeight();
 		break;
 	case STAGE_RESULT:
 
@@ -77,7 +79,7 @@ void DrawWorkMatsuo(void)
 		DrawTitlelogo();
 		break;
 	case STAGE_GAME:
-
+		DrawWeight();
 		break;
 	case STAGE_RESULT:
 		break;
