@@ -26,3 +26,5 @@ void UpdateWorkSekiguchi(void);
 void DrawWorkSekiguchi(void);
 
 #endif
+
+

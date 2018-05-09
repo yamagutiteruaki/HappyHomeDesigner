@@ -4,6 +4,8 @@
 // Author : GP12B295 29 ŽRŒû‹P–¾
 //
 //=============================================================================
+#define _CRT_SECURE_NO_WARNINGS
+
 #include <stdio.h>
 #include "debugproc.h"
 #include "input.h"

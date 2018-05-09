@@ -1,8 +1,9 @@
 //=============================================================================
 //
 // カメラ処理 [camera.h]
-// Author : GP12B295 29 山口輝明
-//			GP11B243　32 山口輝明
+// Author  GP11B243　32 山口輝明
+//          宋彦霖
+//
 //=============================================================================
 #ifndef _CAMERA_H_
 #define _CAMERA_H_
@@ -23,11 +24,14 @@
 #define CAMERA_V_ANGLE			(D3DX_PI)
 #define CAMERA_H_ANGLE			(D3DX_PI * 0.5f)
 
-#define CAMERA_H_ANGLE_MARGIN	(D3DX_PI / 180 * 45)
-#define CAMERA_MARGIN_SPEED		(D3DX_PI / 180)
+#define CAMERA_H_ANGLE_MARGIN		(D3DX_PI / 180 * 45)
+#define CAMERA_MARGIN_SPEED			(D3DX_PI / 180)
 #define CAMERA_LENGTH_SPEED			(10.0f)
 #define CAMERA_LENGTH_AUTO_SPEED	(30.0f)
-#define CAMERA_LENGTH			(200.0f)
+#define CAMERA_LENGTH				(200.0f)
+#define CAMERA_LENGTH_MIN			(100.0f)
+#define CAMERA_LENGTH_MAX			(300.0f)
+
 
 #define CAMERA_ROT_MOUSE_X			(0.002f)
 #define CAMERA_ROT_MOUSE_Y			(0.002f)
@@ -100,7 +104,7 @@ enum
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void			InitCamera(void);
+HRESULT			InitCamera(int nType);
 void			UninitCamera(void);
 void			UpdateCamera(void);
 void			SetCamera(void);

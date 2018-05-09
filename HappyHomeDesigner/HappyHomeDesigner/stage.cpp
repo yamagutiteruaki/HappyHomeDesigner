@@ -77,7 +77,7 @@ HRESULT InitStage(HINSTANCE hInstance, HWND hWnd)
 //=============================================================================
 HRESULT InitStageEach(int nType)
 {
-	InitCamera();				// カメラ
+	InitCamera(nType);			// カメラ
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
 	InitResult();				//リザルト
@@ -219,7 +219,8 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
-		DrawResult();				//リザルト		break;
+		DrawResult();				//リザルト
+		break;
 	}
 
 	DrawFade();						// フェード

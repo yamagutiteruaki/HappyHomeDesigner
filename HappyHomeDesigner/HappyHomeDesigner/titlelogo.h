@@ -25,13 +25,13 @@
 
 #define	START_POS_X				(SCREEN_WIDTH/2)		// スタートボタンの位置(X座標)
 #define	START_POS_Y				(SCREEN_HEIGHT/2)		// スタートボタンの位置(Y座標)
-#define	START_WIDTH				(800/2)		// スタートボタンの幅
-#define	START_HEIGHT			(500/2)		// スタートボタンの高さ
+#define	START_WIDTH				(1200/2*SCREEN_SCALE)		// スタートボタンの幅
+#define	START_HEIGHT			(750/2*SCREEN_SCALE)		// スタートボタンの高さ
 
 #define	STAMP_POS_X				(SCREEN_WIDTH/2+30)		// スタﾝﾌﾟボタンの位置(X座標)
 #define	STAMP_POS_Y				(SCREEN_HEIGHT/2)		// スタンプボタンの位置(Y座標)
-#define	STAMP_WIDTH				(500/2)		// スタンプボタンの幅
-#define	STAMP_HEIGHT			(500/2)		// スタンプボタンの高さ
+#define	STAMP_WIDTH				(750/2*SCREEN_SCALE)		// スタンプボタンの幅
+#define	STAMP_HEIGHT			(750/2*SCREEN_SCALE)		// スタンプボタンの高さ
 
 #define	ROT_STAMP			(0.3f)
 

@@ -233,6 +233,22 @@ void DrawPlayer(void)
 void UpdatePlayer(void)
 {
 	PlayerMove();
+
+#ifdef _DEBUG
+	//PLAYER *player = &playerWk[0];
+	//CAMERA *camera = GetCamera();
+
+	//PrintDebugProc("player rot: %f\n", player->rotDest.y);
+	//PrintDebugProc("\n");
+
+	//PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
+	//PrintDebugProc("\n");
+
+	//PrintDebugProc("camera length: %f\n", camera->fLength);
+	// PrintDebugProc("\n");
+	
+#endif
+
 }
 
 //=============================================================================
@@ -275,6 +291,7 @@ void PlayerMove(void)
 			player->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 			
 			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
+
 		}
 	}
 	else if (GetKeyboardPress(DIK_RIGHT))
