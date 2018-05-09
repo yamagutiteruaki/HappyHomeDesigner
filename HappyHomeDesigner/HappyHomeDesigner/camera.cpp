@@ -2,7 +2,6 @@
 //
 // ƒJƒƒ‰ˆ— [camera.cpp]
 // Author : GP12B295 29 ŽRŒû‹P–¾
-//			GP11B243@32 ŽRŒû‹P–¾
 //          ‘v•FèÁ
 //
 //=============================================================================
@@ -30,19 +29,22 @@ CAMERA					cameraWk;
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
-void InitCamera(void)
+HRESULT InitCamera(int nType)
 {
 	CAMERA *camera = &cameraWk;
 
 	camera->posCameraEye = D3DXVECTOR3(POS_X_CAM, POS_Y_CAM, POS_Z_CAM);
 	camera->posCameraAt = D3DXVECTOR3(POS_X_CAM_AT, POS_Y_CAM_AT, POS_Z_CAM_AT);
 	camera->vecCameraUp = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+	camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 
 	camera->fVAngle = CAMERA_V_ANGLE * 1.3f;
 	camera->fHAngle = CAMERA_H_ANGLE;
 	camera->fHAngleMargin = 0.0f;
 	camera->fLength = CAMERA_LENGTH;
 	camera->fLengthTemp = 0;
+
+	return S_OK;
 }
 
 //=============================================================================

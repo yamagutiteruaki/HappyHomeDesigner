@@ -14,7 +14,7 @@
 //*****************************************************************************
 #define	LIGHT_MAX				(2)						// ÉâÉCÉgÇÃêî
 
-#define LIGHT_DIFFUSE_0			(1.0f)
+#define LIGHT_DIFFUSE_0			(0.6f)
 #define LIGHT_DIFFUSE_1			(0.7f)
 #define LIGHT_DIFFUSE_2			(0.1f)
 #define LIGHT_AMBIENT			(0.7f)

@@ -34,8 +34,8 @@
 #define WINDOW_NAME		("HappyHomeDesigner ～リフォームの匠～")	// ウインドウのキャプション名
 
 #define SCREEN_SCALE	(1.0f)
-#define SCREEN_WIDTH	(960 * SCREEN_SCALE)		// ウインドウの幅
-#define SCREEN_HEIGHT	(540 * SCREEN_SCALE)		// ウインドウの高さ
+#define SCREEN_WIDTH	(1280 * SCREEN_SCALE)		// ウインドウの幅
+#define SCREEN_HEIGHT	(720 * SCREEN_SCALE)		// ウインドウの高さ
 #define SCREEN_CENTER_X	(SCREEN_WIDTH / 2)			// ウインドウ中央X
 #define SCREEN_CENTER_Y	(SCREEN_HEIGHT / 2)			// ウインドウ中央Y
 

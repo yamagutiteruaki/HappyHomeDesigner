@@ -36,16 +36,16 @@ void InitLight(void)
 	g_aLight[0].Type = D3DLIGHT_DIRECTIONAL;
 
 	// ライト0の拡散光の設定
-	g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 1.0f);
+	//g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 1.0f);
 
 	//// ライト0の鏡面反射光の設定
 	//g_aLight[0].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	//// ライト0の環境光の設定
-	//g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
+	// ライト0の環境光の設定
+	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
 
 	// ライト0の方向の設定
-	vecDir = D3DXVECTOR3(-0.4f, -0.7f, 0.5f);
+	vecDir = D3DXVECTOR3(-0.4f, -0.7f, -0.5f);
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
 
 	// ライト0をレンダリングパイプラインに設定
@@ -85,7 +85,7 @@ void InitLight(void)
 
 	///********** ライト2 **********/
 
-	//// D3DLIGHT9構造体を0でクリアする
+	// D3DLIGHT9構造体を0でクリアする
 	//ZeroMemory(&g_aLight[2], sizeof(D3DLIGHT9));
 
 	//// ライト2のタイプの設定
@@ -97,17 +97,17 @@ void InitLight(void)
 	//// ライト2の鏡面反射光の設定
 	////	g_aLight[2].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
-	//// ライト2の環境光の設定
-	////	g_aLight[2].Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	// ライト2の環境光の設定
+	//g_aLight[2].Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	//// ライト2の方向の設定
 	//vecDir = D3DXVECTOR3(LIGHT_SUB_XZ, LIGHT_SUB_Y, 0.0f);
 	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[2].Direction, &vecDir);
 
-	//// ライト2をレンダリングパイプラインに設定
+	// ライト2をレンダリングパイプラインに設定
 	//pDevice->SetLight(2, &g_aLight[2]);
 
-	//// ライト2を使用状態に
+	// ライト2を使用状態に
 	//pDevice->LightEnable(2, TRUE);
 
 
