@@ -17,6 +17,8 @@
 #define	VALUE_ROTATE_POLICE		(D3DX_PI * 0.05f)				// 回転速度
 #define	RATE_ROTATE_POLICE		(0.20f)							// 回転慣性係数
 
+#define	POLICE_AT_LENGTH		(50.0f)
+
 #define	POLICE_MAX				(1)								// ポリスの最大数
 
 #define	POLICE_SIZE_X			(10.0f)							// ポリスの幅
