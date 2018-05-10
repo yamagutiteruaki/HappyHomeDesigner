@@ -6,6 +6,7 @@
 //=============================================================================
 #include "main.h"
 #include "stage.h"
+#include "input.h"
 
 /* Debug */
 #ifdef _DEBUG
@@ -332,6 +333,12 @@ void Uninit(void)
 //=============================================================================
 void Update(void)
 {
+
+	if (GetKeyboardTrigger(DIK_LSHIFT))//スタンプを　T=押してる　F=押してない
+	{
+		modeflag = modeflag ? false : true;
+	}
+
 	// ステージ更新処理
 	UpdateStage();
 }
@@ -365,3 +372,4 @@ LPDIRECT3DDEVICE9 GetDevice(void)
 {
 	return g_pD3DDevice;
 }
+
