@@ -394,6 +394,7 @@ void PoliceMove(void)
 	{// 左を向く
 		//police->rot.y = camera->rotCamera.y - D3DX_PI * 0.50f;
 
+		// ここをフィールド基準で
 		police->rot.y = D3DX_PI * 0.50f;
 
 		//if (police->rot.y < -D3DX_PI)
@@ -406,8 +407,8 @@ void PoliceMove(void)
 
 
 		// 移動量計算
-		police->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-		police->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+		police->move.x -= cosf(police->rot.y) * VALUE_MOVE_POLICE;
+		police->move.z += sinf(police->rot.y) * VALUE_MOVE_POLICE;
 
 
 	}
