@@ -59,7 +59,7 @@ void UninitFade(void)
 void UpdateFade(void)
 {
 	
-	PrintDebugProc("[フェード状態  ：(%d)]\n", g_eFade);
+	//PrintDebugProc("[フェード状態  ：(%d)]\n", g_eFade);
 
 	if(g_eFade != FADE_NONE)
 	{// フェード処理中
