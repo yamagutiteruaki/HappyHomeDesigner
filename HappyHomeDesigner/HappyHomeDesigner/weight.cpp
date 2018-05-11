@@ -28,7 +28,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWeight = NULL;		// 頂点バッファインターフェ
 
 LPDIRECT3DTEXTURE9		g_pD3DTextureWeightMeter = NULL;		// テクスチャへのポリゴン
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWeightMeter = NULL;		// 頂点バッファインターフェースへのポインタ
-
+float					Power;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -37,7 +37,7 @@ HRESULT InitWeight(int type)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//use = true;										// 使用
-
+	Power = 1.0f;
 	MakeVertexWeight(pDevice);										// 頂点情報の作成
 
 										// テクスチャーの初期化を行う
@@ -92,11 +92,11 @@ void UninitWeight(void)
 //=============================================================================
 void UpdateWeight(void)
 {
-
-	//if (GetKeyboardPress(DIK_L))
-	//{
-	//	Power += 0.1;
-	//}
+	if (GetKeyboardPress(DIK_P))
+	{
+		Power +=0.1f;
+		SetVertexWeight();
+	}
 }
 
 //=============================================================================
@@ -185,6 +185,8 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffWeight->Unlock();
 	}
 
+
+	//赤の手
 	// オブジェクトの頂点バッファを生成
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
 		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
@@ -202,7 +204,7 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 		g_pD3DVtxBuffWeightMeter->Lock(0, 0, (void**)&pVtx, 0);
 
-		// 頂点座標の設定
+		//// 頂点座標の設定
 		pVtx[0].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, 0.0f, 0.0f);
 		pVtx[1].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, 0.0f, 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
@@ -220,7 +222,7 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 		pVtx[3].diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
-		// テクスチャ座標の設定
+		//// テクスチャ座標の設定
 		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
 		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
 		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
@@ -239,19 +241,27 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 //=============================================================================
 void SetVertexWeight(void)
 {
-	{//頂点バッファの中身を埋める
-		VERTEX_2D *pVtx;
 
-		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
-		g_pD3DVtxBuffWeight->Lock(0, 0, (void**)&pVtx, 0);
+	VERTEX_2D *pVtx;
 
-		// 反射光の設定
-		pVtx[0].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[1].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[2].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		// 頂点データをアンロックする
-		g_pD3DVtxBuffWeight->Unlock();
-	}
+	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	g_pD3DVtxBuffWeightMeter->Lock(0, 0, (void**)&pVtx, 0);
+
+	// 頂点座標の設定
+	pVtx[0].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, Power, 0.0f);
+	pVtx[1].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, Power, 0.0f);
+	pVtx[2].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2,1.0f, 0.0f);
+	pVtx[3].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, 1.0f, 0.0f);
+
+
+	// テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, Power);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, Power);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
+
+	// 頂点データをアンロックする
+	g_pD3DVtxBuffWeightMeter->Unlock();
 
 }
