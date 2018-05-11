@@ -13,10 +13,10 @@
 //*****************************************************************************
 #define	NUM_CLOCK				(2)			// ポリゴン数
 
-#define TEXTURE_GAME_CLOCK			("data/TEXTURE/clock.png")			// タイマー画像
-#define TEXTURE_GAME_CLOCKHAND		("data/TEXTURE/clockhand.png")		// 針画像
+#define TEXTURE_GAME_CLOCK			("data/TEXTURE/clock.png")				// タイマー画像
+#define TEXTURE_GAME_CLOCKHAND		("data/TEXTURE/clockhand01.png")		// 針画像
 
-#define CLOCK_POS_X				(60)
+#define CLOCK_POS_X				(SCREEN_CENTER_X)
 #define CLOCK_POS_Y				(60)
 
 #define	CLOCK_WIDTH		(100 / 2*SCREEN_SCALE)				// タイマーの幅
