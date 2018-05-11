@@ -62,8 +62,9 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 
-
 #ifdef _DEBUG
+#endif
+
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
 
@@ -121,12 +122,17 @@ void UpdateCamera(void)
 	if (GetKeyboardTrigger(DIK_X))
 	{
 		camera->rotCamera.y = player->rot.y + D3DX_PI;
+
+
 	}
 	
 	// ƒJƒƒ‰ƒ[ƒN
 	CameraWork(&(player->Eye));
 
-#endif
+	// Šp“x‚ðC³
+	camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
+
+
 }
 
 //=============================================================================
