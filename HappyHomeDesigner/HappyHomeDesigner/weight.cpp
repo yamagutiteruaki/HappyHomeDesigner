@@ -37,7 +37,7 @@ HRESULT InitWeight(int type)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	//use = true;										// 使用
-	Power = 1.0f;
+	Power = 0.0f;
 	MakeVertexWeight(pDevice);										// 頂点情報の作成
 
 										// テクスチャーの初期化を行う
@@ -94,7 +94,14 @@ void UpdateWeight(void)
 {
 	if (GetKeyboardPress(DIK_P))
 	{
-		Power +=0.1f;
+		if (Power < 1.0)
+		{
+			Power = Power + 0.01f;
+		}
+		else
+		{
+			Power = 0.0f;
+		}
 		SetVertexWeight();
 	}
 }
@@ -158,10 +165,10 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffWeight->Lock(0, 0, (void**)&pVtx, 0);
 
 		// 頂点座標の設定
-		pVtx[0].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X / 2, 0.0f, 0.0f);
-		pVtx[1].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X+ TEXTURE_WEIGHT_SIZE_X/2, 0.0f, 0.0f);
-		pVtx[2].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X / 2, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
-		pVtx[3].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X+ TEXTURE_WEIGHT_SIZE_X/2, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
+		pVtx[0].vtx = D3DXVECTOR3( 0.0f , 0.0f, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X, 0.0f, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3( 0.0f , TEXTURE_WEIGHT_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3( TEXTURE_WEIGHT_SIZE_X, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
 
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
@@ -205,10 +212,10 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffWeightMeter->Lock(0, 0, (void**)&pVtx, 0);
 
 		//// 頂点座標の設定
-		pVtx[0].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, 0.0f, 0.0f);
-		pVtx[1].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, 0.0f, 0.0f);
-		pVtx[2].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
-		pVtx[3].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
+		pVtx[0].vtx = D3DXVECTOR3(0.0f , TEXTURE_WEIGHT_SIZE_Y/2+Power, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(0.0f + TEXTURE_WEIGHT_SIZE_X , TEXTURE_WEIGHT_SIZE_Y/2+Power, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(0.0f , TEXTURE_WEIGHT_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(0.0f + TEXTURE_WEIGHT_SIZE_X , TEXTURE_WEIGHT_SIZE_Y, 0.0f);
 
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
@@ -223,8 +230,8 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[3].diffuse = D3DXCOLOR(1.0f, 0.0f, 0.0f, 1.0f);
 
 		//// テクスチャ座標の設定
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 1.0f);
 		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
@@ -248,17 +255,17 @@ void SetVertexWeight(void)
 	g_pD3DVtxBuffWeightMeter->Lock(0, 0, (void**)&pVtx, 0);
 
 	// 頂点座標の設定
-	pVtx[0].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2, Power, 0.0f);
-	pVtx[1].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, Power, 0.0f);
-	pVtx[2].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X / 2,1.0f, 0.0f);
-	pVtx[3].vtx = D3DXVECTOR3(TEXTURE_WEIGHT_SIZE_X + TEXTURE_WEIGHT_SIZE_X / 2, 1.0f, 0.0f);
+	pVtx[0].vtx = D3DXVECTOR3(0.0f, TEXTURE_WEIGHT_SIZE_Y-(Power*120), 0.0f);
+	pVtx[1].vtx = D3DXVECTOR3(0.0f + TEXTURE_WEIGHT_SIZE_X, TEXTURE_WEIGHT_SIZE_Y - (Power * 120), 0.0f);
+	pVtx[2].vtx = D3DXVECTOR3(0.0f, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
+	pVtx[3].vtx = D3DXVECTOR3(0.0f + TEXTURE_WEIGHT_SIZE_X, TEXTURE_WEIGHT_SIZE_Y, 0.0f);
 
 
 	// テクスチャ座標の設定
-	pVtx[0].tex = D3DXVECTOR2(0.0f, Power);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, Power);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f - Power);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f - Power);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 0.0f );
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 0.0f );
 
 
 	// 頂点データをアンロックする

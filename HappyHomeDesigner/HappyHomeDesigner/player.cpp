@@ -10,6 +10,7 @@
 #include "input.h"
 #include "stage.h"
 #include "field.h"
+#include "calculate.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -364,5 +365,8 @@ void PlayerMove(void)
 	{
 		player->rot.y += D3DX_PI * 2.0f;
 	}
+
+	// Šp“x‚ðC³
+	player->rot.y = PiCalculate360(player->rot.y);
 
 }

@@ -8,15 +8,15 @@
 #define _WALL_H_
 
 #include "main.h"
-
+#include "field.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
 #define	TEXTURE_WALL	"data/TEXTURE/wall000.jpg"								// 読み込むテクスチャファイル名
 
-#define	WALL_SIZE_X			(600.0f)										// 地面のサイズ(X方向)
-#define	WALL_SIZE_Z			(600.0f)										// 地面のサイズ(Z方向)
+#define	WALL_SIZE_X			(FIELD_SIZE_X)										// 地面のサイズ(X方向)
+#define	WALL_SIZE_Z			(400.0f)										// 地面のサイズ(Z方向)
 
 #define WALL_MAX				(4)
 

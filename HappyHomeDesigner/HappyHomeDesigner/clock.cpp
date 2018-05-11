@@ -7,6 +7,8 @@
 #include "main.h"
 #include "clock.h"
 #include "input.h"
+#include "fade.h"
+#include "stage.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -43,7 +45,7 @@ HRESULT InitClock(int type)
 	if (type == 0)
 	{
 		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
+		D3DXCreateTextureFromFile(pDevice,		// デバイスのポインタ
 			TEXTURE_GAME_CLOCKHAND,				// ファイルの名前
 			&g_pD3DTextureClockHand);			// 読み込むメモリのポインタ
 	}
@@ -52,10 +54,10 @@ HRESULT InitClock(int type)
 	for (int i = 0; i < CLOCK_MAX; i++, clock++)
 	{
 		clock->use = true;										// 使用
-		clock->pos = D3DXVECTOR3(60.0f, 60.0f, 0.0f);			// 座標データを初期化
-		clock->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 回転データを初期化
-		clock->PatternAnim = 0;									// アニメパターン番号をランダムで初期化
-		clock->CountAnim = 0;									// アニメカウントを初期化
+		clock->pos = D3DXVECTOR3(CLOCK_POS_X, CLOCK_POS_Y, 0.0f);			// 座標データを初期化
+		clock->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// 回転データを初期化
+		clock->PatternAnim = 0;												// アニメパターン番号をランダムで初期化
+		clock->CountAnim = 0;												// アニメカウントを初期化
 
 		D3DXVECTOR2 temp = D3DXVECTOR2(TEXTURE_CLOCKHAND_SIZE_X, TEXTURE_CLOCKHAND_SIZE_Y);
 		clock->Radius = D3DXVec2Length(&temp);					// 針の半径を初期化
@@ -113,10 +115,15 @@ void UpdateClock(void)
 		{
 			// アニメーション
 			
-				clock->rot.z += 0.01f;
+			clock->rot.z += 0.01f;
 			
-			SetVertexClockHand(i);	// 移動後の座標で頂点を設定
+			SetVertexClockHand(i);		// 移動後の座標で頂点を設定
+
 		}
+		//if (clock->rot.z > D3DX_PI * 2)
+		//{
+		//	SetFade(FADE_OUT, STAGE_RESULT);
+		//}
 	}
 
 }
