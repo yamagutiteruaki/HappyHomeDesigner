@@ -421,7 +421,7 @@ void PoliceMove(void)
 		//police->move.x -= cosf(police->rot.y) * VALUE_MOVE_POLICE;
 		//police->move.z += sinf(police->rot.y) * VALUE_MOVE_POLICE;
 
-		// 注視点の方向に進見続ける
+		// 注視点の方向に進み続ける
 		police->move += (police->Eye - police->At);
 
 
@@ -443,7 +443,7 @@ void PoliceMove(void)
 		//police->move.x += cosf(police->rot.y) * VALUE_MOVE_POLICE;
 		//police->move.z -= sinf(police->rot.y) * VALUE_MOVE_POLICE;
 
-		// 注視点の方向に進見続ける
+		// 注視点の方向に進み続ける
 		police->move += (police->Eye - police->At);
 
 
@@ -464,7 +464,7 @@ void PoliceMove(void)
 		//police->move.x += sinf(police->rot.y) * VALUE_MOVE_POLICE;
 		//police->move.z += cosf(police->rot.y) * VALUE_MOVE_POLICE;
 
-		// 注視点の方向に進見続ける
+		// 注視点の方向に進み続ける
 		police->move += (police->Eye - police->At);
 
 
@@ -486,26 +486,27 @@ void PoliceMove(void)
 		//police->move.x -= sinf(police->rot.y) * VALUE_MOVE_POLICE;
 		//police->move.z -= cosf(police->rot.y) * VALUE_MOVE_POLICE;
 
-		// 注視点の方向に進見続ける
+		// 注視点の方向に進み続ける
 		police->move += (police->Eye - police->At);
 
 
 	}
 
 
-	// ランダム移動処理
-	int y = 0;
-	int x = 0;
-	int n = 0;
-	int m = 0;
+	//// ポリスランダム巡回移動処理
+	//int y = 0;
+	//int x = 0;
+	//int n = 0;
+	//int m = 0;
 
-	while (1)
-	{
-		n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
-		m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
+	//while (1)
+	//{	// ランダムで目標ポイントを決定
+	//	n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
+	//	m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
 
-		// 現在の配列要素番号との差が2より小さい場合ループから抜ける
-		if (!abs(y - n) >= 2 || !abs(x - m) >= 2) break;
-	}
+	//	// 現在の配列要素番号との差が2より小さい場合ループから抜ける(進行可能なポイントの場合)
+	//	if (!abs(y - n) >= 2 || !abs(x - m) >= 2) break;
+	//}
 
+	
 }
