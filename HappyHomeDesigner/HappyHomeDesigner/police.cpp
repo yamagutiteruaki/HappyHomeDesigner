@@ -85,22 +85,23 @@ HRESULT InitPolice(int nType)
 	}
 
 	// 方向転換点の初期設定
-	CheckPointWk[0][0] = D3DXVECTOR3(-300.0f, 0.0f, 300.0f);	// 左上(-300,0,300)
-	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, 300.0f);		// 中心上(0,0,300)
-	CheckPointWk[2][0] = D3DXVECTOR3(300.0f, 0.0f, 300.0f);		// 右上(300,0,300)
-	CheckPointWk[0][1] = D3DXVECTOR3(-300.0f, 0.0f, 0.0f);		// 中心左(-300,0,0)
-	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 中心(0,0,0)
-	CheckPointWk[2][1] = D3DXVECTOR3(300.0f, 0.0f, 0.0f);		// 中心右(300,0,0)
-	CheckPointWk[0][2] = D3DXVECTOR3(-300.0f, 0.0f, -300.0f);	// 左下(-300,0,-300)
-	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -300.0f);		// 中心下(0,0,-300)
-	CheckPointWk[2][2] = D3DXVECTOR3(300.0f, 0.0f, -300.0f);	// 右下(300,0,-300)
+	//CheckPointWk[0][0] = D3DXVECTOR3(-300.0f, 0.0f, 300.0f);	// 左上(-300,0,300)
+	CheckPointWk[0][0] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);		// 左上(-300,0,300)
+	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, FIELD_SIZE_Z / 2);						// 中心上(0,0,300)
+	CheckPointWk[2][0] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);			// 右上(300,0,300)
+	CheckPointWk[0][1] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, 0.0f);					// 中心左(-300,0,0)
+	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									// 中心(0,0,0)
+	CheckPointWk[2][1] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, 0.0f);						// 中心右(300,0,0)
+	CheckPointWk[0][2] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// 左下(-300,0,-300)
+	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -FIELD_SIZE_Z / 2);					// 中心下(0,0,-300)
+	CheckPointWk[2][2] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// 右下(300,0,-300)
 
 
 	// ポリスの初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ポリスの視点(位置座標)の初期化
-		police->Eye = D3DXVECTOR3(-300.0f, 0.0f, 300.0f);
+		police->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
 		// ポリスの上方向の初期化
@@ -175,7 +176,7 @@ void UpdatePolice(void)
 	key++;		// フレームカウント
 
 	// 当たり判定無効時間の解除
-	if (key % 180 == 0)
+	if (key % 120 == 0)
 	{
 		key = 0;
 		police->able_hit = true;
@@ -189,7 +190,7 @@ void UpdatePolice(void)
 			{	// 配列Y要素についてチェック
 				for (int i = 0; i < CHECK_POINT_X_MAX; i++)
 				{	// 配列X要素についてチェック
-					if (CollisionBC(police->Eye, CheckPointWk[j][i], 30.0f, 30.0f))
+					if (CollisionBC(police->Eye, CheckPointWk[j][i], 70.0f, 70.0f))
 					{	// チェックポイントに侵入したら方向転換し、移動ベクトル算出
 						PoliceMove(j,i);
 						// 当たり判定有効フラグをfalseに
