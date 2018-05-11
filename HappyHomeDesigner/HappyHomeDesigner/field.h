@@ -17,8 +17,8 @@
 #define	TEXTURE_FIELD	"data/TEXTURE/field_glass.jpg"								// 読み込むテクスチャファイル名
 #define	TEXTURE_HOME	"data/TEXTURE/field001.jpg"							// 読み込むテクスチャファイル名
 
-#define	FIELD_SIZE_X			(600.0f)										// 地面のサイズ(X方向)
-#define	FIELD_SIZE_Z			(600.0f)										// 地面のサイズ(Z方向)
+#define	FIELD_SIZE_X			(1500.0f)										// 地面のサイズ(X方向)
+#define	FIELD_SIZE_Z			(1500.0f)										// 地面のサイズ(Z方向)
 
 #define HOME_SIZE_X		(100.0f)										//家の床のサイズ(X方向)
 #define HOME_SIZE_Z		(100.0f)										//家の床のサイズ(Y方向)

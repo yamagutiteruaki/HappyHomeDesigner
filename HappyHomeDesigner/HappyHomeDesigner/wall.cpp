@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "wall.h"
+#include "field.h"
 #include "debugproc.h"
 #include "calculate.h"
 #include "input.h"
@@ -42,6 +43,7 @@ HRESULT InitWall(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	WALL *wall = GetWall(0);
+	FIELD *field = GetField(0);
 	{
 		MakeVertexWall(pDevice);
 
@@ -58,8 +60,8 @@ HRESULT InitWall(void)
 	for (int i = 0; i < WALL_MAX; i++, wall++)
 	{
 		wall->Pos.x = 0.0f;	//X座標の設定
-		wall->Pos.y = -600 / 2;//Y座標は0固定
-		wall->Pos.z = 600 / 2;//Z座標の設定
+		wall->Pos.y = -(WALL_SIZE_X) / 2;//Y座標は0固定
+		wall->Pos.z = (WALL_SIZE_Z) / 2;//Z座標の設定
 
 		wall->Rot.x = -D3DX_PI / 2;
 		wall->Rot.y = (D3DX_PI / 2)*i ;
