@@ -12,14 +12,14 @@
 // マクロ定義
 //*****************************************************************************
 
-#define	VALUE_MOVE_POLICE		(0.50f)							// 移動速度係数
+#define	VALUE_MOVE_POLICE		(3.00f)							// 移動速度係数
 #define	RATE_MOVE_POLICE			(0.20f)							// 移動慣性係数
 #define	VALUE_ROTATE_POLICE		(D3DX_PI * 0.05f)				// 回転速度
 #define	RATE_ROTATE_POLICE		(0.20f)							// 回転慣性係数
 
 #define	POLICE_AT_LENGTH		(50.0f)
 
-#define	POLICE_MAX				(1)								// ポリスの最大数
+#define	POLICE_MAX				(15)								// ポリスの最大数
 
 #define	POLICE_SIZE_X			(10.0f)							// ポリスの幅
 #define	POLICE_SIZE_Y			(20.0f)							// ポリスの高さ
@@ -35,6 +35,7 @@
 
 #define	CHECK_POINT_X_MAX			(3)								// 横方向のチェックポイントの最大数
 #define	CHECK_POINT_Y_MAX			(3)								// 縦方向のチェックポイントの最大数
+#define	CHECK_POINT_MAX				(CHECK_POINT_X_MAX * CHECK_POINT_Y_MAX)		// チェックポイントの合計
 
 //*****************************************************************************
 // 構造体宣言
@@ -43,6 +44,7 @@
 typedef struct		// ポリス構造体
 {
 	bool			use;							// true:使用  false:未使用
+	bool			able_hit;						// true:当たり判定有効  false:当たり判定無効
 
 	D3DXVECTOR3		scl;							// スケール
 
@@ -57,6 +59,8 @@ typedef struct		// ポリス構造体
 	int				anim;							// アニメーション番号
 
 	float			speed;							// 移動速度係数
+
+	int				key;							// フレームカウント用
 
 } POLICE;
 
