@@ -19,7 +19,7 @@
 
 #define	POLICE_AT_LENGTH		(50.0f)
 
-#define	POLICE_MAX				(1)								// ポリスの最大数
+#define	POLICE_MAX				(15)								// ポリスの最大数
 
 #define	POLICE_SIZE_X			(10.0f)							// ポリスの幅
 #define	POLICE_SIZE_Y			(20.0f)							// ポリスの高さ
@@ -59,6 +59,8 @@ typedef struct		// ポリス構造体
 	int				anim;							// アニメーション番号
 
 	float			speed;							// 移動速度係数
+
+	int				key;							// フレームカウント用
 
 } POLICE;
 

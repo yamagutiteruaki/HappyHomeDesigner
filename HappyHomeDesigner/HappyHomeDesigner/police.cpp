@@ -24,7 +24,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp);
-void PoliceMove(int y, int x);
+void PoliceMove(POLICE *police, int y, int x);
 
 
 //*****************************************************************************
@@ -42,7 +42,6 @@ POLICE				policeWk[POLICE_MAX];									// ポリス格納ワーク
 D3DXVECTOR3			CheckPointWk[CHECK_POINT_Y_MAX][CHECK_POINT_X_MAX];		// チェックポイント格納ワーク
 
 int					animCnt;												// アニメカウント
-int					key;													// フレームカウント
 int					sp_Update;												// 更新頻度計算用
 
 
@@ -85,7 +84,6 @@ HRESULT InitPolice(int nType)
 	}
 
 	// 方向転換点の初期設定
-	//CheckPointWk[0][0] = D3DXVECTOR3(-300.0f, 0.0f, 300.0f);	// 左上(-300,0,300)
 	CheckPointWk[0][0] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);		// 左上(-300,0,300)
 	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, FIELD_SIZE_Z / 2);						// 中心上(0,0,300)
 	CheckPointWk[2][0] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);			// 右上(300,0,300)
@@ -118,7 +116,7 @@ HRESULT InitPolice(int nType)
 
 
 		// ポリスのスケールの初期化
-		police->scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		police->scl = D3DXVECTOR3(1.0f * 2, 1.0f * 2, 1.0f * 2);
 
 		// useフラグをtrueに設定
 		police->use = true;
@@ -128,6 +126,9 @@ HRESULT InitPolice(int nType)
 
 		// ポリスの移動速度初期化
 		police->speed = VALUE_MOVE_POLICE;
+
+		// ポリスのフレームカウント初期化
+		police->key = 0;
 
 	}
 
@@ -173,14 +174,19 @@ void UpdatePolice(void)
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
 
-	key++;		// フレームカウント
 
-	// 当たり判定無効時間の解除
-	if (key % 120 == 0)
+	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		key = 0;
-		police->able_hit = true;
+		police->key++;
+		// 当たり判定無効時間の解除
+		if (police->key % 120 == 0)
+		{
+			police->key = 0;
+			police->able_hit = true;
+		}
 	}
+	police = &policeWk[0];
+
 
 	for (int k = 0; k < POLICE_MAX; k++, police++)
 	{	// ポリスについてチェック
@@ -192,7 +198,7 @@ void UpdatePolice(void)
 				{	// 配列X要素についてチェック
 					if (CollisionBC(police->Eye, CheckPointWk[j][i], 70.0f, 70.0f))
 					{	// チェックポイントに侵入したら方向転換し、移動ベクトル算出
-						PoliceMove(j,i);
+						PoliceMove(police,j,i);
 						// 当たり判定有効フラグをfalseに
 						police->able_hit = false;
 						break;
@@ -263,19 +269,22 @@ void UpdatePolice(void)
 	//police->move.y += (0.0f - police->move.y) * RATE_MOVE_POLICE;
 	//police->move.z += (0.0f - police->move.z) * RATE_MOVE_POLICE;
 
-	/// 位置移動
-	police->Eye.x += police->move.x;
-	police->Eye.y += police->move.y;
-	//if (police->Eye.y < 5.0f)
-	//{
-	//	police->Eye.y = 5.0f;
-	//}
-	//if (police->Eye.y > 75.0f)
-	//{
-	//	police->Eye.y = 75.0f;
-	//}
-	police->Eye.z += police->move.z;
 
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		/// 位置移動
+		police->Eye.x += police->move.x;
+		police->Eye.y += police->move.y;
+		//if (police->Eye.y < 5.0f)
+		//{
+		//	police->Eye.y = 5.0f;
+		//}
+		//if (police->Eye.y > 75.0f)
+		//{
+		//	police->Eye.y = 75.0f;
+		//}
+		police->Eye.z += police->move.z;
+	}
 
 	// ポリスの移動制限（場外に行かないようにする）
 	// Z座標のマックスとX座標のマックスで制限かける
@@ -437,9 +446,9 @@ D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 
 //=============================================================================
 // ポリスの移動関数
 //=============================================================================
-void PoliceMove(int y, int x)
+void PoliceMove(POLICE *police,int y, int x)
 {
-	POLICE *police = &policeWk[0];
+	//POLICE *police = &policeWk[0];
 
 	// ポリスランダム巡回移動処理
 	int n = 0;
