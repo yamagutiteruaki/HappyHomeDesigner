@@ -45,9 +45,9 @@ int					animCnt;												// アニメカウント
 int					sp_Update;												// 更新頻度計算用
 
 
-//=============================================================================
-// 初期化処理
-//=============================================================================
+																			//=============================================================================
+																			// 初期化処理
+																			//=============================================================================
 HRESULT InitPolice(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -56,29 +56,29 @@ HRESULT InitPolice(int nType)
 
 	if (nType == STAGE_INIT_FAST)
 	{
-			g_pD3DTexturePolice = NULL;
-			g_pD3DXMeshPolice = NULL;
-			g_pD3DXBuffMatPolice = NULL;
+		g_pD3DTexturePolice = NULL;
+		g_pD3DXMeshPolice = NULL;
+		g_pD3DXBuffMatPolice = NULL;
 
 
-			// Xファイルの読み込み
-			if (FAILED(D3DXLoadMeshFromX(POLICE_MODEL,
-				D3DXMESH_SYSTEMMEM,
-				pDevice,
-				NULL,
-				&g_pD3DXBuffMatPolice,
-				NULL,
-				&g_nNumMatPolice,
-				&g_pD3DXMeshPolice)))
-			{
-				return E_FAIL;
-			}
+		// Xファイルの読み込み
+		if (FAILED(D3DXLoadMeshFromX(POLICE_MODEL,
+			D3DXMESH_SYSTEMMEM,
+			pDevice,
+			NULL,
+			&g_pD3DXBuffMatPolice,
+			NULL,
+			&g_nNumMatPolice,
+			&g_pD3DXMeshPolice)))
+		{
+			return E_FAIL;
+		}
 
 #if 0
-			// テクスチャの読み込み
-			D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-				TEXTURE_FILENAME,		// ファイルの名前
-				&g_pD3DTextureModel);	// 読み込むメモリー
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
+			TEXTURE_FILENAME,		// ファイルの名前
+			&g_pD3DTextureModel);	// 読み込むメモリー
 #endif
 
 	}
@@ -95,7 +95,7 @@ HRESULT InitPolice(int nType)
 	CheckPointWk[2][2] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// 右下(300,0,-300)
 
 
-	// ポリスの初期化処理
+																						// ポリスの初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ポリスの視点(位置座標)の初期化
@@ -198,7 +198,7 @@ void UpdatePolice(void)
 				{	// 配列X要素についてチェック
 					if (CollisionBC(police->Eye, CheckPointWk[j][i], 70.0f, 70.0f))
 					{	// チェックポイントに侵入したら方向転換し、移動ベクトル算出
-						PoliceMove(police,j,i);
+						PoliceMove(police, j, i);
 						// 当たり判定有効フラグをfalseに
 						police->able_hit = false;
 						break;
@@ -211,57 +211,57 @@ void UpdatePolice(void)
 
 
 	// デバッグ時に手動でポリス移動
-//#ifdef _DEBUG
-//	if (GetKeyboardPress(DIK_A))
-//	{
-//		if (GetKeyboardPress(DIK_W))
-//		{// 左前移動
-//			police->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//			police->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//		}
-//		else if (GetKeyboardPress(DIK_S))
-//		{// 左後移動
-//			police->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//			police->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//		}
-//		else
-//		{// 左移動
-//			police->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//			police->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//		}
-//	}
-//	else if (GetKeyboardPress(DIK_D))
-//	{
-//		if (GetKeyboardPress(DIK_W))
-//		{// 右前移動
-//			police->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//			police->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//		}
-//		else if (GetKeyboardPress(DIK_S))
-//		{// 右後移動
-//			police->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//			police->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-//		}
-//		else
-//		{// 右移動
-//			police->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//			police->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//		}
-//	}
-//	else if (GetKeyboardPress(DIK_W))
-//	{// 前移動
-//		police->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//		police->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//	}
-//	else if (GetKeyboardPress(DIK_S))
-//	{// 後移動
-//		police->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//		police->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-//	}
-//
-//	
-//#endif
-//
+	//#ifdef _DEBUG
+	//	if (GetKeyboardPress(DIK_A))
+	//	{
+	//		if (GetKeyboardPress(DIK_W))
+	//		{// 左前移動
+	//			police->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//			police->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//		}
+	//		else if (GetKeyboardPress(DIK_S))
+	//		{// 左後移動
+	//			police->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//			police->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//		}
+	//		else
+	//		{// 左移動
+	//			police->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//			police->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//		}
+	//	}
+	//	else if (GetKeyboardPress(DIK_D))
+	//	{
+	//		if (GetKeyboardPress(DIK_W))
+	//		{// 右前移動
+	//			police->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//			police->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//		}
+	//		else if (GetKeyboardPress(DIK_S))
+	//		{// 右後移動
+	//			police->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//			police->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
+	//		}
+	//		else
+	//		{// 右移動
+	//			police->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//			police->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//		}
+	//	}
+	//	else if (GetKeyboardPress(DIK_W))
+	//	{// 前移動
+	//		police->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//		police->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//	}
+	//	else if (GetKeyboardPress(DIK_S))
+	//	{// 後移動
+	//		police->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//		police->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
+	//	}
+	//
+	//	
+	//#endif
+	//
 	// ポリス移動処理
 
 	// 移動量に慣性をかける
@@ -446,7 +446,7 @@ D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 
 //=============================================================================
 // ポリスの移動関数
 //=============================================================================
-void PoliceMove(POLICE *police,int y, int x)
+void PoliceMove(POLICE *police, int y, int x)
 {
 	//POLICE *police = &policeWk[0];
 
@@ -459,12 +459,12 @@ void PoliceMove(POLICE *police,int y, int x)
 		n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
 		m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
 
-		// 現在の配列要素番号との差が2より小さい場合ループから抜ける(進行可能なポイントの場合)
-		//if (abs(y - n) < 2 && abs(x - m) < 2) break;
+											// 現在の配列要素番号との差が2より小さい場合ループから抜ける(進行可能なポイントの場合)
+											//if (abs(y - n) < 2 && abs(x - m) < 2) break;
 
-		// XY配列要素番号が負か最大値を超えているかチェック
+											// XY配列要素番号が負か最大値を超えているかチェック
 
-		// 上下左右なら許可
+											// 上下左右なら許可
 		if (n == y && m == x + 1 || n == y && m == x - 1 || m == x && n == y + 1 || m == x && n == y - 1) break;
 	}
 
