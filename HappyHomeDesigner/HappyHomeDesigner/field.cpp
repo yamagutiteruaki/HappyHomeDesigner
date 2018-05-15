@@ -97,13 +97,13 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		home->Pos.x = -120+i%2*240;	//X座標の設定
-		home->Pos.y = 0.0f;//Y座標の設定
-		home->Pos.z = 150.0f + i / 2 * (-240);	//Z座標の設定
-
-		//home->Pos.x = -(FIELD_SIZE_X/4+30*(FIELD_SIZE_X/600)) + i % 2 * (((FIELD_SIZE_X / 4)-(FIELD_SIZE_X/4+30*(FIELD_SIZE_X/600)))*2);	//X座標の設定
+		//home->Pos.x = -120+i%2*240;	//X座標の設定
 		//home->Pos.y = 0.0f;//Y座標の設定
-		//home->Pos.z = FIELD_SIZE_X/4 + i / 2 * (-((FIELD_SIZE_X/4+30*(FIELD_SIZE_X/600))*2));	//Z座標の設定
+		//home->Pos.z = 150.0f + i / 2 * (-240);	//Z座標の設定
+
+		home->Pos.x = -(HOME_DISTANCE) + i % 2 * (HOME_DISTANCE*2);	//X座標の設定
+		home->Pos.y = 0.0f;//Y座標の設定
+		home->Pos.z = HOME_DISTANCE + i / 2 * (-HOME_DISTANCE *2);	//Z座標の設定
 
 		home->Rot.y = D3DX_PI / 2 ;
 	;
