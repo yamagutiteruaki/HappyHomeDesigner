@@ -12,30 +12,28 @@
 // マクロ定義
 //*****************************************************************************
 
-#define	VALUE_MOVE_POLICE		(3.00f)							// 移動速度係数
-#define	RATE_MOVE_POLICE			(0.20f)							// 移動慣性係数
-#define	VALUE_ROTATE_POLICE		(D3DX_PI * 0.05f)				// 回転速度
-#define	RATE_ROTATE_POLICE		(0.20f)							// 回転慣性係数
+#define	VALUE_MOVE_POLICE		(3.00f)										// 移動速度係数
+#define	RATE_MOVE_POLICE			(0.20f)									// 移動慣性係数
+#define	VALUE_ROTATE_POLICE		(D3DX_PI * 0.05f)							// 回転速度
+#define	RATE_ROTATE_POLICE		(0.20f)										// 回転慣性係数
 
-#define	POLICE_AT_LENGTH		(50.0f)
+#define	POLICE_MAX				(10)										// ポリスの最大数
 
-#define	POLICE_MAX				(1)								// ポリスの最大数
+#define	POLICE_SIZE_X			(10.0f)										// ポリスの幅
+#define	POLICE_SIZE_Y			(20.0f)										// ポリスの高さ
 
-#define	POLICE_SIZE_X			(10.0f)							// ポリスの幅
-#define	POLICE_SIZE_Y			(20.0f)							// ポリスの高さ
+#define	POLICE_ANIM_MAX			(12)										// ポリスのアニメーションパターン数
+#define	POLICE_ANIM_SEC			(1)											// アニメーション一巡にかかる秒数
 
-#define	POLICE_ANIM_MAX			(12)							// ポリスのアニメーションパターン数
-#define	POLICE_ANIM_SEC			(1)								// アニメーション一巡にかかる秒数
+#define	POLICE_SPEED_FREQUENCY	(60*10)										// ポリスの移動速度の更新頻度(フレーム×秒数)
+#define	POLICE_SPEEDUP			(0.2f)										// ポリスの移動速度変化量
+#define POLICE_SHADOW_SIZE		(53.0f)										// ポリスの影サイズ
 
-#define	POLICE_SPEED_FREQUENCY	(60*10)							// ポリスの移動速度の更新頻度(フレーム×秒数)
-#define	POLICE_SPEEDUP			(0.2f)							// ポリスの移動速度変化量
-#define POLICE_SHADOW_SIZE		(53.0f)							// ポリスの影サイズ
+#define	POLICE_MODEL			"data/MODEL/POLICE/standingman.x"			// 読み込むモデル名
 
-#define	POLICE_MODEL			"data/MODEL/POLICE/standingman.x"	// 読み込むモデル名
-
-#define	CHECK_POINT_X_MAX			(3)								// 横方向のチェックポイントの最大数
-#define	CHECK_POINT_Y_MAX			(3)								// 縦方向のチェックポイントの最大数
-#define	CHECK_POINT_MAX				(CHECK_POINT_X_MAX * CHECK_POINT_Y_MAX)		// チェックポイントの合計
+#define	CHECK_POINT_X_MAX		(3)											// 横方向のチェックポイントの最大数
+#define	CHECK_POINT_Y_MAX		(3)											// 縦方向のチェックポイントの最大数
+#define	CHECK_POINT_MAX			(CHECK_POINT_X_MAX * CHECK_POINT_Y_MAX)		// チェックポイントの合計
 
 //*****************************************************************************
 // 構造体宣言
@@ -53,14 +51,23 @@ typedef struct		// ポリス構造体
 	D3DXVECTOR3		Up;								// ポリスの上方向
 	D3DXVECTOR3		rot;							// ポリスの向き
 	D3DXVECTOR3		move;							// ポリスの移動量
+	D3DXVECTOR3		rotBasis;						// ポリスの回転の中心点(原点から少し調整するため）
+	D3DXVECTOR3		axisXZ;							// ポリスの回転軸(XZ)
+	D3DXVECTOR3		axisY;							// ポリスの回転軸(Y)
 
-	VERTEX_2D		vertexWk[NUM_VERTEX];			// 頂点情報格納ワーク
+	D3DXQUATERNION	qRotateXZ;						// ポリスのXZ軸回転クォータニオン
+	D3DXQUATERNION	qRotateY;						// ポリスのY軸回転クォータニオン
+	D3DXQUATERNION	qAnswer;						// ポリスの合成後回転クォータニオン
 
 	int				anim;							// アニメーション番号
 
 	float			speed;							// 移動速度係数
 
 	int				key;							// フレームカウント用
+
+	float			fangleXZ;						// 回転角度(XZ)
+	float			fangleY;						// 回転角度(Y)
+
 
 } POLICE;
 

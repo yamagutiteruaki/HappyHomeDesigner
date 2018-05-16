@@ -1,5 +1,3 @@
-
-
 //=============================================================================
 //
 // ポリス処理 [police.cpp]
@@ -14,7 +12,7 @@
 #include "stage.h"
 #include "field.h"
 #include "collision.h"
-
+#include "calculate.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -23,7 +21,9 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp);
+D3DXMATRIX* FixedPostureLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp);
+D3DXMATRIX* VariablePostureLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp);
+
 void PoliceMove(POLICE *police, int y, int x);
 
 
@@ -45,9 +45,9 @@ int					animCnt;												// アニメカウント
 int					sp_Update;												// 更新頻度計算用
 
 
-																			//=============================================================================
-																			// 初期化処理
-																			//=============================================================================
+//=============================================================================
+// 初期化処理
+//=============================================================================
 HRESULT InitPolice(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -95,17 +95,21 @@ HRESULT InitPolice(int nType)
 	CheckPointWk[2][2] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// 右下(300,0,-300)
 
 
-																						// ポリスの初期化処理
+	// ポリスの初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ポリスの視点(位置座標)の初期化
-		police->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
+		//police->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
+		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
+
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
 		// ポリスの上方向の初期化
 		police->Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 		// ポリスの向きの初期化
 		police->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		//police->rot = 0.0f;
+
 		// ポリスの移動量の初期化
 		police->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		//police->move = CheckPointWk[0][0] - CheckPointWk[0][1];
@@ -114,10 +118,20 @@ HRESULT InitPolice(int nType)
 		//police->move = CheckPointWk[1][1] - CheckPointWk[0][0];
 		//D3DXVec3Normalize(&police->move, &police->move);
 
+		// 回転の中心点の初期設定(原点ではなく少しずらす）
+		police->rotBasis = D3DXVECTOR3(0.0f, 60.0f, 0.0f);
 
 		// ポリスのスケールの初期化
 		police->scl = D3DXVECTOR3(1.0f * 2, 1.0f * 2, 1.0f * 2);
 
+		// ポリスの回転軸の初期化
+		police->axisXZ = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
+		police->axisY = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+		// ポリスの回転角度の初期化
+		police->fangleXZ = 0.0f;
+		police->fangleY = 0.0f;
+		
 		// useフラグをtrueに設定
 		police->use = true;
 
@@ -129,7 +143,6 @@ HRESULT InitPolice(int nType)
 
 		// ポリスのフレームカウント初期化
 		police->key = 0;
-
 	}
 
 
@@ -174,7 +187,7 @@ void UpdatePolice(void)
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
 
-
+	// 当たり判定の一定時間無効処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		police->key++;
@@ -185,9 +198,8 @@ void UpdatePolice(void)
 			police->able_hit = true;
 		}
 	}
+	// ポリスの当たり判定処理
 	police = &policeWk[0];
-
-
 	for (int k = 0; k < POLICE_MAX; k++, police++)
 	{	// ポリスについてチェック
 		if (police->able_hit)
@@ -207,126 +219,54 @@ void UpdatePolice(void)
 			}
 		}
 	}
-	police = &policeWk[0];
-
-
-	// デバッグ時に手動でポリス移動
-	//#ifdef _DEBUG
-	//	if (GetKeyboardPress(DIK_A))
-	//	{
-	//		if (GetKeyboardPress(DIK_W))
-	//		{// 左前移動
-	//			police->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//			police->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//		}
-	//		else if (GetKeyboardPress(DIK_S))
-	//		{// 左後移動
-	//			police->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//			police->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//		}
-	//		else
-	//		{// 左移動
-	//			police->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//			police->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//		}
-	//	}
-	//	else if (GetKeyboardPress(DIK_D))
-	//	{
-	//		if (GetKeyboardPress(DIK_W))
-	//		{// 右前移動
-	//			police->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//			police->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//		}
-	//		else if (GetKeyboardPress(DIK_S))
-	//		{// 右後移動
-	//			police->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//			police->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_POLICE;
-	//		}
-	//		else
-	//		{// 右移動
-	//			police->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//			police->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//		}
-	//	}
-	//	else if (GetKeyboardPress(DIK_W))
-	//	{// 前移動
-	//		police->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//		police->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//	}
-	//	else if (GetKeyboardPress(DIK_S))
-	//	{// 後移動
-	//		police->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//		police->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_POLICE;
-	//	}
-	//
-	//	
-	//#endif
-	//
 	// ポリス移動処理
-
-	// 移動量に慣性をかける
-	//police->move.x += (0.0f - police->move.x) * RATE_MOVE_POLICE;
-	//police->move.y += (0.0f - police->move.y) * RATE_MOVE_POLICE;
-	//police->move.z += (0.0f - police->move.z) * RATE_MOVE_POLICE;
-
-
+	police = &policeWk[0];
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		/// 位置移動
+		// 位置移動
 		police->Eye.x += police->move.x;
 		police->Eye.y += police->move.y;
-		//if (police->Eye.y < 5.0f)
-		//{
-		//	police->Eye.y = 5.0f;
-		//}
-		//if (police->Eye.y > 75.0f)
-		//{
-		//	police->Eye.y = 75.0f;
-		//}
 		police->Eye.z += police->move.z;
 	}
 
-	// ポリスの移動制限（場外に行かないようにする）
-	// Z座標のマックスとX座標のマックスで制限かける
-	//panel = GetPanel(GetPanelNumber(PANEL_NUM_Z, PANEL_NUM_X));		// 右上
-	//if (police->Eye.x > panel->Pos.x)
-	//{
-	//	police->Eye.x = panel->Pos.x;
-	//}
-	//if (police->Eye.z > panel->Pos.z)
-	//{
-	//	police->Eye.z = panel->Pos.z;
-	//}
+	// ポリス回転処理
+	police = &policeWk[0];
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		// クォータニオンによる回転のXZ軸回転軸を求める
+		// 空方向のベクトルと進行方向のベクトルの外積が回転軸
+		//D3DXVec3Cross(&police->axis, D3DXVec3Normalize(&police->rotBasis, &police->rotBasis), D3DXVec3Normalize(&police->move, &police->move));
+		D3DXVec3Normalize(&police->axisXZ, &police->axisXZ);
+		D3DXVec3Normalize(&police->axisY, &police->axisY);
 
-	// Z座標のミニマムとX座標のミニマムで制限かける
-	//panel = GetPanel(GetPanelNumber(1, 1));							// 左下
-	//if (police->Eye.x < -panel->Pos.x)
-	//{
-	//	police->Eye.x = -panel->Pos.x;
-	//}
-	//if (police->Eye.z < -panel->Pos.z)
-	//{
-	//	police->Eye.z = -panel->Pos.z;
-	//}
-
-
-
-	// チェックポイントに入ったら方向転換
-
-	// チェックポイントに入ったかの判定
-	//if(CollisionBC(police->Eye, movePointWk[0], 30.0f, 30.0f));
-	//{	// チェックポイントに入ったら
-
-	//	// 向きをランダムで決定
-	//	rand () % CHECK_POINT_MAX
-	//}
-
+		// 回転角度の設定
+		police->fangleXZ += VALUE_ROTATE_CAMERA / 1.0f;
+		if (police->fangleXZ > D3DX_PI)
+		{
+			police->fangleXZ -= D3DX_PI * 2.0f;
+		}
+		// XZ回転軸ベクトルが0の場合のエラー処理
+		if (police->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+		{	// 回転角度を0にする
+			police->fangleXZ = 0.0f;
+		}
+		// Y回転軸ベクトルが0の場合のエラー処理
+		if (police->axisY == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+		{	// 回転角度を0にする
+			police->fangleY = 0.0f;
+		}
+		// 回転クォータニオンを生成
+		D3DXQuaternionRotationAxis(&police->qRotateXZ, &police->axisXZ, police->fangleXZ);		// XZ軸回転クォータニオン生成
+		D3DXQuaternionRotationAxis(&police->qRotateY, &police->axisY, police->fangleY);			// Y軸回転クォータニオン生成(Atに向かせる)
+		D3DXQuaternionMultiply(&police->qAnswer, &police->qRotateXZ, &police->qRotateY);		// 回転クォータニオンを合成
+	}
 
 	police = &policeWk[0];
 #ifdef _DEBUG
 	PrintDebugProc("[ポリスの位置  ：(%f : %f : %f)]\n", police->Eye.x, police->Eye.y, police->Eye.z);
+	PrintDebugProc("[ポリスの注視点  ：(%f : %f : %f)]\n", police->At.x, police->At.y, police->At.z);
 	PrintDebugProc("[ポリスの移動ベクトル  ：(%f : %f : %f)]\n", police->move.x, police->move.y, police->move.z);
-	PrintDebugProc("[ポリスの向き  ：(%f)]\n", police->rot.y);
+	PrintDebugProc("[ポリスの向き  ：(%f)]\n", police->rot);
 	PrintDebugProc("[ポリスの使用状態  ：(%d)]\n", police->use);
 
 #endif
@@ -337,41 +277,24 @@ void UpdatePolice(void)
 void DrawPolice(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATRIX mtxRot, mtxTranslate, mtxScale;
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
 
 	POLICE *police = &policeWk[0];
 
+	// ポリス本体の描画処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		if (police->use == true)	// 使用状態なら描画する
-		{
+		if (police->use == true)
+		{	// 使用状態なら描画する
 			// ライトをon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 
 			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&g_mtxWorldPolice);
 
-			// スケールを反映
-			D3DXMatrixScaling(&mtxScale, police->scl.x,
-				police->scl.y,
-				police->scl.z);
-			D3DXMatrixMultiply(&g_mtxWorldPolice,
-				&g_mtxWorldPolice, &mtxScale);
-
-
-			// 回転を反映
-			//D3DXMatrixRotationYawPitchRoll(&mtxRot, police->rot.y, police->rot.x, police->rot.z);
-			//D3DXMatrixMultiply(&g_mtxWorldPolice, &g_mtxWorldPolice, &mtxRot);
-			PoliceLookAtMatrix(&mtxRot, &police->Eye, &police->At, &police->Up);
-
-			D3DXMatrixMultiply(&g_mtxWorldPolice, &g_mtxWorldPolice, &mtxRot);
-
-			// 移動を反映
-			D3DXMatrixTranslation(&mtxTranslate, police->Eye.x, police->Eye.y, police->Eye.z);
-			D3DXMatrixMultiply(&g_mtxWorldPolice, &g_mtxWorldPolice, &mtxTranslate);
+			// ワールドマトリックス作成
+			D3DXMatrixTransformation(&g_mtxWorldPolice, NULL, NULL, &police->scl, &police->rotBasis, &police->qAnswer, &police->Eye);
 
 			// ワールドマトリックスの設定
 			pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldPolice);
@@ -386,21 +309,18 @@ void DrawPolice(void)
 			{
 				// マテリアルの設定
 				pDevice->SetMaterial(&pD3DXMat[nCntMat].MatD3D);
-
 				// テクスチャの設定
 				pDevice->SetTexture(0, g_pD3DTexturePolice);
-
 				// 描画
 				g_pD3DXMeshPolice->DrawSubset(nCntMat);
-
 			}
 
 			// ライトをoff
 			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
 		}
-
 	}
+
+	// ポリスのアームの描画
 
 	{// マテリアルをデフォルトに戻す
 		D3DXMATERIAL mat;
@@ -421,160 +341,30 @@ POLICE *GetPolice(int no)
 	return(&policeWk[no]);
 }
 //=============================================================================
-// ポリスの回転行列算出関数
-//=============================================================================
-D3DXMATRIX* PoliceLookAtMatrix(D3DXMATRIX *pout, D3DXVECTOR3 *pEye, D3DXVECTOR3 *pAt, D3DXVECTOR3 *pUp)
-{
-	D3DXVECTOR3 X, Y, Z, D;
-	D = *pEye - *pAt;
-	//D = *pAt - *pEye;
-
-
-	D3DXVec3Normalize(&D, &D);
-	D3DXVec3Cross(&X, D3DXVec3Normalize(&Y, pUp), &D);
-	D3DXVec3Normalize(&X, &X);
-	D3DXVec3Normalize(&Z, D3DXVec3Cross(&Z, &X, &Y));
-
-
-	pout->_11 = X.x; pout->_12 = X.y; pout->_13 = X.z; pout->_14 = 0;
-	pout->_21 = Y.x; pout->_22 = Y.y; pout->_23 = Y.z; pout->_24 = 0;
-	pout->_31 = Z.x; pout->_32 = Z.y; pout->_33 = Z.z; pout->_34 = 0;
-	pout->_41 = 0.0f; pout->_42 = 0.0f; pout->_43 = 0.0f; pout->_44 = 1.0f;
-
-	return pout;
-}
-//=============================================================================
-// ポリスの移動関数
+// ポリスの移動処理関数(引数1:ポリスのポインタ,引数2:二次元配列のY要素,引数3:二次元配列のX要素)
 //=============================================================================
 void PoliceMove(POLICE *police, int y, int x)
 {
-	//POLICE *police = &policeWk[0];
-
-	// ポリスランダム巡回移動処理
 	int n = 0;
 	int m = 0;
 
+	// ポリスランダム巡回移動処理
 	while (1)
 	{	// ランダムで次の目標ポイントを決定
 		n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
 		m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
-
-											// 現在の配列要素番号との差が2より小さい場合ループから抜ける(進行可能なポイントの場合)
-											//if (abs(y - n) < 2 && abs(x - m) < 2) break;
-
-											// XY配列要素番号が負か最大値を超えているかチェック
-
-											// 上下左右なら許可
+		// 上下左右なら許可
 		if (n == y && m == x + 1 || n == y && m == x - 1 || m == x && n == y + 1 || m == x && n == y - 1) break;
 	}
-
 	// 注視点を次の目標ポイントにセット
 	police->At = CheckPointWk[n][m];
-
-	// 現在のポイントから次の目標ポイントへの移動ベクトルを求める
-	//police->move = CheckPointWk[n][m] - CheckPointWk[y][x];
-
+	// 注視点を向くためのY軸回転角度を求める
+	D3DXVECTOR3 vec = police->Eye - police->At;		// 注視点へのベクトルを求める
+	police->fangleY = (atan2f(vec.x, vec.z));		// 回転角度を求める
 	// 現在のポリスの座標から次の目標ポイントへの移動ベクトルを求める
 	police->move = CheckPointWk[n][m] - police->Eye;
-
 	// 移動ベクトルを正規化
 	D3DXVec3Normalize(&police->move, &police->move);
-
 	// 移動速度調整
 	police->move = police->move * VALUE_MOVE_POLICE;
-
-	//if (GetKeyboardPress(DIK_NUMPAD4))
-	//{// 左を向く
-	//	//police->rot.y = camera->rotCamera.y - D3DX_PI * 0.50f;
-
-	//	// ここをフィールド基準で
-	//	police->rot.y = - D3DX_PI * 0.50f;
-
-	//	//if (police->rot.y < -D3DX_PI)
-	//	//{
-	//	//	police->rot.y += D3DX_PI * 2.0f;
-	//	//}
-
-	//	police->At.x = police->Eye.x - sinf(police->rot.y);
-	//	police->At.z = police->Eye.z - cosf(police->rot.y);
-
-
-	//	// 移動量計算
-	//	//police->move.x -= cosf(police->rot.y) * VALUE_MOVE_POLICE;
-	//	//police->move.z += sinf(police->rot.y) * VALUE_MOVE_POLICE;
-
-	//	// 注視点の方向に進み続ける
-	//	police->move += (police->Eye - police->At);
-
-
-	//}
-	//if (GetKeyboardPress(DIK_NUMPAD6))
-	//{// 右を向く
-	//	police->rot.y = D3DX_PI * 0.50f;
-
-
-	//	//if (police->rot.y < -D3DX_PI)
-	//	//{
-	//	//	police->rot.y += D3DX_PI * 2.0f;
-	//	//}
-
-	//	police->At.x = police->Eye.x - sinf(police->rot.y);
-	//	police->At.z = police->Eye.z - cosf(police->rot.y);
-
-	//	// 移動量計算
-	//	//police->move.x += cosf(police->rot.y) * VALUE_MOVE_POLICE;
-	//	//police->move.z -= sinf(police->rot.y) * VALUE_MOVE_POLICE;
-
-	//	// 注視点の方向に進み続ける
-	//	police->move += (police->Eye - police->At);
-
-
-	//}
-	//if (GetKeyboardPress(DIK_NUMPAD8))
-	//{// 前を向く
-	//	police->rot.y = 0.0f;
-
-	//	//if (police->rot.y < -D3DX_PI)
-	//	//{
-	//	//	police->rot.y += D3DX_PI * 2.0f;
-	//	//}
-
-	//	police->At.x = police->Eye.x - sinf(police->rot.y);
-	//	police->At.z = police->Eye.z - cosf(police->rot.y);
-
-	//	// 移動量計算
-	//	//police->move.x += sinf(police->rot.y) * VALUE_MOVE_POLICE;
-	//	//police->move.z += cosf(police->rot.y) * VALUE_MOVE_POLICE;
-
-	//	// 注視点の方向に進み続ける
-	//	police->move += (police->Eye - police->At);
-
-
-	//}
-	//if (GetKeyboardPress(DIK_NUMPAD2))
-	//{// 後を向く
-	//	police->rot.y = D3DX_PI;
-
-
-	//	//if (police->rot.y < -D3DX_PI)
-	//	//{
-	//	//	police->rot.y += D3DX_PI * 2.0f;
-	//	//}
-
-	//	police->At.x = police->Eye.x - sinf(police->rot.y);
-	//	police->At.z = police->Eye.z - cosf(police->rot.y);
-
-	//	// 移動量計算
-	//	//police->move.x -= sinf(police->rot.y) * VALUE_MOVE_POLICE;
-	//	//police->move.z -= cosf(police->rot.y) * VALUE_MOVE_POLICE;
-
-	//	// 注視点の方向に進み続ける
-	//	police->move += (police->Eye - police->At);
-
-
-	//}
-
-
-
-
 }
