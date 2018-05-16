@@ -13,8 +13,10 @@
 
 #define TEXTURE_WEIGHT		("data/TEXTURE/power01.png")	// 画像
 #define TEXTURE_WEIGHT2		("data/TEXTURE/power01.png")	// 画像
-#define TEXTURE_WEIGHT_SIZE_X	(120*SCREEN_SCALE)		// テクスチャサイズ
-#define TEXTURE_WEIGHT_SIZE_Y	(120*SCREEN_SCALE)		// 同上
+#define TEXTURE_WEIGHT_X	(150)		// テクスチャサイズ
+#define TEXTURE_WEIGHT_Y	(150)		// 同上
+#define TEXTURE_WEIGHT_SIZE_X	( TEXTURE_WEIGHT_X*SCREEN_SCALE)		// テクスチャサイズ
+#define TEXTURE_WEIGHT_SIZE_Y	( TEXTURE_WEIGHT_Y*SCREEN_SCALE)		// 同上
 #define TEXTURE_WEIGHT_POS_X	(10*SCREEN_SCALE)		// テクスチャサイズ
 #define TEXTURE_WEIGHT_POS_Y	(10*SCREEN_SCALE)		// 同上
 #define WEIGHT_MAX						(4) // 力の最大数

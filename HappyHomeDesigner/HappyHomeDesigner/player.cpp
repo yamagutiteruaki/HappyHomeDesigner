@@ -44,7 +44,7 @@ PLAYER				playerWk[PLAYER_MAX];						// プレイヤー格納ワーク
 
 const char *FileNamePlayer[PLAYER_ANIM_MAX] =					// モデル読み込む
 {
-	"data/MODEL/PLAYER/player01.x",
+	"data/MODEL/PLAYER/player00.x",
 
 };
 

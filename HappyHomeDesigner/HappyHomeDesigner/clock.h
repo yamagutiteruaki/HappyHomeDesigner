@@ -64,6 +64,7 @@ void UninitClock(void);
 void UpdateClock(void);
 void DrawClock(void);
 CLOCK *GetClock(int no);
+//CLOCK *StopClock(void);
 
 
 #endif
