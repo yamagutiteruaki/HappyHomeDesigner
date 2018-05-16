@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="arrest.cpp" />
     <ClCompile Include="calculate.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
@@ -172,6 +173,7 @@
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="title.cpp" />
     <ClCompile Include="titlelogo.cpp" />
+    <ClCompile Include="voice.cpp" />
     <ClCompile Include="wall.cpp" />
     <ClCompile Include="weight.cpp" />
     <ClCompile Include="workChisaka.cpp" />
@@ -182,6 +184,7 @@
     <ClCompile Include="workYamaguchi.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="arrest.h" />
     <ClInclude Include="calculate.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />
@@ -203,6 +206,7 @@
     <ClInclude Include="stage.h" />
     <ClInclude Include="title.h" />
     <ClInclude Include="titlelogo.h" />
+    <ClInclude Include="voice.h" />
     <ClInclude Include="wall.h" />
     <ClInclude Include="weight.h" />
     <ClInclude Include="workChisaka.h" />

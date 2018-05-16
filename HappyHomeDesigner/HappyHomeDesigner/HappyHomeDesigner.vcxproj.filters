@@ -123,6 +123,12 @@
     <ClCompile Include="clock.cpp">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClCompile>
+    <ClCompile Include="voice.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="arrest.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -210,6 +216,12 @@
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
     <ClInclude Include="clock.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="voice.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="arrest.h">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
   </ItemGroup>
