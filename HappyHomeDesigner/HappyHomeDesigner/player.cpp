@@ -256,8 +256,10 @@ void UpdatePlayer(void)
 	PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
 	PrintDebugProc("\n");
 
-	//PrintDebugProc("camera length: %f\n", camera->fLength);
-	// PrintDebugProc("\n");
+	PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
+	 PrintDebugProc("\n");
+
+
 	
 #endif
 

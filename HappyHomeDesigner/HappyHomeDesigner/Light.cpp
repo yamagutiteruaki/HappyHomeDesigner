@@ -46,6 +46,7 @@ void InitLight(void)
 
 	// ライト0の方向の設定
 	vecDir = D3DXVECTOR3(-0.4f, -0.7f, -0.5f);
+	
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
 
 	// ライト0をレンダリングパイプラインに設定

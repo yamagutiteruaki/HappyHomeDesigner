@@ -27,6 +27,8 @@ void CameraWorkReset();
 //*****************************************************************************
 CAMERA					cameraWk;
 
+bool CameraReset = false;
+
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -128,18 +130,29 @@ void UpdateCamera(void)
 	if (GetKeyboardTrigger(DIK_X))
 	{
 		camera->rotDest = player->rot.y + D3DX_PI;
+
+		CameraReset = true;
 	}
 
 	// カメラリセットの演出
-	CameraWorkReset();
+	if (CameraReset == true)
+	{
+		CameraWorkReset();
+	}
 
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
 	// 角度の修正
 	camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
+	camera->rotDest = PiCalculate360(camera->rotDest);
 
+#ifdef _DEBUG
+	PrintDebugProc("CameraReset: %d\n", CameraReset);
+	PrintDebugProc("\n");
 
+#endif
+	
 }
 
 //=============================================================================
@@ -185,7 +198,7 @@ void CameraWorkReset()
 	}
 
 	// 目的の角度まで慣性をかける
-	camera->rotCamera.y += Diff * 0.1;
+	camera->rotCamera.y += (float)(Diff * 0.1);
 
 	if (camera->rotCamera.y > D3DX_PI)
 	{
@@ -194,6 +207,11 @@ void CameraWorkReset()
 	if (camera->rotCamera.y < -D3DX_PI)
 	{
 		camera->rotCamera.y += D3DX_PI * 2.0f;
+	}
+
+	if (Diff ==0.0f)
+	{
+		CameraReset = false;
 	}
 
 }
