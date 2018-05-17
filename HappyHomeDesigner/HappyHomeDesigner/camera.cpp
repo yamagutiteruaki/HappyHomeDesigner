@@ -20,6 +20,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 void CameraWork(D3DXVECTOR3 *at);
+void CameraWorkReset();
 
 //*****************************************************************************
 // グローバル変数
@@ -45,6 +46,10 @@ HRESULT InitCamera(int nType)
 	camera->fLength = CAMERA_LENGTH;
 	camera->fLengthTemp = 0;
 
+	camera->rotDest = 0.0f;
+
+
+
 	return S_OK;
 }
 
@@ -61,6 +66,7 @@ void UninitCamera(void)
 //=============================================================================
 void UpdateCamera(void)
 {
+
 
 #ifdef _DEBUG
 #endif
@@ -121,15 +127,16 @@ void UpdateCamera(void)
 	// カメラリセット
 	if (GetKeyboardTrigger(DIK_X))
 	{
-		camera->rotCamera.y = player->rot.y + D3DX_PI;
-
-
+		camera->rotDest = player->rot.y + D3DX_PI;
 	}
-	
+
+	// カメラリセットの演出
+	CameraWorkReset();
+
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
-	// 角度を修正
+	// 角度の修正
 	camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
 
 
@@ -156,6 +163,38 @@ void CameraWork(D3DXVECTOR3 *at)
 	// カメラの位置 = カメラの注視点 + (注視点からの角度 * 視点までの距離)
 	camera->posCameraEye = camera->posCameraAt + (vec * camera->fLength);
 
+}
+
+//=============================================================================
+// カメラリセットの演出
+//=============================================================================
+void CameraWorkReset()
+{
+	CAMERA *camera = GetCamera();
+	float Diff;						// 差分
+
+	// 目的の角度までの差分
+	Diff = camera->rotDest - camera->rotCamera.y;
+	if (Diff > D3DX_PI)
+	{
+		Diff -= D3DX_PI * 2.0f;
+	}
+	if (Diff < -D3DX_PI)
+	{
+		Diff += D3DX_PI * 2.0f;
+	}
+
+	// 目的の角度まで慣性をかける
+	camera->rotCamera.y += Diff * 0.1;
+
+	if (camera->rotCamera.y > D3DX_PI)
+	{
+		camera->rotCamera.y -= D3DX_PI * 2.0f;
+	}
+	if (camera->rotCamera.y < -D3DX_PI)
+	{
+		camera->rotCamera.y += D3DX_PI * 2.0f;
+	}
 
 }
 

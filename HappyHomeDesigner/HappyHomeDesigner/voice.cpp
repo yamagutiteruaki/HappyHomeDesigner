@@ -125,6 +125,7 @@ void UpdateVoice(void)
 					player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 					player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 					camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+					camera->rotDest = 0.0f;
 					voice->use = false;
 					voice->count++;
 				}
