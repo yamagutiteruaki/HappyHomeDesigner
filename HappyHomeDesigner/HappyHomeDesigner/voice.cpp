@@ -14,6 +14,7 @@
 #include "stage.h"
 #include "arrest.h"
 #include <time.h>
+#include "camera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -93,6 +94,8 @@ void UpdateVoice(void)
 	VOICE *voice = voiceWk;				// エネミーのポインターを初期化
 	PLAYER *player = GetPlayer(0);
 	FIELD *field = GetField(0);
+	CAMERA *camera = GetCamera();
+
 
 	for (int i = 0; i < VOICE_MAX; i++, voice++)
 	{
@@ -121,6 +124,7 @@ void UpdateVoice(void)
 					player->Eye = field->Pos;
 					player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 					player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+					camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 					voice->use = false;
 					voice->count++;
 				}

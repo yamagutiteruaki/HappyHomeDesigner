@@ -25,10 +25,16 @@
 
 #define PLAYER_HP				(1)							// 残機
 
+#define	BORDER_X1		(-480.00f)						// 境界線X
+#define	BORDER_X2		(480.00f)						// 境界線X
+#define	BORDER_Z1		(-480.00f)						// 境界線Z
+#define	BORDER_Z2		(480.00f)						// 境界線Z
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void PlayerMove(void);
+void PlayerBorder(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -234,10 +240,14 @@ void DrawPlayer(void)
 void UpdatePlayer(void)
 {
 	PlayerMove();
+	PlayerBorder();
 
 #ifdef _DEBUG
-	//PLAYER *player = &playerWk[0];
+	PLAYER *player = &playerWk[0];
 	//CAMERA *camera = GetCamera();
+
+	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y , player->Eye.z);
+	PrintDebugProc("\n");
 
 	//PrintDebugProc("player rot: %f\n", player->rotDest.y);
 	//PrintDebugProc("\n");
@@ -368,5 +378,34 @@ void PlayerMove(void)
 
 	// 角度を修正
 	player->rot.y = PiCalculate360(player->rot.y);
+
+}
+
+//=============================================================================
+// プレイヤーの移動制限
+//=============================================================================
+void PlayerBorder(void)
+{
+	PLAYER *player = &playerWk[0];
+
+	if (player->Eye.x < BORDER_X1)
+	{
+		player->Eye.x = BORDER_X1;
+	}
+
+	if (player->Eye.x > BORDER_X2)
+	{
+		player->Eye.x = BORDER_X2;
+	}
+
+	if (player->Eye.z < BORDER_Z1)
+	{
+		player->Eye.z = BORDER_Z1;
+	}
+
+	if (player->Eye.z > BORDER_Z2)
+	{
+		player->Eye.z = BORDER_Z2;
+	}
 
 }
