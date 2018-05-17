@@ -12,8 +12,8 @@
 #define	NUM_ARREST				(2)			// ポリゴン数
 
 #define TEXTURE_GAME_ARREST		("data/TEXTURE/police.png")	// 画像
-#define TEXTURE_ARREST_SIZE_X	(100/2*SCREEN_SCALE)		// テクスチャサイズ
-#define TEXTURE_ARREST_SIZE_Y	(100/2*SCREEN_SCALE)		// 同上
+#define TEXTURE_ARREST_SIZE_X	(150/2*SCREEN_SCALE)		// テクスチャサイズ
+#define TEXTURE_ARREST_SIZE_Y	(150/2*SCREEN_SCALE)		// 同上
 
 #define TEXTURE_PATTERN_DIVIDE_X_ARREST	(1)	// アニメパターンのテクスチャ内分割数（X)
 #define TEXTURE_PATTERN_DIVIDE_Y_ARREST	(1)	// アニメパターンのテクスチャ内分割数（Y)

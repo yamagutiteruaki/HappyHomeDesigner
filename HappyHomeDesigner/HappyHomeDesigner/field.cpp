@@ -48,7 +48,7 @@ const char *FileNameHome[HOME_MAX] =
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ1
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ2
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ3
-	"data/MODEL/HOUSE/house00.x",		// Ž©‘î
+	"data/MODEL/HOUSE/house01.x",		// Ž©‘î
 };
 
 //=============================================================================

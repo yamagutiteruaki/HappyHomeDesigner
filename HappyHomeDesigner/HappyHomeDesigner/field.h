@@ -14,7 +14,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_FIELD	"data/TEXTURE/field_glass.jpg"								// 読み込むテクスチャファイル名
+#define	TEXTURE_FIELD	"data/TEXTURE/field_stone.jpg"								// 読み込むテクスチャファイル名
 #define	TEXTURE_HOME	"data/TEXTURE/field001.jpg"							// 読み込むテクスチャファイル名
 
 #define	FIELD_SIZE_X			(1000.0f)										// 地面のサイズ(X方向)
