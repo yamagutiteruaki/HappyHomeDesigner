@@ -239,26 +239,33 @@ void DrawPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
+	PLAYER *player = &playerWk[0];
+
 	PlayerMove();
 	PlayerBorder();
 
 #ifdef _DEBUG
-	PLAYER *player = &playerWk[0];
-	//CAMERA *camera = GetCamera();
+	CAMERA *camera = GetCamera();
 
 	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y , player->Eye.z);
 	PrintDebugProc("\n");
 
-	//PrintDebugProc("player rot: %f\n", player->rotDest.y);
-	//PrintDebugProc("\n");
+	PrintDebugProc("player rot: %f\n", player->rotDest.y);
+	PrintDebugProc("\n");
 
-	//PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
-	//PrintDebugProc("\n");
+	PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
+	PrintDebugProc("\n");
 
-	//PrintDebugProc("camera length: %f\n", camera->fLength);
-	// PrintDebugProc("\n");
+	PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
+	 PrintDebugProc("\n");
+
+
 	
 #endif
+
+	// Šp“x‚ðC³
+	player->rot.y = PiCalculate360(player->rot.y);
+	player->rotDest.y = PiCalculate360(player->rotDest.y);
 
 }
 

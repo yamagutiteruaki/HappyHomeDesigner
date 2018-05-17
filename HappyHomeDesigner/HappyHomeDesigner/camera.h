@@ -63,6 +63,8 @@ typedef struct
 	D3DXVECTOR3			rotCamera;					// カメラの回転
 	D3DXVECTOR3			vecTag;
 
+	float				rotDest;					// カメラの目標角度
+
 	D3DXVECTOR3			posCameraAtTps;				// ポジション
 	D3DXVECTOR3			posCameraAtNormal;			// ポジション
 
