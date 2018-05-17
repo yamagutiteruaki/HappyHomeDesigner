@@ -25,10 +25,10 @@
 
 #define PLAYER_HP				(1)							// Žc‹@
 
-#define	BORDER_X1		(-480.00f)						// ‹«ŠEüX
-#define	BORDER_X2		(480.00f)						// ‹«ŠEüX
-#define	BORDER_Z1		(-480.00f)						// ‹«ŠEüZ
-#define	BORDER_Z2		(480.00f)						// ‹«ŠEüZ
+#define	BORDER_X1		(-480.00f)						// ‹«ŠEüX1F¶
+#define	BORDER_X2		(480.00f)						// ‹«ŠEüX2F‰E
+#define	BORDER_Z1		(-480.00f)						// ‹«ŠEüZ1F‘O
+#define	BORDER_Z2		(480.00f)						// ‹«ŠEüZ2FŒã‚ë
 
 //*****************************************************************************
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
@@ -388,21 +388,25 @@ void PlayerBorder(void)
 {
 	PLAYER *player = &playerWk[0];
 
+	// ¶‚Ì•Ç
 	if (player->Eye.x < BORDER_X1)
 	{
 		player->Eye.x = BORDER_X1;
 	}
 
+	// ‰E‚Ì•Ç
 	if (player->Eye.x > BORDER_X2)
 	{
 		player->Eye.x = BORDER_X2;
 	}
 
+	// Œã‚ë‚Ì•Ç
 	if (player->Eye.z < BORDER_Z1)
 	{
 		player->Eye.z = BORDER_Z1;
 	}
 
+	// ‘O‚Ì•Ç
 	if (player->Eye.z > BORDER_Z2)
 	{
 		player->Eye.z = BORDER_Z2;
