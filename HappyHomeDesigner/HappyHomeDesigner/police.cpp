@@ -165,7 +165,7 @@ HRESULT InitPolice(int nType)
 	{
 		// ポリスの視点(位置座標)の初期化
 		//police->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
-		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
+		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
 		// ポリスの上方向の初期化
@@ -377,11 +377,12 @@ void UpdatePolice(void)
 	POLICE_LEG *policeLeg = &policeLegWk[0];
 
 	// 当たり判定の一定時間無効処理
+	police = &policeWk[0];
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		police->key++;
+		if (!police->able_hit) police->key++;
 		// 当たり判定無効時間の解除
-		if (police->key % 120 == 0)
+		if (police->key % 300 == 0)
 		{
 			police->key = 0;
 			police->able_hit = true;
@@ -397,7 +398,7 @@ void UpdatePolice(void)
 			{	// 配列Y要素についてチェック
 				for (int i = 0; i < CHECK_POINT_X_MAX; i++)
 				{	// 配列X要素についてチェック
-					if (CollisionBC(police->Eye, CheckPointWk[j][i], 70.0f, 70.0f))
+					if (CollisionBC(police->Eye, CheckPointWk[j][i], 20.0f, 20.0f))
 					{	// チェックポイントに侵入したら方向転換し、移動ベクトル算出
 						PoliceMove(police, j, i);
 						// 当たり判定有効フラグをfalseに
@@ -437,10 +438,10 @@ void UpdatePolice(void)
 	SetAnimation(TYPE_BODY, NULL, NULL,
 		D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 60.0f, 0.0f));
 	// アームアニメーション処理
-	SetAnimation(TYPE_ARM, D3DX_PI / 6, POLICE_ARM_ANIM_FRAME,
+	SetAnimation(TYPE_ARM, POLICE_ARM_ANGLE, POLICE_ARM_ANIM_FRAME,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 60.0f, 0.0f));
 	// レッグアニメーション処理
-	SetAnimation(TYPE_LEG, D3DX_PI / 6, POLICE_LEG_ANIM_FRAME,
+	SetAnimation(TYPE_LEG, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 40.0f, 0.0f));
 
 	police = &policeWk[0];
@@ -452,6 +453,7 @@ void UpdatePolice(void)
 	//PrintDebugProc("[ポリスの向き  ：(%f)]\n", police->rot);
 	PrintDebugProc("[ポリスの使用状態  ：(%d)]\n", police->use);
 	PrintDebugProc("[右腕の回転角度  ：(%f)]\n", policeArm->fangleXZ);
+	PrintDebugProc("[ポリスの当たり判定有効状態  ：(%d)]\n", police->able_hit);
 
 #endif
 }
