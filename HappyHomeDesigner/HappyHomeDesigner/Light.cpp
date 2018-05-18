@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "light.h"
+#include "camera.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -26,6 +27,7 @@ void InitLight(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXVECTOR3 vecDir;
+	CAMERA *camera = GetCamera();
 
 	/********** ライト0 **********/
 
@@ -45,8 +47,9 @@ void InitLight(void)
 	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
 
 	// ライト0の方向の設定
-	vecDir = D3DXVECTOR3(-0.4f, -0.7f, -0.5f);
-	
+	//vecDir = D3DXVECTOR3(-0.4f, -0.7f, -0.5f);
+	//vecDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
 
 	// ライト0をレンダリングパイプラインに設定
@@ -81,7 +84,7 @@ void InitLight(void)
 	pDevice->SetLight(1, &g_aLight[1]);
 	
 	// ライト1を使用状態に
-	pDevice->LightEnable(1, TRUE);
+	pDevice->LightEnable(1, FALSE);
 
 
 	///********** ライト2 **********/
@@ -190,7 +193,7 @@ void InitLight(void)
 	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[5].Direction, &vecDir);
 
 	//// ライト5をレンダリングパイプラインに設定
-	//pDevice->SetLight(5, &g_aLight[5]);
+	//pDevice->SetLight(5, &g_aLight[5])
 
 	//// ライト5を使用状態に
 	//pDevice->LightEnable(5, TRUE);

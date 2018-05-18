@@ -9,6 +9,7 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "Light.h"
 
 #include "player.h"
 
