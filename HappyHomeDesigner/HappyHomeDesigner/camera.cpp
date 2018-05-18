@@ -25,9 +25,8 @@ void CameraWorkReset();
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-CAMERA					cameraWk;
-
-bool CameraReset = false;
+CAMERA	cameraWk;
+bool	CameraReset = false;	// カメラリセットのスイッチ
 
 //=============================================================================
 // 初期化処理
@@ -69,7 +68,6 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 
-
 #ifdef _DEBUG
 #endif
 
@@ -87,6 +85,8 @@ void UpdateCamera(void)
 
 		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
 		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+		CameraReset = false;
 	}
 	if (GetKeyboardPress(DIK_C))
 	{// 視点旋回「右」
@@ -98,6 +98,8 @@ void UpdateCamera(void)
 
 		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
 		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+		CameraReset = false;
 	}
 
 	if (GetKeyboardPress(DIK_W))
@@ -198,7 +200,7 @@ void CameraWorkReset()
 	}
 
 	// 目的の角度まで慣性をかける
-	camera->rotCamera.y += (float)(Diff * 0.1);
+	camera->rotCamera.y += (float)(Diff * 0.15);
 
 	if (camera->rotCamera.y > D3DX_PI)
 	{
@@ -207,11 +209,6 @@ void CameraWorkReset()
 	if (camera->rotCamera.y < -D3DX_PI)
 	{
 		camera->rotCamera.y += D3DX_PI * 2.0f;
-	}
-
-	if (Diff ==0.0f)
-	{
-		CameraReset = false;
 	}
 
 }
