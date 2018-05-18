@@ -13,7 +13,6 @@
 #include "field.h"
 #include "collision.h"
 #include "calculate.h"
-
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -23,11 +22,10 @@
 //*****************************************************************************
 void PoliceMove(void *pIn, int y, int x);
 void SetAnimation(int pType, float fAngle, int frame,
-	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY, D3DXVECTOR3 basis);
+	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY);
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
-
 // ƒ|ƒŠƒX–{‘ÌŠÖŒW
 LPDIRECT3DTEXTURE9	g_pD3DTexturePolice;									// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İêŠ
 LPD3DXMESH			g_pD3DXMeshPolice;										// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -35,7 +33,6 @@ LPD3DXBUFFER		g_pD3DXBuffMatPolice;									// ƒƒbƒVƒ…‚Ìƒ}ƒeƒŠƒAƒ‹î•ñ‚ğŠi”[
 DWORD				g_nNumMatPolice;										// ‘®«î•ñ‚Ì‘”
 D3DXMATRIX			g_mtxWorldPolice;										// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
 POLICE				policeWk[POLICE_MAX];									// ƒ|ƒŠƒXŠi”[ƒ[ƒN
-
 // ƒ|ƒŠƒXƒA[ƒ€ŠÖŒW
 LPDIRECT3DTEXTURE9	g_pD3DTexturePoliceArm[POLICE_ARM_TYPE_MAX];			// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İêŠ
 LPD3DXMESH			g_pD3DXMeshPoliceArm[POLICE_ARM_TYPE_MAX];				// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -43,13 +40,11 @@ LPD3DXBUFFER		g_pD3DXBuffMatPoliceArm[POLICE_ARM_TYPE_MAX];			// ƒƒbƒVƒ…‚Ìƒ}ƒeƒ
 DWORD				g_nNumMatPoliceArm[POLICE_ARM_TYPE_MAX];				// ‘®«î•ñ‚Ì‘”
 D3DXMATRIX			g_mtxWorldPoliceArm;									// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
 POLICE_ARM			policeArmWk[POLICE_ARM_TYPE_MAX];						// ƒ|ƒŠƒXƒA[ƒ€Ši”[ƒ[ƒN
-
 const char *FileNamePoliceArm[POLICE_ARM_TYPE_MAX] =
 {	// “Ç‚İ‚Şƒ‚ƒfƒ‹
 	"data/MODEL/POLICE/standing_R_hand.x",		// ‰E˜r
 	"data/MODEL/POLICE/standing_L_hand.x",		// ¶˜r
 };
-
 // ƒ|ƒŠƒX‚ÌƒŒƒbƒOŠÖŒW
 LPDIRECT3DTEXTURE9	g_pD3DTexturePoliceLeg[POLICE_LEG_TYPE_MAX];			// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İêŠ
 LPD3DXMESH			g_pD3DXMeshPoliceLeg[POLICE_LEG_TYPE_MAX];				// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -57,16 +52,13 @@ LPD3DXBUFFER		g_pD3DXBuffMatPoliceLeg[POLICE_LEG_TYPE_MAX];			// ƒƒbƒVƒ…‚Ìƒ}ƒeƒ
 DWORD				g_nNumMatPoliceLeg[POLICE_LEG_TYPE_MAX];				// ‘®«î•ñ‚Ì‘”
 D3DXMATRIX			g_mtxWorldPoliceLeg;									// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
 POLICE_LEG			policeLegWk[POLICE_LEG_TYPE_MAX];						// ƒ|ƒŠƒXƒA[ƒ€Ši”[ƒ[ƒN
-
 const char *FileNamePoliceLeg[POLICE_LEG_TYPE_MAX] =
 {
 	"data/MODEL/POLICE/standing_R_leg.x",		// ‰E‘«
 	"data/MODEL/POLICE/standing_L_leg.x",		// ¶‘«
 };
-
 // ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒgŠÖŒW
 D3DXVECTOR3			CheckPointWk[CHECK_POINT_Y_MAX][CHECK_POINT_X_MAX];		// ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒgŠi”[ƒ[ƒN
-
 // ‚»‚Ì‘¼
 int					animCnt;												// ƒAƒjƒƒJƒEƒ“ƒg
 int					sp_Update;												// XV•p“xŒvZ—p
@@ -164,7 +156,7 @@ HRESULT InitPolice(int nType)
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ƒ|ƒŠƒX‚Ì‹“_(ˆÊ’uÀ•W)‚Ì‰Šú‰»
-		//police->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
+		//police->Eye = D3DXVECTOR3(-CHECK_POINT_X / 2, 0.0f, CHECK_POINT_Z / 2);
 		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ƒ|ƒŠƒX‚Ì’‹“_‚Ì‰Šú‰»
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
@@ -175,9 +167,9 @@ HRESULT InitPolice(int nType)
 		// ƒ|ƒŠƒX‚ÌˆÚ“®—Ê‚Ì‰Šú‰»
 		police->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ‰ñ“]‚Ì’†S“_‚Ì‰Šúİ’è(Œ´“_‚Å‚Í‚È‚­­‚µ‚¸‚ç‚·j
-		police->rotBasis = D3DXVECTOR3(0.0f, 60.0f, 0.0f);
+		police->rotBasis = D3DXVECTOR3(0.0f, 30.0f, 0.0f);
 		// ƒ|ƒŠƒX‚ÌƒXƒP[ƒ‹‚Ì‰Šú‰»
-		police->scl = D3DXVECTOR3(1.0f * 2, 1.0f * 2, 1.0f * 2);
+		police->scl = D3DXVECTOR3(POLICE_SCALE_X, POLICE_SCALE_Y, POLICE_SCALE_Z);
 		// ƒ|ƒŠƒX‚Ì‰ñ“]²‚Ì‰Šú‰»
 		police->axisXZ = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		police->axisY = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -188,17 +180,16 @@ HRESULT InitPolice(int nType)
 		police->use = true;
 		// “–‚½‚è”»’è—LŒøƒtƒ‰ƒO‚ğtrue‚Éİ’è
 		police->able_hit = true;
-		// ƒ|ƒŠƒX‚ÌˆÚ“®‘¬“x‰Šú‰»
-		police->speed = VALUE_MOVE_POLICE;
 		// ƒ|ƒŠƒX‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		police->key = 0;
 	}
 
 	// ƒA[ƒ€‚Ì‰Šú‰»ˆ—
+	police = &policeWk[0];
 	for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
 	{
 		// ƒA[ƒ€‚Ì‹“_(ˆÊ’uÀ•W)‚Ì‰Šú‰»
-		//policeArm->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
+		//policeArm->Eye = D3DXVECTOR3(-CHECK_POINT_X / 2, 0.0f, CHECK_POINT_Z / 2);
 		policeArm->Eye = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
 		// ƒA[ƒ€‚Ì’‹“_‚Ì‰Šú‰»
 		policeArm->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
@@ -209,9 +200,10 @@ HRESULT InitPolice(int nType)
 		// ƒA[ƒ€‚ÌˆÚ“®—Ê‚Ì‰Šú‰»
 		policeArm->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ‰ñ“]‚Ì’†S“_‚Ì‰Šúİ’è(Œ´“_‚Å‚Í‚È‚­­‚µ‚¸‚ç‚·j
-		policeArm->rotBasis = D3DXVECTOR3(0.0f, 60.0f, 0.0f);
+		policeArm->rotBasis = D3DXVECTOR3(POLICE_ARM_ROTBASIS_X * POLICE_SCALE_X, POLICE_ARM_ROTBASIS_Y * POLICE_SCALE_Y, POLICE_ARM_ROTBASIS_Z * POLICE_SCALE_Z);
 		// ƒA[ƒ€‚ÌƒXƒP[ƒ‹‚Ì‰Šú‰»
-		policeArm->scl = D3DXVECTOR3(1.0f * 2, 1.0f * 2, 1.0f * 2);
+		//policeArm->scl = D3DXVECTOR3(1.0f, 1.0f, 1.0f);
+		policeArm->scl = police->scl;
 		// ƒA[ƒ€‚Ì‰ñ“]²‚Ì‰Šú‰»
 		policeArm->axisXZ = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 		policeArm->axisY = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -220,8 +212,6 @@ HRESULT InitPolice(int nType)
 		policeArm->fangleY = 0.0f;
 		// useƒtƒ‰ƒO‚ğtrue‚Éİ’è
 		policeArm->use = true;
-		// ƒA[ƒ€‚ÌˆÚ“®‘¬“x‰Šú‰»
-		policeArm->speed = VALUE_MOVE_POLICE;
 		// ƒA[ƒ€‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		policeArm->key = 0;
 		// ƒA[ƒ€‚Ìƒ^ƒCƒv‚Ì‰Šú‰»(‰E˜r‚ª0E¶˜r‚ª1)
@@ -238,10 +228,11 @@ HRESULT InitPolice(int nType)
 	}
 
 	// ƒŒƒbƒO‚Ì‰Šú‰»ˆ—
+	police = &policeWk[0];
 	for (int i = 0; i < POLICE_LEG_TYPE_MAX; i++, policeLeg++)
 	{
 		// ƒŒƒbƒO‚Ì‹“_(ˆÊ’uÀ•W)‚Ì‰Šú‰»
-		//policeLeg->Eye = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
+		//policeLeg->Eye = D3DXVECTOR3(-CHECK_POINT_X / 2, 0.0f, CHECK_POINT_Z / 2);
 		policeLeg->Eye = D3DXVECTOR3(0.0f, 0.0f, 100.0f);
 		// ƒŒƒbƒO‚Ì’‹“_‚Ì‰Šú‰»
 		policeLeg->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
@@ -252,9 +243,9 @@ HRESULT InitPolice(int nType)
 		// ƒŒƒbƒO‚ÌˆÚ“®—Ê‚Ì‰Šú‰»
 		policeLeg->move = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		// ‰ñ“]‚Ì’†S“_‚Ì‰Šúİ’è(Œ´“_‚Å‚Í‚È‚­­‚µ‚¸‚ç‚·j
-		policeLeg->rotBasis = D3DXVECTOR3(0.0f, 60.0f, 0.0f);
+		policeLeg->rotBasis = D3DXVECTOR3(POLICE_LEG_ROTBASIS_X * POLICE_SCALE_X, POLICE_LEG_ROTBASIS_Y * POLICE_SCALE_Y, POLICE_LEG_ROTBASIS_Z * POLICE_SCALE_Z);
 		// ƒŒƒbƒO‚ÌƒXƒP[ƒ‹‚Ì‰Šú‰»
-		policeLeg->scl = D3DXVECTOR3(1.0f * 2, 1.0f * 2, 1.0f * 2);
+		policeLeg->scl = police->scl;
 		// ƒŒƒbƒO‚Ì‰ñ“]²‚Ì‰Šú‰»
 		policeLeg->axisXZ = D3DXVECTOR3(1.0f, 0.0f, 0.0f);
 		policeLeg->axisY = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -263,8 +254,6 @@ HRESULT InitPolice(int nType)
 		policeLeg->fangleY = 0.0f;
 		// useƒtƒ‰ƒO‚ğtrue‚Éİ’è
 		policeLeg->use = true;
-		// ƒŒƒbƒO‚ÌˆÚ“®‘¬“x‰Šú‰»
-		policeLeg->speed = VALUE_MOVE_POLICE;
 		// ƒŒƒbƒO‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		policeLeg->key = 0;
 		// ƒŒƒbƒO‚Ìƒ^ƒCƒv‚Ì‰Šú‰»(‰E‘«‚ª0E¶‘«‚ª1)
@@ -281,15 +270,15 @@ HRESULT InitPolice(int nType)
 	}
 
 	// ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚Ì‰Šúİ’è
-	CheckPointWk[0][0] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);		// ¶ã(-300,0,300)
-	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, FIELD_SIZE_Z / 2);						// ’†Sã(0,0,300)
-	CheckPointWk[2][0] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);			// ‰Eã(300,0,300)
-	CheckPointWk[0][1] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, 0.0f);					// ’†S¶(-300,0,0)
+	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// ¶ã(-300,0,300)
+	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, CHECK_POINT_Z);						// ’†Sã(0,0,300)
+	CheckPointWk[2][0] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, CHECK_POINT_Z);			// ‰Eã(300,0,300)
+	CheckPointWk[0][1] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, 0.0f);					// ’†S¶(-300,0,0)
 	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									// ’†S(0,0,0)
-	CheckPointWk[2][1] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, 0.0f);						// ’†S‰E(300,0,0)
-	CheckPointWk[0][2] = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// ¶‰º(-300,0,-300)
-	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -FIELD_SIZE_Z / 2);					// ’†S‰º(0,0,-300)
-	CheckPointWk[2][2] = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);		// ‰E‰º(300,0,-300)
+	CheckPointWk[2][1] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, 0.0f);						// ’†S‰E(300,0,0)
+	CheckPointWk[0][2] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// ¶‰º(-300,0,-300)
+	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -CHECK_POINT_Z);					// ’†S‰º(0,0,-300)
+	CheckPointWk[2][2] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// ‰E‰º(300,0,-300)
 
 	return S_OK;
 }
@@ -398,7 +387,7 @@ void UpdatePolice(void)
 			{	// ”z—ñY—v‘f‚É‚Â‚¢‚Äƒ`ƒFƒbƒN
 				for (int i = 0; i < CHECK_POINT_X_MAX; i++)
 				{	// ”z—ñX—v‘f‚É‚Â‚¢‚Äƒ`ƒFƒbƒN
-					if (CollisionBC(police->Eye, CheckPointWk[j][i], 20.0f, 20.0f))
+					if (CollisionBC(police->Eye, CheckPointWk[j][i], 5.0f, 5.0f))
 					{	// ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚ÉN“ü‚µ‚½‚ç•ûŒü“]Š·‚µAˆÚ“®ƒxƒNƒgƒ‹Zo
 						PoliceMove(police, j, i);
 						// “–‚½‚è”»’è—LŒøƒtƒ‰ƒO‚ğfalse‚É
@@ -436,13 +425,13 @@ void UpdatePolice(void)
 	// ƒAƒjƒ[ƒVƒ‡ƒ“
 	// ƒ|ƒŠƒX–{‘ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
 	SetAnimation(TYPE_BODY, NULL, NULL,
-		D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 60.0f, 0.0f));
+		D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	// ƒA[ƒ€ƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
 	SetAnimation(TYPE_ARM, POLICE_ARM_ANGLE, POLICE_ARM_ANIM_FRAME,
-		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 60.0f, 0.0f));
+		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	// ƒŒƒbƒOƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
 	SetAnimation(TYPE_LEG, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
-		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f), D3DXVECTOR3(0.0f, 40.0f, 0.0f));
+		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
 	police = &policeWk[0];
 	policeArm = &policeArmWk[0];
@@ -633,7 +622,7 @@ void PoliceMove(void* pIn, int y, int x)
 	// ˆÚ“®ƒxƒNƒgƒ‹‚ğ³‹K‰»
 	D3DXVec3Normalize(&police->move, &police->move);
 	// ˆÚ“®‘¬“x’²®
-	police->move = police->move * VALUE_MOVE_POLICE;
+	police->move = police->move * POLICE_SPEED;
 }
 //=============================================================================
 // ƒAƒjƒ[ƒVƒ‡ƒ“İ’èŠÖ”
@@ -642,10 +631,9 @@ void PoliceMove(void* pIn, int y, int x)
 //  ˆø”3:ˆê‰•œ‚É‚©‚©‚éƒtƒŒ[ƒ€”,
 //  ˆø”4:‰ñ“]²XZ,
 //  ˆø”5:‰ñ“]²Y,
-//  ˆø”6:‰ñ“]Šî€“_,
 //=============================================================================
 void SetAnimation(int pType, float fAngle, int frame,
-	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY, D3DXVECTOR3 basis)
+	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY)
 {
 	POLICE *police;
 	POLICE_ARM *policeArm;
@@ -658,8 +646,6 @@ void SetAnimation(int pType, float fAngle, int frame,
 		police = &policeWk[0];
 		for (int i = 0; i < POLICE_MAX; i++, police++)
 		{
-			// ‰ñ“]Šî€“_‚Ìİ’è
-			police->rotBasis = basis;
 			// ‰ñ“]²XZ‚Ìİ’è
 			police->axisXZ = AxisXZ;
 			// ‰ñ“]²Y‚Ìİ’è
@@ -688,8 +674,6 @@ void SetAnimation(int pType, float fAngle, int frame,
 		{
 			if (policeArm->use)
 			{	// g—p‚©–¢g—p‚©ƒ`ƒFƒbƒN
-				// ‰ñ“]Šî€“_‚Ìİ’è
-				policeArm->rotBasis = basis;
 				// ‰ñ“]²XZ‚Ìİ’è
 				policeArm->axisXZ = AxisXZ;
 				// ‰ñ“]²Y‚Ìİ’è
@@ -777,8 +761,6 @@ void SetAnimation(int pType, float fAngle, int frame,
 		{
 			if (policeLeg->use)
 			{	// g—p‚©–¢g—p‚©ƒ`ƒFƒbƒN
-				// ‰ñ“]Šî€“_‚Ìİ’è
-				policeLeg->rotBasis = basis;
 				// ‰ñ“]²XZ‚Ìİ’è
 				policeLeg->axisXZ = AxisXZ;
 				// ‰ñ“]²Y‚Ìİ’è
