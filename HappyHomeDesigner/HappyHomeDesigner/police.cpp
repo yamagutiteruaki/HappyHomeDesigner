@@ -20,13 +20,14 @@
 //*****************************************************************************
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
 //*****************************************************************************
-void PoliceMove(void *pIn, int y, int x);
-void SetAnimation(int pType, float fAngle, int frame,
-	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY);
+void PoliceMove(POLICE *police, int y, int x);
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
+
+//*****************************************************************************
 // ƒ|ƒŠƒX–{‘ÌŠÖŒW
+//*****************************************************************************
 LPDIRECT3DTEXTURE9	g_pD3DTexturePolice;									// ƒeƒNƒXƒ`ƒƒ“Ç‚İ‚İêŠ
 LPD3DXMESH			g_pD3DXMeshPolice;										// ID3DXMeshƒCƒ“ƒ^[ƒtƒFƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
 LPD3DXBUFFER		g_pD3DXBuffMatPolice;									// ƒƒbƒVƒ…‚Ìƒ}ƒeƒŠƒAƒ‹î•ñ‚ğŠi”[
@@ -39,7 +40,7 @@ LPD3DXMESH			g_pD3DXMeshPoliceArm[POLICE_ARM_TYPE_MAX];				// ID3DXMeshƒCƒ“ƒ^[ƒ
 LPD3DXBUFFER		g_pD3DXBuffMatPoliceArm[POLICE_ARM_TYPE_MAX];			// ƒƒbƒVƒ…‚Ìƒ}ƒeƒŠƒAƒ‹î•ñ‚ğŠi”[
 DWORD				g_nNumMatPoliceArm[POLICE_ARM_TYPE_MAX];				// ‘®«î•ñ‚Ì‘”
 D3DXMATRIX			g_mtxWorldPoliceArm;									// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
-POLICE_ARM			policeArmWk[POLICE_ARM_TYPE_MAX];						// ƒ|ƒŠƒXƒA[ƒ€Ši”[ƒ[ƒN
+POLICE_ARM			policeArmWk[POLICE_ARM_MAX];							// ƒ|ƒŠƒXƒA[ƒ€Ši”[ƒ[ƒN
 const char *FileNamePoliceArm[POLICE_ARM_TYPE_MAX] =
 {	// “Ç‚İ‚Şƒ‚ƒfƒ‹
 	"data/MODEL/POLICE/standing_R_hand.x",		// ‰E˜r
@@ -51,7 +52,7 @@ LPD3DXMESH			g_pD3DXMeshPoliceLeg[POLICE_LEG_TYPE_MAX];				// ID3DXMeshƒCƒ“ƒ^[ƒ
 LPD3DXBUFFER		g_pD3DXBuffMatPoliceLeg[POLICE_LEG_TYPE_MAX];			// ƒƒbƒVƒ…‚Ìƒ}ƒeƒŠƒAƒ‹î•ñ‚ğŠi”[
 DWORD				g_nNumMatPoliceLeg[POLICE_LEG_TYPE_MAX];				// ‘®«î•ñ‚Ì‘”
 D3DXMATRIX			g_mtxWorldPoliceLeg;									// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX
-POLICE_LEG			policeLegWk[POLICE_LEG_TYPE_MAX];						// ƒ|ƒŠƒXƒA[ƒ€Ši”[ƒ[ƒN
+POLICE_LEG			policeLegWk[POLICE_LEG_MAX];							// ƒ|ƒŠƒXƒŒƒbƒOŠi”[ƒ[ƒN
 const char *FileNamePoliceLeg[POLICE_LEG_TYPE_MAX] =
 {
 	"data/MODEL/POLICE/standing_R_leg.x",		// ‰E‘«
@@ -94,9 +95,9 @@ HRESULT InitPolice(int nType)
 		}
 #if 0
 		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-		D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-			TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-			&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+		//D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		//	TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+		//	&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
 #endif
 		// ƒA[ƒ€‚Ìƒ‚ƒfƒ‹“Ç‚İ‚İ
 		for (int i = 0; i < POLICE_ARM_TYPE_MAX; i++)
@@ -119,9 +120,9 @@ HRESULT InitPolice(int nType)
 			}
 #if 0
 			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-			D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-				&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+			//D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			//	TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			//	&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
 #endif
 		}
 		// ƒŒƒbƒO‚Ìƒ‚ƒfƒ‹“Ç‚İ‚İ
@@ -145,9 +146,9 @@ HRESULT InitPolice(int nType)
 			}
 #if 0
 			// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-			D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-				TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-				&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
+			//D3DXCreateTextureFromFile(pDevice,					// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			//	TEXTURE_FILENAME,		// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			//	&g_pD3DTextureModel);	// “Ç‚İ‚Şƒƒ‚ƒŠ[
 #endif
 		}
 	}
@@ -182,6 +183,8 @@ HRESULT InitPolice(int nType)
 		police->able_hit = true;
 		// ƒ|ƒŠƒX‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		police->key = 0;
+		// eqŠÖŒW¯•Ê”Ô†‚Ì‰Šúİ’è(”Ô†‚Í1‚©‚ç)
+		police->num = i + 1;
 	}
 
 	// ƒA[ƒ€‚Ì‰Šú‰»ˆ—
@@ -211,7 +214,7 @@ HRESULT InitPolice(int nType)
 		policeArm->fangleXZ = 0.0f;
 		policeArm->fangleY = 0.0f;
 		// useƒtƒ‰ƒO‚ğtrue‚Éİ’è
-		policeArm->use = true;
+		policeArm->use = false;
 		// ƒA[ƒ€‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		policeArm->key = 0;
 		// ƒA[ƒ€‚Ìƒ^ƒCƒv‚Ì‰Šú‰»(‰E˜r‚ª0E¶˜r‚ª1)
@@ -225,11 +228,13 @@ HRESULT InitPolice(int nType)
 		}
 		// ‰ñ“]Ø‚è‘Ö‚¦ƒtƒ‰ƒO‚ğtrue‚Éİ’è
 		policeArm->rotf = true;
+		// eqŠÖŒW¯•Ê”Ô†‚Ì‰Šúİ’è(–¢g—p:0”Ô,g—pF–{‘Ì‚Æ“¯‚¶”Ô†)
+		policeArm->num = 0;
 	}
 
 	// ƒŒƒbƒO‚Ì‰Šú‰»ˆ—
 	police = &policeWk[0];
-	for (int i = 0; i < POLICE_LEG_TYPE_MAX; i++, policeLeg++)
+	for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
 	{
 		// ƒŒƒbƒO‚Ì‹“_(ˆÊ’uÀ•W)‚Ì‰Šú‰»
 		//policeLeg->Eye = D3DXVECTOR3(-CHECK_POINT_X / 2, 0.0f, CHECK_POINT_Z / 2);
@@ -253,7 +258,7 @@ HRESULT InitPolice(int nType)
 		policeLeg->fangleXZ = 0.0f;
 		policeLeg->fangleY = 0.0f;
 		// useƒtƒ‰ƒO‚ğtrue‚Éİ’è
-		policeLeg->use = true;
+		policeLeg->use = false;
 		// ƒŒƒbƒO‚ÌƒtƒŒ[ƒ€ƒJƒEƒ“ƒg‰Šú‰»
 		policeLeg->key = 0;
 		// ƒŒƒbƒO‚Ìƒ^ƒCƒv‚Ì‰Šú‰»(‰E‘«‚ª0E¶‘«‚ª1)
@@ -267,7 +272,12 @@ HRESULT InitPolice(int nType)
 		}
 		// ‰ñ“]Ø‚è‘Ö‚¦ƒtƒ‰ƒO‚ğtrue‚Éİ’è
 		policeLeg->rotf = true;
+		// eqŠÖŒW¯•Ê”Ô†‚Ì‰Šúİ’è(–¢g—p:0”Ô,g—pF–{‘Ì‚Æ“¯‚¶”Ô†)
+		policeLeg->num = 0;
 	}
+
+	// eqŠÖŒWİ’èˆ—
+	SetParts();
 
 	// ƒ`ƒFƒbƒNƒ|ƒCƒ“ƒg‚Ì‰Šúİ’è
 	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// ¶ã(-300,0,300)
@@ -289,8 +299,6 @@ HRESULT InitPolice(int nType)
 void UninitPolice(void)
 {
 	// –{‘Ì
-	for (int i = 0; i < POLICE_MAX; i++)
-	{
 		if (g_pD3DTexturePolice != NULL)
 		{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
 			g_pD3DTexturePolice->Release();
@@ -308,10 +316,9 @@ void UninitPolice(void)
 			g_pD3DXBuffMatPolice->Release();
 			g_pD3DXBuffMatPolice = NULL;
 		}
-	}
 
 	// ƒA[ƒ€
-	for (int i = 0; i < POLICE_ARM_MAX; i++)
+	for (int i = 0; i < POLICE_ARM_TYPE_MAX; i++)
 	{
 		if (g_pD3DTexturePoliceArm[i] != NULL)
 		{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
@@ -333,7 +340,7 @@ void UninitPolice(void)
 	}
 
 	// ƒŒƒbƒO
-	for (int i = 0; i < POLICE_LEG_MAX; i++)
+	for (int i = 0; i < POLICE_LEG_TYPE_MAX; i++)
 	{
 		if (g_pD3DTexturePoliceLeg[i] != NULL)
 		{// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
@@ -411,17 +418,34 @@ void UpdatePolice(void)
 	police = &policeWk[0];
 	policeArm = &policeArmWk[0];
 	policeLeg = &policeLegWk[0];
-	for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
+	// –{‘Ì‚ÆeqŠÖŒW‚Ìƒp[ƒc‚ğˆÚ“®
+	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
-		policeArm->Eye = police->Eye;
-		policeArm->At = police->At;
+		// ƒA[ƒ€‚ÌˆÚ“®
+		policeArm = &policeArmWk[0];
+		for (int j = 0; j < POLICE_ARM_MAX; j++, policeArm++)
+		{
+			if (!policeArm->use) continue;
+			if (policeArm->num == police->num)
+			{
+				policeArm->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
+				policeArm->Eye = police->Eye;
+				policeArm->At = police->At;
+			}
+		}
+		// ƒŒƒbƒO‚ÌˆÚ“®
+		policeLeg = &policeLegWk[0];
+		for (int k = 0; k < POLICE_LEG_MAX; k++, policeLeg++)
+		{
+			if (!policeLeg->use) continue;
+			if (policeLeg->num == police->num)
+			{
+				policeLeg->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
+				policeLeg->Eye = police->Eye;
+				policeLeg->At = police->At;
+			}
+		}
 	}
-	for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
-	{
-		policeLeg->Eye = police->Eye;
-		policeLeg->At = police->At;
-	}
-
 	// ƒAƒjƒ[ƒVƒ‡ƒ“
 	// ƒ|ƒŠƒX–{‘ÌƒAƒjƒ[ƒVƒ‡ƒ“ˆ—
 	SetAnimation(TYPE_BODY, NULL, NULL,
@@ -433,17 +457,15 @@ void UpdatePolice(void)
 	SetAnimation(TYPE_LEG, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
 		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 
-	police = &policeWk[0];
-	policeArm = &policeArmWk[0];
 #ifdef _DEBUG
+	police = &policeWk[0];
 	PrintDebugProc("[ƒ|ƒŠƒX‚ÌˆÊ’u  F(%f : %f : %f)]\n", police->Eye.x, police->Eye.y, police->Eye.z);
 	PrintDebugProc("[ƒ|ƒŠƒX‚Ì’‹“_  F(%f : %f : %f)]\n", police->At.x, police->At.y, police->At.z);
 	PrintDebugProc("[ƒ|ƒŠƒX‚ÌˆÚ“®ƒxƒNƒgƒ‹  F(%f : %f : %f)]\n", police->move.x, police->move.y, police->move.z);
 	//PrintDebugProc("[ƒ|ƒŠƒX‚ÌŒü‚«  F(%f)]\n", police->rot);
 	PrintDebugProc("[ƒ|ƒŠƒX‚Ìg—pó‘Ô  F(%d)]\n", police->use);
-	PrintDebugProc("[‰E˜r‚Ì‰ñ“]Šp“x  F(%f)]\n", policeArm->fangleXZ);
+	//PrintDebugProc("[‰E˜r‚Ì‰ñ“]Šp“x  F(%f)]\n", policeArm->fangleXZ);
 	PrintDebugProc("[ƒ|ƒŠƒX‚Ì“–‚½‚è”»’è—LŒøó‘Ô  F(%d)]\n", police->able_hit);
-
 #endif
 }
 //=============================================================================
@@ -466,19 +488,14 @@ void DrawPolice(void)
 		{	// g—pó‘Ô‚È‚ç•`‰æ‚·‚é
 			// ƒ‰ƒCƒg‚ğon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
 			D3DXMatrixIdentity(&g_mtxWorldPolice);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒXì¬
 			D3DXMatrixTransformation(&g_mtxWorldPolice, NULL, NULL, &police->scl, &police->rotBasis, &police->qAnswer, &police->Eye);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
 			pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldPolice);
-
 			// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
 			pDevice->GetMaterial(&matDef);
-
 			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
 			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatPolice->GetBufferPointer();
 
@@ -495,7 +512,6 @@ void DrawPolice(void)
 			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 		}
 	}
-
 	// ƒ|ƒŠƒX‚ÌƒA[ƒ€‚Ì•`‰æ
 	for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
 	{
@@ -503,19 +519,14 @@ void DrawPolice(void)
 		{	// g—pó‘Ô‚È‚ç•`‰æ‚·‚é
 			// ƒ‰ƒCƒg‚ğon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
 			D3DXMatrixIdentity(&g_mtxWorldPoliceArm);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒXì¬
 			D3DXMatrixTransformation(&g_mtxWorldPoliceArm, NULL, NULL, &policeArm->scl, &policeArm->rotBasis, &policeArm->qAnswer, &policeArm->Eye);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
 			pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldPoliceArm);
-
 			// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
 			pDevice->GetMaterial(&matDef);
-
 			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
 			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatPoliceArm[policeArm->type]->GetBufferPointer();
 
@@ -533,7 +544,6 @@ void DrawPolice(void)
 			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 		}
 	}
-
 	// ƒ|ƒŠƒX‚ÌƒŒƒbƒO‚Ì•`‰æ
 	for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
 	{
@@ -541,19 +551,14 @@ void DrawPolice(void)
 		{	// g—pó‘Ô‚È‚ç•`‰æ‚·‚é
 			// ƒ‰ƒCƒg‚ğon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ì‰Šú‰»
 			D3DXMatrixIdentity(&g_mtxWorldPoliceLeg);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒXì¬
 			D3DXMatrixTransformation(&g_mtxWorldPoliceLeg, NULL, NULL, &policeLeg->scl, &policeLeg->rotBasis, &policeLeg->qAnswer, &policeLeg->Eye);
-
 			// ƒ[ƒ‹ƒhƒ}ƒgƒŠƒbƒNƒX‚Ìİ’è
 			pDevice->SetTransform(D3DTS_WORLD, &g_mtxWorldPoliceLeg);
-
 			// Œ»İ‚Ìƒ}ƒeƒŠƒAƒ‹‚ğæ“¾
 			pDevice->GetMaterial(&matDef);
-
 			// ƒ}ƒeƒŠƒAƒ‹î•ñ‚É‘Î‚·‚éƒ|ƒCƒ“ƒ^‚ğæ“¾
 			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatPoliceLeg[policeLeg->type]->GetBufferPointer();
 
@@ -573,11 +578,9 @@ void DrawPolice(void)
 	
 	{// ƒ}ƒeƒŠƒAƒ‹‚ğƒfƒtƒHƒ‹ƒg‚É–ß‚·
 		D3DXMATERIAL mat;
-
 		mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
 		mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
 		mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-
 		pDevice->SetMaterial(&mat.MatD3D);
 	}
 }
@@ -591,13 +594,10 @@ POLICE *GetPolice(int no)
 //=============================================================================
 // ƒ|ƒŠƒX‚ÌˆÚ“®ˆ—ŠÖ”(ˆø”1:ƒ|ƒŠƒX‚Ìƒ|ƒCƒ“ƒ^,ˆø”2:“ñŸŒ³”z—ñ‚ÌY—v‘f,ˆø”3:“ñŸŒ³”z—ñ‚ÌX—v‘f)
 //=============================================================================
-void PoliceMove(void* pIn, int y, int x)
+void PoliceMove(POLICE *police, int y, int x)
 {
-	POLICE *police;
 	int n = 0;
 	int m = 0;
-
-	police = (POLICE*)pIn;
 
 	// ƒ|ƒŠƒXƒ‰ƒ“ƒ_ƒ€„‰ñˆÚ“®ˆ—
 	while (1)
@@ -608,15 +608,11 @@ void PoliceMove(void* pIn, int y, int x)
 		if (n == y && m == x + 1 || n == y && m == x - 1 || m == x && n == y + 1 || m == x && n == y - 1) break;
 	}
 
-
 	// ’‹“_‚ğŸ‚Ì–Ú•Wƒ|ƒCƒ“ƒg‚ÉƒZƒbƒg
 	police->At = CheckPointWk[n][m];
 	// ’‹“_‚ğŒü‚­‚½‚ß‚ÌY²‰ñ“]Šp“x‚ğ‹‚ß‚é
 	D3DXVECTOR3 vec = police->Eye - police->At;		// ’‹“_‚Ö‚ÌƒxƒNƒgƒ‹‚ğ‹‚ß‚é
 	police->fangleY = (atan2f(vec.x, vec.z));		// ‰ñ“]Šp“x‚ğ‹‚ß‚é
-
-
-
 	// Œ»İ‚Ìƒ|ƒŠƒX‚ÌÀ•W‚©‚çŸ‚Ì–Ú•Wƒ|ƒCƒ“ƒg‚Ö‚ÌˆÚ“®ƒxƒNƒgƒ‹‚ğ‹‚ß‚é
 	police->move = CheckPointWk[n][m] - police->Eye;
 	// ˆÚ“®ƒxƒNƒgƒ‹‚ğ³‹K‰»
@@ -630,10 +626,9 @@ void PoliceMove(void* pIn, int y, int x)
 //  ˆø”2:XZ²‰ñ“]Šp“x,
 //  ˆø”3:ˆê‰•œ‚É‚©‚©‚éƒtƒŒ[ƒ€”,
 //  ˆø”4:‰ñ“]²XZ,
-//  ˆø”5:‰ñ“]²Y,
+//  ˆø”5:‰ñ“]²Y)
 //=============================================================================
-void SetAnimation(int pType, float fAngle, int frame,
-	D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY)
+void SetAnimation(int pType, float fAngle, int frame,D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY)
 {
 	POLICE *police;
 	POLICE_ARM *policeArm;
@@ -668,7 +663,7 @@ void SetAnimation(int pType, float fAngle, int frame,
 		break;
 	case TYPE_ARM:
 		// ƒA[ƒ€‰ñ“]ˆ—
-		police = &policeWk[0];
+		//police = &policeWk[0];
 		policeArm = &policeArmWk[0];
 		for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
 		{
@@ -734,7 +729,7 @@ void SetAnimation(int pType, float fAngle, int frame,
 					}
 				}
 				// –{‘Ì‚Æ“¯‚¶’‹“_‚ğŒü‚­‚½‚ß‚ÌY²‰ñ“]Šp“x‚ğƒZƒbƒg
-				policeArm->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
+				//policeArm->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
 
 				// XZ‰ñ“]²ƒxƒNƒgƒ‹‚ª0‚Ìê‡‚ÌƒGƒ‰[ˆ—
 				if (policeArm->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
@@ -755,7 +750,7 @@ void SetAnimation(int pType, float fAngle, int frame,
 		break;
 	case TYPE_LEG:
 		// ƒŒƒbƒO‰ñ“]ˆ—
-		police = &policeWk[0];
+		//police = &policeWk[0];
 		policeLeg = &policeLegWk[0];
 		for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
 		{
@@ -821,7 +816,7 @@ void SetAnimation(int pType, float fAngle, int frame,
 					}
 				}
 				// –{‘Ì‚Æ“¯‚¶’‹“_‚ğŒü‚­‚½‚ß‚ÌY²‰ñ“]Šp“x‚ğƒZƒbƒg
-				policeLeg->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
+				//policeLeg->fangleY = police->fangleY;			// –{‘Ì‚Æˆê’v
 				// XZ‰ñ“]²ƒxƒNƒgƒ‹‚ª0‚Ìê‡‚ÌƒGƒ‰[ˆ—
 				if (policeLeg->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
 				{	// ‰ñ“]Šp“x‚ğ0‚É‚·‚é
@@ -840,5 +835,72 @@ void SetAnimation(int pType, float fAngle, int frame,
 		}
 		break;
 	}
-	return;
+}
+//=============================================================================
+// ƒp[ƒceqŠÖŒWİ’èŠÖ”
+//=============================================================================
+void SetParts(void)
+{
+	POLICE *police = &policeWk[0];
+	POLICE_ARM *policeArm = &policeArmWk[0];
+	POLICE_LEG *policeLeg = &policeLegWk[0];
+
+	// –{‘Ì‚É˜rƒp[ƒc‚ğŠÖ˜A•t‚¯‚é
+	police = &policeWk[0];
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		// g—pó‘Ô‚Ìƒ|ƒŠƒX‚É‚Ì‚İƒp[ƒc‚ğƒZƒbƒg
+		if (!police->use) continue;
+		// –¢g—p‚Ì‰E˜rƒp[ƒc‚ğƒZƒbƒg
+		policeArm = &policeArmWk[0];
+		for (int j = 0; j < POLICE_ARM_MAX; j++, policeArm++)
+		{	// –¢g—p‚©‚Â‰E˜r‚Å‚ ‚é‚±‚Æ‚Ìƒ`ƒFƒbƒN
+			if ((policeArm->use) || (policeArm->type == 1)) continue;
+			// –{‘Ì‚Æ“¯‚¶”Ô†‚ğƒZƒbƒg
+			policeArm->num = police->num;
+			// g—pó‘Ô‚É‚·‚é
+			policeArm->use = true;
+			break;
+		}
+		// –¢g—p‚Ì¶˜rƒp[ƒc‚ğƒZƒbƒg
+		policeArm = &policeArmWk[0];
+		for (int j = 0; j < POLICE_ARM_MAX; j++, policeArm++)
+		{	// –¢g—p‚©‚Â¶˜r‚Å‚ ‚é‚±‚Æ‚Ìƒ`ƒFƒbƒN
+			if ((policeArm->use) || (policeArm->type == 0)) continue;
+			// –{‘Ì‚Æ“¯‚¶”Ô†‚ğƒZƒbƒg
+			policeArm->num = police->num;
+			// g—pó‘Ô‚É‚·‚é
+			policeArm->use = true;
+			break;
+		}
+	}
+	// –{‘Ì‚É‘«ƒp[ƒc‚ğŠÖ˜A•t‚¯‚é
+	police = &policeWk[0];
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		// g—pó‘Ô‚Ìƒ|ƒŠƒX‚É‚Ì‚İƒp[ƒc‚ğƒZƒbƒg
+		if (!police->use) continue;
+		// –¢g—p‚Ì‰E‘«ƒp[ƒc‚ğƒZƒbƒg
+		policeLeg = &policeLegWk[0];
+		for (int j = 0; j < POLICE_LEG_MAX; j++, policeLeg++)
+		{	// –¢g—p‚©‚Â‰E‘«‚Å‚ ‚é‚±‚Æ‚Ìƒ`ƒFƒbƒN
+			if ((policeLeg->use) || (policeLeg->type == 1)) continue;
+			// –{‘Ì‚Æ“¯‚¶”Ô†‚ğƒZƒbƒg
+			policeLeg->num = police->num;
+			// g—pó‘Ô‚É‚·‚é
+			policeLeg->use = true;
+			break;
+		}
+		// –¢g—p‚Ì¶‘«ƒp[ƒc‚ğƒZƒbƒg
+		policeLeg = &policeLegWk[0];
+		for (int j = 0; j < POLICE_LEG_MAX; j++, policeLeg++)
+		{	// –¢g—p‚©‚Â¶‘«‚Å‚ ‚é‚±‚Æ‚Ìƒ`ƒFƒbƒN
+			if ((policeLeg->use) || (policeLeg->type == 0)) continue;
+			// –{‘Ì‚Æ“¯‚¶”Ô†‚ğƒZƒbƒg
+			policeLeg->num = police->num;
+			// g—pó‘Ô‚É‚·‚é
+			policeLeg->use = true;
+			break;
+		}
+	}
 }

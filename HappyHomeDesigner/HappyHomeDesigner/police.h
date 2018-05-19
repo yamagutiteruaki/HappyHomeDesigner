@@ -14,7 +14,7 @@
 //*****************************************************************************
 // ポリス本体関係
 #define	POLICE_SPEED			(1.20f)											// 移動速度係数
-#define	POLICE_MAX				(1)												// ポリスの最大数 /////まだ複数対応してないのでいじらないで！！/////
+#define	POLICE_MAX				(3)												// ポリスの最大数
 #define	POLICE_MODEL			"data/MODEL/POLICE/standing_body.x"				// 読み込むモデル名
 #define	POLICE_SCALE_X			(1.0f * 1.2)									// スケールのX成分
 #define	POLICE_SCALE_Y			(1.0f * 1.2)									// スケールのY成分
@@ -25,16 +25,16 @@
 // ポリスアーム関係
 #define	POLICE_ARM_TYPE_MAX		(2)												// ポリスの腕の種類(右腕・左腕)
 #define	POLICE_ARM_MAX			(POLICE_MAX * 2)								// ポリスの腕の最大数(両腕の合計数)
-#define	POLICE_ARM_ANIM_FRAME	(2 * 60 / 4)									// アニメーション一往復にかかるフレーム数(秒数 * 60フレーム)
-#define	POLICE_ARM_ANGLE		(D3DX_PI / 6 / 2)								// アニメーションの回転角度(180度 / 適当な角度)
+#define	POLICE_ARM_ANIM_FRAME	(1 * 60 / 4)									// アニメーション一往復にかかるフレーム数(秒数 * 60フレーム)
+#define	POLICE_ARM_ANGLE		(D3DX_PI / 4 / 2)								// アニメーションの回転角度(180度 / 適当な角度)
 #define	POLICE_ARM_ROTBASIS_X	(0.0f)											// 回転基準点のX座標
 #define	POLICE_ARM_ROTBASIS_Y	(30.0f)											// 回転基準点のY座標
 #define	POLICE_ARM_ROTBASIS_Z	(0.0f)											// 回転基準点のZ座標
 // ポリスのレッグ関係
 #define	POLICE_LEG_TYPE_MAX		(2)												// ポリスの足の種類(右足・左足)
 #define	POLICE_LEG_MAX			(POLICE_MAX * 2)								// ポリスの足の最大数(両足の合計数)
-#define	POLICE_LEG_ANIM_FRAME	(2 * 60 / 4)									// アニメーション一往復にかかるフレーム数(秒数 * 60フレーム)
-#define	POLICE_LEG_ANGLE		(D3DX_PI / 6 / 2)								// アニメーションの回転角度(180度 / 適当な角度)
+#define	POLICE_LEG_ANIM_FRAME	(1 * 60 / 4)									// アニメーション一往復にかかるフレーム数(秒数 * 60フレーム)
+#define	POLICE_LEG_ANGLE		(D3DX_PI / 4 / 2)								// アニメーションの回転角度(180度 / 適当な角度)
 #define	POLICE_LEG_ROTBASIS_X	(0.0f)											// 回転基準点のX座標
 #define	POLICE_LEG_ROTBASIS_Y	(20.0f)											// 回転基準点のY座標
 #define	POLICE_LEG_ROTBASIS_Z	(0.0f)											// 回転基準点のZ座標
@@ -52,12 +52,11 @@ enum
 	TYPE_BODY = 0,		// 本体
 	TYPE_ARM,			// アーム
 	TYPE_LEG,			// レッグ
-	FURNITURETYPE_MAX
+	TYPE_MAX
 };
 //*****************************************************************************
 // 構造体宣言
 //*****************************************************************************
-
 typedef struct		// ポリス構造体
 {
 	bool			use;							// true:使用  false:未使用
@@ -81,9 +80,8 @@ typedef struct		// ポリス構造体
 	float			fangleY;						// 回転角度(Y)
 
 	int				key;							// フレームカウント用
-
+	int				num;							// 親子関係識別用
 } POLICE;
-
 typedef struct		// ポリスアーム構造体
 {
 	bool			use;							// true:使用  false:未使用
@@ -108,9 +106,8 @@ typedef struct		// ポリスアーム構造体
 
 	int				key;							// フレームカウント用
 	int				type;							// アームの種類(右腕が0・左腕が1)
-
+	int				num;							// 親子関係識別用
 } POLICE_ARM;
-
 typedef struct		// ポリスレッグ構造体
 {
 	bool			use;							// true:使用  false:未使用
@@ -135,9 +132,8 @@ typedef struct		// ポリスレッグ構造体
 
 	int				key;							// フレームカウント用
 	int				type;							// アームの種類(右腕が0・左腕が1)
-
+	int				num;							// 親子関係識別用
 } POLICE_LEG;
-
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -146,4 +142,6 @@ void UninitPolice(void);
 void UpdatePolice(void);
 void DrawPolice(void);
 POLICE *GetPolice(int no);
+void SetAnimation(int pType, float fAngle, int frame,D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY);
+void SetParts(void);
 #endif
