@@ -1,7 +1,7 @@
 //=============================================================================
 //
-// ポリス処理 [enemy.h]
-// Author : GP11B243-18-千坂浩太
+// ポリス処理 [police.h]
+// Author : GP12A295-19-千坂浩太
 //
 //=============================================================================
 #ifndef _POLICE_H_
@@ -22,6 +22,7 @@
 #define	POLICE_ROTBASIS_X		(0.0f)											// 回転基準点のX座標
 #define	POLICE_ROTBASIS_Y		(60.0f)											// 回転基準点のY座標
 #define	POLICE_ROTBASIS_Z		(0.0f)											// 回転基準点のZ座標
+#define	POLICE_COLLISION_FRAME	(5 * 60)										// 当たり判定の無効状態の解除にかかるフレーム数(秒数 * 60フレーム)
 // ポリスアーム関係
 #define	POLICE_ARM_TYPE_MAX		(2)												// ポリスの腕の種類(右腕・左腕)
 #define	POLICE_ARM_MAX			(POLICE_MAX * 2)								// ポリスの腕の最大数(両腕の合計数)
@@ -42,26 +43,17 @@
 #define	CHECK_POINT_X_MAX		(3)												// 横方向のチェックポイントの最大数
 #define	CHECK_POINT_Y_MAX		(3)												// 縦方向のチェックポイントの最大数
 #define	CHECK_POINT_MAX			(FIELD_SIZE_X_MAX * CHECK_POINT_Y_MAX)			// チェックポイントの合計数
-#define	CHECK_POINT_X			(FIELD_SIZE_X / 2 - FIELD_SIZE_X / 16)
-#define	CHECK_POINT_Z			(FIELD_SIZE_X / 2 - FIELD_SIZE_Z / 16)
-//**************************************
-// アニメーション設定対象の識別番号
-//**************************************
-enum
-{
-	TYPE_BODY = 0,		// 本体
-	TYPE_ARM,			// アーム
-	TYPE_LEG,			// レッグ
-	TYPE_MAX
-};
+#define	CHECK_POINT_X			(FIELD_SIZE_X / 2 - FIELD_SIZE_X / 16)			// チェックポイントのX座標
+#define	CHECK_POINT_Z			(FIELD_SIZE_Z / 2 - FIELD_SIZE_Z / 16)			// チェックポイントのZ座標
 //*****************************************************************************
-// 構造体宣言
+// クラス定義
 //*****************************************************************************
-typedef struct		// ポリス構造体
+class POLICE						// ポリスクラス
 {
+public:
 	bool			use;							// true:使用  false:未使用
 	bool			able_hit;						// true:当たり判定有効  false:当たり判定無効
-
+	bool			rotf;							// 回転方向の切り替えフラグ(今は使わないのでNULL)
 	D3DXVECTOR3		scl;							// スケール
 	D3DXVECTOR3		Eye;							// ポリスの視点(位置座標)
 	D3DXVECTOR3		At;								// ポリスの注視点(ポリスが見ている座標)
@@ -71,69 +63,21 @@ typedef struct		// ポリス構造体
 	D3DXVECTOR3		rotBasis;						// ポリスの回転の中心点(原点から少し調整するため）
 	D3DXVECTOR3		axisXZ;							// ポリスの回転軸(XZ)
 	D3DXVECTOR3		axisY;							// ポリスの回転軸(Y)
-
 	D3DXQUATERNION	qRotateXZ;						// ポリスのXZ軸回転クォータニオン
 	D3DXQUATERNION	qRotateY;						// ポリスのY軸回転クォータニオン
 	D3DXQUATERNION	qAnswer;						// ポリスの合成後回転クォータニオン
-
 	float			fangleXZ;						// 回転角度(XZ)
 	float			fangleY;						// 回転角度(Y)
-
 	int				key;							// フレームカウント用
 	int				num;							// 親子関係識別用
-} POLICE;
-typedef struct		// ポリスアーム構造体
+	int				type;							// 本体の種類(今は使わないのでNULL)
+};
+class POLICE_ARM :public POLICE		// ポリスアームクラス
 {
-	bool			use;							// true:使用  false:未使用
-	bool			rotf;							// 回転方向の切り替えフラグ
-
-	D3DXVECTOR3		scl;							// スケール
-	D3DXVECTOR3		Eye;							// アームの視点(位置座標)
-	D3DXVECTOR3		At;								// アームの注視点(アームが見ている座標)
-	D3DXVECTOR3		Up;								// アームの上方向
-	D3DXVECTOR3		rot;							// アームの向き
-	D3DXVECTOR3		move;							// アームの移動量
-	D3DXVECTOR3		rotBasis;						// アームの回転の中心点(原点から少し調整するため）
-	D3DXVECTOR3		axisXZ;							// アームの回転軸(XZ)
-	D3DXVECTOR3		axisY;							// アームの回転軸(Y)
-
-	D3DXQUATERNION	qRotateXZ;						// アームのXZ軸回転クォータニオン
-	D3DXQUATERNION	qRotateY;						// アームのY軸回転クォータニオン
-	D3DXQUATERNION	qAnswer;						// アームの合成後回転クォータニオン
-
-	float			fangleXZ;						// 回転角度(XZ)
-	float			fangleY;						// 回転角度(Y)
-
-	int				key;							// フレームカウント用
-	int				type;							// アームの種類(右腕が0・左腕が1)
-	int				num;							// 親子関係識別用
-} POLICE_ARM;
-typedef struct		// ポリスレッグ構造体
+};
+class POLICE_LEG :public POLICE		// ポリスレッグクラス
 {
-	bool			use;							// true:使用  false:未使用
-	bool			rotf;							// 回転方向の切り替えフラグ
-
-	D3DXVECTOR3		scl;							// スケール
-	D3DXVECTOR3		Eye;							// レッグの視点(位置座標)
-	D3DXVECTOR3		At;								// レッグの注視点(レッグが見ている座標)
-	D3DXVECTOR3		Up;								// レッグの上方向
-	D3DXVECTOR3		rot;							// レッグの向き
-	D3DXVECTOR3		move;							// レッグの移動量
-	D3DXVECTOR3		rotBasis;						// レッグの回転の中心点(原点から少し調整するため）
-	D3DXVECTOR3		axisXZ;							// レッグの回転軸(XZ)
-	D3DXVECTOR3		axisY;							// レッグの回転軸(Y)
-
-	D3DXQUATERNION	qRotateXZ;						// レッグのXZ軸回転クォータニオン
-	D3DXQUATERNION	qRotateY;						// レッグのY軸回転クォータニオン
-	D3DXQUATERNION	qAnswer;						// レッグの合成後回転クォータニオン
-
-	float			fangleXZ;						// 回転角度(XZ)
-	float			fangleY;						// 回転角度(Y)
-
-	int				key;							// フレームカウント用
-	int				type;							// アームの種類(右腕が0・左腕が1)
-	int				num;							// 親子関係識別用
-} POLICE_LEG;
+};
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -142,6 +86,7 @@ void UninitPolice(void);
 void UpdatePolice(void);
 void DrawPolice(void);
 POLICE *GetPolice(int no);
-void SetAnimation(int pType, float fAngle, int frame,D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY);
 void SetParts(void);
+template <typename CLASS> void SetAnimation(CLASS *pIn, float fAngle, int frame, D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY);
+void Animation(void);
 #endif

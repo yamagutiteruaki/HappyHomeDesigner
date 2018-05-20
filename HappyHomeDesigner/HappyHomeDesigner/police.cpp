@@ -1,7 +1,7 @@
 //=============================================================================
 //
 // ポリス処理 [police.cpp]
-// Author : GP11B243-18-千坂浩太
+// Author : GP12A295-19-千坂浩太
 //
 //=============================================================================
 #include "camera.h"
@@ -20,21 +20,21 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void PoliceMove(POLICE *police, int y, int x);
+void InvalidCollision(int frame);
+void PoliceCollision(void);
+void SetPoliceMove(POLICE *police, int y, int x);
+void PoliceMove(void);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-
-//*****************************************************************************
 // ポリス本体関係
-//*****************************************************************************
 LPDIRECT3DTEXTURE9	g_pD3DTexturePolice;									// テクスチャ読み込み場所
 LPD3DXMESH			g_pD3DXMeshPolice;										// ID3DXMeshインターフェイスへのポインタ
 LPD3DXBUFFER		g_pD3DXBuffMatPolice;									// メッシュのマテリアル情報を格納
 DWORD				g_nNumMatPolice;										// 属性情報の総数
 D3DXMATRIX			g_mtxWorldPolice;										// ワールドマトリックス
 POLICE				policeWk[POLICE_MAX];									// ポリス格納ワーク
-// ポリスアーム関係
+																			// ポリスアーム関係
 LPDIRECT3DTEXTURE9	g_pD3DTexturePoliceArm[POLICE_ARM_TYPE_MAX];			// テクスチャ読み込み場所
 LPD3DXMESH			g_pD3DXMeshPoliceArm[POLICE_ARM_TYPE_MAX];				// ID3DXMeshインターフェイスへのポインタ
 LPD3DXBUFFER		g_pD3DXBuffMatPoliceArm[POLICE_ARM_TYPE_MAX];			// メッシュのマテリアル情報を格納
@@ -60,12 +60,12 @@ const char *FileNamePoliceLeg[POLICE_LEG_TYPE_MAX] =
 };
 // チェックポイント関係
 D3DXVECTOR3			CheckPointWk[CHECK_POINT_Y_MAX][CHECK_POINT_X_MAX];		// チェックポイント格納ワーク
-// その他
+																			// その他
 int					animCnt;												// アニメカウント
 int					sp_Update;												// 更新頻度計算用
-//=============================================================================
-// 初期化処理
-//=============================================================================
+																			//=============================================================================
+																			// 初期化処理
+																			//=============================================================================
 HRESULT InitPolice(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -152,7 +152,6 @@ HRESULT InitPolice(int nType)
 #endif
 		}
 	}
-
 	// ポリス本体の初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
@@ -185,8 +184,11 @@ HRESULT InitPolice(int nType)
 		police->key = 0;
 		// 親子関係識別番号の初期設定(番号は1から)
 		police->num = i + 1;
+		// 回転切り替えフラグをNULLに
+		police->rotf = NULL;
+		// 本体のタイプをNULLに
+		police->type = NULL;
 	}
-
 	// アームの初期化処理
 	police = &policeWk[0];
 	for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
@@ -218,7 +220,7 @@ HRESULT InitPolice(int nType)
 		// アームのフレームカウント初期化
 		policeArm->key = 0;
 		// アームのタイプの初期化(右腕が0・左腕が1)
-		if(i < POLICE_MAX)
+		if (i < POLICE_MAX)
 		{	// 右腕をポリスの人数分用意
 			policeArm->type = 0;
 		}
@@ -231,7 +233,6 @@ HRESULT InitPolice(int nType)
 		// 親子関係識別番号の初期設定(未使用:0番,使用：本体と同じ番号)
 		policeArm->num = 0;
 	}
-
 	// レッグの初期化処理
 	police = &policeWk[0];
 	for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
@@ -270,8 +271,8 @@ HRESULT InitPolice(int nType)
 		{	// 左足をポリスの人数分用意
 			policeLeg->type = 1;
 		}
-		// 回転切り替えフラグをtrueに設定
-		policeLeg->rotf = true;
+		// 回転切り替えフラグをfalseに設定
+		policeLeg->rotf = false;
 		// 親子関係識別番号の初期設定(未使用:0番,使用：本体と同じ番号)
 		policeLeg->num = 0;
 	}
@@ -280,43 +281,39 @@ HRESULT InitPolice(int nType)
 	SetParts();
 
 	// チェックポイントの初期設定
-	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 左上(-300,0,300)
-	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, CHECK_POINT_Z);						// 中心上(0,0,300)
-	CheckPointWk[2][0] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, CHECK_POINT_Z);			// 右上(300,0,300)
-	CheckPointWk[0][1] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, 0.0f);					// 中心左(-300,0,0)
-	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);									// 中心(0,0,0)
-	CheckPointWk[2][1] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, 0.0f);						// 中心右(300,0,0)
-	CheckPointWk[0][2] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 左下(-300,0,-300)
-	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -CHECK_POINT_Z);					// 中心下(0,0,-300)
-	CheckPointWk[2][2] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 右下(300,0,-300)
+	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 左上
+	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, CHECK_POINT_Z);				// 中心上
+	CheckPointWk[2][0] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 右上
+	CheckPointWk[0][1] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, 0.0f);				// 中心左
+	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// 中心
+	CheckPointWk[2][1] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, 0.0f);				// 中心右
+	CheckPointWk[0][2] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 左下
+	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -CHECK_POINT_Z);				// 中心下
+	CheckPointWk[2][2] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 右下
 
 	return S_OK;
 }
-
 //=============================================================================
 // 終了処理
 //=============================================================================
 void UninitPolice(void)
 {
 	// 本体
-		if (g_pD3DTexturePolice != NULL)
-		{// テクスチャの開放
-			g_pD3DTexturePolice->Release();
-			g_pD3DTexturePolice = NULL;
-		}
-
-		if (g_pD3DXMeshPolice != NULL)
-		{// メッシュの開放
-			g_pD3DXMeshPolice->Release();
-			g_pD3DXMeshPolice = NULL;
-		}
-
-		if (g_pD3DXBuffMatPolice != NULL)
-		{// マテリアルの開放
-			g_pD3DXBuffMatPolice->Release();
-			g_pD3DXBuffMatPolice = NULL;
-		}
-
+	if (g_pD3DTexturePolice != NULL)
+	{// テクスチャの開放
+		g_pD3DTexturePolice->Release();
+		g_pD3DTexturePolice = NULL;
+	}
+	if (g_pD3DXMeshPolice != NULL)
+	{// メッシュの開放
+		g_pD3DXMeshPolice->Release();
+		g_pD3DXMeshPolice = NULL;
+	}
+	if (g_pD3DXBuffMatPolice != NULL)
+	{// マテリアルの開放
+		g_pD3DXBuffMatPolice->Release();
+		g_pD3DXBuffMatPolice = NULL;
+	}
 	// アーム
 	for (int i = 0; i < POLICE_ARM_TYPE_MAX; i++)
 	{
@@ -325,20 +322,17 @@ void UninitPolice(void)
 			g_pD3DTexturePoliceArm[i]->Release();
 			g_pD3DTexturePoliceArm[i] = NULL;
 		}
-
 		if (g_pD3DXMeshPoliceArm[i] != NULL)
 		{// メッシュの開放
 			g_pD3DXMeshPoliceArm[i]->Release();
 			g_pD3DXMeshPoliceArm[i] = NULL;
 		}
-
 		if (g_pD3DXBuffMatPoliceArm[i] != NULL)
 		{// マテリアルの開放
 			g_pD3DXBuffMatPoliceArm[i]->Release();
 			g_pD3DXBuffMatPoliceArm[i] = NULL;
 		}
 	}
-
 	// レッグ
 	for (int i = 0; i < POLICE_LEG_TYPE_MAX; i++)
 	{
@@ -347,22 +341,18 @@ void UninitPolice(void)
 			g_pD3DTexturePoliceLeg[i]->Release();
 			g_pD3DTexturePoliceLeg[i] = NULL;
 		}
-
 		if (g_pD3DXMeshPoliceLeg[i] != NULL)
 		{// メッシュの開放
 			g_pD3DXMeshPoliceLeg[i]->Release();
 			g_pD3DXMeshPoliceLeg[i] = NULL;
 		}
-
 		if (g_pD3DXBuffMatPoliceLeg[i] != NULL)
 		{// マテリアルの開放
 			g_pD3DXBuffMatPoliceLeg[i]->Release();
 			g_pD3DXBuffMatPoliceLeg[i] = NULL;
 		}
 	}
-
 }
-
 //=============================================================================
 // 更新処理
 //=============================================================================
@@ -373,89 +363,13 @@ void UpdatePolice(void)
 	POLICE_LEG *policeLeg = &policeLegWk[0];
 
 	// 当たり判定の一定時間無効処理
-	police = &policeWk[0];
-	for (int i = 0; i < POLICE_MAX; i++, police++)
-	{
-		if (!police->able_hit) police->key++;
-		// 当たり判定無効時間の解除
-		if (police->key % 300 == 0)
-		{
-			police->key = 0;
-			police->able_hit = true;
-		}
-	}
+	InvalidCollision(POLICE_COLLISION_FRAME);
 	// ポリスの当たり判定処理
-	police = &policeWk[0];
-	for (int k = 0; k < POLICE_MAX; k++, police++)
-	{	// ポリスについてチェック
-		if (police->able_hit)
-		{	// 当たり判定が有効なポリスのみチェック
-			for (int j = 0; j < CHECK_POINT_Y_MAX; j++)
-			{	// 配列Y要素についてチェック
-				for (int i = 0; i < CHECK_POINT_X_MAX; i++)
-				{	// 配列X要素についてチェック
-					if (CollisionBC(police->Eye, CheckPointWk[j][i], 5.0f, 5.0f))
-					{	// チェックポイントに侵入したら方向転換し、移動ベクトル算出
-						PoliceMove(police, j, i);
-						// 当たり判定有効フラグをfalseに
-						police->able_hit = false;
-						break;
-					}
-				}
-			}
-		}
-	}
+	PoliceCollision();
 	// ポリス移動処理
-	police = &policeWk[0];
-	for (int i = 0; i < POLICE_MAX; i++, police++)
-	{
-		// 位置移動
-		police->Eye.x += police->move.x;
-		police->Eye.y += police->move.y;
-		police->Eye.z += police->move.z;
-	}
-	// アームとレッグの視点と注視点を本体と一致させる
-	police = &policeWk[0];
-	policeArm = &policeArmWk[0];
-	policeLeg = &policeLegWk[0];
-	// 本体と親子関係のパーツを移動
-	for (int i = 0; i < POLICE_MAX; i++, police++)
-	{
-		// アームの移動
-		policeArm = &policeArmWk[0];
-		for (int j = 0; j < POLICE_ARM_MAX; j++, policeArm++)
-		{
-			if (!policeArm->use) continue;
-			if (policeArm->num == police->num)
-			{
-				policeArm->fangleY = police->fangleY;			// 本体と一致
-				policeArm->Eye = police->Eye;
-				policeArm->At = police->At;
-			}
-		}
-		// レッグの移動
-		policeLeg = &policeLegWk[0];
-		for (int k = 0; k < POLICE_LEG_MAX; k++, policeLeg++)
-		{
-			if (!policeLeg->use) continue;
-			if (policeLeg->num == police->num)
-			{
-				policeLeg->fangleY = police->fangleY;			// 本体と一致
-				policeLeg->Eye = police->Eye;
-				policeLeg->At = police->At;
-			}
-		}
-	}
-	// アニメーション
-	// ポリス本体アニメーション処理
-	SetAnimation(TYPE_BODY, NULL, NULL,
-		D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-	// アームアニメーション処理
-	SetAnimation(TYPE_ARM, POLICE_ARM_ANGLE, POLICE_ARM_ANIM_FRAME,
-		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
-	// レッグアニメーション処理
-	SetAnimation(TYPE_LEG, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
-		D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	PoliceMove();
+	// アニメーション処理
+	Animation();
 
 #ifdef _DEBUG
 	police = &policeWk[0];
@@ -476,7 +390,6 @@ void DrawPolice(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATERIAL *pD3DXMat;
 	D3DMATERIAL9 matDef;
-
 	POLICE *police = &policeWk[0];
 	POLICE_ARM *policeArm = &policeArmWk[0];
 	POLICE_LEG *policeLeg = &policeLegWk[0];
@@ -575,7 +488,7 @@ void DrawPolice(void)
 			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
 		}
 	}
-	
+
 	{// マテリアルをデフォルトに戻す
 		D3DXMATERIAL mat;
 		mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
@@ -592,248 +505,46 @@ POLICE *GetPolice(int no)
 	return(&policeWk[no]);
 }
 //=============================================================================
-// ポリスの移動処理関数(引数1:ポリスのポインタ,引数2:二次元配列のY要素,引数3:二次元配列のX要素)
+// 当たり判定無効処理関数(引数：当たり判定無効が解除されるまでのフレーム数)
 //=============================================================================
-void PoliceMove(POLICE *police, int y, int x)
+void InvalidCollision(int frame)
 {
-	int n = 0;
-	int m = 0;
+	POLICE *police = &policeWk[0];
 
-	// ポリスランダム巡回移動処理
-	while (1)
-	{	// ランダムで次の目標ポイントを決定
-		n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
-		m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
-		// 上下左右なら許可
-		if (n == y && m == x + 1 || n == y && m == x - 1 || m == x && n == y + 1 || m == x && n == y - 1) break;
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		if (!police->able_hit) police->key++;
+		// 当たり判定無効時間の解除
+		if (police->key % frame == 0)
+		{
+			police->key = 0;
+			police->able_hit = true;
+		}
 	}
-
-	// 注視点を次の目標ポイントにセット
-	police->At = CheckPointWk[n][m];
-	// 注視点を向くためのY軸回転角度を求める
-	D3DXVECTOR3 vec = police->Eye - police->At;		// 注視点へのベクトルを求める
-	police->fangleY = (atan2f(vec.x, vec.z));		// 回転角度を求める
-	// 現在のポリスの座標から次の目標ポイントへの移動ベクトルを求める
-	police->move = CheckPointWk[n][m] - police->Eye;
-	// 移動ベクトルを正規化
-	D3DXVec3Normalize(&police->move, &police->move);
-	// 移動速度調整
-	police->move = police->move * POLICE_SPEED;
 }
 //=============================================================================
-// アニメーション設定関数
-// (引数1:設定対象の構造体へのポインタ識別番号(0:本体,1:アーム,2:レッグ,etc...),
-//  引数2:XZ軸回転角度,
-//  引数3:一往復にかかるフレーム数,
-//  引数4:回転軸XZ,
-//  引数5:回転軸Y)
+// 当たり判定処理関数
 //=============================================================================
-void SetAnimation(int pType, float fAngle, int frame,D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY)
+void PoliceCollision(void)
 {
-	POLICE *police;
-	POLICE_ARM *policeArm;
-	POLICE_LEG *policeLeg;
+	POLICE *police = &policeWk[0];
 
-	switch (pType)
-	{	// もとのポインタ型に代入しなおす
-	case TYPE_BODY:
-		// 本体回転処理
-		police = &policeWk[0];
-		for (int i = 0; i < POLICE_MAX; i++, police++)
-		{
-			// 回転軸XZの設定
-			police->axisXZ = AxisXZ;
-			// 回転軸Yの設定
-			police->axisY = AxisY;
-			// XZ回転軸ベクトルが0の場合のエラー処理
-			if (police->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-			{	// 回転角度を0にする
-				police->fangleXZ = 0.0f;
-			}
-			// Y回転軸ベクトルが0の場合のエラー処理
-			if (police->axisY == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-			{	// 回転角度を0にする
-				police->fangleY = 0.0f;
-			}
-			// 回転クォータニオンを生成
-			D3DXQuaternionRotationAxis(&police->qRotateXZ, &police->axisXZ, police->fangleXZ);		// XZ軸回転クォータニオン生成
-			D3DXQuaternionRotationAxis(&police->qRotateY, &police->axisY, police->fangleY);			// Y軸回転クォータニオン生成(Atに向かせる)
-			D3DXQuaternionMultiply(&police->qAnswer, &police->qRotateXZ, &police->qRotateY);		// 回転クォータニオンを合成
-		}
-		break;
-	case TYPE_ARM:
-		// アーム回転処理
-		//police = &policeWk[0];
-		policeArm = &policeArmWk[0];
-		for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
-		{
-			if (policeArm->use)
-			{	// 使用か未使用かチェック
-				// 回転軸XZの設定
-				policeArm->axisXZ = AxisXZ;
-				// 回転軸Yの設定
-				policeArm->axisY = AxisY;
-				// XZ軸回転角度の設定
-				if (policeArm->type == 0)
-				{	// 右腕の場合
-					if (policeArm->fangleXZ >= fAngle)
-					{	// 90度まで腕上がったらフラグ切り替え
-						policeArm->rotf = false;
-					}
-					if (policeArm->fangleXZ <= -fAngle)
-					{	// 90度まで腕上がったらフラグ切り替え
-						policeArm->rotf = true;
-					}
-					if (policeArm->rotf == true)
-					{	// 正の回転
-						policeArm->fangleXZ += fAngle / frame;
-						if (policeArm->fangleXZ > D3DX_PI)
-						{
-							policeArm->fangleXZ -= D3DX_PI * 2.0f;
-						}
-					}
-					if (policeArm->rotf == false)
-					{	// 負の回転
-						policeArm->fangleXZ -= fAngle / frame;
-						if (policeArm->fangleXZ < -D3DX_PI)
-						{
-							policeArm->fangleXZ += D3DX_PI * 2.0f;
-						}
-					}
+	for (int k = 0; k < POLICE_MAX; k++, police++)
+	{	// 当たり判定が有効なポリスのみチェック
+		if (!police->able_hit) continue;
+		for (int j = 0; j < CHECK_POINT_Y_MAX; j++)
+		{	// 配列Y要素についてチェック
+			for (int i = 0; i < CHECK_POINT_X_MAX; i++)
+			{	// 配列X要素についてチェック
+				if (CollisionBC(police->Eye, CheckPointWk[j][i], 5.0f, 5.0f))
+				{	// チェックポイントに侵入したらポリスの移動設定
+					SetPoliceMove(police, j, i);
+					// 当たり判定有効フラグをfalseに
+					police->able_hit = false;
+					break;
 				}
-				if (policeArm->type == 1)
-				{	// 左腕の場合
-					if (policeArm->fangleXZ >= fAngle)
-					{	// 90度まで腕上がったらフラグ切り替え
-						policeArm->rotf = true;
-					}
-					if (policeArm->fangleXZ <= -fAngle)
-					{	// 90度まで腕上がったらフラグ切り替え
-						policeArm->rotf = false;
-					}
-					if (policeArm->rotf == true)
-					{	// 負の回転
-						policeArm->fangleXZ -= fAngle / frame;
-						if (policeArm->fangleXZ < -D3DX_PI)
-						{
-							policeArm->fangleXZ += D3DX_PI * 2.0f;
-						}
-					}
-					if (policeArm->rotf == false)
-					{	// 正の回転
-						policeArm->fangleXZ += fAngle / frame;
-						if (policeArm->fangleXZ > D3DX_PI)
-						{
-							policeArm->fangleXZ -= D3DX_PI * 2.0f;
-						}
-					}
-				}
-				// 本体と同じ注視点を向くためのY軸回転角度をセット
-				//policeArm->fangleY = police->fangleY;			// 本体と一致
-
-				// XZ回転軸ベクトルが0の場合のエラー処理
-				if (policeArm->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-				{	// 回転角度を0にする
-					policeArm->fangleXZ = 0.0f;
-				}
-				// Y回転軸ベクトルが0の場合のエラー処理
-				if (policeArm->axisY == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-				{	// 回転角度を0にする
-					policeArm->fangleY = 0.0f;
-				}
-				// 回転クォータニオンを生成
-				D3DXQuaternionRotationAxis(&policeArm->qRotateXZ, &policeArm->axisXZ, policeArm->fangleXZ);		// XZ軸回転クォータニオン生成
-				D3DXQuaternionRotationAxis(&policeArm->qRotateY, &policeArm->axisY, policeArm->fangleY);		// Y軸回転クォータニオン生成(Atに向かせる)
-				D3DXQuaternionMultiply(&policeArm->qAnswer, &policeArm->qRotateXZ, &policeArm->qRotateY);		// 回転クォータニオンを合成
 			}
 		}
-		break;
-	case TYPE_LEG:
-		// レッグ回転処理
-		//police = &policeWk[0];
-		policeLeg = &policeLegWk[0];
-		for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
-		{
-			if (policeLeg->use)
-			{	// 使用か未使用かチェック
-				// 回転軸XZの設定
-				policeLeg->axisXZ = AxisXZ;
-				// 回転軸Yの設定
-				policeLeg->axisY = AxisY;
-				// XZ軸回転角度の設定
-				if (policeLeg->type == 0)
-				{	// 右足の場合
-					if (policeLeg->fangleXZ >= fAngle)
-					{	// 90度まで足上がったらフラグ切り替え
-						policeLeg->rotf = true;
-					}
-					if (policeLeg->fangleXZ <= -fAngle)
-					{	// 90度まで足上がったらフラグ切り替え
-						policeLeg->rotf = false;
-					}
-					if (policeLeg->rotf == true)
-					{	// 負の回転
-						policeLeg->fangleXZ -= fAngle / frame;
-						if (policeLeg->fangleXZ < -D3DX_PI)
-						{
-							policeLeg->fangleXZ += D3DX_PI * 2.0f;
-						}
-					}
-					if (policeLeg->rotf == false)
-					{	// 正の回転
-						policeLeg->fangleXZ += fAngle / frame;
-						if (policeLeg->fangleXZ > D3DX_PI)
-						{
-							policeLeg->fangleXZ -= D3DX_PI * 2.0f;
-						}
-					}
-				}
-				if (policeLeg->type == 1)
-				{	// 左足の場合
-					if (policeLeg->fangleXZ >= fAngle)
-					{	// 90度まで足上がったらフラグ切り替え
-						policeLeg->rotf = false;
-					}
-					if (policeLeg->fangleXZ <= -fAngle)
-					{	// 90度まで足上がったらフラグ切り替え
-						policeLeg->rotf = true;
-					}
-					if (policeLeg->rotf == true)
-					{	// 正の回転
-						policeLeg->fangleXZ += fAngle / frame;
-						if (policeLeg->fangleXZ > D3DX_PI)
-						{
-							policeLeg->fangleXZ -= D3DX_PI * 2.0f;
-						}
-					}
-					if (policeLeg->rotf == false)
-					{	// 負の回転
-						policeLeg->fangleXZ -= fAngle / frame;
-						if (policeLeg->fangleXZ < -D3DX_PI)
-						{
-							policeLeg->fangleXZ += D3DX_PI * 2.0f;
-						}
-					}
-				}
-				// 本体と同じ注視点を向くためのY軸回転角度をセット
-				//policeLeg->fangleY = police->fangleY;			// 本体と一致
-				// XZ回転軸ベクトルが0の場合のエラー処理
-				if (policeLeg->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-				{	// 回転角度を0にする
-					policeLeg->fangleXZ = 0.0f;
-				}
-				// Y回転軸ベクトルが0の場合のエラー処理
-				if (policeLeg->axisY == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
-				{	// 回転角度を0にする
-					policeLeg->fangleY = 0.0f;
-				}
-				// 回転クォータニオンを生成
-				D3DXQuaternionRotationAxis(&policeLeg->qRotateXZ, &policeLeg->axisXZ, policeLeg->fangleXZ);		// XZ軸回転クォータニオン生成
-				D3DXQuaternionRotationAxis(&policeLeg->qRotateY, &policeLeg->axisY, policeLeg->fangleY);		// Y軸回転クォータニオン生成(Atに向かせる)
-				D3DXQuaternionMultiply(&policeLeg->qAnswer, &policeLeg->qRotateXZ, &policeLeg->qRotateY);		// 回転クォータニオンを合成
-			}
-		}
-		break;
 	}
 }
 //=============================================================================
@@ -902,5 +613,196 @@ void SetParts(void)
 			policeLeg->use = true;
 			break;
 		}
+	}
+}
+//=============================================================================
+// ポリスの移動設定関数(引数1:ポリス構造体へのポインタ,引数2:二次元配列のY要素,引数3:二次元配列のX要素)
+//=============================================================================
+void SetPoliceMove(POLICE *police, int y, int x)
+{
+	int n = 0;
+	int m = 0;
+
+	// ポリスランダム巡回移動処理
+	while (1)
+	{	// ランダムで次の目標ポイントを決定
+		n = rand() % CHECK_POINT_Y_MAX;		// 配列のY要素番号をランダムで求める
+		m = rand() % CHECK_POINT_X_MAX;		// 配列のX要素番号をランダムで求める
+											// 上下左右なら許可
+		if (n == y && m == x + 1 || n == y && m == x - 1 || m == x && n == y + 1 || m == x && n == y - 1) break;
+	}
+	// 注視点を次の目標ポイントにセット
+	police->At = CheckPointWk[n][m];
+	// 注視点を向くためのY軸回転角度を求める
+	D3DXVECTOR3 vec = police->Eye - police->At;		// 注視点へのベクトルを求める
+	police->fangleY = (atan2f(vec.x, vec.z));		// 回転角度を求める
+													// 現在のポリスの座標から次の目標ポイントへの移動ベクトルを求める
+	police->move = CheckPointWk[n][m] - police->Eye;
+	// 移動ベクトルを正規化
+	D3DXVec3Normalize(&police->move, &police->move);
+	// 移動速度調整
+	police->move = police->move * POLICE_SPEED;
+}
+//=============================================================================
+// ポリスの移動関数
+//=============================================================================
+void PoliceMove(void)
+{
+	POLICE *police = &policeWk[0];
+	POLICE_ARM *policeArm = &policeArmWk[0];
+	POLICE_LEG *policeLeg = &policeLegWk[0];
+
+	// ポリス本体の移動
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		police->Eye.x += police->move.x;
+		police->Eye.y += police->move.y;
+		police->Eye.z += police->move.z;
+	}
+	// 本体と親子関係のパーツを移動
+	police = &policeWk[0];
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		// アームの移動
+		policeArm = &policeArmWk[0];
+		for (int j = 0; j < POLICE_ARM_MAX; j++, policeArm++)
+		{
+			if (!policeArm->use) continue;
+			if (policeArm->num == police->num)
+			{	// 本体の座標と一致させる
+				policeArm->Eye = police->Eye;
+				policeArm->At = police->At;
+				// 本体と同じ注視点を向くためのY軸回転角度をセット
+				policeArm->fangleY = police->fangleY;
+			}
+		}
+		// レッグの移動
+		policeLeg = &policeLegWk[0];
+		for (int k = 0; k < POLICE_LEG_MAX; k++, policeLeg++)
+		{	// 本体の座標と一致させる
+			if (!policeLeg->use) continue;
+			if (policeLeg->num == police->num)
+			{
+				policeLeg->Eye = police->Eye;
+				policeLeg->At = police->At;
+				// 本体と同じ注視点を向くためのY軸回転角度をセット
+				policeLeg->fangleY = police->fangleY;
+			}
+		}
+	}
+}
+//=============================================================================
+// アニメーション設定関数
+// (引数1:設定対象の構造体へのポインタ,
+//  引数2:XZ軸回転角度,
+//  引数3:一往復にかかるフレーム数,
+//  引数4:回転軸XZ,
+//  引数5:回転軸Y)
+//=============================================================================
+template <typename CLASS> void SetAnimation(CLASS *pIn, float fAngle, int frame, D3DXVECTOR3 AxisXZ, D3DXVECTOR3 AxisY)		// メモ:typenameはclassと書いてもよい
+{
+	if (pIn->use)
+	{	// 使用か未使用かチェック
+		// 回転軸XZの設定
+		pIn->axisXZ = AxisXZ;
+		// 回転軸Yの設定
+		pIn->axisY = AxisY;
+		// XZ軸回転角度の設定
+		if (pIn->type == 0)
+		{	// 右パーツの場合
+			if (pIn->fangleXZ >= fAngle)
+			{	// 一定角度までパーツ上がったらフラグ切り替え
+				pIn->rotf = false;
+			}
+			if (pIn->fangleXZ <= -fAngle)
+			{	// 一定角度までパーツ上がったらフラグ切り替え
+				pIn->rotf = true;
+			}
+			if (pIn->rotf == true)
+			{	// 正の回転
+				pIn->fangleXZ += fAngle / frame;
+				if (pIn->fangleXZ > D3DX_PI)
+				{
+					pIn->fangleXZ -= D3DX_PI * 2.0f;
+				}
+			}
+			if (pIn->rotf == false)
+			{	// 負の回転
+				pIn->fangleXZ -= fAngle / frame;
+				if (pIn->fangleXZ < -D3DX_PI)
+				{
+					pIn->fangleXZ += D3DX_PI * 2.0f;
+				}
+			}
+		}
+		if (pIn->type == 1)
+		{	// 左パーツの場合
+			if (pIn->fangleXZ >= fAngle)
+			{	// 一定角度までパーツ上がったらフラグ切り替え
+				pIn->rotf = true;
+			}
+			if (pIn->fangleXZ <= -fAngle)
+			{	// 一定角度までパーツ上がったらフラグ切り替え
+				pIn->rotf = false;
+			}
+			if (pIn->rotf == true)
+			{	// 負の回転
+				pIn->fangleXZ -= fAngle / frame;
+				if (pIn->fangleXZ < -D3DX_PI)
+				{
+					pIn->fangleXZ += D3DX_PI * 2.0f;
+				}
+			}
+			if (pIn->rotf == false)
+			{	// 正の回転
+				pIn->fangleXZ += fAngle / frame;
+				if (pIn->fangleXZ > D3DX_PI)
+				{
+					pIn->fangleXZ -= D3DX_PI * 2.0f;
+				}
+			}
+		}
+		// XZ回転軸ベクトルが0の場合のエラー処理
+		if (pIn->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+		{	// 回転角度を0にする
+			pIn->fangleXZ = 0.0f;
+		}
+		// Y回転軸ベクトルが0の場合のエラー処理
+		if (pIn->axisY == D3DXVECTOR3(0.0f, 0.0f, 0.0f))
+		{	// 回転角度を0にする
+			pIn->fangleY = 0.0f;
+		}
+		// 回転クォータニオンを生成
+		D3DXQuaternionRotationAxis(&pIn->qRotateXZ, &pIn->axisXZ, pIn->fangleXZ);	// XZ軸回転クォータニオン生成
+		D3DXQuaternionRotationAxis(&pIn->qRotateY, &pIn->axisY, pIn->fangleY);		// Y軸回転クォータニオン生成(Atに向かせる)
+		D3DXQuaternionMultiply(&pIn->qAnswer, &pIn->qRotateXZ, &pIn->qRotateY);		// 回転クォータニオンを合成
+	}
+}
+//=============================================================================
+// アニメーション処理関数
+//=============================================================================
+void Animation(void)
+{
+	POLICE *police = &policeWk[0];
+	POLICE_ARM *policeArm = &policeArmWk[0];
+	POLICE_LEG *policeLeg = &policeLegWk[0];
+
+	// ポリス本体アニメーション処理
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		SetAnimation(police, NULL, NULL,
+			D3DXVECTOR3(0.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	}
+	// アームアニメーション処理
+	for (int i = 0; i < POLICE_ARM_MAX; i++, policeArm++)
+	{
+		SetAnimation(policeArm, POLICE_ARM_ANGLE, POLICE_ARM_ANIM_FRAME,
+			D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	}
+	// レッグアニメーション処理
+	for (int i = 0; i < POLICE_LEG_MAX; i++, policeLeg++)
+	{
+		SetAnimation(policeLeg, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
+			D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
 	}
 }
