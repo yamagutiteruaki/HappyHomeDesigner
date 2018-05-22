@@ -116,7 +116,7 @@ void UpdateButton(void)
 
 		if (GetKeyboardTrigger(DIK_B))
 		{
-			button->use = button->use ? false : true;
+			Button();
 		}
 		if (button->use == true)
 		{
@@ -134,9 +134,9 @@ void UpdateButton(void)
 				button->pos.x -= 5 * rate;
 			}
 		}
-
-		if (button->use == false)
+		else
 		{
+			button->use = false;
 			rate = 10;
 
 			button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
@@ -255,4 +255,16 @@ void SetVertexButton(int no)
 BUTTON *GetButton(int no)
 {
 	return(&buttonWk[no]);
+}
+
+//========================================================
+// ボタンの表示　falseならtrueを、trueならfalseを。
+//========================================================
+bool Button(void)
+{
+	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
+
+	//return button->use = button->use ? false : true;
+	return button->use = true;
+
 }
