@@ -14,8 +14,10 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_FIELD	"data/TEXTURE/field_glass.jpg"								// 読み込むテクスチャファイル名
-//#define	TEXTURE_HOME	"data/TEXTURE/field001.jpg"							// 読み込むテクスチャファイル名
+
+#define	TEXTURE_FIELD	"data/TEXTURE/field_stone.jpg"								// 読み込むテクスチャファイル名
+
+
 
 #define	FIELD_SIZE_X			(1000.0f)										// 地面のサイズ(X方向)
 #define	FIELD_SIZE_Z			(1000.0f)										// 地面のサイズ(Z方向)
@@ -41,7 +43,7 @@ typedef struct // フィールド構造体
 
 }FIELD;
 
-typedef struct // 家の構造体
+
 {
 	D3DXMATRIX		world;						// ワールドマトリックス
 	D3DXVECTOR3		Pos;						// ポリゴン表示位置の中心座標

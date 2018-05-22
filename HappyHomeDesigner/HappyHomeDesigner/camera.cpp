@@ -20,11 +20,13 @@
 // プロトタイプ宣言
 //*****************************************************************************
 void CameraWork(D3DXVECTOR3 *at);
+void CameraWorkReset();
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-CAMERA					cameraWk;
+CAMERA	cameraWk;
+bool	CameraReset = false;	// カメラリセットのスイッチ
 
 //=============================================================================
 // 初期化処理
@@ -44,6 +46,10 @@ HRESULT InitCamera(int nType)
 	camera->fHAngleMargin = 0.0f;
 	camera->fLength = CAMERA_LENGTH;
 	camera->fLengthTemp = 0;
+
+	camera->rotDest = 0.0f;
+
+
 
 	return S_OK;
 }
@@ -79,6 +85,8 @@ void UpdateCamera(void)
 
 		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
 		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+		CameraReset = false;
 	}
 	if (GetKeyboardPress(DIK_C))
 	{// 視点旋回「右」
@@ -90,6 +98,8 @@ void UpdateCamera(void)
 
 		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
 		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+		CameraReset = false;
 	}
 
 	if (GetKeyboardPress(DIK_W))
@@ -121,18 +131,30 @@ void UpdateCamera(void)
 	// カメラリセット
 	if (GetKeyboardTrigger(DIK_X))
 	{
-		camera->rotCamera.y = player->rot.y + D3DX_PI;
+		camera->rotDest = player->rot.y + D3DX_PI;
 
-
+		CameraReset = true;
 	}
-	
+
+	// カメラリセットの演出
+	if (CameraReset == true)
+	{
+		CameraWorkReset();
+	}
+
 	// カメラワーク
 	CameraWork(&(player->Eye));
 
-	// 角度を修正
+	// 角度の修正
 	camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
+	camera->rotDest = PiCalculate360(camera->rotDest);
 
+#ifdef _DEBUG
+	PrintDebugProc("CameraReset: %d\n", CameraReset);
+	PrintDebugProc("\n");
 
+#endif
+	
 }
 
 //=============================================================================
@@ -156,6 +178,38 @@ void CameraWork(D3DXVECTOR3 *at)
 	// カメラの位置 = カメラの注視点 + (注視点からの角度 * 視点までの距離)
 	camera->posCameraEye = camera->posCameraAt + (vec * camera->fLength);
 
+}
+
+//=============================================================================
+// カメラリセットの演出
+//=============================================================================
+void CameraWorkReset()
+{
+	CAMERA *camera = GetCamera();
+	float Diff;						// 差分
+
+	// 目的の角度までの差分
+	Diff = camera->rotDest - camera->rotCamera.y;
+	if (Diff > D3DX_PI)
+	{
+		Diff -= D3DX_PI * 2.0f;
+	}
+	if (Diff < -D3DX_PI)
+	{
+		Diff += D3DX_PI * 2.0f;
+	}
+
+	// 目的の角度まで慣性をかける
+	camera->rotCamera.y += (float)(Diff * 0.15);
+
+	if (camera->rotCamera.y > D3DX_PI)
+	{
+		camera->rotCamera.y -= D3DX_PI * 2.0f;
+	}
+	if (camera->rotCamera.y < -D3DX_PI)
+	{
+		camera->rotCamera.y += D3DX_PI * 2.0f;
+	}
 
 }
 

@@ -25,10 +25,16 @@
 
 #define PLAYER_HP				(1)							// 残機
 
+#define	BORDER_X1		(-480.00f)						// 境界線X1：左
+#define	BORDER_X2		(480.00f)						// 境界線X2：右
+#define	BORDER_Z1		(-480.00f)						// 境界線Z1：前
+#define	BORDER_Z2		(480.00f)						// 境界線Z2：後ろ
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void PlayerMove(void);
+void PlayerBorder(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -233,22 +239,33 @@ void DrawPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
+	PLAYER *player = &playerWk[0];
+
 	PlayerMove();
+	PlayerBorder();
 
 #ifdef _DEBUG
-	//PLAYER *player = &playerWk[0];
-	//CAMERA *camera = GetCamera();
+	CAMERA *camera = GetCamera();
 
-	//PrintDebugProc("player rot: %f\n", player->rotDest.y);
-	//PrintDebugProc("\n");
+	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y , player->Eye.z);
+	PrintDebugProc("\n");
 
-	//PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
-	//PrintDebugProc("\n");
+	PrintDebugProc("player rot: %f\n", player->rotDest.y);
+	PrintDebugProc("\n");
 
-	//PrintDebugProc("camera length: %f\n", camera->fLength);
-	// PrintDebugProc("\n");
+	PrintDebugProc("camera rot: %f\n", camera->rotCamera.y);
+	PrintDebugProc("\n");
+
+	PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
+	 PrintDebugProc("\n");
+
+
 	
 #endif
+
+	// 角度を修正
+	player->rot.y = PiCalculate360(player->rot.y);
+	player->rotDest.y = PiCalculate360(player->rotDest.y);
 
 }
 
@@ -368,5 +385,38 @@ void PlayerMove(void)
 
 	// 角度を修正
 	player->rot.y = PiCalculate360(player->rot.y);
+
+}
+
+//=============================================================================
+// プレイヤーの移動制限
+//=============================================================================
+void PlayerBorder(void)
+{
+	PLAYER *player = &playerWk[0];
+
+	// 左の壁
+	if (player->Eye.x < BORDER_X1)
+	{
+		player->Eye.x = BORDER_X1;
+	}
+
+	// 右の壁
+	if (player->Eye.x > BORDER_X2)
+	{
+		player->Eye.x = BORDER_X2;
+	}
+
+	// 後ろの壁
+	if (player->Eye.z < BORDER_Z1)
+	{
+		player->Eye.z = BORDER_Z1;
+	}
+
+	// 前の壁
+	if (player->Eye.z > BORDER_Z2)
+	{
+		player->Eye.z = BORDER_Z2;
+	}
 
 }
