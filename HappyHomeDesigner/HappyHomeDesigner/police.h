@@ -14,7 +14,7 @@
 //*****************************************************************************
 // ポリス本体関係
 #define	POLICE_SPEED			(1.20f)											// 移動速度係数
-#define	POLICE_MAX				(3)												// ポリスの最大数
+#define	POLICE_MAX				(2)												// ポリスの最大数
 #define	POLICE_MODEL			"data/MODEL/POLICE/standing_body.x"				// 読み込むモデル名
 #define	POLICE_SCALE_X			(1.0f * 1.2)									// スケールのX成分
 #define	POLICE_SCALE_Y			(1.0f * 1.2)									// スケールのY成分
