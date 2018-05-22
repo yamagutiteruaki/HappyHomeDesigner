@@ -169,6 +169,7 @@
     <ClCompile Include="police.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="resultlogo.cpp" />
+    <ClCompile Include="search.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="title.cpp" />
@@ -202,6 +203,7 @@
     <ClInclude Include="police.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="resultlogo.h" />
+    <ClInclude Include="search.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="title.h" />

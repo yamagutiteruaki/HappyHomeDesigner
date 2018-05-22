@@ -11,6 +11,7 @@
 
 // 千坂担当分で必要なインクルード
 #include "police.h"
+#include "search.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -32,6 +33,7 @@
 HRESULT InitWorkChisaka(int nType)
 {
 	InitPolice(nType);
+	InitSearch(nType);
 	return S_OK;
 }
 
@@ -41,6 +43,7 @@ HRESULT InitWorkChisaka(int nType)
 void UninitWorkChisaka(void)
 {
 	UninitPolice();
+	UninitSearch();
 }
 
 //=============================================================================
@@ -54,6 +57,7 @@ void UpdateWorkChisaka(void)
 		break;
 	case STAGE_GAME:
 		UpdatePolice();
+		UpdateSearch();
 		break;
 	case STAGE_RESULT:
 		break;
@@ -72,6 +76,7 @@ void DrawWorkChisaka(void)
 		break;
 	case STAGE_GAME:
 		DrawPolice();
+		DrawSearch();
 		break;
 	case STAGE_RESULT:
 		break;
