@@ -190,6 +190,10 @@ void UpdateStage(void)
 		SetSoundBgm(SOUND_BGM_TITLE);
 		break;
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_HOUSE4:
 		UpdateGame();				// ゲーム
 		SetSoundBgm(SOUND_BGM_GAME);
 		break;
@@ -216,6 +220,10 @@ void DrawStage(void)
 		DrawTitle();					// タイトル
 		break;
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_HOUSE4:
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
