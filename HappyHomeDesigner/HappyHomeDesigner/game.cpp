@@ -71,10 +71,10 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
+	DrawWorkImagawa();
 
 	DrawWorkChisaka();
 	DrawWorkSon();
-	DrawWorkImagawa();
 	DrawWorkYamaguchi();
 	DrawWorkSekiguchi();
 	DrawWorkMatsuo();

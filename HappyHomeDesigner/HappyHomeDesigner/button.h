@@ -54,6 +54,7 @@ void UninitButton(void);
 void UpdateButton(void);
 void DrawButton(void);
 BUTTON *GetButton(int no);
+bool Button(void);
 
 
 #endif

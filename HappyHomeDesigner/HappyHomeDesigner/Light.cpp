@@ -66,16 +66,16 @@ void InitLight(void)
 	g_aLight[1].Type = D3DLIGHT_DIRECTIONAL;
 	
 	// ライト1の拡散光の設定
-	g_aLight[1].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, 1.0f);
+	//g_aLight[1].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, 0.5f);
 	
 	// ライト1の鏡面反射光の設定
 	//	g_aLight[1].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 	
 	// ライト1の環境光の設定
-	//	g_aLight[1].Ambient = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	g_aLight[1].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 0.5f);
 	
 	// ライト1の方向の設定
-	vecDir = D3DXVECTOR3(0.4f, -0.7f, 0.5f);
+	vecDir = D3DXVECTOR3(0.4f, 0.7f, 0.5f);
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
 	
 	// ライト1をレンダリングパイプラインに設定

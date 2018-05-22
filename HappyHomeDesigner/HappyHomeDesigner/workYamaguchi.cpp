@@ -10,6 +10,7 @@
 #include "fade.h"
 
 // 山口担当分で必要なインクルード
+#include "house.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,7 +31,6 @@
 //=============================================================================
 HRESULT InitWorkYamaguchi(int nType)
 {
-
 	return S_OK;
 }
 
@@ -48,11 +48,7 @@ void UpdateWorkYamaguchi(void)
 {
 	switch (GetStage())
 	{
-	case STAGE_TITLE:
-		break;
-	case STAGE_GAME:
-		break;
-	case STAGE_RESULT:
+	case STAGE_HOUSE2:
 		break;
 	}
 
@@ -65,11 +61,7 @@ void DrawWorkYamaguchi(void)
 {
 	switch (GetStage())
 	{
-	case STAGE_TITLE:
-		break;
-	case STAGE_GAME:
-		break;
-	case STAGE_RESULT:
+	case STAGE_HOUSE1:
 		break;
 	}
 }

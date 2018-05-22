@@ -23,15 +23,15 @@
 // プロトタイプ宣言
 //*****************************************************************************
 
-HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice);
+HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice,int no);
 
 
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		g_pD3DTextureField = NULL;	// テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffField = NULL;	// 頂点バッファへのポインタ
+LPDIRECT3DTEXTURE9		g_pD3DTextureField[FIELD_MAX];	// テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffField[FIELD_MAX];	// 頂点バッファへのポインタ
 
 LPDIRECT3DTEXTURE9		g_pD3DTextureHome [HOME_MAX];	// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffHome [HOME_MAX];	// 頂点バッファへのポインタ
@@ -66,7 +66,11 @@ const char *FileNameDoor[HOME_MAX] =
 	"data/MODEL/ITEM/doa.x",		// ドア3
 	"data/MODEL/ITEM/doa.x",		// ドア4
 };
-
+const char *FileNameField[FIELD_MAX] =
+{
+	TEXTURE_FIELD,		// 家1
+	TEXTURE_FIELD1,		// 家2
+};
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -75,16 +79,16 @@ HRESULT InitField(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	FIELD *field = GetField(0);
 	HOME  *home = GetHome(0);
+
+	for(int i=0;i<FIELD_MAX;i++,field++)
 	{
-		MakeVertexField(pDevice);
 
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-			TEXTURE_FIELD,			// ファイルの名前
-			&g_pD3DTextureField);	// 読み込むメモリー
-									// テクスチャの読み込み
-
-									// テクスチャの読み込み
+			FileNameField[i],			// ファイルの名前
+			&g_pD3DTextureField[i]);	// 読み込むメモリー
+		
+		MakeVertexField(pDevice,i);
 
 	}
 
@@ -162,20 +166,21 @@ HRESULT InitField(void)
 //=============================================================================
 void UninitField(void)
 {
+	for (int i = 0; i < FIELD_MAX; i++)
+	{
+		//フィールド
+		if (g_pD3DTextureField != NULL)
+		{// テクスチャの開放
+			g_pD3DTextureField[i]->Release();
+			g_pD3DTextureField[i] = NULL;
+		}
 
-	//フィールド
-	if (g_pD3DTextureField != NULL)
-	{// テクスチャの開放
-		g_pD3DTextureField->Release();
-		g_pD3DTextureField = NULL;
+		if (g_pD3DVtxBuffField != NULL)
+		{// 頂点バッファの開放
+			g_pD3DVtxBuffField[i]->Release();
+			g_pD3DVtxBuffField[i] = NULL;
+		}
 	}
-
-	if (g_pD3DVtxBuffField != NULL)
-	{// 頂点バッファの開放
-		g_pD3DVtxBuffField->Release();
-		g_pD3DVtxBuffField = NULL;
-	}
-
 
 	//家
 	for ( int i=0; i < HOME_MAX; i++)
@@ -231,15 +236,6 @@ void UninitField(void)
 void UpdateField(void)
 {
 
-	//HOME  *home = GetHome(0);
-
-	//for (int i = 0; i < HOME_MAX; i++, home++)
-	//{
-	//	home->Rot.x +=i* 0.1f;
-	//	home->Rot.y +=i* 0.01f;
-	//	home->Rot.z +=i* 0.001f;
-
-	//}
 }
 
 //=============================================================================
@@ -251,42 +247,55 @@ void DrawField(void)
 	D3DXMATRIX mtxRot, mtxTranslate, mtxScale;
 	D3DXMATERIAL *pD3DXMat;
 	D3DXMATERIAL matDef;
+	int fieldnum;
 
-	FIELD *field = GetField(0);
-	for (int i = 0; i < FIELD_MAX; i++, field++)
+	if (GetStage() == STAGE_GAME)
 	{
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&field->world);
-
-
-		// 移動を反映
-		D3DXMatrixTranslation(&mtxTranslate, field->Pos.x, field->Pos.y, field->Pos.z);
-		D3DXMatrixMultiply(&field->world, &field->world, &mtxTranslate);
-
-		// ワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &field->world);
-
-		// 頂点バッファをデバイスのデータストリームにバインド
-		pDevice->SetStreamSource(0, g_pD3DVtxBuffField, 0, sizeof(VERTEX_3D));
-
-		// 頂点フォーマットの設定
-		pDevice->SetFVF(FVF_VERTEX_3D);
-
-		// テクスチャの設定
-		pDevice->SetTexture(0, g_pD3DTextureField);
-
-		// ポリゴンの描画
-		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i * 4, NUM_POLYGON);
+		fieldnum = 0;
 	}
+	else if (GetStage() == STAGE_HOUSE1
+		|| GetStage() == STAGE_HOUSE2
+		|| GetStage() == STAGE_HOUSE3
+		|| GetStage() == STAGE_HOUSE4)
+	{
+		fieldnum = 1;
+	}
+	FIELD *field = GetField(fieldnum);
+
+	// ワールドマトリックスの初期化
+	D3DXMatrixIdentity(&field->world);
+
+
+	// 移動を反映
+	D3DXMatrixTranslation(&mtxTranslate, field->Pos.x, field->Pos.y, field->Pos.z);
+	D3DXMatrixMultiply(&field->world, &field->world, &mtxTranslate);
+
+	// ワールドマトリックスの設定
+	pDevice->SetTransform(D3DTS_WORLD, &field->world);
+
+	// 頂点バッファをデバイスのデータストリームにバインド
+	pDevice->SetStreamSource(0, g_pD3DVtxBuffField[fieldnum], 0, sizeof(VERTEX_3D));
+
+	// 頂点フォーマットの設定
+	pDevice->SetFVF(FVF_VERTEX_3D);
+
+	// テクスチャの設定
+	pDevice->SetTexture(0, g_pD3DTextureField[fieldnum]);
+
+	// ポリゴンの描画
+	pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 
 	HOME *home = GetHome(0);
-	for (int i = 0; i < HOME_MAX; i++, home++)
-	{
-		// ライトをon
-		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&home->world);
+	if (GetStage() == STAGE_GAME)
+	{
+		for (int i = 0; i < HOME_MAX; i++, home++)
+		{
+			// ライトをon
+			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+			// ワールドマトリックスの初期化
+			D3DXMatrixIdentity(&home->world);
 
 		// スケールを反映
 		D3DXMatrixScaling(&mtxScale, home->Scl.x,
@@ -294,52 +303,51 @@ void DrawField(void)
 			home->Scl.z);
 		D3DXMatrixMultiply(&home->world,
 		&home->world, &mtxScale);
-		
 
-		// 回転を反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, home->Rot.y, home->Rot.x, home->Rot.z);
-		D3DXMatrixMultiply(&home->world, &home->world, &mtxRot);
+			// 回転を反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRot, home->Rot.y, home->Rot.x, home->Rot.z);
+			D3DXMatrixMultiply(&home->world, &home->world, &mtxRot);
 
-		// 移動を反映
-		D3DXMatrixTranslation(&mtxTranslate, home->Pos.x, home->Pos.y, home->Pos.z);
-		D3DXMatrixMultiply(&home->world, &home->world, &mtxTranslate);
+			// 移動を反映
+			D3DXMatrixTranslation(&mtxTranslate, home->Pos.x, home->Pos.y, home->Pos.z);
+			D3DXMatrixMultiply(&home->world, &home->world, &mtxTranslate);
 
-		// ワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &home->world);
+			// ワールドマトリックスの設定
+			pDevice->SetTransform(D3DTS_WORLD, &home->world);
 
-		// 現在のマテリアルを取得
-		pDevice->GetMaterial(&matDef.MatD3D);
-
+			// 現在のマテリアルを取得
+			pDevice->GetMaterial(&matDef.MatD3D);
 
 
-		// マテリアル情報に対するポインタを取得
-		pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatHome[i]->GetBufferPointer();
 
-		for (int j = 0; j < (int) g_nNumMatHome[i]; j++ )
-		{
-			// マテリアルの設定
-			pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+			// マテリアル情報に対するポインタを取得
+			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatHome[i]->GetBufferPointer();
 
-			// テクスチャの設定
-			pDevice->SetTexture(0, g_pD3DTextureHome[i]);
+			for (int j = 0; j < (int)g_nNumMatHome[i]; j++)
+			{
+				// マテリアルの設定
+				pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
 
-			// 描画
-			g_pD3DXMeshHome[i]->DrawSubset(j);
+				// テクスチャの設定
+				pDevice->SetTexture(0, g_pD3DTextureHome[i]);
+
+				// 描画
+				g_pD3DXMeshHome[i]->DrawSubset(j);
+			}
+
+			// ライトをoff
+			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+			//D3DXMATERIAL mat;
+			//
+			//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+			//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+			// マテリアルをデフォルトに戻す
+			pDevice->SetMaterial(&matDef.MatD3D);
 		}
-
-		// ライトをoff
-		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-
-		//D3DXMATERIAL mat;
-		//
-		//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
-		//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-		//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-
-		// マテリアルをデフォルトに戻す
-		pDevice->SetMaterial(&matDef.MatD3D);
-
 	}
 
 	DOOR *door = GetDoor(0);
@@ -408,14 +416,14 @@ void DrawField(void)
 //=============================================================================
 // 頂点の作成
 //=============================================================================
-HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
+HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice,int no)
 {
 	// オブジェクトの頂点バッファを生成
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX* FIELD_MAX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
 		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
 		FVF_VERTEX_3D,				// 使用する頂点フォーマット
 		D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
-		&g_pD3DVtxBuffField,		// 頂点バッファインターフェースへのポインタ
+		&g_pD3DVtxBuffField[no],		// 頂点バッファインターフェースへのポインタ
 		NULL)))						// NULLに設定
 	{
 		return E_FAIL;
@@ -425,7 +433,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 		VERTEX_3D *pVtx;
 
 		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
-		g_pD3DVtxBuffField->Lock(0, 0, (void**)&pVtx, 0);
+		g_pD3DVtxBuffField[no]->Lock(0, 0, (void**)&pVtx, 0);
 
 		for (int i = 0; i < FIELD_MAX; i++, pVtx += 4)
 
@@ -456,7 +464,7 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 		}
 		// 頂点データをアンロックする
-		g_pD3DVtxBuffField->Unlock();
+		g_pD3DVtxBuffField[no]->Unlock();
 	}
 
 	return S_OK;
