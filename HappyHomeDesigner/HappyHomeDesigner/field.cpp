@@ -297,12 +297,12 @@ void DrawField(void)
 			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&home->world);
 
-		// スケールを反映
-		D3DXMatrixScaling(&mtxScale, home->Scl.x,
-			home->Scl.y,
-			home->Scl.z);
-		D3DXMatrixMultiply(&home->world,
-		&home->world, &mtxScale);
+			// スケールを反映
+			D3DXMatrixScaling(&mtxScale, home->Scl.x,
+				home->Scl.y,
+				home->Scl.z);
+			D3DXMatrixMultiply(&home->world,
+				&home->world, &mtxScale);
 
 			// 回転を反映
 			D3DXMatrixRotationYawPitchRoll(&mtxRot, home->Rot.y, home->Rot.x, home->Rot.z);
@@ -348,68 +348,69 @@ void DrawField(void)
 			// マテリアルをデフォルトに戻す
 			pDevice->SetMaterial(&matDef.MatD3D);
 		}
-	}
-
-	DOOR *door = GetDoor(0);
-	for (int i = 0; i < HOME_MAX; i++, home++ ,door++)
-	{
-		// ライトをon
-		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-		// ワールドマトリックスの初期化
-		D3DXMatrixIdentity(&door->world);
-
-		//// スケールを反映
-		//D3DXMatrixScaling(&mtxScale, enemy->scl.x,
-		//	enemy->scl.y,
-		//	enemy->scl.z);
-		//D3DXMatrixMultiply(&g_mtxWorldEnemy,
-		//	&g_mtxWorldEnemy, &mtxScale);
 
 
-		// 回転を反映
-		D3DXMatrixRotationYawPitchRoll(&mtxRot, door->Rot.y, door->Rot.x, door->Rot.z);
-		D3DXMatrixMultiply(&door->world, &door->world, &mtxRot);
-
-		// 移動を反映
-		D3DXMatrixTranslation(&mtxTranslate, door->Pos.x, door->Pos.y, door->Pos.z);
-		D3DXMatrixMultiply(&door->world, &door->world, &mtxTranslate);
-
-		// ワールドマトリックスの設定
-		pDevice->SetTransform(D3DTS_WORLD, &door->world);
-
-		// 現在のマテリアルを取得
-		pDevice->GetMaterial(&matDef.MatD3D);
-
-
-
-		// マテリアル情報に対するポインタを取得
-		pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatDoor[i]->GetBufferPointer();
-
-		for (int j = 0; j < (int)g_nNumMatDoor[i]; j++)
+		DOOR *door = GetDoor(0);
+		for (int i = 0; i < HOME_MAX; i++, home++, door++)
 		{
-			// マテリアルの設定
-			pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+			// ライトをon
+			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-			// テクスチャの設定
-			pDevice->SetTexture(0, g_pD3DTextureDoor[i]);
+			// ワールドマトリックスの初期化
+			D3DXMatrixIdentity(&door->world);
 
-			// 描画
-			g_pD3DXMeshDoor[i]->DrawSubset(j);
+			//// スケールを反映
+			//D3DXMatrixScaling(&mtxScale, enemy->scl.x,
+			//	enemy->scl.y,
+			//	enemy->scl.z);
+			//D3DXMatrixMultiply(&g_mtxWorldEnemy,
+			//	&g_mtxWorldEnemy, &mtxScale);
+
+
+			// 回転を反映
+			D3DXMatrixRotationYawPitchRoll(&mtxRot, door->Rot.y, door->Rot.x, door->Rot.z);
+			D3DXMatrixMultiply(&door->world, &door->world, &mtxRot);
+
+			// 移動を反映
+			D3DXMatrixTranslation(&mtxTranslate, door->Pos.x, door->Pos.y, door->Pos.z);
+			D3DXMatrixMultiply(&door->world, &door->world, &mtxTranslate);
+
+			// ワールドマトリックスの設定
+			pDevice->SetTransform(D3DTS_WORLD, &door->world);
+
+			// 現在のマテリアルを取得
+			pDevice->GetMaterial(&matDef.MatD3D);
+
+
+
+			// マテリアル情報に対するポインタを取得
+			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatDoor[i]->GetBufferPointer();
+
+			for (int j = 0; j < (int)g_nNumMatDoor[i]; j++)
+			{
+				// マテリアルの設定
+				pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+
+				// テクスチャの設定
+				pDevice->SetTexture(0, g_pD3DTextureDoor[i]);
+
+				// 描画
+				g_pD3DXMeshDoor[i]->DrawSubset(j);
+			}
+
+			// ライトをoff
+			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+			//D3DXMATERIAL mat;
+			//
+			//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+			//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+			// マテリアルをデフォルトに戻す
+			pDevice->SetMaterial(&matDef.MatD3D);
 		}
-
-		// ライトをoff
-		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-
-		//D3DXMATERIAL mat;
-		//
-		//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
-		//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-		//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-
-		// マテリアルをデフォルトに戻す
-		pDevice->SetMaterial(&matDef.MatD3D);
 	}
 }
 
