@@ -6,6 +6,7 @@
 //=============================================================================
 #include "light.h"
 #include "camera.h"
+#include "debugproc.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -27,7 +28,6 @@ void InitLight(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXVECTOR3 vecDir;
-	CAMERA *camera = GetCamera();
 
 	/********** ライト0 **********/
 
@@ -47,9 +47,7 @@ void InitLight(void)
 	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
 
 	// ライト0の方向の設定
-	//vecDir = D3DXVECTOR3(-0.4f, -0.7f, -0.5f);
-	//vecDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-
+	vecDir = D3DXVECTOR3(-0.0f, -1.0f, -0.8f);
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
 
 	// ライト0をレンダリングパイプラインに設定
@@ -201,4 +199,31 @@ void InitLight(void)
 
 	// ライティングモードをON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+}
+
+//=============================================================================
+// 更新処理
+//=============================================================================
+void UpdateLight(void)
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	CAMERA *camera = GetCamera();
+	D3DXVECTOR3 vecDir;
+
+	//vecDir.y = camera->rotCamera.y;
+
+	//vecDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
+
+	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
+
+	//vecDir = camera->rotCamera;
+
+	//g_aLight[0].Position = vecDir;
+
+	//pDevice->SetLight(0, &g_aLight[0]);
+
+#ifdef _DEBUG
+	PrintDebugProc("vecDir: %f\n", vecDir.y);
+	PrintDebugProc("\n");
+#endif
 }
