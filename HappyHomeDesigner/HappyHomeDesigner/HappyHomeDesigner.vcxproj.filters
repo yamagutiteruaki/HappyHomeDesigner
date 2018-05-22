@@ -129,6 +129,9 @@
     <ClCompile Include="arrest.cpp">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClCompile>
+    <ClCompile Include="button.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -222,6 +225,9 @@
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
     <ClInclude Include="arrest.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="button.h">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
   </ItemGroup>
