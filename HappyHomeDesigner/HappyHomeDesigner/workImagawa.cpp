@@ -54,7 +54,7 @@ void UpdateWorkImagawa(void)
 	{
 	case STAGE_TITLE:
 		break;
-	case STAGE_GAME:
+	case STAGE_HOUSE2:
 		UpdateField();
 		UpdateWall();
 		break;
@@ -74,6 +74,7 @@ void DrawWorkImagawa(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
 		DrawField();
 		DrawWall();
 		break;
