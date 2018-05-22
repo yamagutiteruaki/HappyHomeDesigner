@@ -15,6 +15,7 @@
 
 #define TEXTURE_GAME_CLOCK			("data/TEXTURE/clock.png")				// タイマー画像
 #define TEXTURE_GAME_CLOCKHAND		("data/TEXTURE/clockhand01.png")		// 針画像
+#define TEXTURE_GAME_CLOCKHAND02	("data/TEXTURE/clockhand02.png")		
 
 #define CLOCK_POS_X				(SCREEN_CENTER_X)
 #define CLOCK_POS_Y				(60)
@@ -26,6 +27,8 @@
 #define TEXTURE_CLOCK_SIZE_Y		(100/2)		// 同上
 #define TEXTURE_CLOCKHAND_SIZE_X	(100/2)		// 同上
 #define TEXTURE_CLOCKHAND_SIZE_Y	(100/2)		// 同上
+#define TEXTURE_CLOCKHAND02_SIZE_X	(100/2)		// 同上
+#define TEXTURE_CLOCKHAND02_SIZE_Y	(100/2)		// 同上
 
 #define TEXTURE_PATTERN_DIVIDE_X_CLOCKHAND	(1)	// アニメパターンのテクスチャ内分割数（X)
 #define TEXTURE_PATTERN_DIVIDE_Y_CLOCKHAND	(1)	// アニメパターンのテクスチャ内分割数（Y)
