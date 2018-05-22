@@ -31,7 +31,6 @@
 //=============================================================================
 HRESULT InitWorkYamaguchi(int nType)
 {
-	//InitHouse(nType);
 	return S_OK;
 }
 
@@ -40,7 +39,6 @@ HRESULT InitWorkYamaguchi(int nType)
 //=============================================================================
 void UninitWorkYamaguchi(void)
 {
-	//UninitHouse();
 }
 
 //=============================================================================
@@ -51,7 +49,6 @@ void UpdateWorkYamaguchi(void)
 	switch (GetStage())
 	{
 	case STAGE_HOUSE2:
-		//UpdateHouse();
 		break;
 	}
 
@@ -64,8 +61,7 @@ void DrawWorkYamaguchi(void)
 {
 	switch (GetStage())
 	{
-	case STAGE_HOUSE2:
-		//DrawHouse();
+	case STAGE_HOUSE1:
 		break;
 	}
 }
