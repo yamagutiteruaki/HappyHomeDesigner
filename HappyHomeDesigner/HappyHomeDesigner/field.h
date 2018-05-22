@@ -13,8 +13,11 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+
 #define	TEXTURE_FIELD	"data/TEXTURE/field_stone.jpg"								// 読み込むテクスチャファイル名
 #define TEXTURE_FIELD1	"data/TEXTURE/Floor.jpg"
+
+
 
 #define	FIELD_SIZE_X			(1000.0f)										// 地面のサイズ(X方向)
 #define	FIELD_SIZE_Z			(1000.0f)										// 地面のサイズ(Z方向)
@@ -37,13 +40,22 @@ typedef struct // フィールド構造体
 
 }FIELD;
 
-typedef struct // フィールド構造体
+
 {
 	D3DXMATRIX		world;						// ワールドマトリックス
 	D3DXVECTOR3		Pos;						// ポリゴン表示位置の中心座標
 	D3DXVECTOR3		Rot;
-
+	D3DXVECTOR3		Scl;
 }HOME;
+
+typedef struct // ドアの構造体
+{
+	D3DXMATRIX		world;						// ワールドマトリックス
+	D3DXVECTOR3		Pos;						// ポリゴン表示位置の中心座標
+	D3DXVECTOR3		Rot;
+	D3DXVECTOR3		Scl;
+}DOOR;
+
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -55,4 +67,6 @@ void DrawField(void);
 
 FIELD *GetField(int no);
 HOME  *GetHome(int no);
+DOOR *GetDoor(int no);
+
 #endif

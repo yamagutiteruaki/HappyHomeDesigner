@@ -36,12 +36,20 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffField[FIELD_MAX];	// 頂点バッファへのポイン
 LPDIRECT3DTEXTURE9		g_pD3DTextureHome [HOME_MAX];	// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffHome [HOME_MAX];	// 頂点バッファへのポインタ
 
+LPDIRECT3DTEXTURE9		g_pD3DTextureDoor[HOME_MAX];	// テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffDoor[HOME_MAX];	// 頂点バッファへのポインタ
+
 FIELD					g_aField[FIELD_MAX];
 HOME					g_aHome[HOME_MAX];
+DOOR					g_aDoor[HOME_MAX];
 
 LPD3DXMESH			g_pD3DXMeshHome[HOME_MAX];			// ID3DXMeshインターフェイスへのポインタ
 LPD3DXBUFFER		g_pD3DXBuffMatHome[HOME_MAX];		// メッシュのマテリアル情報を格納
 DWORD				g_nNumMatHome[HOME_MAX];				// 属性情報の総数
+
+LPD3DXMESH			g_pD3DXMeshDoor[HOME_MAX];			// ID3DXMeshインターフェイスへのポインタ
+LPD3DXBUFFER		g_pD3DXBuffMatDoor[HOME_MAX];		// メッシュのマテリアル情報を格納
+DWORD				g_nNumMatDoor[HOME_MAX];				// 属性情報の総数
 
 const char *FileNameHome[HOME_MAX] =
 {
@@ -51,14 +59,18 @@ const char *FileNameHome[HOME_MAX] =
 	"data/MODEL/HOUSE/house01.x",		// 自宅
 };
 
+const char *FileNameDoor[HOME_MAX] =
+{
+	"data/MODEL/ITEM/doa.x",		// ドア1
+	"data/MODEL/ITEM/doa.x",		// ドア2
+	"data/MODEL/ITEM/doa.x",		// ドア3
+	"data/MODEL/ITEM/doa.x",		// ドア4
+};
 const char *FileNameField[FIELD_MAX] =
 {
 	TEXTURE_FIELD,		// 家1
 	TEXTURE_FIELD1,		// 家2
 };
-
-
-
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -80,7 +92,7 @@ HRESULT InitField(void)
 
 	}
 
-
+	//フィールドの設定
 	for (int i = 0; i < FIELD_MAX; i++, field++)
 	{
 		field->Pos.x =0.0f;	//X座標の設定
@@ -89,6 +101,7 @@ HRESULT InitField(void)
 
 	}
 
+	//家の設定
 	for (int i = 0; i < HOME_MAX; i++, home++)
 	{
 
@@ -105,16 +118,43 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		//home->Pos.x = -120+i%2*240;	//X座標の設定
-		//home->Pos.y = 0.0f;//Y座標の設定
-		//home->Pos.z = 150.0f + i / 2 * (-240);	//Z座標の設定
-
 		home->Pos.x = -(HOME_DISTANCE) + i % 2 * (HOME_DISTANCE*2);	//X座標の設定
 		home->Pos.y = 0.0f;//Y座標の設定
 		home->Pos.z = HOME_DISTANCE + i / 2 * (-HOME_DISTANCE *2);	//Z座標の設定
 
 		home->Rot.y = D3DX_PI / 2 ;
-	;
+
+		home->Scl.x = 1.5f;
+		home->Scl.y = 1.0f;
+		home->Scl.z = 1.5f;
+
+	}
+
+	home = GetHome(0);
+	DOOR *door = GetDoor(0);
+	//ドアの設定
+	for (int i = 0; i < HOME_MAX; i++, door++ ,home++)
+	{
+
+		// Xファイルの読み込み
+		if (FAILED(D3DXLoadMeshFromX(FileNameDoor[i],
+			D3DXMESH_SYSTEMMEM,
+			pDevice,
+			NULL,
+			&g_pD3DXBuffMatDoor[i],
+			NULL,
+			&g_nNumMatDoor[i],
+			&g_pD3DXMeshDoor[i])))
+		{
+			return E_FAIL;
+		}
+
+		door->Pos.x = home->Pos.x+25.0f*home->Scl.x;	//X座標の設定
+		door->Pos.y = home->Pos.y;		//Y座標の設定
+		door->Pos.z = home->Pos.z -93.0f*home->Scl.z;	//Z座標の設定
+
+		door->Rot.y = 0.0f;
+		;
 
 	}
 
@@ -165,6 +205,29 @@ void UninitField(void)
 
 	}
 
+	//ドア
+	for (int i = 0; i < HOME_MAX; i++)
+	{
+		if (g_pD3DTextureDoor[i] != NULL)
+		{// テクスチャの開放
+			g_pD3DTextureDoor[i]->Release();
+			g_pD3DTextureDoor[i] = NULL;
+		}
+
+		if (g_pD3DXMeshDoor[i] != NULL)
+		{// メッシュの開放
+			g_pD3DXMeshDoor[i]->Release();
+			g_pD3DXMeshDoor[i] = NULL;
+		}
+
+		if (g_pD3DXBuffMatDoor[i] != NULL)
+		{// マテリアルの開放
+			g_pD3DXBuffMatDoor[i]->Release();
+			g_pD3DXBuffMatDoor[i] = NULL;
+		}
+
+	}
+
 }
 
 //=============================================================================
@@ -181,7 +244,7 @@ void UpdateField(void)
 void DrawField(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	D3DXMATRIX mtxRot, mtxTranslate;
+	D3DXMATRIX mtxRot, mtxTranslate, mtxScale;
 	D3DXMATERIAL *pD3DXMat;
 	D3DXMATERIAL matDef;
 	int fieldnum;
@@ -234,13 +297,12 @@ void DrawField(void)
 			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&home->world);
 
-			//// スケールを反映
-			//D3DXMatrixScaling(&mtxScale, enemy->scl.x,
-			//	enemy->scl.y,
-			//	enemy->scl.z);
-			//D3DXMatrixMultiply(&g_mtxWorldEnemy,
-			//	&g_mtxWorldEnemy, &mtxScale);
-
+		// スケールを反映
+		D3DXMatrixScaling(&mtxScale, home->Scl.x,
+			home->Scl.y,
+			home->Scl.z);
+		D3DXMatrixMultiply(&home->world,
+		&home->world, &mtxScale);
 
 			// 回転を反映
 			D3DXMatrixRotationYawPitchRoll(&mtxRot, home->Rot.y, home->Rot.x, home->Rot.z);
@@ -288,6 +350,67 @@ void DrawField(void)
 		}
 	}
 
+	DOOR *door = GetDoor(0);
+	for (int i = 0; i < HOME_MAX; i++, home++ ,door++)
+	{
+		// ライトをon
+		pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
+
+		// ワールドマトリックスの初期化
+		D3DXMatrixIdentity(&door->world);
+
+		//// スケールを反映
+		//D3DXMatrixScaling(&mtxScale, enemy->scl.x,
+		//	enemy->scl.y,
+		//	enemy->scl.z);
+		//D3DXMatrixMultiply(&g_mtxWorldEnemy,
+		//	&g_mtxWorldEnemy, &mtxScale);
+
+
+		// 回転を反映
+		D3DXMatrixRotationYawPitchRoll(&mtxRot, door->Rot.y, door->Rot.x, door->Rot.z);
+		D3DXMatrixMultiply(&door->world, &door->world, &mtxRot);
+
+		// 移動を反映
+		D3DXMatrixTranslation(&mtxTranslate, door->Pos.x, door->Pos.y, door->Pos.z);
+		D3DXMatrixMultiply(&door->world, &door->world, &mtxTranslate);
+
+		// ワールドマトリックスの設定
+		pDevice->SetTransform(D3DTS_WORLD, &door->world);
+
+		// 現在のマテリアルを取得
+		pDevice->GetMaterial(&matDef.MatD3D);
+
+
+
+		// マテリアル情報に対するポインタを取得
+		pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatDoor[i]->GetBufferPointer();
+
+		for (int j = 0; j < (int)g_nNumMatDoor[i]; j++)
+		{
+			// マテリアルの設定
+			pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+
+			// テクスチャの設定
+			pDevice->SetTexture(0, g_pD3DTextureDoor[i]);
+
+			// 描画
+			g_pD3DXMeshDoor[i]->DrawSubset(j);
+		}
+
+		// ライトをoff
+		pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+		//D3DXMATERIAL mat;
+		//
+		//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+		//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+		//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+		// マテリアルをデフォルトに戻す
+		pDevice->SetMaterial(&matDef.MatD3D);
+	}
 }
 
 //=============================================================================
@@ -355,4 +478,8 @@ FIELD *GetField(int no)
 HOME *GetHome(int no)
 {
 	return &g_aHome[no];
+}
+DOOR *GetDoor(int no)
+{
+	return &g_aDoor[no];
 }
