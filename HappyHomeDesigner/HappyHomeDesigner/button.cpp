@@ -109,10 +109,10 @@ void UpdateButton(void)
 	VOICE *voice = GetVoice(0);
 	for (int i = 0; i < BUTTON_MAX; i++, button++)
 	{
-		if (GetKeyboardTrigger(DIK_Q))
-		{
-			SetFade(FADE_OUT, STAGE_HOUSE2);
-		}
+		//if (GetKeyboardTrigger(DIK_Q))
+		//{
+		//	SetFade(FADE_OUT, STAGE_HOUSE1);
+		//}
 #ifdef DEBUG
 		if (GetKeyboardTrigger(DIK_B))
 		{
