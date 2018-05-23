@@ -6,52 +6,29 @@
 //=============================================================================
 #ifndef _SEARCH_H_
 #define _SEARCH_H_
-
 #include "main.h"
-
-//*****************************************************************************
-// プロトタイプ宣言
-//*****************************************************************************
-HRESULT InitSearch(void);
-void UninitSearch(void);
-void UpdateSearch(void);
-void DrawSearch(void);
+#include "police.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_SEARCH	"data/TEXTURE/field000.jpg"	// 読み込むテクスチャファイル名
-#define	SEARCH_MAX		(1)							// 索敵範囲の最大数
-
+#define	TEXTURE_SEARCH	"data/TEXTURE/white.png"	// 読み込むテクスチャファイル名
+#define	SEARCH_MAX		(POLICE_MAX)				// 索敵範囲の最大数
+#define	SEARCH_LENGTH	(100.0f)					// 索敵距離
+#define	SEARCH_ANGLE	(D3DX_PI / 3.5f)			// 索敵視野角
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************
-class SEARCH	// サーチクラス
+class SEARCH :public POLICE		// サーチクラス
 {
 public:
-	bool			use;							// true:使用  false:未使用
-	bool			able_hit;						// true:当たり判定有効  false:当たり判定無効
-	bool			rotf;							// 回転方向の切り替えフラグ(今は使わないのでNULL)
-	D3DXVECTOR3		scl;							// スケール
-	D3DXVECTOR3		Eye;							// ポリスの視点(位置座標)
-	D3DXVECTOR3		At;								// ポリスの注視点(ポリスが見ている座標)
-	D3DXVECTOR3		Up;								// ポリスの上方向
-	D3DXVECTOR3		rot;							// ポリスの向き
-	D3DXVECTOR3		move;							// ポリスの移動量
-	D3DXVECTOR3		rotBasis;						// ポリスの回転の中心点(原点から少し調整するため）
-	D3DXVECTOR3		axisXZ;							// ポリスの回転軸(XZ)
-	D3DXVECTOR3		axisY;							// ポリスの回転軸(Y)
-	D3DXQUATERNION	qRotateXZ;						// ポリスのXZ軸回転クォータニオン
-	D3DXQUATERNION	qRotateY;						// ポリスのY軸回転クォータニオン
-	D3DXQUATERNION	qAnswer;						// ポリスの合成後回転クォータニオン
-	float			fangleXZ;						// 回転角度(XZ)
-	float			fangleY;						// 回転角度(Y)
-	int				key;							// フレームカウント用
-	int				num;							// 親子関係識別用
-	int				type;							// 本体の種類(今は使わないのでNULL)
+	float	cos;				// コサイン
+	float	sita;				// 索敵角度
 };
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT InitSearch(int nType);
-
+void UninitSearch(void);
+void UpdateSearch(void);
+void DrawSearch(void);
 #endif
