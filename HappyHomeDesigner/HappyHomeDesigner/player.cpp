@@ -258,7 +258,7 @@ void UpdatePlayer(void)
 	PrintDebugProc("\n");
 
 	PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
-	 PrintDebugProc("\n");
+	PrintDebugProc("\n");
 
 
 	

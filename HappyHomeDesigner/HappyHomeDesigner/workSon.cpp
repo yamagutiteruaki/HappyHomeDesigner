@@ -53,11 +53,13 @@ void UninitWorkSon(void)
 //=============================================================================
 void UpdateWorkSon(void)
 {
+	UpdateLight();
+
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
 		break;
-	case STAGE_GAME:
+	case STAGE_GAME || STAGE_HOUSE1 || STAGE_HOUSE2 || STAGE_HOUSE3 || STAGE_HOUSE4:
 		UpdatePlayer();
 		break;
 	case STAGE_RESULT:
@@ -75,7 +77,8 @@ void DrawWorkSon(void)
 	{
 	case STAGE_TITLE:
 		break;
-	case STAGE_GAME:
+	case STAGE_GAME ||STAGE_HOUSE1|| STAGE_HOUSE2|| STAGE_HOUSE3|| STAGE_HOUSE4:
+
 		DrawPlayer();
 		break;
 	case STAGE_RESULT:

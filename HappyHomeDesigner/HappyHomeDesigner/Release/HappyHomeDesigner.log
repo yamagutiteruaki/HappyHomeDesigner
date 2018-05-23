@@ -1,64 +1,50 @@
-﻿  calculate.cpp
-calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
-  camera.cpp
-  clock.cpp
-  collision.cpp
-  debugproc.cpp
-debugproc.cpp(76): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-debugproc.cpp(76): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
-debugproc.cpp(155): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
-debugproc.cpp(164): warning C4996: 'strcat': This function or variable may be unsafe. Consider using strcat_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\string.h(90): note: 'strcat' の宣言を確認してください
-debugproc.cpp(112): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(122): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(127): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(132): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(137): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(142): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(147): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-debugproc.cpp(151): warning C4996: 'sprintf': This function or variable may be unsafe. Consider using sprintf_s instead. To disable deprecation, use _CRT_SECURE_NO_WARNINGS. See online help for details.
-  C:\Program Files (x86)\Windows Kits\10\Include\10.0.10240.0\ucrt\stdio.h(1769): note: 'sprintf' の宣言を確認してください
-  fade.cpp
-  field.cpp
-  furniture.cpp
-  game.cpp
-  house.cpp
-  input.cpp
-input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-  Light.cpp
-Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
-  main.cpp
-main.cpp(77): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-main.cpp(235): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
-main.cpp(236): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
-  player.cpp
-  police.cpp
-  result.cpp
-  resultlogo.cpp
-  sound.cpp
-  stage.cpp
-  title.cpp
-  コンパイル中...
-  titlelogo.cpp
-  wall.cpp
-  weight.cpp
-  workChisaka.cpp
-  workImagawa.cpp
-  workMatsuo.cpp
-  workSekiguchi.cpp
-  workSon.cpp
-  workYamaguchi.cpp
-  コード生成しています。
-  All 156 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
-  コード生成が終了しました。
-  HappyHomeDesigner.vcxproj -> D:\Users\chisakakouta\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
-  HappyHomeDesigner.vcxproj -> D:\Users\chisakakouta\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)
+﻿2018/05/23 10:25:28 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt button.cpp
+         button.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.lib" /MACHINE:X86 /SAFESEH Release\arrest.obj
+         Release\button.obj
+         Release\calculate.obj
+         Release\camera.obj
+         Release\clock.obj
+         Release\collision.obj
+         Release\debugproc.obj
+         Release\fade.obj
+         Release\field.obj
+         Release\furniture.obj
+         Release\game.obj
+         Release\house.obj
+         Release\input.obj
+         Release\Light.obj
+         Release\main.obj
+         Release\player.obj
+         Release\police.obj
+         Release\result.obj
+         Release\resultlogo.obj
+         Release\search.obj
+         Release\sound.obj
+         Release\stage.obj
+         Release\title.obj
+         Release\titlelogo.obj
+         Release\voice.obj
+         Release\wall.obj
+         Release\weight.obj
+         Release\workChisaka.obj
+         Release\workImagawa.obj
+         Release\workMatsuo.obj
+         Release\workSekiguchi.obj
+         Release\workSon.obj
+         Release\workYamaguchi.obj
+         コード生成しています。
+         5 of 242 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
+           0 functions were new in current compilation
+           1 functions had inline decision re-evaluated but remain unchanged
+         コード生成が終了しました。
+         HappyHomeDesigner.vcxproj -> C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+     1>プロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+経過時間 00:00:03.15

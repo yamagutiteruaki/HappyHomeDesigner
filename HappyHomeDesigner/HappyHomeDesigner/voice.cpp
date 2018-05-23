@@ -99,14 +99,15 @@ void UpdateVoice(void)
 
 	for (int i = 0; i < VOICE_MAX; i++, voice++)
 	{
-
+#ifdef DEBUG
 		if (GetKeyboardTrigger(DIK_V))
 		{
 			voice->use = voice->use ? false : true;
 		}
+#endif
 		if (voice->use == true)			// 使用している状態なら更新する
 		{
-
+			//フレームを数える
 			voice->cnt_frame++;
 			if (voice->cnt_frame >= 60)
 			{

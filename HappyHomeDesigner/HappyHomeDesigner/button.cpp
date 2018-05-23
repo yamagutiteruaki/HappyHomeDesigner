@@ -111,13 +111,15 @@ void UpdateButton(void)
 	{
 		if (GetKeyboardTrigger(DIK_Q))
 		{
-			button->kind++;
+			SetFade(FADE_OUT, STAGE_HOUSE1);
 		}
-
+#ifdef DEBUG
 		if (GetKeyboardTrigger(DIK_B))
 		{
 			Button();
 		}
+#endif
+
 		if (button->use == true)
 		{
 			if (rate > 0)
@@ -133,9 +135,11 @@ void UpdateButton(void)
 			{
 				button->pos.x -= 5 * rate;
 			}
+
 		}
 		else
 		{
+
 			button->use = false;
 			rate = 10;
 
@@ -264,7 +268,7 @@ bool Button(void)
 {
 	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
 
-	//return button->use = button->use ? false : true;
-	return button->use = true;
+	return button->use = button->use ? false : true;
+	//return button->use = true;
 
 }
