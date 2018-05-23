@@ -133,16 +133,21 @@ void UpdateClock(void)
 		{
 			// アニメーション
 			
-			clock->rot.z += 0.001f;
+			clock->rot.z += 0.002f;
 			
 			SetVertexClockHand(i);		// 移動後の座標で頂点を設定
 
 		}
-		//if (clock->rot.z > D3DX_PI * 2)
-		//{
-		//	SetFade(FADE_OUT, STAGE_RESULT);
-		//}
-	}
+		if (clock->rot.z > D3DX_PI * 2)
+		{
+			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+		else if (clock->rot.z > 2 * D3DX_PI * 11 / 12)
+		{
+			SetFade(FADE_OUT_HALF, STAGE_GAME, D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.0f));
+
+		}
+}
 
 }
 

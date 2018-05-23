@@ -24,6 +24,7 @@ void InvalidCollision(int frame);
 void PoliceCollision(void);
 void SetPoliceMove(POLICE *police, int y, int x);
 void PoliceMove(void);
+void PoliceEachCollision(void);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -152,12 +153,24 @@ HRESULT InitPolice(int nType)
 #endif
 		}
 	}
+
+	// チェックポイントの初期設定
+	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 左上
+	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, CHECK_POINT_Z);				// 中心上
+	CheckPointWk[2][0] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 右上
+	CheckPointWk[0][1] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, 0.0f);				// 中心左
+	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// 中心
+	CheckPointWk[2][1] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, 0.0f);				// 中心右
+	CheckPointWk[0][2] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 左下
+	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -CHECK_POINT_Z);				// 中心下
+	CheckPointWk[2][2] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 右下
+
 	// ポリス本体の初期化処理
 	for (int i = 0; i < POLICE_MAX; i++, police++)
 	{
 		// ポリスの視点(位置座標)の初期化
 		//police->Eye = D3DXVECTOR3(-CHECK_POINT_X / 2, 0.0f, CHECK_POINT_Z / 2);
-		police->Eye = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		police->Eye = CheckPointWk[i][i];
 		// ポリスの注視点の初期化
 		police->At = D3DXVECTOR3(0.0f, 0.0f, 50.0f);
 		// ポリスの上方向の初期化
@@ -280,17 +293,6 @@ HRESULT InitPolice(int nType)
 	// 親子関係設定処理
 	SetParts();
 
-	// チェックポイントの初期設定
-	CheckPointWk[0][0] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 左上
-	CheckPointWk[1][0] = D3DXVECTOR3(0.0f, 0.0f, CHECK_POINT_Z);				// 中心上
-	CheckPointWk[2][0] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, CHECK_POINT_Z);		// 右上
-	CheckPointWk[0][1] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, 0.0f);				// 中心左
-	CheckPointWk[1][1] = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// 中心
-	CheckPointWk[2][1] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, 0.0f);				// 中心右
-	CheckPointWk[0][2] = D3DXVECTOR3(-CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 左下
-	CheckPointWk[1][2] = D3DXVECTOR3(-0.0f, 0.0f, -CHECK_POINT_Z);				// 中心下
-	CheckPointWk[2][2] = D3DXVECTOR3(CHECK_POINT_X, 0.0f, -CHECK_POINT_Z);		// 右下
-
 	return S_OK;
 }
 //=============================================================================
@@ -366,6 +368,8 @@ void UpdatePolice(void)
 	InvalidCollision(POLICE_COLLISION_FRAME);
 	// ポリスの当たり判定処理
 	PoliceCollision();
+	// ポリス同士の当たり判定処理
+	PoliceEachCollision();
 	// ポリス移動処理
 	PoliceMove();
 	// アニメーション処理
@@ -804,5 +808,33 @@ void Animation(void)
 	{
 		SetAnimation(policeLeg, POLICE_LEG_ANGLE, POLICE_LEG_ANIM_FRAME,
 			D3DXVECTOR3(1.0f, 0.0f, 0.0f), D3DXVECTOR3(0.0f, 1.0f, 0.0f));
+	}
+}
+//=============================================================================
+// ポリス同士の当たり判定処理関数
+//=============================================================================
+void PoliceEachCollision(void)
+{
+	POLICE *police = &policeWk[0];
+
+	for (int i = 0; i < POLICE_MAX; i++)
+	{	// 使用状態のポリスのみチェック
+		if (!policeWk[i].use) continue;
+		for (int j = i + 1; j < POLICE_MAX; j++)
+		{	// 使用状態のポリスのみチェック
+			if (!policeWk[j].use) continue;
+			if (CollisionBC(policeWk[i].Eye, policeWk[j].Eye, 100.0f, 100.0f))
+			{	// ポリス同士がぶつかったら
+				// お互いのmoveベクトルを反転
+				police[i].move = -police[i].move;
+				police[j].move = -police[j].move;
+				// 向きも反転(新しいY軸回転角度を求める)
+				police[i].fangleY = police[i].fangleY + D3DX_PI;
+				police[j].fangleY = police[j].fangleY + D3DX_PI;
+				// チェックポイントとの当たり判定有効フラグをtrueに
+				police[i].able_hit = true;
+				police[j].able_hit = true;
+			}
+		}
 	}
 }

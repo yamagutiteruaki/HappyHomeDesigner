@@ -55,7 +55,7 @@ HRESULT InitArrest(int type)
 	for (int i = 0; i < ARREST_MAX; i++, arrest++, cnt++)
 	{
 		arrest->use = true;										// 使用
-		arrest->pos = D3DXVECTOR3(SCREEN_WIDTH-TEXTURE_ARREST_SIZE_X, 75+150*i, 0.0f);	// 座標データを初期化
+		arrest->pos = D3DXVECTOR3(SCREEN_WIDTH-TEXTURE_ARREST_SIZE_X, 75.0f+150.0f*i, 0.0f);	// 座標データを初期化
 		arrest->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 回転データを初期化
 		arrest->cnt_frame = 0;									// フレームを数えたい
 		D3DXVECTOR2 temp = D3DXVECTOR2(TEXTURE_ARREST_SIZE_X, TEXTURE_ARREST_SIZE_Y);

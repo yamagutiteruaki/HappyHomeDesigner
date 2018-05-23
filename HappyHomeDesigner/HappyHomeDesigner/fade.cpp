@@ -78,7 +78,7 @@ void UpdateFade(void)
 				}
 				// フェードイン処理に切り替え
 				g_color.a = 1.0f;
-				SetFade(FADE_IN, STAGE_MAX);
+				SetFade(FADE_IN, STAGE_MAX, g_color);
 			}
 
 			// 色を設定
@@ -91,6 +91,7 @@ void UpdateFade(void)
 			{
 				// フェードイン処理に切り替え
 				g_color.a = FADE_HALF;
+				g_eFade = FADE_IN;
 			}
 
 			// 色を設定
@@ -103,7 +104,7 @@ void UpdateFade(void)
 			{
 				// フェード処理終了
 				g_color.a = 0.0f;
-				SetFade(FADE_NONE, STAGE_MAX);
+				SetFade(FADE_NONE, STAGE_MAX,g_color);
 				fadeflag = false;		//フェードフラグをoff
 			}
 
@@ -180,7 +181,7 @@ void SetColor(D3DCOLOR col)
 //=============================================================================
 // フェードの状態設定
 //=============================================================================
-void SetFade(FADE fade, int next )
+void SetFade(FADE fade, int next ,D3DXCOLOR color )
 {
 
 	if (fadeflag == false)
@@ -190,10 +191,10 @@ void SetFade(FADE fade, int next )
 		switch (fade)
 		{
 		case FADE_OUT:
-			g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			g_color = color;
 			break;
 		case FADE_OUT_HALF:
-			g_color = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+			g_color = color;
 			break;
 		}
 
