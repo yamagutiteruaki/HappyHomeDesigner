@@ -53,6 +53,8 @@ void UninitWorkSon(void)
 //=============================================================================
 void UpdateWorkSon(void)
 {
+	UpdateLight();
+
 	switch (GetStage())
 	{
 	case STAGE_TITLE:

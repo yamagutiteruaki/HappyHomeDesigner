@@ -12,6 +12,7 @@
 #include "field.h"
 #include "calculate.h"
 
+#include "button.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -257,7 +258,7 @@ void UpdatePlayer(void)
 	PrintDebugProc("\n");
 
 	PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
-	 PrintDebugProc("\n");
+	PrintDebugProc("\n");
 
 
 	
@@ -416,6 +417,7 @@ void PlayerBorder(void)
 	// 前の壁
 	if (player->Eye.z > BORDER_Z2)
 	{
+		Button();
 		player->Eye.z = BORDER_Z2;
 	}
 
