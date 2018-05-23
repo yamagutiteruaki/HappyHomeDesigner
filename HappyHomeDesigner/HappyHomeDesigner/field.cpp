@@ -99,6 +99,15 @@ HRESULT InitField(void)
 		field->Pos.y = 0.0f;//Y座標は0固定
 		field->Pos.z =0.0f;	//Z座標の設定
 
+		//if (i == 0)
+		{
+			field->Size = D3DXVECTOR3(FIELD_SIZE_X, 0.0f, FIELD_SIZE_Z);
+		}
+		// if (i == 1)
+		{
+			//field->Size = D3DXVECTOR3(FIELD_SIZE_X/2, 0.0f, FIELD_SIZE_Z/2);
+		}
+
 	}
 
 	//家の設定
@@ -436,15 +445,16 @@ HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice,int no)
 		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 		g_pD3DVtxBuffField[no]->Lock(0, 0, (void**)&pVtx, 0);
 
-		for (int i = 0; i < FIELD_MAX; i++, pVtx += 4)
+		FIELD *field = GetField(0);
+
+		for (int i = 0; i < FIELD_MAX; i++, field++,pVtx += 4)
 
 		{
-
 			// 頂点座標の設定
-			pVtx[0].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
-			pVtx[1].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_Z / 2);
-			pVtx[2].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);
-			pVtx[3].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_Z / 2);
+			pVtx[0].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_X / 2);
+			pVtx[1].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_X / 2);
+			pVtx[2].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_X / 2);
+			pVtx[3].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_X / 2);
 
 			// 法線ベクトルの設定
 			pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
