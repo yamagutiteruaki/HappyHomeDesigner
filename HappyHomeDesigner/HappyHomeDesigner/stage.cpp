@@ -126,7 +126,7 @@ void UninitStage(void)
 void UpdateStage(void)
 {
 #ifdef _DEBUG
-	if (GetKeyboardTrigger(DIK_F1))
+	if (GetKeyboardTrigger(DIK_RSHIFT))
 	{	// デバッグ表示ON/OFF
 		g_bDispDebug = g_bDispDebug ? false : true;
 	}
@@ -193,7 +193,7 @@ void UpdateStage(void)
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
-	case STAGE_HOUSE4:
+	case STAGE_MYHOUSE:
 		UpdateGame();				// ゲーム
 		SetSoundBgm(SOUND_BGM_GAME);
 		break;
@@ -223,7 +223,7 @@ void DrawStage(void)
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
-	case STAGE_HOUSE4:
+	case STAGE_MYHOUSE:
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:

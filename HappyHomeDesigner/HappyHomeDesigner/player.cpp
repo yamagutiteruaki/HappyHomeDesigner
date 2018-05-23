@@ -24,12 +24,9 @@
 #define	PLAYER_ANIM_MAX			(1)							// プレイヤーのアニメーションパターン数
 #define	PLAYER_ANIM_SEC			(1)							// アニメーション一巡にかかる秒数
 
-#define PLAYER_HP				(1)							// 残機
+#define MOVE_LIMIT				(10)
 
-#define	BORDER_X1		(-480.00f)						// 境界線X1：左
-#define	BORDER_X2		(480.00f)						// 境界線X2：右
-#define	BORDER_Z1		(-480.00f)						// 境界線Z1：前
-#define	BORDER_Z2		(480.00f)						// 境界線Z2：後ろ
+#define PLAYER_HP				(1)							// 残機
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -395,29 +392,44 @@ void PlayerMove(void)
 void PlayerBorder(void)
 {
 	PLAYER *player = &playerWk[0];
+	int fieldnum;
+
+	if (GetStage() == STAGE_GAME)
+	{
+		fieldnum = 0;
+	}
+	else if (GetStage() == STAGE_HOUSE1
+		|| GetStage() == STAGE_HOUSE2
+		|| GetStage() == STAGE_HOUSE3
+		|| GetStage() == STAGE_MYHOUSE)
+	{
+		fieldnum = 1;
+	}
+	FIELD *field = GetField(fieldnum);
+
 
 	// 左の壁
-	if (player->Eye.x < BORDER_X1)
+	if (player->Eye.x < -field->Size.x/2+MOVE_LIMIT)
 	{
-		player->Eye.x = BORDER_X1;
+		player->Eye.x = -field->Size.x / 2+MOVE_LIMIT;
 	}
 
 	// 右の壁
-	if (player->Eye.x > BORDER_X2)
+	if (player->Eye.x > field->Size.x / 2-MOVE_LIMIT)
 	{
-		player->Eye.x = BORDER_X2;
+		player->Eye.x = field->Size.x / 2-MOVE_LIMIT;
 	}
 
 	// 後ろの壁
-	if (player->Eye.z < BORDER_Z1)
+	if (player->Eye.z < -field->Size.z / 2 + MOVE_LIMIT)
 	{
-		player->Eye.z = BORDER_Z1;
+		player->Eye.z = -field->Size.z / 2 + MOVE_LIMIT;
 	}
 
 	// 前の壁
-	if (player->Eye.z > BORDER_Z2)
+	if (player->Eye.z > field->Size.z / 2 - MOVE_LIMIT)
 	{
-		player->Eye.z = BORDER_Z2;
+		player->Eye.z = field->Size.z / 2 - MOVE_LIMIT;
 	}
 
 }

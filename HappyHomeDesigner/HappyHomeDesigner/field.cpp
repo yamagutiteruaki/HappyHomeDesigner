@@ -9,6 +9,7 @@
 #include "calculate.h"
 #include "input.h"
 #include "stage.h"
+#include "fade.h"
 
 /* Debug */
 #ifdef _DEBUG
@@ -23,7 +24,7 @@
 // プロトタイプ宣言
 //*****************************************************************************
 
-HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice,int no);
+HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice);
 
 
 
@@ -80,35 +81,24 @@ HRESULT InitField(void)
 	FIELD *field = GetField(0);
 	HOME  *home = GetHome(0);
 
-	for(int i=0;i<FIELD_MAX;i++,field++)
+	for (int i = 0; i < FIELD_MAX; i++, field++)
 	{
 
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
 			FileNameField[i],			// ファイルの名前
 			&g_pD3DTextureField[i]);	// 読み込むメモリー
-		
-		MakeVertexField(pDevice,i);
 
-	}
 
-	//フィールドの設定
-	for (int i = 0; i < FIELD_MAX; i++, field++)
-	{
-		field->Pos.x =0.0f;	//X座標の設定
+		field->Pos.x = 0.0f;	//X座標の設定
 		field->Pos.y = 0.0f;//Y座標は0固定
-		field->Pos.z =0.0f;	//Z座標の設定
+		field->Pos.z = 0.0f;	//Z座標の設定
 
-		//if (i == 0)
-		{
-			field->Size = D3DXVECTOR3(FIELD_SIZE_X, 0.0f, FIELD_SIZE_Z);
-		}
-		// if (i == 1)
-		{
-			//field->Size = D3DXVECTOR3(FIELD_SIZE_X/2, 0.0f, FIELD_SIZE_Z/2);
-		}
+		field->Size = D3DXVECTOR3(FIELD_SIZE_X / (i + 1), 0.0f, FIELD_SIZE_Z / (i + 1));
+		//field->Size = D3DXVECTOR3(FIELD_SIZE_X/2, 0.0f, FIELD_SIZE_Z/2);
 
 	}
+		MakeVertexField(pDevice);
 
 	//家の設定
 	for (int i = 0; i < HOME_MAX; i++, home++)
@@ -170,6 +160,7 @@ HRESULT InitField(void)
 
 
 	}
+
 
 	return S_OK;
 }
@@ -249,6 +240,29 @@ void UninitField(void)
 void UpdateField(void)
 {
 
+#ifdef _DEBUG
+	if (GetKeyboardTrigger(DIK_F1))
+	{
+		SetFade(FADE_OUT, STAGE_HOUSE1, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+	else if (GetKeyboardTrigger(DIK_F2))
+	{
+		SetFade(FADE_OUT, STAGE_HOUSE2, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+	else if (GetKeyboardTrigger(DIK_F3))
+	{
+		SetFade(FADE_OUT, STAGE_HOUSE3, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+	else if (GetKeyboardTrigger(DIK_F4))
+	{
+		SetFade(FADE_OUT, STAGE_MYHOUSE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+	else if (GetKeyboardTrigger(DIK_F5))
+	{
+		SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+	}
+#endif
+
 }
 
 //=============================================================================
@@ -269,7 +283,7 @@ void DrawField(void)
 	else if (GetStage() == STAGE_HOUSE1
 		|| GetStage() == STAGE_HOUSE2
 		|| GetStage() == STAGE_HOUSE3
-		|| GetStage() == STAGE_HOUSE4)
+		|| GetStage() == STAGE_MYHOUSE)
 	{
 		fieldnum = 1;
 	}
@@ -430,58 +444,59 @@ void DrawField(void)
 //=============================================================================
 // 頂点の作成
 //=============================================================================
-HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice,int no)
-{
-	// オブジェクトの頂点バッファを生成
-	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX* FIELD_MAX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
-		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
-		FVF_VERTEX_3D,				// 使用する頂点フォーマット
-		D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
-		&g_pD3DVtxBuffField[no],		// 頂点バッファインターフェースへのポインタ
-		NULL)))						// NULLに設定
+HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice)
+{	
+	FIELD *field = GetField(0);
+	VERTEX_3D *pVtx;
+	for (int i = 0; i < FIELD_MAX; i++, field++, pVtx += 4)
 	{
-		return E_FAIL;
-	}
-	//for (int i = 0; i < FIELD_MAX; i++)
-	{//頂点バッファの中身を埋める
-		VERTEX_3D *pVtx;
-
-		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
-		g_pD3DVtxBuffField[no]->Lock(0, 0, (void**)&pVtx, 0);
-
-		FIELD *field = GetField(0);
-
-		for (int i = 0; i < FIELD_MAX; i++, field++,pVtx += 4)
-
+		// オブジェクトの頂点バッファを生成
+		if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX* FIELD_MAX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
+			D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
+			FVF_VERTEX_3D,				// 使用する頂点フォーマット
+			D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
+			&g_pD3DVtxBuffField[i],		// 頂点バッファインターフェースへのポインタ
+			NULL)))						// NULLに設定
 		{
-			// 頂点座標の設定
-			pVtx[0].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_X / 2);
-			pVtx[1].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, FIELD_SIZE_X / 2);
-			pVtx[2].vtx = D3DXVECTOR3(-FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_X / 2);
-			pVtx[3].vtx = D3DXVECTOR3(FIELD_SIZE_X / 2, 0.0f, -FIELD_SIZE_X / 2);
-
-			// 法線ベクトルの設定
-			pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-			pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-			pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-			pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
-
-			// 反射光の設定
-			pVtx[0].diffuse =
-				pVtx[1].diffuse =
-				pVtx[2].diffuse =
-				pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-
-			// テクスチャ座標の設定
-			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-			pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-			pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+			return E_FAIL;
 		}
-		// 頂点データをアンロックする
-		g_pD3DVtxBuffField[no]->Unlock();
-	}
+		//for (int i = 0; i < FIELD_MAX; i++)
+		{//頂点バッファの中身を埋める
 
+			// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+			g_pD3DVtxBuffField[i]->Lock(0, 0, (void**)&pVtx, 0);
+
+
+
+			{
+				// 頂点座標の設定
+				pVtx[0].vtx = D3DXVECTOR3(-field->Size.x / 2, 0.0f, field->Size.z / 2);
+				pVtx[1].vtx = D3DXVECTOR3(field->Size.x / 2, 0.0f, field->Size.z / 2);
+				pVtx[2].vtx = D3DXVECTOR3(-field->Size.x / 2, 0.0f, -field->Size.z / 2);
+				pVtx[3].vtx = D3DXVECTOR3(field->Size.x / 2, 0.0f, -field->Size.z / 2);
+
+				// 法線ベクトルの設定
+				pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				pVtx[1].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				pVtx[2].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+				pVtx[3].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
+
+				// 反射光の設定
+				pVtx[0].diffuse =
+					pVtx[1].diffuse =
+					pVtx[2].diffuse =
+					pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+
+				// テクスチャ座標の設定
+				pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+				pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+				pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+				pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+			}
+			// 頂点データをアンロックする
+			g_pD3DVtxBuffField[i]->Unlock();
+		}
+	}
 	return S_OK;
 }
 
