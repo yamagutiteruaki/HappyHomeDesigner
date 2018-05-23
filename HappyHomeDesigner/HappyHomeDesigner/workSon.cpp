@@ -53,7 +53,7 @@ void UninitWorkSon(void)
 //=============================================================================
 void UpdateWorkSon(void)
 {
-	UpdateLight();
+	//UpdateLight();
 
 	switch (GetStage())
 	{
