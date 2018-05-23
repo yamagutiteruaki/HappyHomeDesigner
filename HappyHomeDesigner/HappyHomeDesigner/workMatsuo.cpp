@@ -15,6 +15,7 @@
 #include "weight.h"
 #include "voice.h"
 #include "arrest.h"
+#include "button.h"
 // デバッグ用
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -38,6 +39,7 @@ HRESULT InitWorkMatsuo(int nType)
 	InitWeight(0);
 	InitVoice(0);
 	InitArrest(0);
+	InitButton(0);
 	return S_OK;
 }
 
@@ -50,6 +52,7 @@ void UninitWorkMatsuo(void)
 	UninitWeight();
 	UninitVoice();
 	UninitArrest();
+	UninitButton();
 }
 
 //=============================================================================
@@ -67,6 +70,7 @@ void UpdateWorkMatsuo(void)
 		UpdateWeight();
 		UpdateVoice();
 		UpdateArrest();
+		UpdateButton();
 		break;
 	case STAGE_RESULT:
 
@@ -89,6 +93,7 @@ void DrawWorkMatsuo(void)
 		DrawWeight();
 		DrawVoice();
 		DrawArrest();
+		DrawButton();
 		break;
 	case STAGE_RESULT:
 		break;

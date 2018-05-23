@@ -12,6 +12,7 @@
 #include "field.h"
 #include "calculate.h"
 
+#include "button.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -416,6 +417,7 @@ void PlayerBorder(void)
 	// 前の壁
 	if (player->Eye.z > BORDER_Z2)
 	{
+		Button();
 		player->Eye.z = BORDER_Z2;
 	}
 

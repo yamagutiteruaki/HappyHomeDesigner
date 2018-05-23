@@ -152,6 +152,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="arrest.cpp" />
+    <ClCompile Include="button.cpp" />
     <ClCompile Include="calculate.cpp" />
     <ClCompile Include="camera.cpp" />
     <ClCompile Include="clock.cpp" />
@@ -186,6 +187,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h" />
+    <ClInclude Include="button.h" />
     <ClInclude Include="calculate.h" />
     <ClInclude Include="camera.h" />
     <ClInclude Include="clock.h" />

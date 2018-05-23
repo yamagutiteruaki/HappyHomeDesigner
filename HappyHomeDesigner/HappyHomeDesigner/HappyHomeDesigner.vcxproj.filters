@@ -129,10 +129,11 @@
     <ClCompile Include="arrest.cpp">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClCompile>
-    <ClCompile Include="search.cpp">
+  <ClCompile Include="button.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>   <ClCompile Include="search.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
-    </ClCompile>
-  </ItemGroup>
+    </ClCompile>  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
       <Filter>ソース ファイル\work</Filter>
@@ -227,8 +228,9 @@
     <ClInclude Include="arrest.h">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
-    <ClInclude Include="search.h">
+    <ClInclude Include="button.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClInclude>   <ClInclude Include="search.h">
       <Filter>ソース ファイル\stage\game</Filter>
-    </ClInclude>
-  </ItemGroup>
+    </ClInclude>  </ItemGroup>
 </Project>
