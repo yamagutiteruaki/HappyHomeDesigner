@@ -105,7 +105,7 @@ void UpdateArrest(void)
 void DrawArrest(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	ARREST *arrest = arrestWk;				// エネミーのポインターを初期化
+	ARREST *arrest = &arrestWk[0];				// エネミーのポインターを初期化
 	VOICE *voice = GetVoice(0);
 
 										// 頂点フォーマットの設定

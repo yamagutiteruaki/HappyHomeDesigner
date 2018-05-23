@@ -51,7 +51,7 @@ PLAYER				playerWk[PLAYER_MAX];						// プレイヤー格納ワーク
 
 const char *FileNamePlayer[PLAYER_ANIM_MAX] =					// モデル読み込む
 {
-	"data/MODEL/PLAYER/player00.x",
+	"data/MODEL/PLAYER/standingman.x",
 
 };
 
@@ -417,7 +417,6 @@ void PlayerBorder(void)
 	// 前の壁
 	if (player->Eye.z > BORDER_Z2)
 	{
-		Button();
 		player->Eye.z = BORDER_Z2;
 	}
 
