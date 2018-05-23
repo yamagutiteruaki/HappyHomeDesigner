@@ -112,11 +112,11 @@ void UpdateVoice(void)
 			{
 				if (voice->count == ARREST_MAX)
 				{
-					SetFade(FADE_OUT, STAGE_RESULT);
+					SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 				}
 				else
 				{
-					SetFade(FADE_OUT, STAGE_GAME);
+					SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 				}
 
 				if (GetFade() == FADE_IN)

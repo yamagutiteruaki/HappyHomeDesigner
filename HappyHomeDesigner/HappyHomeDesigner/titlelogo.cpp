@@ -208,7 +208,7 @@ void UpdateTitlelogo(void)
 	}
 	if (stampCount >= 60)
 	{
-		SetFade(FADE_OUT, STAGE_GAME);
+		SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		
 	}
 	

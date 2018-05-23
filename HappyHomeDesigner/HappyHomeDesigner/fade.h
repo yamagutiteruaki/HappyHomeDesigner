@@ -13,7 +13,7 @@
 // マクロ定義
 //*****************************************************************************
 #define	FADE_RATE		(0.02f)		// フェード係数
-#define	FADE_HALF		(0.4f)		// ハーフフェード
+#define	FADE_HALF		(0.3f)		// ハーフフェード
 
 #define	FADE_COLOR_R	(0.0f)		// フェードカラーR
 #define	FADE_COLOR_G	(0.0f)		// フェードカラーG
@@ -39,7 +39,7 @@ void UninitFade(void);
 void UpdateFade(void);
 void DrawFade(void);
 
-void SetFade(FADE fade, int next);
+void SetFade(FADE fade, int next,D3DXCOLOR color);
 FADE GetFade(void);
 
 #endif
