@@ -111,7 +111,7 @@ void UpdateButton(void)
 	{
 		if (GetKeyboardTrigger(DIK_Q))
 		{
-			SetFade(FADE_OUT, STAGE_HOUSE1);
+			SetFade(FADE_OUT, STAGE_HOUSE2);
 		}
 #ifdef DEBUG
 		if (GetKeyboardTrigger(DIK_B))
