@@ -41,5 +41,10 @@ void DrawFade(void);
 
 void SetFade(FADE fade, int next,D3DXCOLOR color);
 FADE GetFade(void);
+float GetFadeCol(void);
+bool GetFadeFlag(void);
+void SetFadeFlag(bool flag);
+
+
 
 #endif

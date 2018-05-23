@@ -133,9 +133,9 @@ HRESULT InitField(void)
 
 		home->Rot.y = D3DX_PI / 2 ;
 
-		home->Scl.x = 1.5f;
-		home->Scl.y = 1.0f;
-		home->Scl.z = 1.5f;
+		home->Scl.x = 4.0f;
+		home->Scl.y = 3.0f;
+		home->Scl.z = 4.0f;
 
 	}
 
@@ -158,12 +158,16 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		door->Pos.x = home->Pos.x+25.0f*home->Scl.x;	//X座標の設定
+		door->Pos.x = home->Pos.x+12.0f*home->Scl.x;	//X座標の設定
 		door->Pos.y = home->Pos.y;		//Y座標の設定
-		door->Pos.z = home->Pos.z -93.0f*home->Scl.z;	//Z座標の設定
+		door->Pos.z = home->Pos.z -46.5f*home->Scl.z;	//Z座標の設定
 
 		door->Rot.y = 0.0f;
-		;
+		
+		door->Scl.x = 3.0f;
+		door->Scl.y = 3.0f;
+		door->Scl.z = 1.0f;
+
 
 	}
 
@@ -368,12 +372,12 @@ void DrawField(void)
 			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&door->world);
 
-			//// スケールを反映
-			//D3DXMatrixScaling(&mtxScale, enemy->scl.x,
-			//	enemy->scl.y,
-			//	enemy->scl.z);
-			//D3DXMatrixMultiply(&g_mtxWorldEnemy,
-			//	&g_mtxWorldEnemy, &mtxScale);
+			// スケールを反映
+			D3DXMatrixScaling(&mtxScale, door->Scl.x,
+				door->Scl.y,
+				door->Scl.z);
+			D3DXMatrixMultiply(&door->world,
+				&door->world, &mtxScale);
 
 
 			// 回転を反映

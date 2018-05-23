@@ -9,6 +9,8 @@
 #include "input.h"
 #include "fade.h"
 #include "stage.h"
+#include "calculate.h"
+#include "debugproc.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -132,22 +134,19 @@ void UpdateClock(void)
 		if (clock->use == true)			// 使用している状態なら更新する
 		{
 			// アニメーション
-			
-			clock->rot.z += 0.002f;
-			
+
+			clock->rot.z += 0.005f*D3DX_PI;
+			clock->rot.z = PiCalculate360(clock->rot.z);
 			SetVertexClockHand(i);		// 移動後の座標で頂点を設定
+			PrintDebugProc("[針の角度  ：(%f)]\n", clock->rot.z);
 
 		}
-		if (clock->rot.z > D3DX_PI * 2)
+		//if (clock->rot.z > D3DX_PI * 2)
 		{
-			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			//SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
-		else if (clock->rot.z > 2 * D3DX_PI * 11 / 12)
-		{
-			SetFade(FADE_OUT_HALF, STAGE_GAME, D3DXCOLOR(1.0f, 0.0f, 0.0f, 0.0f));
 
-		}
-}
+	}
 
 }
 
@@ -369,3 +368,4 @@ CLOCK *GetClock(int no)
 //{
 //	return false;
 //}
+
