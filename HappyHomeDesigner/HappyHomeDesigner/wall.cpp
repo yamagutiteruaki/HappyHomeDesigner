@@ -24,17 +24,23 @@
 // プロトタイプ宣言
 //*****************************************************************************
 
-HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice);
+HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice,int no);
 
 
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		g_pD3DTextureWall = NULL;	// テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWall = NULL;	// 頂点バッファへのポインタ
+LPDIRECT3DTEXTURE9		g_pD3DTextureWall[WALL_MAX*WALL_KIND];	// テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWall[WALL_MAX*WALL_KIND];	// 頂点バッファへのポインタ
 
-WALL					g_aWall[WALL_MAX];
+WALL					g_aWall[WALL_MAX*WALL_KIND];
+
+const char *FileNameWall[WALL_KIND] =
+{
+	TEXTURE_WALL,		// 家1
+	TEXTURE_WALL1,		// 家2
+};
 
 //=============================================================================
 // 初期化処理
@@ -44,20 +50,20 @@ HRESULT InitWall(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	WALL *wall = GetWall(0);
 	FIELD *field = GetField(0);
+
+	for(int i=0;i<WALL_KIND*WALL_MAX;i++)
 	{
-		MakeVertexWall(pDevice);
 
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-			TEXTURE_WALL,			// ファイルの名前
-			&g_pD3DTextureWall);	// 読み込むメモリー
-									// テクスチャの読み込み
+			FileNameWall[i/4],			// ファイルの名前
+			&g_pD3DTextureWall[i]);	// 読み込むメモリー
 
-									// テクスチャの読み込み
+		MakeVertexWall(pDevice,i);
 
 	}
 
-	for (int i = 0; i < WALL_MAX; i++, wall++)
+	for (int i = 0; i < WALL_KIND*WALL_MAX; i++, wall++)
 	{
 		wall->Pos.x = 0.0f;	//X座標の設定
 		wall->Pos.y = -(WALL_SIZE_X) / 2;//Y座標は0固定
@@ -73,20 +79,21 @@ HRESULT InitWall(void)
 //=============================================================================
 void UninitWall(void)
 {
+	for (int i = 0; i < WALL_KIND*WALL_MAX; i++)
+	{
+		//フィールド
+		if (g_pD3DTextureWall != NULL)
+		{// テクスチャの開放
+			g_pD3DTextureWall[i]->Release();
+			g_pD3DTextureWall[i] = NULL;
+		}
 
-	//フィールド
-	if (g_pD3DTextureWall != NULL)
-	{// テクスチャの開放
-		g_pD3DTextureWall->Release();
-		g_pD3DTextureWall = NULL;
+		if (g_pD3DVtxBuffWall != NULL)
+		{// 頂点バッファの開放
+			g_pD3DVtxBuffWall[i]->Release();
+			g_pD3DVtxBuffWall[i] = NULL;
+		}
 	}
-
-	if (g_pD3DVtxBuffWall != NULL)
-	{// 頂点バッファの開放
-		g_pD3DVtxBuffWall->Release();
-		g_pD3DVtxBuffWall = NULL;
-	}
-
 
 }
 
@@ -106,8 +113,18 @@ void DrawWall(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTranslate;
 
-	WALL *wall = GetWall(0);
-	for (int i = 0; i < WALL_MAX; i++, wall++)
+
+	int no;
+	if (GetStage() == STAGE_GAME)
+	{
+		no = 0;
+	}
+	else
+	{
+		no = 4;
+	}
+		WALL *wall = GetWall(no);
+for (int i=no; i < no+4; i++, wall++)
 	{
 		// ワールドマトリックスの初期化
 		D3DXMatrixIdentity(&wall->world);
@@ -125,13 +142,13 @@ void DrawWall(void)
 		pDevice->SetTransform(D3DTS_WORLD, &wall->world);
 
 		// 頂点バッファをデバイスのデータストリームにバインド
-		pDevice->SetStreamSource(0, g_pD3DVtxBuffWall, 0, sizeof(VERTEX_3D));
+		pDevice->SetStreamSource(0, g_pD3DVtxBuffWall[i], 0, sizeof(VERTEX_3D));
 
 		// 頂点フォーマットの設定
 		pDevice->SetFVF(FVF_VERTEX_3D);
 
 		// テクスチャの設定
-		pDevice->SetTexture(0, g_pD3DTextureWall);
+		pDevice->SetTexture(0, g_pD3DTextureWall[i]);
 
 		// ポリゴンの描画
 		pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, i * 4, NUM_POLYGON);
@@ -143,14 +160,14 @@ void DrawWall(void)
 //=============================================================================
 // 頂点の作成
 //=============================================================================
-HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice)
+HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice,int no)
 {
 	// オブジェクトの頂点バッファを生成
-	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX* WALL_MAX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
+	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_3D) * NUM_VERTEX* WALL_MAX*WALL_KIND,	// 頂点データ用に確保するバッファサイズ(バイト単位)
 		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
 		FVF_VERTEX_3D,				// 使用する頂点フォーマット
 		D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
-		&g_pD3DVtxBuffWall,		// 頂点バッファインターフェースへのポインタ
+		&g_pD3DVtxBuffWall[no],		// 頂点バッファインターフェースへのポインタ
 		NULL)))						// NULLに設定
 	{
 		return E_FAIL;
@@ -159,9 +176,9 @@ HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice)
 		VERTEX_3D *pVtx;
 
 		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
-		g_pD3DVtxBuffWall->Lock(0, 0, (void**)&pVtx, 0);
+		g_pD3DVtxBuffWall[no]->Lock(0, 0, (void**)&pVtx, 0);
 
-		for (int i = 0; i < WALL_MAX; i++, pVtx += 4)
+		for (int i = 0; i < WALL_MAX*WALL_KIND; i++, pVtx += 4)
 
 		{
 
@@ -190,7 +207,7 @@ HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 		}
 		// 頂点データをアンロックする
-		g_pD3DVtxBuffWall->Unlock();
+		g_pD3DVtxBuffWall[no]->Unlock();
 	}
 
 	return S_OK;
