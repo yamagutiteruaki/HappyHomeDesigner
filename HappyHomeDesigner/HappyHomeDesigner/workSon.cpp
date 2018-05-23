@@ -60,6 +60,7 @@ void UpdateWorkSon(void)
 	case STAGE_TITLE:
 		break;
 
+	case STAGE_GAME:
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
