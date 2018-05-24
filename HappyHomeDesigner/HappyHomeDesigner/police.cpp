@@ -25,6 +25,7 @@ void PoliceCollision(void);
 void SetPoliceMove(POLICE *police, int y, int x);
 void PoliceMove(void);
 void PoliceEachCollision(void);
+void PoliceMoveControl(int frame);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -201,6 +202,10 @@ HRESULT InitPolice(int nType)
 		police->rotf = NULL;
 		// 本体のタイプをNULLに
 		police->type = NULL;
+		// 移動フラグの初期化
+		police->movef = true;
+		// 移動切り替え用カウンタの初期化
+		police->key2 = 0;
 	}
 	// アームの初期化処理
 	police = &policeWk[0];
@@ -364,6 +369,8 @@ void UpdatePolice(void)
 	POLICE_ARM *policeArm = &policeArmWk[0];
 	POLICE_LEG *policeLeg = &policeLegWk[0];
 
+	// 移動無効切り替え処理
+	PoliceMoveControl(3 * 60);
 	// 当たり判定の一定時間無効処理
 	InvalidCollision(POLICE_COLLISION_FRAME);
 	// ポリスの当たり判定処理
@@ -658,7 +665,8 @@ void PoliceMove(void)
 
 	// ポリス本体の移動
 	for (int i = 0; i < POLICE_MAX; i++, police++)
-	{
+	{	// 移動フラグがtrueの時のみ移動
+		if (!police->movef) continue;
 		police->Eye.x += police->move.x;
 		police->Eye.y += police->move.y;
 		police->Eye.z += police->move.z;
@@ -835,6 +843,24 @@ void PoliceEachCollision(void)
 				police[i].able_hit = true;
 				police[j].able_hit = true;
 			}
+		}
+	}
+}
+//=============================================================================
+// 移動無効処理関数(引数：移動無効が解除されるまでのフレーム数)
+//=============================================================================
+void PoliceMoveControl(int frame)
+{
+	POLICE *police = &policeWk[0];
+
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		if (!police->movef) police->key2++;
+		// 移動無効時間の解除
+		if (police->key2 % frame == 0)
+		{
+			police->key2 = 0;
+			police->movef = true;
 		}
 	}
 }
