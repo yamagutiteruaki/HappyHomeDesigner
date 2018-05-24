@@ -54,6 +54,7 @@ public:
 	bool			use;							// true:使用  false:未使用
 	bool			able_hit;						// true:当たり判定有効  false:当たり判定無効
 	bool			rotf;							// 回転方向の切り替えフラグ(今は使わないのでNULL)
+	bool			movef;							// ポリスの移動フラグ(true:移動  false:停止)
 	D3DXVECTOR3		scl;							// スケール
 	D3DXVECTOR3		Eye;							// ポリスの視点(位置座標)
 	D3DXVECTOR3		At;								// ポリスの注視点(ポリスが見ている座標)
@@ -69,6 +70,7 @@ public:
 	float			fangleXZ;						// 回転角度(XZ)
 	float			fangleY;						// 回転角度(Y)
 	int				key;							// フレームカウント用
+	int				key2;							// 移動フラグ切り替えカウント用
 	int				num;							// 親子関係識別用
 	int				type;							// 本体の種類(今は使わないのでNULL)
 };
