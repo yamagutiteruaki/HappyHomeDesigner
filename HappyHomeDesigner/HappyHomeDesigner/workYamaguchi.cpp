@@ -11,6 +11,7 @@
 
 // 山口担当分で必要なインクルード
 #include "house.h"
+#include "timeeffect.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -31,6 +32,7 @@
 //=============================================================================
 HRESULT InitWorkYamaguchi(int nType)
 {
+	InitTimeeffect();
 	return S_OK;
 }
 
@@ -39,6 +41,8 @@ HRESULT InitWorkYamaguchi(int nType)
 //=============================================================================
 void UninitWorkYamaguchi(void)
 {
+	UninitTimeeffect();
+
 }
 
 //=============================================================================
@@ -48,7 +52,8 @@ void UpdateWorkYamaguchi(void)
 {
 	switch (GetStage())
 	{
-	case STAGE_HOUSE2:
+	case STAGE_GAME:
+		UpdateTimeeffect();
 		break;
 	}
 
@@ -61,7 +66,8 @@ void DrawWorkYamaguchi(void)
 {
 	switch (GetStage())
 	{
-	case STAGE_HOUSE1:
+	case STAGE_GAME:
+		DrawTimeeffect();
 		break;
 	}
 }

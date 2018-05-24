@@ -144,8 +144,21 @@ void UpdateStage(void)
 		{
 			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
-
 		break;
+
+	case STAGE_HOUSE1:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE1), g_nStage);
+		break;
+	case STAGE_HOUSE2:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE2), g_nStage);
+		break;
+	case STAGE_HOUSE3:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE3), g_nStage);
+		break;
+	case STAGE_MYHOUSE:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_MYHOUSE), g_nStage);
+		break;
+
 	case STAGE_RESULT:
 		PrintDebugProc("%s (%d)\n", STR(STAGE_RESULT), g_nStage);
 		if (GetKeyboardTrigger(DIK_RETURN))
