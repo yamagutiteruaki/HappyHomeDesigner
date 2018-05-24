@@ -194,6 +194,7 @@ void UpdateStage(void)
 
 	UpdateInput();					// 入力
 	UpdateSound();					// サウンド
+	UpdateLight();
 
 	// ステージに応じた更新処理
 	switch (g_nStage)

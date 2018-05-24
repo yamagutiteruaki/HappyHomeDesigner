@@ -122,6 +122,13 @@ HRESULT InitPlayer(int nType)
 		// Å‰‚Í’¼—§ó‘Ô‚Éİ’è
 		player->anim = 0;
 
+		player->weight = 0;
+
+		for (int j = 0; j < HAVE_MAX; j++)
+		{
+			player->havenum[j] = -1;
+		}
+
 	}
 
 	return S_OK;

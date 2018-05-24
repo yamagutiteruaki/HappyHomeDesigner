@@ -17,7 +17,7 @@
 #define	TEXTURE_WALL1	"data/TEXTURE/Floor_wall.jpg"								// 読み込むテクスチャファイル名
 
 #define	WALL_SIZE_X			(FIELD_SIZE_X)										// 地面のサイズ(X方向)
-#define	WALL_SIZE_Z			(150.0f)										// 地面のサイズ(Z方向)
+#define	WALL_SIZE_Z			(200.0f)										// 地面のサイズ(Z方向)
 
 #define WALL_MAX				(4)
 #define WALL_KIND				(2)

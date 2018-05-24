@@ -38,16 +38,16 @@ void InitLight(void)
 	g_aLight[0].Type = D3DLIGHT_DIRECTIONAL;
 
 	// ライト0の拡散光の設定
-	//g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 1.0f);
+	g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 0.0f);
 
-	//// ライト0の鏡面反射光の設定
-	//g_aLight[0].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+	// ライト0の鏡面反射光の設定
+	g_aLight[0].Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
 
 	// ライト0の環境光の設定
 	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
 
 	// ライト0の方向の設定
-	vecDir = D3DXVECTOR3(-0.0f, -1.0f, -0.8f);
+	vecDir = D3DXVECTOR3(0.0f, -1.0f, 1.0f);
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
 
 	// ライト0をレンダリングパイプラインに設定
@@ -57,35 +57,43 @@ void InitLight(void)
 	pDevice->LightEnable(0, TRUE);
 
 
-	///********** ライト1 **********/
+	/********** ライト1 **********/
 	
 	// D3DLIGHT9構造体を0でクリアする
 	ZeroMemory(&g_aLight[1], sizeof(D3DLIGHT9));
 	
 	// ライト1のタイプの設定
-	g_aLight[1].Type = D3DLIGHT_DIRECTIONAL;
+	g_aLight[1].Type = D3DLIGHT_POINT;
 	
 	// ライト1の拡散光の設定
-	//g_aLight[1].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, 0.5f);
+	g_aLight[1].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, 0.5f);
 	
 	// ライト1の鏡面反射光の設定
-	//	g_aLight[1].Specular = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-	
+	g_aLight[1].Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+
 	// ライト1の環境光の設定
 	g_aLight[1].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 0.5f);
-	
+
+	//ライト1のポジションの設定
+	g_aLight[1].Position = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
+
+	//ライト1の減衰値
+	g_aLight[1].Attenuation0 = 1.0f;
+	g_aLight[1].Attenuation1 = 0.0f;
+	g_aLight[1].Attenuation2 = 0.0f;
+
 	// ライト1の方向の設定
-	vecDir = D3DXVECTOR3(0.4f, 0.7f, 0.5f);
-	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
+	//vecDir = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
+	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
 	
 	// ライト1をレンダリングパイプラインに設定
 	pDevice->SetLight(1, &g_aLight[1]);
 	
 	// ライト1を使用状態に
-	pDevice->LightEnable(1, FALSE);
+	pDevice->LightEnable(1, TRUE);
 
 
-	///********** ライト2 **********/
+	/********** ライト2 **********/
 
 	// D3DLIGHT9構造体を0でクリアする
 	//ZeroMemory(&g_aLight[2], sizeof(D3DLIGHT9));
@@ -113,7 +121,7 @@ void InitLight(void)
 	//pDevice->LightEnable(2, TRUE);
 
 
-	///********** ライト3 **********/
+	/********** ライト3 **********/
 
 	//// D3DLIGHT9構造体を0でクリアする
 	//ZeroMemory(&g_aLight[3], sizeof(D3DLIGHT9));
@@ -210,17 +218,7 @@ void UpdateLight(void)
 	CAMERA *camera = GetCamera();
 	D3DXVECTOR3 vecDir;
 
-	//vecDir.y = camera->rotCamera.y;
 
-	//vecDir = D3DXVECTOR3(0.0f, -1.0f, 0.0f);
-
-	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[0].Direction, &vecDir);
-
-	//vecDir = camera->rotCamera;
-
-	//g_aLight[0].Position = vecDir;
-
-	//pDevice->SetLight(0, &g_aLight[0]);
 
 #ifdef _DEBUG
 	PrintDebugProc("vecDir: %f\n", vecDir.y);

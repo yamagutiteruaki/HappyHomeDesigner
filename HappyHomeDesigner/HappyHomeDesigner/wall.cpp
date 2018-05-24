@@ -57,14 +57,14 @@ HRESULT InitWall(void)
 
 		wall->Pos.x = 0.0f;	//X座標の設定
 		wall->Pos.y = -(field->Size.x) / 2;//Y座標は0固定
-		wall->Pos.z = (WALL_SIZE_Z) / 2;//Z座標の設定
+		wall->Pos.z = WALL_SIZE_Z/((i/4)+1);//Z座標の設定
 
 		wall->Rot.x = -D3DX_PI / 2;
 		wall->Rot.y = (D3DX_PI / 2)*i ;
 
 		wall->Size.x = field->Size.x;
 		wall->Size.y = 0.0f;
-		wall->Size.z = WALL_SIZE_Z;
+		wall->Size.z = wall->Pos.z*2;
 
 	}
 		for(int i=0;i<WALL_KIND*WALL_MAX;i++)
@@ -192,10 +192,10 @@ HRESULT MakeVertexWall(LPDIRECT3DDEVICE9 pDevice,int no)
 		{
 
 			// 頂点座標の設定
-			pVtx[0].vtx = D3DXVECTOR3(-wall->Size.x /2, 0.0f, WALL_SIZE_Z/2);
-			pVtx[1].vtx = D3DXVECTOR3(wall->Size.x /2, 0.0f, WALL_SIZE_Z / 2);
-			pVtx[2].vtx = D3DXVECTOR3(-wall->Size.x / 2, 0.0f, -WALL_SIZE_Z / 2);
-			pVtx[3].vtx = D3DXVECTOR3(wall->Size.x / 2, 0.0f, -WALL_SIZE_Z / 2);
+			pVtx[0].vtx = D3DXVECTOR3(-wall->Size.x /2, 0.0f, wall->Size.z /2);
+			pVtx[1].vtx = D3DXVECTOR3(wall->Size.x /2, 0.0f, wall->Size.z / 2);
+			pVtx[2].vtx = D3DXVECTOR3(-wall->Size.x / 2, 0.0f, -wall->Size.z / 2);
+			pVtx[3].vtx = D3DXVECTOR3(wall->Size.x / 2, 0.0f, -wall->Size.z / 2);
 
 			// 法線ベクトルの設定
 			pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
