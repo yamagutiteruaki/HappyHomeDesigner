@@ -34,6 +34,9 @@
     <Filter Include="ソース ファイル\stage\game\UI">
       <UniqueIdentifier>{cb84ec26-9241-4dd1-94fb-ebea56763fa3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\stage\game\effect">
+      <UniqueIdentifier>{807c772c-cbb3-462a-ad38-17fc2c3d75e6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="workChisaka.cpp">
@@ -129,11 +132,16 @@
     <ClCompile Include="arrest.cpp">
       <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClCompile>
-  <ClCompile Include="button.cpp">
+    <ClCompile Include="button.cpp">
       <Filter>ソース ファイル\stage\game\UI</Filter>
-    </ClCompile>   <ClCompile Include="search.cpp">
+    </ClCompile>
+    <ClCompile Include="search.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
-    </ClCompile>  </ItemGroup>
+    </ClCompile>
+    <ClCompile Include="timeeffect.cpp">
+      <Filter>ソース ファイル\stage\game\effect</Filter>
+    </ClCompile>
+  </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
       <Filter>ソース ファイル\work</Filter>
@@ -230,7 +238,12 @@
     </ClInclude>
     <ClInclude Include="button.h">
       <Filter>ソース ファイル\stage\game\UI</Filter>
-    </ClInclude>   <ClInclude Include="search.h">
+    </ClInclude>
+    <ClInclude Include="search.h">
       <Filter>ソース ファイル\stage\game</Filter>
-    </ClInclude>  </ItemGroup>
+    </ClInclude>
+    <ClInclude Include="timeeffect.h">
+      <Filter>ソース ファイル\stage\game\effect</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

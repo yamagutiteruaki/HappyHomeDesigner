@@ -34,7 +34,7 @@ enum
 	STAGE_HOUSE1,		//‰Æ1
 	STAGE_HOUSE2,		//‰Æ2
 	STAGE_HOUSE3,		//‰Æ3
-	STAGE_HOUSE4,		//‰Æ4
+	STAGE_MYHOUSE,		//‰Æ4
 	STAGE_MAX
 };
 

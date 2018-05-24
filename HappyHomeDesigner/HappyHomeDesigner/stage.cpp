@@ -126,7 +126,7 @@ void UninitStage(void)
 void UpdateStage(void)
 {
 #ifdef _DEBUG
-	if (GetKeyboardTrigger(DIK_F1))
+	if (GetKeyboardTrigger(DIK_RSHIFT))
 	{	// デバッグ表示ON/OFF
 		g_bDispDebug = g_bDispDebug ? false : true;
 	}
@@ -144,8 +144,21 @@ void UpdateStage(void)
 		{
 			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
-
 		break;
+
+	case STAGE_HOUSE1:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE1), g_nStage);
+		break;
+	case STAGE_HOUSE2:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE2), g_nStage);
+		break;
+	case STAGE_HOUSE3:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_HOUSE3), g_nStage);
+		break;
+	case STAGE_MYHOUSE:
+		PrintDebugProc("%s (%d)\n", STR(STAGE_MYHOUSE), g_nStage);
+		break;
+
 	case STAGE_RESULT:
 		PrintDebugProc("%s (%d)\n", STR(STAGE_RESULT), g_nStage);
 		if (GetKeyboardTrigger(DIK_RETURN))
@@ -193,7 +206,7 @@ void UpdateStage(void)
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
-	case STAGE_HOUSE4:
+	case STAGE_MYHOUSE:
 		UpdateGame();				// ゲーム
 		SetSoundBgm(SOUND_BGM_GAME);
 		break;
@@ -223,7 +236,7 @@ void DrawStage(void)
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
-	case STAGE_HOUSE4:
+	case STAGE_MYHOUSE:
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:

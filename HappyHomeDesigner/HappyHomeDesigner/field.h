@@ -22,9 +22,6 @@
 #define	FIELD_SIZE_X			(1000.0f)										// 地面のサイズ(X方向)
 #define	FIELD_SIZE_Z			(1000.0f)										// 地面のサイズ(Z方向)
 
-#define HOME_SIZE_X		(100.0f)										//家の床のサイズ(X方向)
-#define HOME_SIZE_Z		(100.0f)										//家の床のサイズ(Y方向)
-
 #define FIELD_MAX				(2)
 #define HOME_MAX				(4)
 

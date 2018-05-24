@@ -98,7 +98,7 @@ float PiCalculate180(float fAngle)
 float PiCalculate360(float fAngle)
 {
 	// 360“x‚ð’´‚¦‚½‚ç360“x‚ðˆø‚­
-	if (fAngle > D3DX_PI * 2)
+	if (fAngle > D3DX_PI * 2.0f)
 	{
 		fAngle -= D3DX_PI * 2.0f;
 	}
