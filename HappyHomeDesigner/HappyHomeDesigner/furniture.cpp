@@ -20,14 +20,14 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9	g_pD3DTextureFurniture[FURNITURETYPE_MAX];	// テクスチャ読み込み場所
-LPD3DXMESH			g_pMeshFurniture[FURNITURETYPE_MAX];		// ID3DXMeshインターフェイスへのポインタ
-LPD3DXBUFFER		g_pD3DXMatBuffFurniture[FURNITURETYPE_MAX];	// メッシュのマテリアル情報を格納
-DWORD				g_aNumMatFurniture[FURNITURETYPE_MAX];		// 属性情報の総数
+LPDIRECT3DTEXTURE9	g_pD3DTextureFurniture[FURNITURE_MAX];		// テクスチャ読み込み場所
+LPD3DXMESH			g_pMeshFurniture[FURNITURE_MAX];			// ID3DXMeshインターフェイスへのポインタ
+LPD3DXBUFFER		g_pD3DXMatBuffFurniture[FURNITURE_MAX];		// メッシュのマテリアル情報を格納
+DWORD				g_aNumMatFurniture[FURNITURE_MAX];			// 属性情報の総数
 D3DXMATRIX			g_mtxWorldFurniture;						// ワールドマトリックス
 FURNITURE			furnitureWk[MAX_FURNITURE];					// アイテムワーク
 
-const char *FileNameFurniture[FURNITURETYPE_MAX] =
+const char *FileNameFurniture[FURNITURE_MAX] =
 {
 	"data/MODEL/FURNITURE/furniture.x",			// コイン
 	"data/MODEL/FURNITURE/furniture001.x",		// ライフ
@@ -43,7 +43,7 @@ HRESULT InitFurniture(int type)
 
 	if (type == STAGE_INIT_FAST)
 	{
-		for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURETYPE_MAX; nCntFurnitureType++)
+		for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_MAX; nCntFurnitureType++)
 		{
 			g_pD3DTextureFurniture[nCntFurnitureType] = NULL;
 			g_pMeshFurniture[nCntFurnitureType] = NULL;
@@ -76,7 +76,7 @@ HRESULT InitFurniture(int type)
 		furniture->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		furniture->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 		furniture->scl = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		furniture->type = FURNITURETYPE_COIN;
+		furniture->type = kabin;
 		furniture->use = false;
 	}
 	return S_OK;
@@ -87,7 +87,7 @@ HRESULT InitFurniture(int type)
 //=============================================================================
 void UninitFurniture(void)
 {
-	for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURETYPE_MAX; nCntFurnitureType++)
+	for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_MAX; nCntFurnitureType++)
 	{
 		if (g_pD3DTextureFurniture[nCntFurnitureType] != NULL)
 		{// テクスチャの開放

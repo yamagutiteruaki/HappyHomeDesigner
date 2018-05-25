@@ -18,10 +18,17 @@
 //**************************************
 enum
 {
-	FURNITURETYPE_COIN = 0,		// コイン
-	FURNITURETYPE_LIFE,			// ライフ
-	FURNITURETYPE_TIMER,		// タイマー
-	FURNITURETYPE_MAX
+	kabin = 0,		// 花瓶
+	isu,			// 椅子
+	buta,			// 豚の貯金箱
+	yubiwa,			// 指輪
+	toire,			// トイレ
+	tukue,			// 机
+	terebi,			// テレビ
+	kinko,			// 金庫
+	tansu,			// タンス
+	bed,			// ベッド
+	FURNITURE_MAX
 };
 
 //*****************************************************************************
@@ -34,11 +41,12 @@ public:
 
 	D3DXVECTOR3	pos;				// 現在の位置
 	D3DXVECTOR3	rot;				// 現在の向き
-	D3DXVECTOR3	rotDest;			// 目的の向き
 	D3DXVECTOR3	scl;				// スケール
 
 	int			type;				// 種類
-	int			num;				// 番号
+	int			house_num;			// 所属している家の番号
+	float		weight;				// 重さ
+	int			price;				// 金額
 };
 
 //*****************************************************************************
@@ -48,8 +56,6 @@ HRESULT InitFurniture(int nType);
 void UninitFurniture(void);
 void UpdateFurniture(void);
 void DrawFurniture(void);
-
-void SetFurniture(D3DXVECTOR3 pos, int nType, int life);
 FURNITURE *GetFurniture(int no);
 
 #endif
