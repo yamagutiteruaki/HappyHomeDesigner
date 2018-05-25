@@ -257,6 +257,7 @@ void SearchCollision(void)
 	SEARCH *search = &searchWk[0];
 	PLAYER *player = GetPlayer(0);
 	VOICE *voice = GetVoice(0);
+	POLICE *police = GetPolice(0);
 
 	// 視野内外判定
 	for (int i = 0; i < PLAYER_MAX; i++, player++)
@@ -289,6 +290,13 @@ void SearchCollision(void)
 				//player->use = false;
 				// 松尾君のアレ描画
 				voice->use = true;
+
+				// ポリスの動きを止める
+				police = GetPolice(0);
+				for (int k = 0; k < POLICE_MAX; k++, police++)
+				{	// ポリスの移動フラグをfalseに
+					police->movef = false;
+				}
 			}
 		}
 	}

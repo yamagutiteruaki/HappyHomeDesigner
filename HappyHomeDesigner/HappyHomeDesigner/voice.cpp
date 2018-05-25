@@ -109,7 +109,7 @@ void UpdateVoice(void)
 		{
 			//フレームを数える
 			voice->cnt_frame++;
-			if (voice->cnt_frame >= 60)
+			if (voice->cnt_frame == 60)
 			{
 				if (voice->count == ARREST_MAX)
 				{
@@ -118,19 +118,23 @@ void UpdateVoice(void)
 				else
 				{
 					SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-				}
-
-				if (GetFade() == FADE_IN)
-				{
-					player->Eye = field->Pos;
-					player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-					player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-					camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-					camera->rotDest = 0.0f;
-					voice->use = false;
 					voice->count++;
+
 				}
 			}
+			if (GetFade() == FADE_IN)
+			{
+				player->Eye = field->Pos;
+				player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				camera->rotDest = 0.0f;
+				voice->use = false;
+				voice->cnt_frame = 0;
+				voice->pos = D3DXVECTOR3(SCREEN_WIDTH * 2, 350.0f, 0.0f);
+
+			}
+			
 			if (voice->pos.x > SCREEN_CENTER_X)
 			{
 				voice->pos.x -= VOICE_SPEED;
@@ -142,11 +146,6 @@ void UpdateVoice(void)
 		
 
 			SetVertexVoice(i);	// 移動後の座標で頂点を設定
-		}
-		else
-		{
-			voice->pos = D3DXVECTOR3(SCREEN_WIDTH * 2, 350.0f, 0.0f);
-			voice->cnt_frame = 0;
 		}
 	}
 
