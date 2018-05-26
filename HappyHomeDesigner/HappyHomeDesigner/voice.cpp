@@ -114,6 +114,7 @@ void UpdateVoice(void)
 				if (voice->count == ARREST_MAX)
 				{
 					SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+					SetGameEnd(GAME_OVER);
 				}
 				else
 				{

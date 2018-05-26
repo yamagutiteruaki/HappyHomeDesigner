@@ -76,45 +76,51 @@ void UpdateCamera(void)
 	PLAYER *player = GetPlayer(0);
 	
 	D3DXVECTOR3 limit;
-	
-	
-	if (camera->posCameraEye.x < -500)
+
+
+	if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))
 	{
+		if (camera->posCameraEye.x < -500)
+		{
 
-		limit = camera->posCameraEye - player->Eye;
-		D3DXVec3Normalize(&limit, &limit);
-		camera->fLength = (-500 - player->Eye.x) / limit.x;
-		camera->posCameraEye = camera->fLength*limit;
+			limit = camera->posCameraEye - player->Eye;				//limit‚ÉÀ•W·Ši”[
+			D3DXVec3Normalize(&limit, &limit);						//limit‚ð³‹K‰»
+			camera->fLength = (-500 - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+			camera->posCameraEye = camera->fLength*limit;			//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+																	//ˆÈ‰º‚R‚Â“¯—l
+		}
+		else if (camera->posCameraEye.x > 500)
+		{
 
-	}
-	else if (camera->posCameraEye.x > 500)
-	{
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (500 - player->Eye.x) / limit.x;
+			camera->posCameraEye = camera->fLength*limit;
 
-		limit = camera->posCameraEye - player->Eye;
-		D3DXVec3Normalize(&limit, &limit);
-		camera->fLength = (500 - player->Eye.x) / limit.x;
-		camera->posCameraEye = camera->fLength*limit;
-
-	}
-	if (camera->posCameraEye.z < -500)
-	{
-
-		limit = camera->posCameraEye - player->Eye;
-		D3DXVec3Normalize(&limit, &limit);
-		camera->fLength = (-500 - player->Eye.z) / limit.z;
-		camera->posCameraEye = camera->fLength*limit;
-
-	}
-	else if (camera->posCameraEye.z > 500)
-	{
-
-		limit = camera->posCameraEye - player->Eye;
-		D3DXVec3Normalize(&limit, &limit);
-		camera->fLength = (500 - player->Eye.z) / limit.z;
-		camera->posCameraEye = camera->fLength*limit;
-
+		}
 	}
 
+	if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))
+	{
+		if (camera->posCameraEye.z < -500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (-500 - player->Eye.z) / limit.z;
+			camera->posCameraEye = camera->fLength*limit;
+
+		}
+		else if (camera->posCameraEye.z > 500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (500 - player->Eye.z) / limit.z;
+			camera->posCameraEye = camera->fLength*limit;
+
+		}
+	}
 
 	if (camera->fLength > camera->fChaseLength)
 	{

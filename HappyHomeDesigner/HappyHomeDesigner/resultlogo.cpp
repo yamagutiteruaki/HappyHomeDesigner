@@ -7,6 +7,8 @@
 #include "resultlogo.h"
 #include "input.h"
 #include "fade.h"
+#include "debugproc.h"
+#include "stage.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -102,6 +104,7 @@ void UninitResultLogo(void)
 void UpdateResultLogo(void)
 {
 
+	PrintDebugProc("[クリア状況  ：(%d)]\n", GetGameEnd());
 
 }
 
