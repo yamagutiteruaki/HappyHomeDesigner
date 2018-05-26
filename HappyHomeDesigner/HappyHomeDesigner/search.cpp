@@ -289,13 +289,13 @@ void SearchCollision(void)
 				// プレイヤーを消す
 				//player->use = false;
 				// 松尾君のアレ描画
-				voice->use = true;
+				//voice->use = true;
 
 				// ポリスの動きを止める
 				police = GetPolice(0);
 				for (int k = 0; k < POLICE_MAX; k++, police++)
 				{	// ポリスの移動フラグをfalseに
-					police->movef = false;
+					//police->movef = false;
 				}
 			}
 		}

@@ -80,6 +80,7 @@ typedef struct
 	float				fHAngleDiff;
 	float				fVAngleDiff;
 	float				fLength;
+	float				fChaseLength;
 	float				fLengthTemp;
 	float				fMoveSpeed;
 	float				fRotSpeed;
