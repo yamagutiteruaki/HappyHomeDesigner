@@ -57,7 +57,7 @@ const char *FileNameHome[HOME_MAX] =
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ1
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ2
 	"data/MODEL/HOUSE/house00.x",		// ‰Æ3
-	"data/MODEL/HOUSE/house01.x",		// Ž©‘î
+	"data/MODEL/HOUSE/gojuu.x",		// Ž©‘î
 };
 
 const char *FileNameDoor[HOME_MAX] =
@@ -155,8 +155,8 @@ HRESULT InitField(void)
 
 		door->Rot.y = 0.0f;
 		
-		door->Scl.x = 3.0f;
-		door->Scl.y = 3.0f;
+		door->Scl.x = 2.0f;
+		door->Scl.y = 2.0f;
 		door->Scl.z = 1.0f;
 
 
