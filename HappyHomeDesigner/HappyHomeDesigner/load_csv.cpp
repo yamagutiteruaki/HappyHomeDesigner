@@ -23,7 +23,7 @@
 //*****************************************************************************
 enum
 {
-	LOAD_CSV_USE = 0,
+	LOAD_CSV_USE = 1,
 	LOAD_CSV_POS_X,
 	LOAD_CSV_POS_Y,
 	LOAD_CSV_POS_Z,
@@ -74,8 +74,8 @@ void LoadCsv(void)
 				continue;
 			}
 			// char‚ðint, double‚É•ÏŠ·‚·‚é
-			furniture->use		= atoi(tkn[1]);
-			furniture->pos.x	= (float)atof(tkn[LOAD_CSV_POS_X]);
+			furniture->use = atoi(tkn[LOAD_CSV_USE]);
+			furniture->pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
 			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
 			furniture->pos.z = (float)atof(tkn[LOAD_CSV_POS_Z]);
 
