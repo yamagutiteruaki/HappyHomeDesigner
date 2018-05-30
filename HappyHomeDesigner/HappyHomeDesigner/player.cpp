@@ -11,6 +11,8 @@
 #include "stage.h"
 #include "field.h"
 #include "calculate.h"
+#include "collision.h"
+#include "fade.h"
 
 #include "button.h"
 //*****************************************************************************
@@ -33,6 +35,8 @@
 //*****************************************************************************
 void PlayerMove(void);
 void PlayerBorder(void);
+void PlayerEntrance(void);
+
 
 //*****************************************************************************
 // グローバル変数
@@ -248,6 +252,8 @@ void UpdatePlayer(void)
 
 	PlayerMove();
 	PlayerBorder();
+	PlayerEntrance();
+
 
 #ifdef _DEBUG
 	CAMERA *camera = GetCamera();
@@ -437,6 +443,29 @@ void PlayerBorder(void)
 	if (player->Eye.z > field->Size.z / 2 - MOVE_LIMIT)
 	{
 		player->Eye.z = field->Size.z / 2 - MOVE_LIMIT;
+	}
+
+}
+
+//=============================================================================
+// プレイヤーの移動制限
+//=============================================================================
+void PlayerEntrance(void)
+{
+	PLAYER *player = &playerWk[0];
+	DOOR *door = GetDoor(0);
+
+	for (int i = 0; i < HOME_MAX; i++, door++)
+	{
+		D3DXVECTOR3 doorpos(door->Pos.x-16, door->Pos.y, door->Pos.z);
+		if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(16.0f, 2.0f)) == true)
+		{
+			if (GetKeyboardTrigger(DIK_SPACE))
+			{
+				SetFade(FADE_OUT, door->Homeno, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			}
+		}
+
 	}
 
 }

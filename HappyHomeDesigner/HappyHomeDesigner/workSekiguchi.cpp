@@ -60,6 +60,10 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
 
 		UpdateClock();
 
@@ -82,6 +86,10 @@ void DrawWorkSekiguchi(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
 
 		DrawClock();
 

@@ -52,6 +52,7 @@ typedef struct // ドアの構造体
 	D3DXVECTOR3		Pos;						// ポリゴン表示位置の中心座標
 	D3DXVECTOR3		Rot;
 	D3DXVECTOR3		Scl;
+	int				Homeno;
 }DOOR;
 
 
