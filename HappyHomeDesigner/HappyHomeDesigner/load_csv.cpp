@@ -23,18 +23,21 @@
 //*****************************************************************************
 enum
 {
-	LOAD_CSV_NUMBER = 0,
-	LOAD_CSV_APPEAR,
+	LOAD_CSV_USE = 0,
 	LOAD_CSV_POS_X,
 	LOAD_CSV_POS_Y,
 	LOAD_CSV_POS_Z,
-	LOAD_CSV_HP,
-	LOAD_CSV_PATTERN,
-	LOAD_CSV_WEAPON,
-	LOAD_CSV_TEXTURE,
-	LOAD_CSV_WIDTH,
-	LOAD_CSV_HEIGHT,
-
+	LOAD_CSV_ROT_X,
+	LOAD_CSV_ROT_Y,
+	LOAD_CSV_ROT_Z,
+	LOAD_CSV_SCL_X,
+	LOAD_CSV_SCL_Y,
+	LOAD_CSV_SCL_Z,
+	LOAD_CSV_TYPE,
+	LOAD_CSV_HOUSE_NUM,
+	LOAD_CSV_WEIGHT,
+	LOAD_CSV_PRICE,
+	LOAD_CSV_RATIO,
 	LOAD_CSV_MAX,
 };
 //=============================================================================
@@ -72,21 +75,25 @@ void LoadCsv(void)
 			}
 			// charをint, doubleに変換する
 			furniture->use		= atoi(tkn[1]);
-			furniture->pos.x	= (float)atof(tkn[2]);
-			furniture->pos.y	= (float)atof(tkn[3]);
-			furniture->pos.z	= (float)atof(tkn[4]);
-			furniture->rot.x = (float)atof(tkn[2]);
-			furniture->rot.y = (float)atof(tkn[3]);
-			furniture->rot.z = (float)atof(tkn[4]);
-			furniture->scl.x = (float)atof(tkn[2]);
-			furniture->scl.y = (float)atof(tkn[3]);
-			furniture->scl.z = (float)atof(tkn[4]);
+			furniture->pos.x	= (float)atof(tkn[LOAD_CSV_POS_X]);
+			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
+			furniture->pos.z = (float)atof(tkn[LOAD_CSV_POS_Z]);
 
-			furniture->txType	= atoi(tkn[8]);
-			furniture->sizeX	= (float)atof(tkn[9]);
-			furniture->sizeY	= (float)atof(tkn[10]);
+			furniture->rot.x = (float)atof(tkn[LOAD_CSV_ROT_X]);
+			furniture->rot.y = (float)atof(tkn[LOAD_CSV_ROT_Y]);
+			furniture->rot.z = (float)atof(tkn[LOAD_CSV_ROT_Z]);
 
-			furniture++;		// 次のデータに
+			furniture->scl.x = (float)atof(tkn[LOAD_CSV_SCL_X]);
+			furniture->scl.y = (float)atof(tkn[LOAD_CSV_SCL_Y]);
+			furniture->scl.z = (float)atof(tkn[LOAD_CSV_SCL_Z]);
+
+			furniture->type = atoi(tkn[LOAD_CSV_TYPE]);
+			furniture->house_num = atof(tkn[LOAD_CSV_HOUSE_NUM]);
+			furniture->weight = (float)atof(tkn[LOAD_CSV_WEIGHT]);
+			furniture->price = atof(tkn[LOAD_CSV_PRICE]);
+			furniture->ratio = atof(tkn[LOAD_CSV_RATIO]);
+			
+			furniture++;	// 次のデータに
 		}
 	}
 }
