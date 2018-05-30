@@ -44,7 +44,11 @@ enum
 	STAGE_INIT_LOOP
 };
 
-
+enum
+{
+	GAME_CLEAR,
+	GAME_OVER
+};
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
@@ -58,5 +62,7 @@ void		SetStage(int nStage);
 int			GetStage(void);
 int			GetPrice(void);
 void		AddPrice(int price);
+void		SetGameEnd(int no);
+int			GetGameEnd(void);
 
 #endif

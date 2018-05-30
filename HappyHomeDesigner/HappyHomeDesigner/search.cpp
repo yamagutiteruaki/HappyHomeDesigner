@@ -34,9 +34,9 @@ LPDIRECT3DTEXTURE9		g_pD3DTextureSearch = NULL;	// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffSearch = NULL;	// 頂点バッファへのポインタ
 D3DXMATRIX				g_mtxWorldSearch;			// ワールドマトリックス
 SEARCH					searchWk[SEARCH_MAX];		// サーチ格納ワーク
-													//=============================================================================
-													// 初期化処理
-													//=============================================================================
+//=============================================================================
+// 初期化処理
+//=============================================================================
 HRESULT InitSearch(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -289,13 +289,13 @@ void SearchCollision(void)
 				// プレイヤーを消す
 				//player->use = false;
 				// 松尾君のアレ描画
-				voice->use = true;
+				//voice->use = true;
 
 				// ポリスの動きを止める
 				police = GetPolice(0);
 				for (int k = 0; k < POLICE_MAX; k++, police++)
 				{	// ポリスの移動フラグをfalseに
-					police->movef = false;
+					//police->movef = false;
 				}
 			}
 		}

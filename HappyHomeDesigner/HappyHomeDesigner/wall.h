@@ -13,7 +13,7 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	TEXTURE_WALL	"data/TEXTURE/wall005.jpg"								// 読み込むテクスチャファイル名
+#define	TEXTURE_WALL	"data/TEXTURE/wall005_a.jpg"								// 読み込むテクスチャファイル名
 #define	TEXTURE_WALL1	"data/TEXTURE/Floor_wall.jpg"								// 読み込むテクスチャファイル名
 
 #define	WALL_SIZE_X			(FIELD_SIZE_X)										// 地面のサイズ(X方向)

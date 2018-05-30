@@ -46,6 +46,7 @@
 //*****************************************************************************
 int					g_nStage;				// 初期ステージ
 int					g_nPrice;				//盗難金額
+int					g_nGameEnd;				//ゲームエンド状況
 
 #ifdef _DEBUG
 bool				g_bDispDebug = true;	// デバッグ表示ON/OFF
@@ -58,7 +59,6 @@ HRESULT InitStage(HINSTANCE hInstance, HWND hWnd)
 {
 	// グローバル変数の初期化
 	g_nStage = START_STAGE;			// 初期ステージを設定
-	g_nPrice = START_PRICE;			//初期金額設定
 
 	InitInput(hInstance, hWnd);		// 入力
 	InitSound(hWnd);				// サウンド
@@ -77,6 +77,10 @@ HRESULT InitStage(HINSTANCE hInstance, HWND hWnd)
 //=============================================================================
 HRESULT InitStageEach(int nType)
 {
+	g_nGameEnd = GAME_CLEAR;		//クリア状況設定
+	g_nPrice = START_PRICE;			//初期金額設定
+
+	
 	InitCamera(nType);			// カメラ
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
@@ -285,4 +289,19 @@ int GetPrice(void)
 void AddPrice(int price)
 {
 	g_nPrice += price;
+}
+
+//==============================================================================
+//ゲームエンドセット
+//==============================================================================
+void SetGameEnd(int no)
+{
+	g_nGameEnd = no;
+}
+//==============================================================================
+//ゲームエンド取得
+//==============================================================================
+int GetGameEnd(void)
+{
+	return g_nGameEnd;
 }

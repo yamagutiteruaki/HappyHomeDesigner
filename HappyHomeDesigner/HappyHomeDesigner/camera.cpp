@@ -45,6 +45,7 @@ HRESULT InitCamera(int nType)
 	camera->fHAngle = CAMERA_H_ANGLE;
 	camera->fHAngleMargin = 0.0f;
 	camera->fLength = CAMERA_LENGTH;
+	camera->fChaseLength = CAMERA_LENGTH;
 	camera->fLengthTemp = 0;
 
 	camera->rotDest = 0.0f;
@@ -73,6 +74,59 @@ void UpdateCamera(void)
 
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
+	
+	D3DXVECTOR3 limit;
+
+
+	if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))
+	{
+		if (camera->posCameraEye.x < -500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;				//limitに座標差格納
+			D3DXVec3Normalize(&limit, &limit);						//limitを正規化
+			camera->fLength = (-500 - player->Eye.x) / limit.x;		//正規化したlimitから壁の外に出ないようにlengthの修正
+			camera->posCameraEye = camera->fLength*limit;			//再設定したlengthからカメラ座標の再設定
+																	//以下３つ同様
+		}
+		else if (camera->posCameraEye.x > 500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (500 - player->Eye.x) / limit.x;
+			camera->posCameraEye = camera->fLength*limit;
+
+		}
+	}
+
+	if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))
+	{
+		if (camera->posCameraEye.z < -500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (-500 - player->Eye.z) / limit.z;
+			camera->posCameraEye = camera->fLength*limit;
+
+		}
+		else if (camera->posCameraEye.z > 500)
+		{
+
+			limit = camera->posCameraEye - player->Eye;
+			D3DXVec3Normalize(&limit, &limit);
+			camera->fLength = (500 - player->Eye.z) / limit.z;
+			camera->posCameraEye = camera->fLength*limit;
+
+		}
+	}
+
+	if (camera->fLength > camera->fChaseLength)
+	{
+		camera->fLength = camera->fChaseLength;
+	}
+
 
 	//デバッグ時にZCでカメラ回転
 	if (GetKeyboardPress(DIK_Z))
@@ -83,8 +137,8 @@ void UpdateCamera(void)
 			camera->rotCamera.y -= D3DX_PI * 2.0f;
 		}
 
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fChaseLength;
+		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fChaseLength;
 
 		CameraReset = false;
 	}
@@ -96,34 +150,41 @@ void UpdateCamera(void)
 			camera->rotCamera.y += D3DX_PI * 2.0f;
 		}
 
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fChaseLength;
+		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fChaseLength;
 
 		CameraReset = false;
 	}
 
-	if (GetKeyboardPress(DIK_W))
-	{// 視点移動「ズームイン」
-		//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
-		camera->fLength -= CAMERA_MOVE_SPEED;
+	if (camera->fLength >= CAMERA_LENGTH_MIN
+		&&camera->fLength <= CAMERA_LENGTH_MAX)
+	{
+		if (GetKeyboardPress(DIK_W))
+		{// 視点移動「ズームイン」
+			//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
+			camera->fChaseLength -= CAMERA_MOVE_SPEED;
 
-		// 移動制限
-		if (camera->fLength < CAMERA_LENGTH_MIN)
-		{
-			camera->fLength = CAMERA_LENGTH_MIN;
+			// 移動制限
+			if (camera->fChaseLength < CAMERA_LENGTH_MIN)
+			{
+				camera->fChaseLength = CAMERA_LENGTH_MIN;
+			}
+		camera->fLength = camera->fChaseLength;
+
 		}
 
-	}
+		if (GetKeyboardPress(DIK_S))
+		{// 視点移動「ズームアウト」
+			//camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+			camera->fChaseLength += CAMERA_MOVE_SPEED;
 
-	if (GetKeyboardPress(DIK_S))
-	{// 視点移動「ズームアウト」
-		//camera->posCameraEye.y += CAMERA_MOVE_SPEED;
-		camera->fLength += CAMERA_MOVE_SPEED;
+			// 移動制限
+			if (camera->fChaseLength > CAMERA_LENGTH_MAX)
+			{
+				camera->fChaseLength = CAMERA_LENGTH_MAX;
+			}
+			camera->fLength = camera->fChaseLength;
 
-		// 移動制限
-		if (camera->fLength > CAMERA_LENGTH_MAX)
-		{
-			camera->fLength = CAMERA_LENGTH_MAX;
 		}
 
 	}
@@ -150,11 +211,15 @@ void UpdateCamera(void)
 	camera->rotDest = PiCalculate360(camera->rotDest);
 
 #ifdef _DEBUG
+	PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
 	PrintDebugProc("CameraReset: %d\n", CameraReset);
+	PrintDebugProc("CameraLength: %f\n", camera->fLength);
 	PrintDebugProc("\n");
 
 #endif
 	
+
+
 }
 
 //=============================================================================
