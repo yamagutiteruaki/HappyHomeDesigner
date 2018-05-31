@@ -123,9 +123,9 @@ HRESULT InitField(void)
 
 		home->Rot.y = D3DX_PI / 2 ;
 
-		home->Scl.x = 3.0f;
-		home->Scl.y = 3.0f;
-		home->Scl.z = 4.0f;
+		home->Scl.x = 1.0f;
+		home->Scl.y = 1.0f;
+		home->Scl.z = 1.0f;
 
 	}
 
