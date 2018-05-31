@@ -211,7 +211,7 @@ FIELD *field = GetField(fieldnum);
 		camera->fLength = camera->fChaseLength;
 
 		}
-		if ((float)fabs(camera->posCameraEye.x) < limit.x && (float)fabs(camera->posCameraEye.z) < limit.z)
+		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)
 		{
 			if (GetKeyboardPress(DIK_S))
 			{// 視点移動「ズームアウト」
