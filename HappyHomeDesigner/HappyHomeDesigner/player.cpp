@@ -455,17 +455,20 @@ void PlayerEntrance(void)
 	PLAYER *player = &playerWk[0];
 	DOOR *door = GetDoor(0);
 
+	bool hitflag = false;
 	for (int i = 0; i < HOME_MAX; i++, door++)
 	{
 		D3DXVECTOR3 doorpos(door->Pos.x-16, door->Pos.y, door->Pos.z);
-		if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(16.0f, 2.0f)) == true)
+		if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
 		{
 			if (GetKeyboardTrigger(DIK_SPACE))
 			{
 				SetFade(FADE_OUT, door->Homeno, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 			}
+			hitflag = true;
+			
 		}
-
 	}
 
+	Button(hitflag);
 }

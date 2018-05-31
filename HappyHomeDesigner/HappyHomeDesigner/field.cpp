@@ -54,10 +54,10 @@ DWORD				g_nNumMatDoor[HOME_MAX];				// 属性情報の総数
 
 const char *FileNameHome[HOME_MAX] =
 {
-	"data/MODEL/HOUSE/house00.x",		// 家1
-	"data/MODEL/HOUSE/house00.x",		// 家2
-	"data/MODEL/HOUSE/house00.x",		// 家3
-	"data/MODEL/HOUSE/gojuu.x",		// 自宅
+	"data/MODEL/HOUSE/house_nobi.x",		// 家1
+	"data/MODEL/HOUSE/house_nobi.x",		// 家2
+	"data/MODEL/HOUSE/house_nobi.x",		// 家3
+	"data/MODEL/HOUSE/house03.x",		// 自宅
 };
 
 const char *FileNameDoor[HOME_MAX] =
@@ -123,9 +123,9 @@ HRESULT InitField(void)
 
 		home->Rot.y = D3DX_PI / 2 ;
 
-		home->Scl.x = 3.0f;
-		home->Scl.y = 3.0f;
-		home->Scl.z = 4.0f;
+		home->Scl.x = 1.0f;
+		home->Scl.y = 1.0f;
+		home->Scl.z = 1.0f;
 
 	}
 
@@ -148,9 +148,9 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		door->Pos.x = home->Pos.x+12.0f*home->Scl.z;	//X座標の設定
+		door->Pos.x = home->Pos.x+70.0f*home->Scl.x;	//X座標の設定
 		door->Pos.y = home->Pos.y;		//Y座標の設定
-		door->Pos.z = home->Pos.z -46.5f*home->Scl.x;	//Z座標の設定
+		door->Pos.z = home->Pos.z -75.0f*home->Scl.z;	//Z座標の設定
 
 
 		door->Rot.y = 0.0f;

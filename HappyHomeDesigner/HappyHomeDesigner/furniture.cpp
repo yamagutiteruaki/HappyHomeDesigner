@@ -9,6 +9,7 @@
 #include "main.h"
 #include "debugproc.h"
 #include "stage.h"
+#include "load_csv.h"
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
@@ -70,16 +71,7 @@ HRESULT InitFurniture(int type)
 #endif
 		}
 	}
-
-	for (int nCntFurniture = 0; nCntFurniture < MAX_FURNITURE; nCntFurniture++, furniture++)
-	{
-		furniture->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		furniture->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		furniture->scl = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		furniture->type = kabin;
-		furniture->use = false;
-	}
-	return S_OK;
+ 	return S_OK;
 }
 
 //=============================================================================
