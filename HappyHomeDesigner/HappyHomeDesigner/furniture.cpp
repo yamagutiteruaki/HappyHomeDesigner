@@ -71,8 +71,7 @@ HRESULT InitFurniture(int type)
 #endif
 		}
 	}
-	LoadCsv();
-	return S_OK;
+ 	return S_OK;
 }
 
 //=============================================================================
