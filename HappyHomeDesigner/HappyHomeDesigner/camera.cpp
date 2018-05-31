@@ -80,68 +80,87 @@ void UpdateCamera(void)
 	D3DXVECTOR3 limit;
 	int fieldnum;
 
-	if (GetStage() == STAGE_GAME)
-	{
-		fieldnum = 0;
-	}
-	else if (GetStage() == STAGE_HOUSE1
+	if (GetStage() == STAGE_HOUSE1
 		|| GetStage() == STAGE_HOUSE2
 		|| GetStage() == STAGE_HOUSE3
 		|| GetStage() == STAGE_MYHOUSE)
 	{
 		fieldnum = 1;
 	}
-	FIELD *field = GetField(fieldnum);
+	else
+	{
+		fieldnum = 0;
+	}
+FIELD *field = GetField(fieldnum);
 
 	float limitpos_x=field->Size.x/2;
 	float limitpos_z=field->Size.z/2;
 
 
+	if (fabs(camera->posCameraEye.z) > limitpos_z
+		|| fabs(camera->posCameraEye.x) > limitpos_x)
 
-	if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))
 	{
-		if (camera->posCameraEye.x < -limitpos_x)
+		if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))
 		{
+			if (camera->posCameraEye.x < -limitpos_x)
+			{
 
-			limit = camera->posCameraEye - player->Eye;				//limit‚ÉÀ•W·Ši”[
-			D3DXVec3Normalize(&limit, &limit);						//limit‚ð³‹K‰»
-			camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
-			camera->posCameraEye = camera->fLength*limit;			//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
-																	//ˆÈ‰º‚R‚Â“¯—l
+				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
+				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
+				camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+																				//ˆÈ‰º‚R‚Â“¯—l
+			}
+			else if (camera->posCameraEye.x > limitpos_x)
+			{
+
+				limit = camera->posCameraEye - player->Eye;
+				D3DXVec3Normalize(&limit, &limit);
+				camera->fLength = (limitpos_x - player->Eye.x) / limit.x;
+				camera->posCameraEye = camera->fLength*limit;
+
+			}
+			else
+			{
+				//camera->fLength = camera->fChaseLength;
+			}
+
 		}
-		else if (camera->posCameraEye.x > limitpos_x)
-		{
 
-			limit = camera->posCameraEye - player->Eye;
-			D3DXVec3Normalize(&limit, &limit);
-			camera->fLength = (limitpos_x - player->Eye.x) / limit.x;
-			camera->posCameraEye = camera->fLength*limit;
+		else if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))
+		{
+			if (camera->posCameraEye.z < -limitpos_z)
+			{
+
+				limit = camera->posCameraEye - player->Eye;
+				D3DXVec3Normalize(&limit, &limit);
+				camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;
+				camera->posCameraEye = camera->fLength*limit;
+
+			}
+			else if (camera->posCameraEye.z > limitpos_z)
+			{
+
+				limit = camera->posCameraEye - player->Eye;
+				D3DXVec3Normalize(&limit, &limit);
+				camera->fLength = (limitpos_z - player->Eye.z) / limit.z;
+				camera->posCameraEye = camera->fLength*limit;
+
+			}
+			else
+			{
+				camera->fLength = camera->fChaseLength;
+			}
 
 		}
 	}
-
-	if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))
+	else if (fabs(camera->posCameraEye.z) < limitpos_z
+		&& fabs(camera->posCameraEye.x) < limitpos_x)
 	{
-		if (camera->posCameraEye.z < -limitpos_z)
-		{
+		camera->fLength = camera->fChaseLength;
 
-			limit = camera->posCameraEye - player->Eye;
-			D3DXVec3Normalize(&limit, &limit);
-			camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;
-			camera->posCameraEye = camera->fLength*limit;
-
-		}
-		else if (camera->posCameraEye.z > limitpos_z)
-		{
-
-			limit = camera->posCameraEye - player->Eye;
-			D3DXVec3Normalize(&limit, &limit);
-			camera->fLength = (limitpos_z - player->Eye.z) / limit.z;
-			camera->posCameraEye = camera->fLength*limit;
-
-		}
 	}
-
 	if (camera->fLength > camera->fChaseLength)
 	{
 		camera->fLength = camera->fChaseLength;
