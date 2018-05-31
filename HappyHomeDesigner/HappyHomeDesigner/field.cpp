@@ -148,9 +148,9 @@ HRESULT InitField(void)
 			return E_FAIL;
 		}
 
-		door->Pos.x = home->Pos.x+12.0f*home->Scl.z;	//X座標の設定
+		door->Pos.x = home->Pos.x+70.0f*home->Scl.x;	//X座標の設定
 		door->Pos.y = home->Pos.y;		//Y座標の設定
-		door->Pos.z = home->Pos.z -46.5f*home->Scl.x;	//Z座標の設定
+		door->Pos.z = home->Pos.z -75.0f*home->Scl.z;	//Z座標の設定
 
 
 		door->Rot.y = 0.0f;
