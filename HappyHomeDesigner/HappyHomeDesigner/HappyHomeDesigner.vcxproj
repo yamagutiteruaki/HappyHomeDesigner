@@ -165,6 +165,7 @@
     <ClCompile Include="house.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="load_csv.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="police.cpp" />
@@ -201,6 +202,7 @@
     <ClInclude Include="house.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="load_csv.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="police.h" />

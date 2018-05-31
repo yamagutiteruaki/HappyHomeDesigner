@@ -53,6 +53,11 @@ void UpdateWorkYamaguchi(void)
 	switch (GetStage())
 	{
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
+
 		UpdateTimeeffect();
 		break;
 	}
@@ -67,6 +72,11 @@ void DrawWorkYamaguchi(void)
 	switch (GetStage())
 	{
 	case STAGE_GAME:
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
+
 		DrawTimeeffect();
 		break;
 	}

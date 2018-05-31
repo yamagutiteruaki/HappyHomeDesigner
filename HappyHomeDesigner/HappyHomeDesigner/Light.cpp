@@ -41,7 +41,7 @@ void InitLight(void)
 	g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 0.0f);
 
 	// ライト0の鏡面反射光の設定
-	g_aLight[0].Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
+	g_aLight[0].Specular = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
 
 	// ライト0の環境光の設定
 	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);
@@ -72,14 +72,14 @@ void InitLight(void)
 	// ライト1の環境光の設定
 	g_aLight[1].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 0.5f);
 	// ライト1の方向の設定
-	//vecDir = D3DXVECTOR3(1.0f, 0.0f, -1.0f);
-	//D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
+	vecDir = D3DXVECTOR3(0.0f, -1.0f, -1.0f);
+	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
 
 	// ライト1をレンダリングパイプラインに設定
 	pDevice->SetLight(1, &g_aLight[1]);
 
 	// ライト1を使用状態に
-	pDevice->LightEnable(1, TRUE);
+	pDevice->LightEnable(1, FALSE);
 
 
 	/********** ライト2 **********/

@@ -36,7 +36,7 @@ LPD3DXBUFFER		g_pD3DXBuffMatPolice;									// メッシュのマテリアル情報を格納
 DWORD				g_nNumMatPolice;										// 属性情報の総数
 D3DXMATRIX			g_mtxWorldPolice;										// ワールドマトリックス
 POLICE				policeWk[POLICE_MAX];									// ポリス格納ワーク
-																			// ポリスアーム関係
+// ポリスアーム関係
 LPDIRECT3DTEXTURE9	g_pD3DTexturePoliceArm[POLICE_ARM_TYPE_MAX];			// テクスチャ読み込み場所
 LPD3DXMESH			g_pD3DXMeshPoliceArm[POLICE_ARM_TYPE_MAX];				// ID3DXMeshインターフェイスへのポインタ
 LPD3DXBUFFER		g_pD3DXBuffMatPoliceArm[POLICE_ARM_TYPE_MAX];			// メッシュのマテリアル情報を格納
@@ -62,12 +62,12 @@ const char *FileNamePoliceLeg[POLICE_LEG_TYPE_MAX] =
 };
 // チェックポイント関係
 D3DXVECTOR3			CheckPointWk[CHECK_POINT_Y_MAX][CHECK_POINT_X_MAX];		// チェックポイント格納ワーク
-																			// その他
+// その他
 int					animCnt;												// アニメカウント
 int					sp_Update;												// 更新頻度計算用
-																			//=============================================================================
-																			// 初期化処理
-																			//=============================================================================
+//=============================================================================
+// 初期化処理
+//=============================================================================
 HRESULT InitPolice(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
@@ -547,7 +547,7 @@ void PoliceCollision(void)
 		{	// 配列Y要素についてチェック
 			for (int i = 0; i < CHECK_POINT_X_MAX; i++)
 			{	// 配列X要素についてチェック
-				if (CollisionBC(police->Eye, CheckPointWk[j][i], 5.0f, 5.0f))
+				if (CollisionBC(police->Eye, CheckPointWk[j][i], POLICE_RADIUS, CHECK_POINT_RADIUS))
 				{	// チェックポイントに侵入したらポリスの移動設定
 					SetPoliceMove(police, j, i);
 					// 当たり判定有効フラグをfalseに
@@ -831,7 +831,7 @@ void PoliceEachCollision(void)
 		for (int j = i + 1; j < POLICE_MAX; j++)
 		{	// 使用状態のポリスのみチェック
 			if (!policeWk[j].use) continue;
-			if (CollisionBC(policeWk[i].Eye, policeWk[j].Eye, 100.0f, 100.0f))
+			if (CollisionBC(policeWk[i].Eye, policeWk[j].Eye, POLICE_RADIUS + POLICE_RADIUS_VALUE, POLICE_RADIUS + POLICE_RADIUS_VALUE))
 			{	// ポリス同士がぶつかったら
 				// お互いのmoveベクトルを反転
 				police[i].move = -police[i].move;

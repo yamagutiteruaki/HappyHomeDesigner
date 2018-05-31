@@ -159,6 +159,8 @@ HRESULT InitField(void)
 		door->Scl.y = 2.0f;
 		door->Scl.z = 1.0f;
 
+		door->Homeno = STAGE_HOUSE1 + i;
+
 
 	}
 
