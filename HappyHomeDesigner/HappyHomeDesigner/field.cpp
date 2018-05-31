@@ -54,10 +54,10 @@ DWORD				g_nNumMatDoor[HOME_MAX];				// ëÆê´èÓïÒÇÃëçêî
 
 const char *FileNameHome[HOME_MAX] =
 {
-	"data/MODEL/HOUSE/house00.x",		// â∆1
-	"data/MODEL/HOUSE/house00.x",		// â∆2
-	"data/MODEL/HOUSE/house00.x",		// â∆3
-	"data/MODEL/HOUSE/gojuu.x",		// é©ëÓ
+	"data/MODEL/HOUSE/house_nobi.x",		// â∆1
+	"data/MODEL/HOUSE/house_nobi.x",		// â∆2
+	"data/MODEL/HOUSE/house_nobi.x",		// â∆3
+	"data/MODEL/HOUSE/house03.x",		// é©ëÓ
 };
 
 const char *FileNameDoor[HOME_MAX] =
