@@ -211,21 +211,22 @@ FIELD *field = GetField(fieldnum);
 		camera->fLength = camera->fChaseLength;
 
 		}
+		if ((float)fabs(camera->posCameraEye.x) < limit.x && (float)fabs(camera->posCameraEye.z) < limit.z)
+		{
+			if (GetKeyboardPress(DIK_S))
+			{// 視点移動「ズームアウト」
+			 //camera->posCameraEye.y += CAMERA_MOVE_SPEED;
+				camera->fChaseLength += CAMERA_MOVE_SPEED;
 
-		if (GetKeyboardPress(DIK_S))
-		{// 視点移動「ズームアウト」
-			//camera->posCameraEye.y += CAMERA_MOVE_SPEED;
-			camera->fChaseLength += CAMERA_MOVE_SPEED;
+				// 移動制限
+				if (camera->fChaseLength > CAMERA_LENGTH_MAX)
+				{
+					camera->fChaseLength = CAMERA_LENGTH_MAX;
+				}
+				camera->fLength = camera->fChaseLength;
 
-			// 移動制限
-			if (camera->fChaseLength > CAMERA_LENGTH_MAX)
-			{
-				camera->fChaseLength = CAMERA_LENGTH_MAX;
 			}
-			camera->fLength = camera->fChaseLength;
-
 		}
-
 	}
 
 	// カメラリセット
