@@ -109,16 +109,6 @@ void UpdateButton(void)
 	VOICE *voice = GetVoice(0);
 	for (int i = 0; i < BUTTON_MAX; i++, button++)
 	{
-		//if (GetKeyboardTrigger(DIK_Q))
-		//{
-		//	SetFade(FADE_OUT, STAGE_HOUSE1);
-		//}
-#ifdef DEBUG
-		if (GetKeyboardTrigger(DIK_B))
-		{
-			Button();
-		}
-#endif
 
 		if (button->use == true)
 		{
@@ -264,11 +254,9 @@ BUTTON *GetButton(int no)
 //========================================================
 // ボタンの表示　falseならtrueを、trueならfalseを。
 //========================================================
-bool Button(void)
+void Button(bool flag)
 {
 	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
 
-	return button->use = button->use ? false : true;
-	//return button->use = true;
-
+	button->use = flag;
 }
