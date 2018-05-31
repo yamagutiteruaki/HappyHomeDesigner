@@ -16,17 +16,18 @@
 #define	TEXTURE_RESULT			"data/TEXTURE/rouya.jpg"		// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULT_LOGO		"data/TEXTURE/result.png"		// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULT_LOGO2	"data/TEXTURE/被害総額.png"			// 読み込むテクスチャファイル名
+#define	TEXTURE_RESULT_GAMEOVER	"data/TEXTURE/GAME_OVER.png"			// 読み込むテクスチャファイル名
+#define	TEXTURE_RESULT_CLEAR	"data/TEXTURE/GAME_CLEAR.png"			// 読み込むテクスチャファイル名
+#define	RESULT_LOGO2_WIDTH	(1200)				// リザルトロゴの幅
+#define	RESULT_LOGO2_HEIGHT	(480)				// リザルトロゴの高さ
 
-//#define	RESULT_LOGO_POS_X	(SCREEN_CENTER_X)					// リザルトロゴの位置(X座標)
-//#define	RESULT_LOGO_POS_Y	(100*SCREEN_SCALE)					// リザルトロゴの位置(Y座標)
-//#define	RESULT_LOGO_WIDTH	(800 / 2*SCREEN_SCALE)				// リザルトロゴの幅
-//#define	RESULT_LOGO_HEIGHT	(240 / 2*SCREEN_SCALE)				// リザルトロゴの高さ
-
-#define	RESULT_LOGO2_POS_X	(SCREEN_CENTER_X)					// リザルトロゴの位置(X座標)
-#define	RESULT_LOGO2_POS_Y	(100*SCREEN_SCALE)					// リザルトロゴの位置(Y座標)
-#define	RESULT_LOGO2_WIDTH	(800 / 2*SCREEN_SCALE)				// リザルトロゴの幅
-#define	RESULT_LOGO2_HEIGHT	(240 / 2*SCREEN_SCALE)				// リザルトロゴの高さ
-
+#define TEXTURE_GAME_SCORE00	("data/TEXTURE/deg_number3.png")	// サンプル用画像
+#define TEXTURE_SCORE00_SIZE_X	(16)	// テクスチャサイズ
+#define TEXTURE_SCORE00_SIZE_Y	(32)	// 同上
+#define SCORE_POS_X			(500)		// ポリゴンの初期位置X
+#define SCORE_POS_Y			(20)		// 同上
+#define SCORE_MAX			(999999999)		// スコアの最大値
+#define SCORE_DIGIT			(10)			// 桁数
 
 //*****************************************************************************
 // プロトタイプ宣言
