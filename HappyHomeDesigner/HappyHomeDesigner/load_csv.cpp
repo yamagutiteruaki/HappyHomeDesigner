@@ -56,6 +56,7 @@ void LoadCsv(void)
 		// ファイルの終わりまで繰り返し読み込む
 		while (fgets(buf, BUFC_MAX, fp) != NULL)
 		{	// カンマで分割
+
 			for (int i = 0; i < LOAD_CSV_MAX; i++)
 			{
 				if (i == 0)

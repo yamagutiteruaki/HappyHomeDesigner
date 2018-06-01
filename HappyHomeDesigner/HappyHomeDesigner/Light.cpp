@@ -58,37 +58,26 @@ void InitLight(void)
 
 
 	/********** ライト1 **********/
-	
+
 	// D3DLIGHT9構造体を0でクリアする
 	ZeroMemory(&g_aLight[1], sizeof(D3DLIGHT9));
-	
+
 	// ライト1のタイプの設定
 	g_aLight[1].Type = D3DLIGHT_POINT;
-	
+
 	// ライト1の拡散光の設定
 	g_aLight[1].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, LIGHT_DIFFUSE_1, 0.5f);
-	
-	// ライト1の鏡面反射光の設定
-	g_aLight[1].Specular = D3DXCOLOR(0.1f, 0.1f, 0.1f, 1.0f);
 
+	// ライト1の鏡面反射光の設定
 	// ライト1の環境光の設定
 	g_aLight[1].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 0.5f);
-
-	////ライト1のポジションの設定
-	//g_aLight[1].Position = D3DXVECTOR3(0.0f, 50.0f, 0.0f);
-
-	////ライト1の減衰値
-	//g_aLight[1].Attenuation0 = 1.0f;
-	//g_aLight[1].Attenuation1 = 0.0f;
-	//g_aLight[1].Attenuation2 = 0.0f;
-
 	// ライト1の方向の設定
 	vecDir = D3DXVECTOR3(0.0f, -1.0f, -1.0f);
 	D3DXVec3Normalize((D3DXVECTOR3*)&g_aLight[1].Direction, &vecDir);
-	
+
 	// ライト1をレンダリングパイプラインに設定
 	pDevice->SetLight(1, &g_aLight[1]);
-	
+
 	// ライト1を使用状態に
 	pDevice->LightEnable(1, FALSE);
 
@@ -204,24 +193,6 @@ void InitLight(void)
 	//// ライト5を使用状態に
 	//pDevice->LightEnable(5, TRUE);
 
-
 	// ライティングモードをON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-}
-
-//=============================================================================
-// 更新処理
-//=============================================================================
-void UpdateLight(void)
-{
-	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	CAMERA *camera = GetCamera();
-	D3DXVECTOR3 vecDir;
-
-
-
-#ifdef _DEBUG
-	PrintDebugProc("vecDir: %f\n", vecDir.y);
-	PrintDebugProc("\n");
-#endif
 }
