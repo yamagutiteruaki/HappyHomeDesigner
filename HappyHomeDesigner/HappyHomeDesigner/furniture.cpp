@@ -21,18 +21,25 @@
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9	g_pD3DTextureFurniture[FURNITURE_MAX];		// テクスチャ読み込み場所
-LPD3DXMESH			g_pMeshFurniture[FURNITURE_MAX];			// ID3DXMeshインターフェイスへのポインタ
-LPD3DXBUFFER		g_pD3DXMatBuffFurniture[FURNITURE_MAX];		// メッシュのマテリアル情報を格納
-DWORD				g_aNumMatFurniture[FURNITURE_MAX];			// 属性情報の総数
-D3DXMATRIX			g_mtxWorldFurniture;						// ワールドマトリックス
-FURNITURE			furnitureWk[MAX_FURNITURE];					// アイテムワーク
+LPDIRECT3DTEXTURE9	g_pD3DTextureFurniture[FURNITURE_TYPE_MAX];		// テクスチャ読み込み場所
+LPD3DXMESH			g_pMeshFurniture[FURNITURE_TYPE_MAX];			// ID3DXMeshインターフェイスへのポインタ
+LPD3DXBUFFER		g_pD3DXMatBuffFurniture[FURNITURE_TYPE_MAX];	// メッシュのマテリアル情報を格納
+DWORD				g_aNumMatFurniture[FURNITURE_TYPE_MAX];			// 属性情報の総数
+D3DXMATRIX			g_mtxWorldFurniture;							// ワールドマトリックス
+FURNITURE			furnitureWk[MAX_FURNITURE];						// 家具格納ワーク
 
-const char *FileNameFurniture[FURNITURE_MAX] =
+const char *FileNameFurniture[FURNITURE_TYPE_MAX] =
 {
-	"data/MODEL/FURNITURE/furniture.x",			// コイン
-	"data/MODEL/FURNITURE/furniture001.x",		// ライフ
-	"data/MODEL/FURNITURE/furniture002.x"		// タイマー
+	"data/MODEL/FURNITURE/kabin.x",		// 花瓶
+	"data/MODEL/FURNITURE/isu.x",		// 椅子
+	"data/MODEL/FURNITURE/pig.x",		// 豚の貯金箱
+	"data/MODEL/FURNITURE/yubiwa.x",	// 指輪
+	"data/MODEL/FURNITURE/toilet.x",	// トイレ
+	"data/MODEL/FURNITURE/desk.x",		// 机
+	"data/MODEL/FURNITURE/desk.x",		// テレビ
+	"data/MODEL/FURNITURE/kinko.x",		// 金庫
+	"data/MODEL/FURNITURE/tansu.x",		// タンス
+	"data/MODEL/FURNITURE/desk.x"		// ベッド
 };
 //=============================================================================
 // 初期化処理
@@ -44,7 +51,7 @@ HRESULT InitFurniture(int type)
 
 	if (type == STAGE_INIT_FAST)
 	{
-		for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_MAX; nCntFurnitureType++)
+		for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_TYPE_MAX; nCntFurnitureType++)
 		{
 			g_pD3DTextureFurniture[nCntFurnitureType] = NULL;
 			g_pMeshFurniture[nCntFurnitureType] = NULL;
@@ -71,7 +78,8 @@ HRESULT InitFurniture(int type)
 #endif
 		}
 	}
- 	return S_OK;
+	LoadCsv();			// CSVファイル読み込み
+	return S_OK;
 }
 
 //=============================================================================
@@ -79,7 +87,7 @@ HRESULT InitFurniture(int type)
 //=============================================================================
 void UninitFurniture(void)
 {
-	for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_MAX; nCntFurnitureType++)
+	for (int nCntFurnitureType = 0; nCntFurnitureType < FURNITURE_TYPE_MAX; nCntFurnitureType++)
 	{
 		if (g_pD3DTextureFurniture[nCntFurnitureType] != NULL)
 		{// テクスチャの開放
@@ -118,7 +126,6 @@ void DrawFurniture(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	D3DXMATRIX mtxRot, mtxTranslate, mtxScale;
 	FURNITURE *furniture = &furnitureWk[0];
-
 
 	for (int nCntFurniture = 0; nCntFurniture < MAX_FURNITURE; nCntFurniture++, furniture++)
 	{
