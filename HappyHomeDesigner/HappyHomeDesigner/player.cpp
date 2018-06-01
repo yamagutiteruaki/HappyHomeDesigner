@@ -250,7 +250,12 @@ void UpdatePlayer(void)
 {
 	PLAYER *player = &playerWk[0];
 
+	D3DXVECTOR3 tempPos = player->Eye;
+
 	PlayerMove();
+
+	AreaHouse(tempPos);
+
 	PlayerBorder();
 	PlayerEntrance();
 
@@ -422,15 +427,15 @@ void PlayerBorder(void)
 
 
 	// ¶‚Ì•Ç
-	if (player->Eye.x < -field->Size.x/2+MOVE_LIMIT)
+	if (player->Eye.x < -field->Size.x / 2 + MOVE_LIMIT)
 	{
-		player->Eye.x = -field->Size.x / 2+MOVE_LIMIT;
+		player->Eye.x = -field->Size.x / 2 + MOVE_LIMIT;
 	}
 
 	// ‰E‚Ì•Ç
-	if (player->Eye.x > field->Size.x / 2-MOVE_LIMIT)
+	if (player->Eye.x > field->Size.x / 2 - MOVE_LIMIT)
 	{
-		player->Eye.x = field->Size.x / 2-MOVE_LIMIT;
+		player->Eye.x = field->Size.x / 2 - MOVE_LIMIT;
 	}
 
 	// Œã‚ë‚Ì•Ç

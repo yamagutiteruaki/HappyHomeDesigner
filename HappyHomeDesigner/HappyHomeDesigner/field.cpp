@@ -10,6 +10,9 @@
 #include "input.h"
 #include "stage.h"
 #include "fade.h"
+#include "player.h"
+#include "collision.h"
+
 
 /* Debug */
 #ifdef _DEBUG
@@ -19,14 +22,14 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+#define MOVE_LIMIT				(0)
+#define HOUSE_LEN				(200.0f)
+#define HOUSE_WID				(200.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice);
-
-
 
 //*****************************************************************************
 // グローバル変数
@@ -264,6 +267,14 @@ void UpdateField(void)
 	{
 		SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 	}
+
+	HOME *House = GetHome(0);
+	PrintDebugProc("House 0: %f, %f\n", (House + 0)->Pos.x, (House + 0)->Pos.z);
+	PrintDebugProc("House 1: %f, %f\n", (House + 1)->Pos.x, (House + 1)->Pos.z);
+	PrintDebugProc("House 2: %f, %f\n", (House + 2)->Pos.x, (House + 2)->Pos.z);
+	PrintDebugProc("House 3: %f, %f\n", (House + 3)->Pos.x, (House + 3)->Pos.z);
+	PrintDebugProc("\n");
+
 #endif
 
 }
@@ -515,4 +526,20 @@ HOME *GetHome(int no)
 DOOR *GetDoor(int no)
 {
 	return &g_aDoor[no];
+}
+
+//=============================================================================
+// 家
+//=============================================================================
+void AreaHouse(D3DXVECTOR3 tempPos)
+{
+	PLAYER *player = GetPlayer(0);
+	HOME *house = GetHome(0);
+
+	for (int i = 0; i < HOME_MAX; i++, house++)
+	{
+		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((HOUSE_LEN / 2), (HOUSE_WID / 2))) == TRUE)
+			player->Eye = tempPos;
+	}
+	
 }
