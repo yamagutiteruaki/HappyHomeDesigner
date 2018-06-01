@@ -196,21 +196,3 @@ void InitLight(void)
 	// ライティングモードをON
 	pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 }
-
-//=============================================================================
-// 更新処理
-//=============================================================================
-void UpdateLight(void)
-{
-	//LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	//CAMERA *camera = GetCamera();
-	//D3DXVECTOR3 vecDir;
-
-
-
-#ifdef _DEBUG
-	//PrintDebugProc("vecDir: %f\n", vecDir.y);
-	//PrintDebugProc("\n");
-#endif
-
-}
