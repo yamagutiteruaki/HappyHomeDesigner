@@ -14,7 +14,7 @@
 #define	TEXTURE_SEARCH	"data/TEXTURE/white.png"	// 読み込むテクスチャファイル名
 #define	SEARCH_MAX		(POLICE_MAX)				// 索敵範囲の最大数
 #define	SEARCH_LENGTH	(100.0f)					// 索敵距離
-#define	SEARCH_ANGLE	(D3DX_PI / 2.5f)			// 索敵視野角
+#define	SEARCH_ANGLE	(D3DX_PI / 2.0f)			// 索敵視野角
 //*****************************************************************************
 // クラス定義
 //*****************************************************************************

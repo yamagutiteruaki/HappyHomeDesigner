@@ -155,8 +155,8 @@ HRESULT MakeVertexSearch(void)
 		// 頂点座標の設定
 		pVtx[0].vtx = D3DXVECTOR3(-7.0f, 0.0f, -10.0f);
 		pVtx[1].vtx = D3DXVECTOR3(7.0f, 0.0f, -10.0f);
-		pVtx[2].vtx = D3DXVECTOR3(-(SEARCH_LENGTH * tanf(SEARCH_ANGLE / 2.0f)), 0.0f, -SEARCH_LENGTH);		// ANGLEとLENGTH
-		pVtx[3].vtx = D3DXVECTOR3(SEARCH_LENGTH * tanf(SEARCH_ANGLE / 2.0f), 0.0f, -SEARCH_LENGTH);			// によって自動的に形変わる
+		pVtx[2].vtx = D3DXVECTOR3(-(SEARCH_LENGTH * sinf(SEARCH_ANGLE / 2.0f)), 0.0f, -SEARCH_LENGTH);		// ANGLEとLENGTH
+		pVtx[3].vtx = D3DXVECTOR3(SEARCH_LENGTH * sinf(SEARCH_ANGLE / 2.0f), 0.0f, -SEARCH_LENGTH);			// によって自動的に形変わる
 
 																											// 法線ベクトルの設定
 		pVtx[0].nor = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
@@ -289,7 +289,7 @@ void SearchCollision(void)
 				// プレイヤーを消す
 				//player->use = false;
 				// 松尾君のアレ描画
-				//voice->use = true;
+				voice->use = true;
 
 				// ポリスの動きを止める
 				police = GetPolice(0);
