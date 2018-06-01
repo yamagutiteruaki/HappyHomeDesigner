@@ -41,7 +41,7 @@ void InitLight(void)
 	g_aLight[0].Diffuse = D3DXCOLOR(LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, LIGHT_DIFFUSE_0, 0.0f);
 
 	// ライト0の鏡面反射光の設定
-	g_aLight[0].Specular = D3DXCOLOR(0.3f, 0.3f, 0.3f, 1.0f);
+	g_aLight[0].Specular = D3DXCOLOR(1.0f, 1.0f,1.0f, 1.0f);
 
 	// ライト0の環境光の設定
 	g_aLight[0].Ambient = D3DXCOLOR(LIGHT_AMBIENT, LIGHT_AMBIENT, LIGHT_AMBIENT, 1.0f);

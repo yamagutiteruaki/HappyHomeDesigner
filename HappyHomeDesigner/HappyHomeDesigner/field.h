@@ -25,7 +25,7 @@
 #define FIELD_MAX				(2)
 #define HOME_MAX				(4)
 
-#define HOME_DISTANCE  (FIELD_SIZE_X/4-FIELD_SIZE_X/50)
+#define HOME_DISTANCE  (FIELD_SIZE_X/4-FIELD_SIZE_X/50-10)
 //=============================================================================
 // ç\ë¢ëÃêÈåæ
 //=============================================================================
