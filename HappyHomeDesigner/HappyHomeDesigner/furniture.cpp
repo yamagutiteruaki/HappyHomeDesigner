@@ -136,9 +136,10 @@ void DrawFurniture(void)
 	FURNITURE *furniture = &furnitureWk[0];
 
 	for (int nCntFurniture = 0; nCntFurniture < MAX_FURNITURE; nCntFurniture++, furniture++)
-	{
-		if (furniture->use)
-		{
+	{	// 使用状態の家具のみ描画
+		if (!furniture->use) continue;
+		if (furniture->house_num == GetStage())
+		{	// ステージ番号と同じ家番号の家具のみ描画
 			// ライトをon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 

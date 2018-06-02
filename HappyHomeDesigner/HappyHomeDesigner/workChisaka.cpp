@@ -62,6 +62,12 @@ void UpdateWorkChisaka(void)
 		UpdateSearch();
 		UpdateFurniture();
 		break;
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
+		UpdateFurniture();
+		break;
 	case STAGE_RESULT:
 		break;
 	}
@@ -80,6 +86,12 @@ void DrawWorkChisaka(void)
 	case STAGE_GAME:
 		DrawPolice();
 		DrawSearch();
+		DrawFurniture();
+		break;
+	case STAGE_HOUSE1:
+	case STAGE_HOUSE2:
+	case STAGE_HOUSE3:
+	case STAGE_MYHOUSE:
 		DrawFurniture();
 		break;
 	case STAGE_RESULT:
