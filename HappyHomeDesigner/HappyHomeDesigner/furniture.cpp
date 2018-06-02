@@ -78,6 +78,14 @@ HRESULT InitFurniture(int type)
 #endif
 		}
 	}
+
+	// ‰Æ‹ï‚Ì‰Šú‰»ˆ—
+	//for (int i = 0; i <MAX_FURNITURE; i++, furniture++)
+	//{
+
+	//}
+
+
 	LoadCsv();			// CSVƒtƒ@ƒCƒ‹“Ç‚İ‚İ
 	return S_OK;
 }
