@@ -238,10 +238,10 @@ void DrawStage(void)
 		DrawTitle();					// タイトル
 		break;
 	case STAGE_GAME:
-	case STAGE_HOUSE1:
-	case STAGE_HOUSE2:
-	case STAGE_HOUSE3:
-	case STAGE_MYHOUSE:
+	case STAGE_HOUSE1:				// 左上の家
+	case STAGE_HOUSE2:				// 右上の家
+	case STAGE_HOUSE3:				// 左下の家
+	case STAGE_MYHOUSE:				// 右下の自分の家
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
