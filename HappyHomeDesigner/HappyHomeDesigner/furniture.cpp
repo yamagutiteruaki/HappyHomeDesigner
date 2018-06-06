@@ -36,7 +36,7 @@ const char *FileNameFurniture[FURNITURE_TYPE_MAX] =
 	"data/MODEL/FURNITURE/yubiwa.x",	// 指輪
 	"data/MODEL/FURNITURE/toilet.x",	// トイレ
 	"data/MODEL/FURNITURE/desk.x",		// 机
-	"data/MODEL/FURNITURE/tv.x",		// テレビ
+	"data/MODEL/FURNITURE/desk.x",		// テレビ
 	"data/MODEL/FURNITURE/kinko.x",		// 金庫
 	"data/MODEL/FURNITURE/tansu.x",		// タンス
 	"data/MODEL/FURNITURE/bed.x"		// ベッド
