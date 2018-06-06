@@ -394,8 +394,8 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 		g_pD3DVtxBuffResultScore->Lock(0, 0, (void**)&pVtx, 0);
 
 		// 頂点座標の設定
-		pVtx[0].vtx = D3DXVECTOR3(0.0f, SCREEN_HEIGHT / 3, 0.0f);
-		pVtx[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT / 3, 0.0f);
+		pVtx[0].vtx = D3DXVECTOR3(0.0f, SCREEN_HEIGHT+200 , 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT+200 , 0.0f);
 		pVtx[2].vtx = D3DXVECTOR3(0.0f, SCREEN_HEIGHT, 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(SCREEN_WIDTH, SCREEN_HEIGHT, 0.0f);
 
@@ -465,7 +465,7 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 //
 //	for (i = 0; i < SCORE_DIGIT; i++)
 //	{
-//		// テクスチャ座標の設定
+//		 テクスチャ座標の設定
 //		float x = (float)(number % 10);
 //		g_vertexWkScore[i][0].tex = D3DXVECTOR2(0.1f * x, 0.0f);
 //		g_vertexWkScore[i][1].tex = D3DXVECTOR2(0.1f * (x + 1), 0.0f);
@@ -473,9 +473,6 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 //		g_vertexWkScore[i][3].tex = D3DXVECTOR2(0.1f * (x + 1), 1.0f);
 //		number /= 10;
 //	}
-//
-//
-//	return S_OK;
 //}
 
 	

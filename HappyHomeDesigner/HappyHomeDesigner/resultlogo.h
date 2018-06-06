@@ -22,12 +22,12 @@
 #define	RESULT_LOGO2_HEIGHT	(480)				// リザルトロゴの高さ
 
 #define TEXTURE_GAME_SCORE00	("data/TEXTURE/deg_number3.png")	// サンプル用画像
-#define TEXTURE_SCORE00_SIZE_X	(16)	// テクスチャサイズ
-#define TEXTURE_SCORE00_SIZE_Y	(32)	// 同上
-#define SCORE_POS_X			(500)		// ポリゴンの初期位置X
-#define SCORE_POS_Y			(20)		// 同上
+#define TEXTURE_SCORE00_SIZE_X	(1000)	// テクスチャサイズ
+#define TEXTURE_SCORE00_SIZE_Y	(500)	// 同上
+#define SCORE_POS_X			(1500)		// ポリゴンの初期位置X
+#define SCORE_POS_Y			(2000)		// 同上
 #define SCORE_MAX			(999999999)		// スコアの最大値
-#define SCORE_DIGIT			(10)			// 桁数
+#define SCORE_DIGIT			(1)			
 
 //*****************************************************************************
 // プロトタイプ宣言
