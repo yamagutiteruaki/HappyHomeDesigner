@@ -139,7 +139,8 @@ void DrawFurniture(void)
 	{	// 使用状態の家具のみ描画
 
 		if (!furniture->use) continue;
-		//if (furniture->house_num == GetStage())		{	// ステージ番号と同じ家番号の家具のみ描画
+		//if (furniture->house_num == GetStage())// ステージ番号と同じ家番号の家具のみ描画
+		{
 			// ライトをon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
