@@ -36,7 +36,7 @@ const char *FileNameFurniture[FURNITURE_TYPE_MAX] =
 	"data/MODEL/FURNITURE/yubiwa.x",	// 指輪
 	"data/MODEL/FURNITURE/toilet.x",	// トイレ
 	"data/MODEL/FURNITURE/desk.x",		// 机
-	"data/MODEL/FURNITURE/desk.x",		// テレビ
+	"data/MODEL/FURNITURE/tv.x",		// テレビ
 	"data/MODEL/FURNITURE/kinko.x",		// 金庫
 	"data/MODEL/FURNITURE/tansu.x",		// タンス
 	"data/MODEL/FURNITURE/bed.x"		// ベッド
@@ -139,7 +139,7 @@ void DrawFurniture(void)
 	{	// 使用状態の家具のみ描画
 
 		if (!furniture->use) continue;
-		//if (furniture->house_num == GetStage())// ステージ番号と同じ家番号の家具のみ描画
+		if (furniture->house_num == GetStage())// ステージ番号と同じ家番号の家具のみ描画
 		{
 			// ライトをon
 			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
