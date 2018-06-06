@@ -15,6 +15,7 @@
 #include "arrest.h"
 #include <time.h>
 #include "camera.h"
+#include "weight.h"
 
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
@@ -133,6 +134,7 @@ void UpdateVoice(void)
 				voice->use = false;
 				voice->cnt_frame = 0;
 				voice->pos = D3DXVECTOR3(SCREEN_WIDTH * 2, 350.0f, 0.0f);
+
 
 			}
 			
