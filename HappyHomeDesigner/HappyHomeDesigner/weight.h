@@ -33,5 +33,4 @@ void UninitWeight(void);
 void UpdateWeight(void);
 void DrawWeight(void);
 
-
 #endif
