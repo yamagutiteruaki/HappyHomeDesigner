@@ -45,7 +45,7 @@ typedef struct		// プレイヤー構造体
 	float			speed;							// 移動速度係数
 
 	int				weight;
-	int				havenum[HAVE_MAX];
+	int				havenum[HAVE_MAX];	
 
 } PLAYER;
 

@@ -20,7 +20,7 @@
 #define ANIM_PATTERN_NUM_ARREST			(TEXTURE_PATTERN_DIVIDE_X_ARREST*TEXTURE_PATTERN_DIVIDE_Y_ARREST)	// アニメーションパターン数
 #define TIME_ANIMATION_ARREST			(1)	// アニメーションの切り替わるカウント
 
-#define ARREST_MAX						(2) // 見つかれる最大数
+#define ARREST_MAX						(10) // 見つかれる最大数
 #define ARREST_SPEED						(300) //声のスピード
 //*****************************************************************************
 // 構造体宣言
