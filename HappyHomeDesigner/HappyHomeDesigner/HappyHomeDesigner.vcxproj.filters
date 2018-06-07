@@ -144,6 +144,9 @@
     <ClCompile Include="load_csv.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="score.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -250,6 +253,9 @@
     </ClInclude>
     <ClInclude Include="load_csv.h">
       <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="score.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
