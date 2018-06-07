@@ -29,6 +29,7 @@
 #define MOVE_LIMIT				(10)
 
 #define PLAYER_HP				(1)							// 残機
+#define PLAYER_POS_ADJ			(20.0f)						// 初期位置調整値
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -64,6 +65,7 @@ HRESULT InitPlayer(int nType)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	PLAYER *player = &playerWk[0];
 	FIELD *field = GetField(0);
+	DOOR *door = GetDoor(3);
 
 	if (nType == STAGE_INIT_FAST)
 	{
@@ -95,9 +97,11 @@ HRESULT InitPlayer(int nType)
 	for (int i = 0; i < PLAYER_MAX; i++, player++)
 	{
 		// プレイヤーの視点の初期化
-		player->Eye = field->Pos;
+		player->Eye = D3DXVECTOR3(275.0f, 0.0f, -330.0f);
+		
 		// プレイヤーの注視点の初期化
 		player->At = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
 		// プレイヤーの上方向の初期化
 		player->Up = D3DXVECTOR3(0.0f, 1.0f, 0.0f);
 
@@ -112,6 +116,9 @@ HRESULT InitPlayer(int nType)
 
 		// プレイヤーのスケールの初期化
 		player->scl = D3DXVECTOR3(0.9f, 0.9f, 0.9f);
+
+		// プレイヤーの視点（一時保存）の初期化
+		player->tmpPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);;						
 
 		// useフラグをtrueに設定
 		player->use = true;
@@ -248,14 +255,13 @@ void DrawPlayer(void)
 //=============================================================================
 void UpdatePlayer(void)
 {
-	PLAYER *player = &playerWk[0];
+	PLAYER *player = GetPlayer(0);
 
-	D3DXVECTOR3 tempPos = player->Eye;
+	player->tmpPos = player->Eye;
 
 	PlayerMove();
 
-	AreaHouse(tempPos);
-
+	//AreaHouse(tempPos);
 	PlayerBorder();
 	PlayerEntrance();
 

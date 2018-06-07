@@ -37,6 +37,8 @@ typedef struct		// プレイヤー構造体
 	D3DXVECTOR3		rotDest;						// プレイヤーの目的の向き
 	D3DXVECTOR3		move;							// プレイヤーの移動量
 
+	D3DXVECTOR3		tmpPos;							// プレイヤーの視点（一時保存）
+
 
 	VERTEX_2D		vertexWk[NUM_VERTEX];			// 頂点情報格納ワーク
 

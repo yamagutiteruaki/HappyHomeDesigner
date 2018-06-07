@@ -24,12 +24,13 @@
 //*****************************************************************************
 #define MOVE_LIMIT				(0)
 #define HOUSE_LEN				(200.0f)
-#define HOUSE_WID				(200.0f)
+#define HOUSE_WID				(170.0f)
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexField(LPDIRECT3DDEVICE9 pDevice);
+void AreaHouse(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -245,6 +246,7 @@ void UninitField(void)
 //=============================================================================
 void UpdateField(void)
 {
+	AreaHouse();
 
 #ifdef _DEBUG
 	if (GetKeyboardTrigger(DIK_F1))
@@ -531,7 +533,7 @@ DOOR *GetDoor(int no)
 //=============================================================================
 // 家
 //=============================================================================
-void AreaHouse(D3DXVECTOR3 tempPos)
+void AreaHouse()
 {
 	PLAYER *player = GetPlayer(0);
 	HOME *house = GetHome(0);
@@ -539,8 +541,7 @@ void AreaHouse(D3DXVECTOR3 tempPos)
 	for (int i = 0; i < HOME_MAX; i++, house++)
 	{
 		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((HOUSE_LEN / 2), (HOUSE_WID / 2))) == TRUE)
-			player->Eye = tempPos;
-
+			player->Eye = player->tmpPos;
 
 	}
 	

@@ -68,6 +68,4 @@ FIELD *GetField(int no);
 HOME  *GetHome(int no);
 DOOR *GetDoor(int no);
 
-void AreaHouse(D3DXVECTOR3 tempPos);
-
 #endif
