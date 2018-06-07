@@ -131,6 +131,9 @@ HRESULT InitField(void)
 		home->Scl.y = 1.0f;
 		home->Scl.z = 1.0f;
 
+		home->len = HOUSE_LEN;
+		home->wid = HOUSE_WID;
+
 	}
 
 	home = GetHome(0);
@@ -540,8 +543,21 @@ void AreaHouse()
 
 	for (int i = 0; i < HOME_MAX; i++, house++)
 	{
-		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((HOUSE_LEN / 2), (HOUSE_WID / 2))) == TRUE)
-			player->Eye = player->tmpPos;
+		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((house->len / 2), (house->wid / 2))) == TRUE)
+		{
+
+			//player->Eye = player->tmpPos;
+
+			//PlyColiObj(house->Pos, (house->len / 2), (house->wid / 2));
+
+			CBTP_resetPos(
+				&(player->Eye),
+				player->posTmp,
+				house->Pos,
+				(house->len / 2),
+				(house->wid / 2)
+				);
+		}
 
 	}
 	

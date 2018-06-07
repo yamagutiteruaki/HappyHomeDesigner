@@ -13,8 +13,8 @@
 #include "calculate.h"
 #include "collision.h"
 #include "fade.h"
-
 #include "button.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -65,7 +65,6 @@ HRESULT InitPlayer(int nType)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	PLAYER *player = &playerWk[0];
 	FIELD *field = GetField(0);
-	DOOR *door = GetDoor(3);
 
 	if (nType == STAGE_INIT_FAST)
 	{
@@ -118,7 +117,7 @@ HRESULT InitPlayer(int nType)
 		player->scl = D3DXVECTOR3(0.9f, 0.9f, 0.9f);
 
 		// プレイヤーの視点（一時保存）の初期化
-		player->tmpPos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);;						
+		player->posTmp = D3DXVECTOR3(0.0f, 0.0f, 0.0f);;						
 
 		// useフラグをtrueに設定
 		player->use = true;
@@ -257,7 +256,7 @@ void UpdatePlayer(void)
 {
 	PLAYER *player = GetPlayer(0);
 
-	player->tmpPos = player->Eye;
+	player->posTmp = player->Eye;
 
 	PlayerMove();
 
@@ -411,7 +410,7 @@ void PlayerMove(void)
 }
 
 //=============================================================================
-// プレイヤーの移動制限
+// プレイヤーの移動制限（フィールド）
 //=============================================================================
 void PlayerBorder(void)
 {
@@ -459,8 +458,37 @@ void PlayerBorder(void)
 }
 
 //=============================================================================
-// プレイヤーの移動制限
+// プレイヤーの移動制限（オブジェクト）
 //=============================================================================
+//void PlyColiObj(D3DXVECTOR3 objPos, float objLen, float objWid)
+//{
+//	PLAYER *player = GetPlayer(0);
+//	
+//	if (player->posTmp.x >= objPos.x + objLen)
+//	{
+//		player->Eye.x = player->posTmp.x;
+//	}
+//
+//	else if (player->posTmp.x <= objPos.x - objLen)
+//	{
+//		player->Eye.x = player->posTmp.x;
+//	}
+//
+//	else if (player->posTmp.z <= objPos.z - objWid)
+//	{
+//		player->Eye.z = player->posTmp.z;
+//	}
+//
+//	else if (player->posTmp.z >= objPos.z + objWid)
+//	{
+//		player->Eye.z = player->posTmp.z;
+//	}
+//
+//}
+
+//=============================================================================
+// 家に入る処理
+//=================================pl============================================
 void PlayerEntrance(void)
 {
 	PLAYER *player = &playerWk[0];

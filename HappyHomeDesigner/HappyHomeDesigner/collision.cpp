@@ -109,3 +109,31 @@ bool CollisionRayToSphere(D3DXVECTOR3 posRay, D3DXVECTOR3 vecRay, D3DXVECTOR3 po
 
 	return true;
 }
+
+//=============================================================================
+// Boxと座標の判定→座標修正
+//=============================================================================
+void CBTP_resetPos(D3DXVECTOR3 *slfPos, D3DXVECTOR3 slfPosTmp, D3DXVECTOR3 tgtPos, float tgtLen, float tgtWid)
+{
+	// 右側
+	if (slfPosTmp.x >= tgtPos.x + tgtLen)
+	{
+		slfPos->x = slfPosTmp.x;
+	}
+	// 左側
+	else if (slfPosTmp.x <= tgtPos.x - tgtLen)
+	{
+		slfPos->x = slfPosTmp.x;
+	}
+	// 後ろ側
+	else if (slfPosTmp.z <= tgtPos.z - tgtWid)
+	{
+		slfPos->z = slfPosTmp.z;
+	}
+	// 前側
+	else if (slfPosTmp.z >= tgtPos.z + tgtWid)
+	{
+		slfPos->z = slfPosTmp.z;
+	}
+
+}
