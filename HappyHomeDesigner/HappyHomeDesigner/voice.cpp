@@ -126,9 +126,14 @@ void UpdateVoice(void)
 			}
 			if (GetFade() == FADE_IN)
 			{
-				player->Eye = field->Pos;
+				// ‰Šú‰»ˆ—
+				player->Eye = D3DXVECTOR3(275.0f, 0.0f, -330.0f);
 				player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+				for (int j = 0; j < HAVE_MAX; j++)
+				{
+					player->havenum[j] = -1;
+				}
 				camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				camera->rotDest = 0.0f;
 				voice->use = false;

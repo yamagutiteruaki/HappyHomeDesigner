@@ -62,6 +62,6 @@ void UpdatePlayer(void);
 
 PLAYER *GetPlayer(int no);
 
-void PlyColiObj(D3DXVECTOR3 objPos, float objLen, float objWid);
+//void PlyColiObj(D3DXVECTOR3 objPos, float objLen, float objWid);
 
 #endif
