@@ -540,6 +540,8 @@ void AreaHouse(D3DXVECTOR3 tempPos)
 	{
 		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((HOUSE_LEN / 2), (HOUSE_WID / 2))) == TRUE)
 			player->Eye = tempPos;
+
+
 	}
 	
 }
