@@ -536,30 +536,10 @@ void AreaHouse(D3DXVECTOR3 tempPos)
 	PLAYER *player = GetPlayer(0);
 	HOME *house = GetHome(0);
 
-	D3DXVECTOR3 avoid = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 壁すりベクトル
-	D3DXVECTOR3 normal = D3DXVECTOR3(0.0f, 0.0f, 0.0f);			// 法線ベクトル
-	float sita = 0.0f;											// プレイヤ―から家の中心までの角度
-
 	for (int i = 0; i < HOME_MAX; i++, house++)
 	{
 		if (CollisionBoxToPos(house->Pos, player->Eye, D3DXVECTOR2((HOUSE_LEN / 2), (HOUSE_WID / 2))) == TRUE)
 			player->Eye = tempPos;
-		//{
-
-		//	// 家の壁の法線ベクトルを求める
-		//	//normal = player->Eye - house->Pos;					// 家の中心からプレイヤーまでのベクトルを求める
-		//	normal = house->Pos - player->Eye;					// 家の中心からプレイヤーまでのベクトルを求める
-
-		//	sita = atan2f(normal.x, normal.z);			// プレイヤーと家の中心までの角度を求める
-		//	normal = normal * cosf(sita);						// 法線ベクトルを算出する
-		//	// 法線ベクトルを正規化する
-		//	D3DXVec3Normalize(&normal, &normal);
-		//	// 壁ずりベクトルの算出
-		//	avoid = player->move - D3DXVec3Dot(&player->move, &normal) * normal;
-		//	// 壁ずりベクトルをmoveに代入
-		//	player->move = avoid;
-
-		//}
 
 
 	}
