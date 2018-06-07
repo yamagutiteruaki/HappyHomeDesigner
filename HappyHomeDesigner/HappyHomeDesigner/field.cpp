@@ -546,16 +546,18 @@ void AreaHouse(D3DXVECTOR3 tempPos)
 			player->Eye = tempPos;
 		//{
 
-			//// 家の壁の法線ベクトルを求める
-			//normal = player->Eye - house->Pos;					// 家の中心からプレイヤーまでのベクトルを求める
-			//sita = atan2f(player->Eye.x, house->Pos.x);			// プレイヤーと家の中心までの角度を求める
-			//normal = normal * cosf(sita);						// 法線ベクトルを算出する
-			//// 法線ベクトルを正規化する
-			//D3DXVec3Normalize(&normal, &normal);
-			//// 壁ずりベクトルの算出
-			//avoid = player->move - D3DXVec3Dot(&player->move, &normal) * normal;
-			//// 壁ずりベクトルをmoveに代入
-			//player->move = avoid;
+		//	// 家の壁の法線ベクトルを求める
+		//	//normal = player->Eye - house->Pos;					// 家の中心からプレイヤーまでのベクトルを求める
+		//	normal = house->Pos - player->Eye;					// 家の中心からプレイヤーまでのベクトルを求める
+
+		//	sita = atan2f(normal.x, normal.z);			// プレイヤーと家の中心までの角度を求める
+		//	normal = normal * cosf(sita);						// 法線ベクトルを算出する
+		//	// 法線ベクトルを正規化する
+		//	D3DXVec3Normalize(&normal, &normal);
+		//	// 壁ずりベクトルの算出
+		//	avoid = player->move - D3DXVec3Dot(&player->move, &normal) * normal;
+		//	// 壁ずりベクトルをmoveに代入
+		//	player->move = avoid;
 
 		//}
 
