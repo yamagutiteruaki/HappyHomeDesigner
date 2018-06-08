@@ -90,7 +90,7 @@ void LoadCsv(void)
 
 			furniture->type = atoi(tkn[LOAD_CSV_TYPE]);
 			furniture->house_num = atoi(tkn[LOAD_CSV_HOUSE_NUM]);
-			furniture->weight = (float)atof(tkn[LOAD_CSV_WEIGHT]);
+			furniture->weight = atoi(tkn[LOAD_CSV_WEIGHT]);
 			furniture->price = atoi(tkn[LOAD_CSV_PRICE]);
 			furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
 			

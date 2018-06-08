@@ -17,7 +17,8 @@
 #define	PLAYER_WID			(10.0f)		// ポリスの幅
 #define	PLAYER_HEI			(20.0f)		// ポリスの高さ
 
-#define HAVE_MAX			(5)			//家具を持てる最大数
+#define HAVE_MAX			(5)			// 家具を持てる最大数
+#define WT_MAX				(5)			// 所持重量制限
 
 //*****************************************************************************
 // 構造体宣言
@@ -47,6 +48,7 @@ typedef struct		// プレイヤー構造体
 	float			speed;							// 移動速度係数
 
 	int				weight;
+
 	int				havenum[HAVE_MAX];	
 
 } PLAYER;

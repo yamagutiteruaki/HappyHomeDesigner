@@ -30,11 +30,14 @@
 
 #define PLAYER_HP				(1)							// 残機
 #define PLAYER_POS_ADJ			(20.0f)						// 初期位置調整値
+#define PLAYER_WT_ADJ			(0.12f)						// 移動速度調整値
+
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 void PlayerMove(void);
+void PlayerMoveWt(void);
 void PlayerBorder(void);
 void PlayerEntrance(void);
 
@@ -132,8 +135,10 @@ HRESULT InitPlayer(int nType)
 		// 最初は直立状態に設定
 		player->anim = 0;
 
+		// 持ち物の総重量
 		player->weight = 0;
 
+		// プレイヤーの持ち物
 		for (int j = 0; j < HAVE_MAX; j++)
 		{
 			player->havenum[j] = -1;
@@ -375,6 +380,9 @@ void PlayerMove(void)
 	player->move.y += (0.0f - player->move.y) * RATE_MOVE_PLAYER;
 	player->move.z += (0.0f - player->move.z) * RATE_MOVE_PLAYER;
 
+	// 所持重量によって移動速度の修正
+	PlayerMoveWt();
+
 	// 位置移動
 	player->Eye.x += player->move.x;
 	player->Eye.y += player->move.y;
@@ -452,6 +460,19 @@ void PlayerBorder(void)
 	{
 		player->Eye.z = field->Size.z / 2 - MOVE_LIMIT;
 	}
+
+}
+
+//=============================================================================
+// プレイヤーの移動速度の修正
+//=============================================================================
+void PlayerMoveWt()
+{
+	PLAYER *player = GetPlayer(0);
+
+	player->move.x *= (1 - PLAYER_WT_ADJ * player->weight);
+	player->move.y *= (1 - PLAYER_WT_ADJ * player->weight);
+	player->move.z *= (1 - PLAYER_WT_ADJ * player->weight);
 
 }
 

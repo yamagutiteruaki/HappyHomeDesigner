@@ -45,7 +45,7 @@ public:
 
 	int			type;				// í—Ş
 	int			house_num;			// Š‘®‚µ‚Ä‚¢‚é‰Æ‚Ì”Ô†
-	float		weight;				// d‚³
+	int			weight;				// d‚³
 	int			price;				// ‹àŠz
 	int			ratio;				// Šm—¦
 };
