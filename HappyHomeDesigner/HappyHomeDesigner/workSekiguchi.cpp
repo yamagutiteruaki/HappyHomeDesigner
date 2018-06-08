@@ -13,6 +13,7 @@
 #include "clock.h"
 #include "result.h"
 #include "resultlogo.h"
+#include "score.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -37,6 +38,8 @@ HRESULT InitWorkSekiguchi(int nType)
 
 	InitResultLogo();
 
+	InitScore();
+
 	return S_OK;
 }
 
@@ -48,6 +51,8 @@ void UninitWorkSekiguchi(void)
 	UninitClock();
 
 	UninitResultLogo();
+
+	UninitScore();
 }
 
 //=============================================================================
@@ -71,6 +76,8 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_RESULT:
 
 		 UpdateResultLogo();
+
+		 UpdateScore();
 
 		break;
 	}
@@ -97,6 +104,8 @@ void DrawWorkSekiguchi(void)
 	case STAGE_RESULT:
 
 		 DrawResultLogo();
+
+		 DrawScore();
 
 		break;
 	}
