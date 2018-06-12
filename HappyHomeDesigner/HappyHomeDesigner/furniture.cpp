@@ -163,7 +163,6 @@ void UpdateFurniture(void)
 	// 指定したスケール拡大・縮小
 	FurnitureScaling(FurnitureNum);
 
-
 	// 現在のposをcsvファイルに上書き
 	if (GetKeyboardTrigger(DIK_Q))
 	{
@@ -197,9 +196,7 @@ void UpdateFurniture(void)
 	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
 	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
 	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
-
 #endif
-
 }
 
 //=============================================================================
@@ -213,7 +210,6 @@ void DrawFurniture(void)
 
 	for (int nCntFurniture = 0; nCntFurniture < MAX_FURNITURE; nCntFurniture++, furniture++)
 	{	// 使用状態の家具のみ描画
-
 		if (!furniture->use) continue;
 		if (furniture->house_num == GetStage())// ステージ番号と同じ家番号の家具のみ描画
 		{

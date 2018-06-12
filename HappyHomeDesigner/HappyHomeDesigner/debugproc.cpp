@@ -78,7 +78,7 @@ void DrawDebugProc(void)
 	RECT rect = {0, g_nDrawPos, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 	// î•ñ•\¦
-	g_pD3DXFont->DrawText(NULL, g_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+	g_pD3DXFont->DrawText(NULL, g_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0x00, 0xff));
 
 	// î•ñƒNƒŠƒA
 	memset(g_aStrDebug, 0, sizeof g_aStrDebug);
