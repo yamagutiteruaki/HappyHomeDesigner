@@ -11,12 +11,16 @@
 #include "main.h"
 #include "debugproc.h"
 #include "stage.h"
+#include "load_csv.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	FURNITURE_CSV		"data/EXCEL_DATA/set_furniture.csv"		// 読み込むファイル名
-#define BUFC_MAX		(512)
+
+//*****************************************************************************
+// グローバル変数
+//*****************************************************************************
+int Cnt;								// 読み込んだ家具の数
 
 //*****************************************************************************
 // 列挙型
@@ -50,6 +54,7 @@ void LoadCsv(void)
 	char *tkn[LOAD_CSV_MAX];					// 一時保存用（分割した配列）
 	FURNITURE *furniture = GetFurniture(0);		// ポインターを初期化
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
+	Cnt = 0;									// カウンタ初期化
 
 	if ((fp = fopen(FURNITURE_CSV, "r")) != NULL)
 	{
@@ -75,6 +80,7 @@ void LoadCsv(void)
 				continue;
 			}
 			// charをint, doubleに変換する
+			strcpy(furniture->name, tkn[0]);
 			furniture->use = atoi(tkn[LOAD_CSV_USE]);
 			furniture->pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
 			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
@@ -94,7 +100,16 @@ void LoadCsv(void)
 			furniture->price = atoi(tkn[LOAD_CSV_PRICE]);
 			furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
 			
+			Cnt++;			// 読み込んだ家具の数カウント
 			furniture++;	// 次のデータに
 		}
+		fclose(fp);
 	}
+}
+//=============================================================================
+// 読み込んだ家具の数取得関数
+//=============================================================================
+int GetFurnitureCnt(void)
+{
+	return (Cnt);
 }
