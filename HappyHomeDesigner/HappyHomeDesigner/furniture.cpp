@@ -11,6 +11,7 @@
 #include "stage.h"
 #include "load_csv.h"
 #include "player.h"
+#include "input.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -19,7 +20,11 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-void FurnitureColi(void);
+int FurnitureColi(void);
+bool BagCheck(void);
+bool WeightCheck(int no);
+void FurnitureGetDAZE();
+
 void FurnitureWt(void);
 
 //*****************************************************************************
@@ -126,7 +131,8 @@ void UninitFurniture(void)
 //=============================================================================
 void UpdateFurniture(void)
 {
-	FURNITURE *furniture = &furnitureWk[0];
+	FurnitureColi();
+	FurnitureGetDAZE();
 
 }
 
@@ -199,36 +205,164 @@ void DrawFurniture(void)
 		pDevice->SetMaterial(&mat.MatD3D);
 	}
 }
+
 //=============================================================================
 // 家具の取得
 //=============================================================================
 FURNITURE *GetFurniture(int no)
 {
 	return &furnitureWk[no];
+
 }
 
 //=============================================================================
 // 家具の当たり判定処理
 //=============================================================================
-void FurnitureColi()
+int FurnitureColi()
 {
-	// 存在しているかとうか
+	PLAYER *ply = GetPlayer(0);
+	FURNITURE *fnt = GetFurniture(0);
+	int no = -1;
+	float dist = 0.0;
+	const float distCheck = 10.0f;
 
-	// 範囲内かとうか
+	for (int i = 0; i < MAX_FURNITURE; i++, fnt++)
+	{
+		// 存在しているのか
+		if (fnt->use == TRUE) continue;
 
+		// 距離を計算
+		dist = sqrt(pow((fnt->pos.x - ply->Eye.x), 2) + pow((fnt->pos.z - ply->Eye.z), 2));
+
+		// 取れる範囲内かとうか
+		if (dist <= distCheck)
+		{
+			// メッセージ表示
+
+			// 番号を取得
+			no = i;
+		}
+		else
+		{
+			no = -1;
+		}
+
+	}
+
+	return no;
+}
+
+//=============================================================================
+// 家具
+//=============================================================================
+void FurnitureGetDAZE()
+{
+	PLAYER *ply = GetPlayer(0);
+	FURNITURE *fnt = GetFurniture(0);
+	int no = -1;
+	
 	// ボタン入力
+	if (GetKeyboardTrigger(DIK_E))
+	{
+		no = FurnitureColi();
+		if (no != -1 &&
+			BagCheck() == TRUE &&		// 所持数チェック
+			WeightCheck(no) == TRUE)	// 所持重量チェック
+		{
+			// カバンの中で空いている場所を探す
+			for (int i = 0; i < HAVE_MAX; i++)
+			{
+				if (ply->havenum[i] == -1)
+				{
+					// 所持数処理（カバンに入れる）
+					ply->havenum[i] = (fnt + no)->type;
+					break;
+				}
+			}
+			// 所持重量処理
+			ply->weight += (fnt + no)->weight;
 
-	// 所持数チェック
+		}
 
-	// 所持重量チェック
-
-	// カバンの空いている場所を探す
-
-	// カバンに入れる
-
-	// 所持重量処理
+	}
 
 }
+
+//=============================================================================
+// 家具
+//=============================================================================
+bool BagCheck()
+{
+	PLAYER *ply = GetPlayer(0);
+	int cnt = 0;
+	for (int i = 0; i < HAVE_MAX; i++)
+	{
+		if (ply->havenum[i] != -1)
+		{
+			cnt++;
+		}
+	}
+
+	if (cnt < HAVE_MAX)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+
+}
+
+//=============================================================================
+// 家具
+//=============================================================================
+bool WeightCheck(int no)
+{
+	PLAYER *ply = GetPlayer(0);
+	FURNITURE *fnt = GetFurniture(0);
+	if (ply->weight + (fnt + no)->weight <= WT_MAX)
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+
+}
+
+//=============================================================================
+// 家具
+//=============================================================================
+void FurniturePut()
+{
+	PLAYER *ply = GetPlayer(0);
+	FURNITURE *fnt = GetFurniture(0);
+
+	// ボタン入力
+	if (GetKeyboardTrigger(DIK_G))
+	{
+		// 置ける場所チェック（いらない）
+
+
+	}
+
+
+	
+
+	// カバンの中身を取得
+
+	// プレイヤー位置を取得
+
+	// プット
+
+	// 所持数処理
+
+	// 所持重量処理
+	
+}
+
 
 //=============================================================================
 // 家具の重量の処理
