@@ -143,7 +143,7 @@ void UpdateFurniture(void)
 {
 
 	FurnitureColi();
-	FurnitureGetDAZE();
+	//FurnitureGetDAZE();
 
 #ifdef _DEBUG
 	// 動かす家具を決定
@@ -299,17 +299,18 @@ int FurnitureColi()
 	FURNITURE *fnt = GetFurniture(0);
 	int no = -1;
 	float dist = 0.0;
-	const float distCheck = 16.0f;
+	const float distCheck = 32.0f;
 
 	for (int i = 0; i < MAX_FURNITURE; i++, fnt++)
 	{
 		// 存在しているのか
 		if (fnt->use == FALSE) continue;
+		if (fnt->house_num != GetStage()) continue;
 
 		// 距離を計算
-		dist = sqrt(pow((fnt->pos.x - ply->Eye.x), 2) + pow((fnt->pos.z - ply->Eye.z), 2));
+		dist = float(sqrt(pow((fnt->pos.x - ply->Eye.x), 2) + pow((fnt->pos.z - ply->Eye.z), 2)));
 		#ifdef _DEBUG
-		PrintDebugProc("dist = %f\n", dist);
+		PrintDebugProc("NO.%d dist = %f\n", fnt->id, dist);
 		#endif
 
 		// 取れる範囲内かとうか
@@ -325,6 +326,14 @@ int FurnitureColi()
 			PrintDebugProc("家具ID: %d\n", fnt->id);
 			#endif
 			no = i;
+
+			// 動作テスト
+			if (GetKeyboardTrigger(DIK_E))
+			{
+				fnt = GetFurniture(0);
+				(fnt + no)->use = FALSE;
+			}
+
 		}
 		else
 		{
