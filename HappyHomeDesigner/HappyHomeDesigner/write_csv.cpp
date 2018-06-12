@@ -29,8 +29,14 @@ void WriteCsv(void)
 {
 	FILE *fp;
 	FURNITURE *furniture = GetFurniture(0);			// ポインターを初期化
+	char fname[64];									// ファイル名生成用
 
-	if ((fp = fopen(FURNITURE_CSV, "w")) != NULL)	// 書き込み用
+	int i = 0;
+	// 出力ファイル名を生成する
+	sprintf(fname, "data/EXCEL_DATA/set_furniture.csv", i);
+
+	// set_furnitureに上書きする場合
+	if ((fp = fopen(fname, "w")) != NULL)	// 書き込み用
 	{
 		// 一行目を出力
 		fprintf(fp, "家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio\n");
