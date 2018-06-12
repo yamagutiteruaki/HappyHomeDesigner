@@ -30,7 +30,7 @@
 
 #define PLAYER_HP				(1)							// 残機
 #define PLAYER_POS_ADJ			(20.0f)						// 初期位置調整値
-#define PLAYER_WT_ADJ			(0.12f)						// 移動速度調整値
+#define PLAYER_WT_ADJ			(0.08f)						// 移動速度調整値
 
 
 //*****************************************************************************

@@ -46,6 +46,7 @@ class FURNITURE
 public:
 	bool		use;				// 使用しているかどうか
 	bool		own;				// プレイヤーに所有されているかどうか(true:所有されている,false:所有されていない)
+	int			id;
 
 	D3DXVECTOR3	pos;				// 現在の位置
 	D3DXVECTOR3	rot;				// 現在の向き

@@ -28,6 +28,7 @@ int Cnt;								// “Ç‚Ýž‚ñ‚¾‰Æ‹ï‚Ì”
 enum
 {
 	LOAD_CSV_USE = 1,
+	LOAD_CSV_ID,
 	LOAD_CSV_POS_X,
 	LOAD_CSV_POS_Y,
 	LOAD_CSV_POS_Z,
@@ -82,6 +83,7 @@ void LoadCsv(void)
 			// char‚ðint, double‚É•ÏŠ·‚·‚é
 			strcpy(furniture->name, tkn[0]);
 			furniture->use = atoi(tkn[LOAD_CSV_USE]);
+			furniture->id = atoi(tkn[LOAD_CSV_ID]);
 			furniture->pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
 			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
 			furniture->pos.z = (float)atof(tkn[LOAD_CSV_POS_Z]);
