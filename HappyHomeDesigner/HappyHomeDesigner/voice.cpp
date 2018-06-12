@@ -134,6 +134,7 @@ void UpdateVoice(void)
 				{
 					player->havenum[j] = -1;
 				}
+				player->weight = 0;
 				camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				camera->rotDest = 0.0f;
 				voice->use = false;

@@ -251,10 +251,10 @@ FIELD *field = GetField(fieldnum);
 	camera->rotDest = PiCalculate360(camera->rotDest);
 
 #ifdef _DEBUG
-	PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
-	PrintDebugProc("CameraReset: %d\n", CameraReset);
-	PrintDebugProc("CameraLength: %f\n", camera->fLength);
-	PrintDebugProc("\n");
+	//PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
+	//PrintDebugProc("CameraReset: %d\n", CameraReset);
+	//PrintDebugProc("CameraLength: %f\n", camera->fLength);
+	//PrintDebugProc("\n");
 
 #endif
 	
