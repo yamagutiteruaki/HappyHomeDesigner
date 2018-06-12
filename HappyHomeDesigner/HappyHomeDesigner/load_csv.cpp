@@ -11,12 +11,16 @@
 #include "main.h"
 #include "debugproc.h"
 #include "stage.h"
+#include "load_csv.h"
 
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
-#define	FURNITURE_CSV		"data/EXCEL_DATA/set_furniture.csv"		// 読み込むファイル名
-#define BUFC_MAX		(512)
+
+//*****************************************************************************
+// グローバル変数
+//*****************************************************************************
+int Cnt;								// 読み込んだ家具の数
 
 //*****************************************************************************
 // 列挙型
@@ -75,6 +79,7 @@ void LoadCsv(void)
 				continue;
 			}
 			// charをint, doubleに変換する
+			strcpy(furniture->name, tkn[0]);
 			furniture->use = atoi(tkn[LOAD_CSV_USE]);
 			furniture->pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
 			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
@@ -94,7 +99,15 @@ void LoadCsv(void)
 			furniture->price = atoi(tkn[LOAD_CSV_PRICE]);
 			furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
 			
+			Cnt++;			// 読み込んだ家具の数カウント
 			furniture++;	// 次のデータに
 		}
 	}
+}
+//=============================================================================
+// 読み込んだ家具の数取得関数
+//=============================================================================
+int GetFurnitureCnt(void)
+{
+	return (Cnt);
 }

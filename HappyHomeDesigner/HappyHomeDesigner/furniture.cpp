@@ -11,6 +11,10 @@
 #include "stage.h"
 #include "load_csv.h"
 #include "player.h"
+#include "input.h"
+#include "write_csv.h"
+#include "camera.h"
+#include "calculate.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -21,6 +25,7 @@
 //*****************************************************************************
 void FurnitureColi(void);
 void FurnitureWt(void);
+void FurnitureMove(int no);
 
 //*****************************************************************************
 // グローバル変数
@@ -31,6 +36,8 @@ LPD3DXBUFFER		g_pD3DXMatBuffFurniture[FURNITURE_TYPE_MAX];	// メッシュのマテリア
 DWORD				g_aNumMatFurniture[FURNITURE_TYPE_MAX];			// 属性情報の総数
 D3DXMATRIX			g_mtxWorldFurniture;							// ワールドマトリックス
 FURNITURE			furnitureWk[MAX_FURNITURE];						// 家具格納ワーク
+
+int					FurnitureNum;									// 操作する家具の番号指定用
 
 const char *FileNameFurniture[FURNITURE_TYPE_MAX] =
 {
@@ -91,6 +98,9 @@ HRESULT InitFurniture(int type)
 
 
 	LoadCsv();			// CSVファイル読み込み
+
+	FurnitureNum = 0;
+
 	return S_OK;
 }
 
@@ -126,7 +136,63 @@ void UninitFurniture(void)
 //=============================================================================
 void UpdateFurniture(void)
 {
-	FURNITURE *furniture = &furnitureWk[0];
+#ifdef _DEBUG
+
+	// 動かす家具を決定
+	if (GetKeyboardTrigger(DIK_L))
+	{
+		FurnitureNum++;
+		if (FurnitureNum > GetFurnitureCnt())
+		{	// ポインタエラー防止
+			FurnitureNum--;
+		}
+	}
+	else if (GetKeyboardTrigger(DIK_K))
+	{
+		FurnitureNum--;
+		if (FurnitureNum < 0)
+		{	// ポインタエラー防止
+			FurnitureNum = 0;
+		}
+	}
+
+	// 家具を移動
+	FurnitureMove(FurnitureNum);
+
+	// 現在のposをcsvファイルに上書き
+	if (GetKeyboardTrigger(DIK_Q))
+	{
+		WriteCsv();
+	}
+
+	PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
+	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
+	PrintDebugProc("家具のpos:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].pos.x,
+		furnitureWk[FurnitureNum].pos.y,
+		furnitureWk[FurnitureNum].pos.z);
+	PrintDebugProc("家具のrot:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].rot.x,
+		furnitureWk[FurnitureNum].rot.y,
+		furnitureWk[FurnitureNum].rot.z);
+	PrintDebugProc("家具のscl:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].scl.x,
+		furnitureWk[FurnitureNum].scl.y,
+		furnitureWk[FurnitureNum].scl.z);
+	PrintDebugProc("家具のuse:       [%d]\n", furnitureWk[FurnitureNum].use);
+	PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
+	PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
+	PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
+	PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
+	PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
+	PrintDebugProc("\n家具の操作方法一覧\n");
+	PrintDebugProc("家具を選択:               [KキーorLキー]\n");
+	PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
+	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
+	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
+	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
+
+#endif
 
 }
 
@@ -258,5 +324,120 @@ void FurnitureWt()
 		//}
 
 	}
+
+}
+//=============================================================================
+// 家具の移動
+//=============================================================================
+void FurnitureMove(int no)
+{
+	FURNITURE *furniture = &furnitureWk[no];
+	CAMERA *camera = GetCamera();
+
+	float fDiffRotY;
+
+	if (furniture == NULL)
+	{
+		furniture = &furnitureWk[0];
+	}
+
+	if (GetKeyboardPress(DIK_F))
+	{
+		if (GetKeyboardPress(DIK_T))
+		{// 左前移動
+			furniture->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+			furniture->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
+		}
+		else if (GetKeyboardPress(DIK_G))
+		{// 左後移動
+			furniture->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+			furniture->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.25f;
+		}
+		else
+		{// 左移動
+			furniture->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+			furniture->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
+
+		}
+	}
+	else if (GetKeyboardPress(DIK_H))
+	{
+		if (GetKeyboardPress(DIK_T))
+		{// 右前移動
+			furniture->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+			furniture->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
+		}
+		else if (GetKeyboardPress(DIK_G))
+		{// 右後移動
+			furniture->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+			furniture->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.25f;
+		}
+		else
+		{// 右移動
+			furniture->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+			furniture->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+
+			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
+		}
+	}
+	else if (GetKeyboardPress(DIK_T))
+	{// 前移動
+		furniture->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+		furniture->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+
+		furniture->rotDest.y = D3DX_PI + camera->rotCamera.y;
+	}
+	else if (GetKeyboardPress(DIK_G))
+	{// 後移動
+		furniture->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+		furniture->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
+
+		furniture->rotDest.y = camera->rotCamera.y;
+	}
+
+	// 移動量に慣性をかける
+	furniture->move.x += (0.0f - furniture->move.x) * RATE_MOVE_FURNITURE;
+	furniture->move.y += (0.0f - furniture->move.y) * RATE_MOVE_FURNITURE;
+	furniture->move.z += (0.0f - furniture->move.z) * RATE_MOVE_FURNITURE;
+
+	// 位置移動
+	furniture->pos.x += furniture->move.x;
+	furniture->pos.y += furniture->move.y;
+	furniture->pos.z += furniture->move.z;
+
+	// 目的の角度までの差分
+	fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+	if (fDiffRotY > D3DX_PI)
+	{
+		fDiffRotY -= D3DX_PI * 2.0f;
+	}
+	if (fDiffRotY < -D3DX_PI)
+	{
+		fDiffRotY += D3DX_PI * 2.0f;
+	}
+
+	// 目的の角度まで慣性をかける
+	furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+	if (furniture->rot.y > D3DX_PI)
+	{
+		furniture->rot.y -= D3DX_PI * 2.0f;
+	}
+	if (furniture->rot.y < -D3DX_PI)
+	{
+		furniture->rot.y += D3DX_PI * 2.0f;
+	}
+
+	// 角度を修正
+	furniture->rot.y = PiCalculate360(furniture->rot.y);
 
 }
