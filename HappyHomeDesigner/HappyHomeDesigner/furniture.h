@@ -19,6 +19,7 @@
 #define	RATE_MOVE_FURNITURE			(0.20f)						// 移動慣性係数
 #define	VALUE_ROTATE_FURNITURE		(D3DX_PI * 0.05f)			// 回転速度
 #define	RATE_ROTATE_FURNITURE		(0.20f)						// 回転慣性係数
+#define	VALUE_SCALE_FURNITURE		(0.05f)						// スケール拡大・縮小速度
 //**************************************
 // 種類
 //**************************************

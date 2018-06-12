@@ -26,6 +26,8 @@
 void FurnitureColi(void);
 void FurnitureWt(void);
 void FurnitureMove(int no);
+void FurnitureRotate(int no);
+void FurnitureScaling(int no);
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
@@ -155,9 +157,12 @@ void UpdateFurniture(void)
 			FurnitureNum = 0;
 		}
 	}
-
-	// ‰Æ‹ï‚ðˆÚ“®
+	// Žw’è‚µ‚½‰Æ‹ï‚ðˆÚ“®
 	FurnitureMove(FurnitureNum);
+	// Žw’è‚µ‚½‰Æ‹ï‚ðYŽ²‰ñ“]
+	FurnitureRotate(FurnitureNum);
+	// Žw’è‚µ‚½ƒXƒP[ƒ‹Šg‘åEk¬
+	FurnitureScaling(FurnitureNum);
 
 	// Œ»Ý‚Ìpos‚ðcsvƒtƒ@ƒCƒ‹‚Éã‘‚«
 	if (GetKeyboardTrigger(DIK_Q))
@@ -441,3 +446,90 @@ void FurnitureMove(int no)
 	furniture->rot.y = PiCalculate360(furniture->rot.y);
 
 }
+//=============================================================================
+// ‰Æ‹ï‚ÌYŽ²‰ñ“]
+//=============================================================================
+void FurnitureRotate(int no)
+{
+	FURNITURE *furniture = &furnitureWk[no];
+	CAMERA *camera = GetCamera();
+
+	float fDiffRotY;
+
+	if (furniture == NULL)
+	{
+		furniture = &furnitureWk[0];
+	}
+
+	if (GetKeyboardPress(DIK_E))
+	{// ¶‰ñ“]
+		furniture->rotDest.y -= VALUE_ROTATE_FURNITURE;
+		if (furniture->rotDest.y < -D3DX_PI)
+		{
+			furniture->rotDest.y += D3DX_PI * 2.0f;
+		}
+	}
+	if (GetKeyboardPress(DIK_R))
+	{// ‰E‰ñ“]
+		furniture->rotDest.y += VALUE_ROTATE_FURNITURE;
+		if (furniture->rotDest.y > D3DX_PI)
+		{
+			furniture->rotDest.y -= D3DX_PI * 2.0f;
+		}
+	}
+
+	// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+	fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+	if (fDiffRotY > D3DX_PI)
+	{
+		fDiffRotY -= D3DX_PI * 2.0f;
+	}
+	if (fDiffRotY < -D3DX_PI)
+	{
+		fDiffRotY += D3DX_PI * 2.0f;
+	}
+
+	// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+	furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+	if (furniture->rot.y > D3DX_PI)
+	{
+		furniture->rot.y -= D3DX_PI * 2.0f;
+	}
+	if (furniture->rot.y < -D3DX_PI)
+	{
+		furniture->rot.y += D3DX_PI * 2.0f;
+	}
+
+	// Šp“x‚ðC³
+	furniture->rot.y = PiCalculate360(furniture->rot.y);
+
+}
+//=============================================================================
+// ‰Æ‹ï‚ÌƒXƒP[ƒ‹Šg‘åEk¬
+//=============================================================================
+void FurnitureScaling(int no)
+{
+	FURNITURE *furniture = &furnitureWk[no];
+	CAMERA *camera = GetCamera();
+
+	float fDiffRotY;
+
+	if (furniture == NULL)
+	{
+		furniture = &furnitureWk[0];
+	}
+
+	if (GetKeyboardPress(DIK_I))
+	{// Šg‘å
+		furniture->scl.x += VALUE_SCALE_FURNITURE;
+		furniture->scl.y += VALUE_SCALE_FURNITURE;
+		furniture->scl.z += VALUE_SCALE_FURNITURE;
+	}
+	if (GetKeyboardPress(DIK_J))
+	{// k¬
+		furniture->scl.x -= VALUE_SCALE_FURNITURE;
+		furniture->scl.y -= VALUE_SCALE_FURNITURE;
+		furniture->scl.z -= VALUE_SCALE_FURNITURE;
+	}
+}
+
