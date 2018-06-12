@@ -139,13 +139,11 @@ void UninitFurniture(void)
 void UpdateFurniture(void)
 {
 #ifdef _DEBUG
-	CAMERA *camera = GetCamera();
-
 	// 動かす家具を決定
 	if (GetKeyboardTrigger(DIK_L))
 	{
 		FurnitureNum++;
-		if (FurnitureNum > GetFurnitureCnt())
+		if (FurnitureNum >= GetFurnitureCnt())
 		{	// ポインタエラー防止
 			FurnitureNum--;
 		}
@@ -165,12 +163,14 @@ void UpdateFurniture(void)
 	// 指定したスケール拡大・縮小
 	FurnitureScaling(FurnitureNum);
 
+
 	// 現在のposをcsvファイルに上書き
 	if (GetKeyboardTrigger(DIK_Q))
 	{
 		WriteCsv();
 	}
 
+	// デバッグフォント表示
 	PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
 	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
 	PrintDebugProc("家具のpos:       [%f %f %f]\n",
@@ -278,7 +278,13 @@ FURNITURE *GetFurniture(int no)
 {
 	return &furnitureWk[no];
 }
-
+//=============================================================================
+// 家具指定番号の取得
+//=============================================================================
+int GetFurnitureNum(void)
+{
+	return FurnitureNum;
+}
 //=============================================================================
 // 家具の当たり判定処理
 //=============================================================================
@@ -511,9 +517,6 @@ void FurnitureRotate(int no)
 void FurnitureScaling(int no)
 {
 	FURNITURE *furniture = &furnitureWk[no];
-	CAMERA *camera = GetCamera();
-
-	float fDiffRotY;
 
 	if (furniture == NULL)
 	{
@@ -532,11 +535,4 @@ void FurnitureScaling(int no)
 		furniture->scl.y -= VALUE_SCALE_FURNITURE;
 		furniture->scl.z -= VALUE_SCALE_FURNITURE;
 	}
-}
-//=============================================================================
-// 家具指定番号の取得
-//=============================================================================
-int GetFurnitureNum(void)
-{
-	return FurnitureNum;
 }

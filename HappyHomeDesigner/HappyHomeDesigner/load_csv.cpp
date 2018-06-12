@@ -54,6 +54,7 @@ void LoadCsv(void)
 	char *tkn[LOAD_CSV_MAX];					// 一時保存用（分割した配列）
 	FURNITURE *furniture = GetFurniture(0);		// ポインターを初期化
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
+	Cnt = 0;									// カウンタ初期化
 
 	if ((fp = fopen(FURNITURE_CSV, "r")) != NULL)
 	{
