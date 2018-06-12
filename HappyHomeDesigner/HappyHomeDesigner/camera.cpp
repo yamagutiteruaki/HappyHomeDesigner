@@ -12,6 +12,7 @@
 #include "player.h"
 #include "stage.h"
 #include "field.h"
+#include "furniture.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -51,7 +52,6 @@ HRESULT InitCamera(int nType)
 	camera->fLengthTemp = 0;
 
 	camera->rotDest = 0.0f;
-
 
 
 	return S_OK;
@@ -95,7 +95,6 @@ FIELD *field = GetField(fieldnum);
 
 	float limitpos_x=field->Size.x/2;
 	float limitpos_z=field->Size.z/2;
-
 
 	if (fabs(camera->posCameraEye.z) > limitpos_z
 		|| fabs(camera->posCameraEye.x) > limitpos_x)
@@ -165,6 +164,7 @@ FIELD *field = GetField(fieldnum);
 	{
 		camera->fLength = camera->fChaseLength;
 	}
+
 
 
 	//デバッグ時にZCでカメラ回転

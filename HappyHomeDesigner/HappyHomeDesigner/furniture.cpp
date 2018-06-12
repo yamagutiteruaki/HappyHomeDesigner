@@ -139,6 +139,7 @@ void UninitFurniture(void)
 void UpdateFurniture(void)
 {
 #ifdef _DEBUG
+	CAMERA *camera = GetCamera();
 
 	// “®‚©‚·‰Æ‹ï‚ğŒˆ’è
 	if (GetKeyboardTrigger(DIK_L))
@@ -532,4 +533,10 @@ void FurnitureScaling(int no)
 		furniture->scl.z -= VALUE_SCALE_FURNITURE;
 	}
 }
-
+//=============================================================================
+// ‰Æ‹ïw’è”Ô†‚Ìæ“¾
+//=============================================================================
+int GetFurnitureNum(void)
+{
+	return FurnitureNum;
+}

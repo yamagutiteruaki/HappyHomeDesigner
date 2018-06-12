@@ -69,5 +69,6 @@ void UninitFurniture(void);
 void UpdateFurniture(void);
 void DrawFurniture(void);
 FURNITURE *GetFurniture(int no);
+int GetFurnitureNum(void);
 
 #endif
