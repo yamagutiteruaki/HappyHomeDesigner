@@ -1,50 +1,9 @@
-﻿2018/05/23 10:25:28 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
-     1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt button.cpp
-         button.cpp
-       Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.lib" /MACHINE:X86 /SAFESEH Release\arrest.obj
-         Release\button.obj
-         Release\calculate.obj
-         Release\camera.obj
-         Release\clock.obj
-         Release\collision.obj
-         Release\debugproc.obj
-         Release\fade.obj
-         Release\field.obj
-         Release\furniture.obj
-         Release\game.obj
-         Release\house.obj
-         Release\input.obj
-         Release\Light.obj
-         Release\main.obj
-         Release\player.obj
-         Release\police.obj
-         Release\result.obj
-         Release\resultlogo.obj
-         Release\search.obj
-         Release\sound.obj
-         Release\stage.obj
-         Release\title.obj
-         Release\titlelogo.obj
-         Release\voice.obj
-         Release\wall.obj
-         Release\weight.obj
-         Release\workChisaka.obj
-         Release\workImagawa.obj
-         Release\workMatsuo.obj
-         Release\workSekiguchi.obj
-         Release\workSon.obj
-         Release\workYamaguchi.obj
-         コード生成しています。
-         5 of 242 functions ( 2.1%) were compiled, the rest were copied from previous compilation.
-           0 functions were new in current compilation
-           1 functions had inline decision re-evaluated but remain unchanged
-         コード生成が終了しました。
-         HappyHomeDesigner.vcxproj -> C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
-     1>プロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
+﻿2018/6/13 上午 05:54:06 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>Link:
+         HappyHomeDesigner.vcxproj -> C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+     1>プロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:03.15
+経過時間 00:00:00.08
