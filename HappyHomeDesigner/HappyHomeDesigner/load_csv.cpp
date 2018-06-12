@@ -56,7 +56,13 @@ void LoadCsv(void)
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
 	Cnt = 0;									// カウンタ初期化
 
-	if ((fp = fopen(FURNITURE_CSV, "r")) != NULL)
+	char fname[64];								// ファイル名生成用
+
+	// 読み込むファイル名を生成する(後でランダム化を想定)
+	int i = 0;
+	sprintf(fname, "data/EXCEL_DATA/set_furniture.csv", i);
+
+	if ((fp = fopen(fname, "r")) != NULL)
 	{
 		// ファイルの終わりまで繰り返し読み込む
 		while (fgets(buf, BUFC_MAX, fp) != NULL)
