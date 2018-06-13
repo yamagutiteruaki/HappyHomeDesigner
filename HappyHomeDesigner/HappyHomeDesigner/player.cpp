@@ -30,7 +30,7 @@
 
 #define PLAYER_HP				(1)							// 残機
 #define PLAYER_POS_ADJ			(20.0f)						// 初期位置調整値
-#define PLAYER_WT_ADJ			(0.12f)						// 移動速度調整値
+#define PLAYER_WT_ADJ			(0.08f)						// 移動速度調整値
 
 
 //*****************************************************************************
@@ -284,6 +284,13 @@ void UpdatePlayer(void)
 
 	//PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
 	//PrintDebugProc("\n");
+
+	PrintDebugProc("space 0: %d\n", player->havenum[0]);
+	PrintDebugProc("space 1: %d\n", player->havenum[1]);
+	PrintDebugProc("space 2: %d\n", player->havenum[2]);
+	PrintDebugProc("space 3: %d\n", player->havenum[3]);
+	PrintDebugProc("space 4: %d\n", player->havenum[4]);
+	PrintDebugProc("wt: %d\n", player->weight);
 
 #endif
 

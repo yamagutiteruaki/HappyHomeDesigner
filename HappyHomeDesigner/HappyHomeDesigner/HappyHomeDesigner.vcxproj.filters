@@ -147,6 +147,9 @@
     <ClCompile Include="score.cpp">
       <Filter>ソース ファイル\stage\result</Filter>
     </ClCompile>
+    <ClCompile Include="write_csv.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -256,6 +259,9 @@
     </ClInclude>
     <ClInclude Include="score.h">
       <Filter>ソース ファイル\stage\result</Filter>
+    </ClInclude>
+    <ClInclude Include="write_csv.h">
+      <Filter>ソース ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

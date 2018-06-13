@@ -16,6 +16,8 @@
 #include <time.h>
 #include "camera.h"
 #include "weight.h"
+#include "furniture.h"
+#include "load_csv.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -96,6 +98,7 @@ void UpdateVoice(void)
 	PLAYER *player = GetPlayer(0);
 	FIELD *field = GetField(0);
 	CAMERA *camera = GetCamera();
+	FURNITURE *fnt = GetFurniture(0);
 
 
 	for (int i = 0; i < VOICE_MAX; i++, voice++)
@@ -132,7 +135,17 @@ void UpdateVoice(void)
 				player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				for (int j = 0; j < HAVE_MAX; j++)
 				{
-					player->havenum[j] = -1;
+					if (player->havenum[j] > -1)
+					{
+						int no = -1;
+						no = player->havenum[j];
+						(fnt + no)->use = TRUE;
+
+						ResetCsv(no);
+
+						player->havenum[j] = -1;
+					}
+				
 				}
 				player->weight = 0;
 				camera->rotCamera = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
@@ -141,6 +154,7 @@ void UpdateVoice(void)
 				voice->cnt_frame = 0;
 				voice->pos = D3DXVECTOR3(SCREEN_WIDTH * 2, 350.0f, 0.0f);
 
+				
 
 			}
 			
