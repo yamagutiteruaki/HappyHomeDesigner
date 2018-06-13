@@ -5,7 +5,10 @@
 //
 //=============================================================================
 #include "score.h"
-
+#include "stage.h"
+#include "calculate.h"
+#include "debugproc.h"
+#include "input.h"
 
 //*****************************************************************************
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
@@ -22,7 +25,12 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffScore = NULL;		// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF
 D3DXVECTOR3				g_posScore;						// ˆÊ’u
 D3DXVECTOR3				g_rotScore;						// Œü‚«
 
-int						g_score;						// ƒXƒRƒA
+long long			g_score;						// •\¦ƒXƒRƒA
+long long			g_maxscore;						//æ“¾ƒXƒRƒA
+
+int slotTimer = 0;									//ƒXƒƒbƒgƒ^ƒCƒ}[
+int slotCount = 0;									//ƒXƒƒbƒgŒ…”
+
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -36,6 +44,7 @@ HRESULT InitScore(void)
 
 	// ƒXƒRƒA‚Ì‰Šú‰»
 	g_score = 0;
+	g_maxscore = 0;
 
 	// ’¸“_î•ñ‚Ìì¬
 	MakeVertexScore(pDevice);
@@ -76,15 +85,53 @@ void UninitScore(void)
 //=============================================================================
 void UpdateScore(void)
 {
+
+	g_maxscore = GetPrice();	//”íŠQ‹àŠz‚Ìæ“¾
+
+	long long slotadd=0;		//ƒXƒƒbƒg‰ÁZ”
+
+	slotTimer++;				//ƒ^ƒCƒ}[‰ÁZ
 	
+	for (int i=0; i < NUM_PLACE-slotCount; i++)
+	{
+
+		slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//‰ÁZ‰‰o
+		g_score += slotadd;
+
+		if (GetKeyboardTrigger(DIK_LSHIFT))//‰‰oƒXƒLƒbƒv
+		{
+			g_score = g_maxscore;
+			slotCount = NUM_PLACE;
+		}
+
+	}
+
+	int number;
+	int number2;
+
+	number = (g_score % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));	//w’èŒ…Šm”F
+	number2 = (g_maxscore % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));//w’èŒ…Šm”F
+
+	if (slotTimer > 60 && number == number2)//‰‰oƒXƒgƒbƒvˆ—
+	{
+		slotCount++;
+		slotTimer = 0;
+	}
+	else if (slotTimer == NUM_PLACE)
+	{
+		g_score = g_maxscore;
+	}
 
 	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
 	{
 		int number;
 
-		number = (g_score % (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (int)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
+		number = (g_score % (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
 		SetTextureScore(nCntPlace, number);
 	}
+	
+	PrintDebugProc("[ƒXƒRƒA F(%g)]\n", g_score);
+
 }
 
 //=============================================================================
@@ -153,10 +200,10 @@ HRESULT MakeVertexScore(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[3].rhw = 1.0f;
 
 			// ”½ËŒõ‚Ìİ’è
-			pVtx[0].diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-			pVtx[1].diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-			pVtx[2].diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
-			pVtx[3].diffuse = D3DXCOLOR(0.0f, 1.0f, 0.0f, 1.0f);
+			pVtx[0].diffuse = 
+			pVtx[1].diffuse = 
+			pVtx[2].diffuse = 
+			pVtx[3].diffuse = SetColorPallet(COLOR_PALLET_ORANGE);
 
 			// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
 			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);

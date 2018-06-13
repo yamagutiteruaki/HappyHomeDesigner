@@ -78,7 +78,7 @@ void DrawDebugProc(void)
 	RECT rect = {0, g_nDrawPos, SCREEN_WIDTH, SCREEN_HEIGHT};
 
 	// 情報表示
-	g_pD3DXFont->DrawText(NULL, g_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0x00, 0xff, 0x00));
+	g_pD3DXFont->DrawText(NULL, g_aStrDebug, -1, &rect, DT_LEFT, D3DCOLOR_ARGB(0xff, 0xff, 0x00, 0x00));
 
 	// 情報クリア
 	memset(g_aStrDebug, 0, sizeof g_aStrDebug);
@@ -132,6 +132,11 @@ void PrintDebugProc(char *fmt,...)
 			case 'f':
 				// 可変引数にアクセスしてその変数を取り出す処理
 				sprintf(aWk, "%.3f", va_arg(list, double));		// double型で指定
+				break;
+
+			case 'g':
+				// 可変引数にアクセスしてその変数を取り出す処理
+				sprintf(aWk, "%.2lld", va_arg(list, long long));		// long long型で指定
 				break;
 
 			case 'l':

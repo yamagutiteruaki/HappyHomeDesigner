@@ -14,7 +14,6 @@
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice);
-void SetTextureScore(void);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -132,7 +131,6 @@ void UpdateResultLogo(void)
 void DrawResultLogo(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	int i;
 
 	// 頂点バッファをデバイスのデータストリームにバインド
 	pDevice->SetStreamSource(0, g_pD3DVtxBuffResult, 0, sizeof(VERTEX_2D));

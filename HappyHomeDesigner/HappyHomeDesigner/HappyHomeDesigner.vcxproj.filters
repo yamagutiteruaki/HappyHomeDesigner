@@ -145,7 +145,7 @@
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
     <ClCompile Include="score.cpp">
-      <Filter>ソース ファイル\stage\game</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -255,7 +255,7 @@
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="score.h">
-      <Filter>ソース ファイル\stage\game</Filter>
+      <Filter>ソース ファイル\stage\result</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

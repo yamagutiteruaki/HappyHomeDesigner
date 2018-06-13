@@ -173,7 +173,7 @@ D3DXCOLOR SetColorPallet(int nColor)
 		temp = D3DXCOLOR(0.3f, 0.9f, 0.3f, 1.0f);
 		break;
 	case COLOR_PALLET_ORANGE:		// オレンジ
-		temp = D3DXCOLOR(1.0f, 0.3f, 0.0f, 1.0f);
+		temp = D3DXCOLOR(1.0f, 0.4f, 0.0f, 1.0f);
 		break;
 	case COLOR_PALLET_BLACK:		// ブラック
 		temp = D3DXCOLOR(0.0f, 0.0f, 0.0f, 1.0f);
