@@ -121,3 +121,55 @@ int GetFurnitureCnt(void)
 {
 	return (Cnt);
 }
+
+//=============================================================================
+// 指定のデータをリセット
+//=============================================================================
+void ResetCsv(int no)
+{
+	FILE *fp;
+	char buf[BUFC_MAX];							// 一時保存用（一行）
+	char *tkn[LOAD_CSV_MAX];					// 一時保存用（分割した配列）
+	FURNITURE *furniture = GetFurniture(no);		// ポインターを初期化
+	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
+
+	char fname[64];								// ファイル名生成用
+
+												// 読み込むファイル名を生成する(後でランダム化を想定)
+	int i = 0;
+	sprintf(fname, "data/EXCEL_DATA/set_furniture.csv", i);
+
+	if ((fp = fopen(fname, "r")) != NULL)
+	{
+		// ファイルの終わりまで繰り返し読み込む
+		while (fgets(buf, BUFC_MAX, fp) != NULL)
+		{	// カンマで分割
+
+			for (int i = 0; i < LOAD_CSV_MAX; i++)
+			{
+				if (i == 0)
+				{
+					tkn[i] = strtok(buf, ",");
+				}
+				else
+				{
+					tkn[i] = strtok(NULL, ",");
+				}
+			}
+			// 指定した行数を飛ばす
+			if (skip > 0)
+			{
+				skip--;
+				continue;
+			}
+			// charをint, doubleに変換する
+			furniture->pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
+			furniture->pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
+			furniture->pos.z = (float)atof(tkn[LOAD_CSV_POS_Z]);
+
+			furniture->house_num = atoi(tkn[LOAD_CSV_HOUSE_NUM]);
+			break;
+		}
+		fclose(fp);
+	}
+}

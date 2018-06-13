@@ -20,4 +20,5 @@
 void LoadCsv(void);
 int GetFurnitureCnt(void);
 
+void ResetCsv(int no);
 #endif

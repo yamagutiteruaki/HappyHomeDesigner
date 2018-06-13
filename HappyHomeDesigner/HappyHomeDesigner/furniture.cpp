@@ -23,9 +23,10 @@
 // プロトタイプ宣言
 //*****************************************************************************
 int FurnitureColi(void);
-bool BagCheck(void);
+void FurnitureGetDAZE(int no);
+void FurniturePut(void);
+int BagCheck(int func);
 bool WeightCheck(int no);
-void FurnitureGetDAZE();
 
 void FurnitureWt(void);
 void FurnitureMove(int no);
@@ -144,6 +145,7 @@ void UpdateFurniture(void)
 
 	FurnitureColi();
 	//FurnitureGetDAZE();
+	FurniturePut();
 
 #ifdef _DEBUG
 	// 動かす家具を決定
@@ -325,13 +327,15 @@ int FurnitureColi()
 			#ifdef _DEBUG
 			PrintDebugProc("家具ID: %d\n", fnt->id);
 			#endif
+
 			no = i;
 
-			// 動作テスト
+			// ボタン入力
 			if (GetKeyboardTrigger(DIK_E))
 			{
-				fnt = GetFurniture(0);
-				(fnt + no)->use = FALSE;
+				FurnitureGetDAZE(no);
+				//fnt = GetFurniture(0);
+				//(fnt + no)->use = FALSE;
 			}
 
 		}
@@ -348,67 +352,72 @@ int FurnitureColi()
 //=============================================================================
 // 家具
 //=============================================================================
-void FurnitureGetDAZE()
+void FurnitureGetDAZE(int no)
 {
 	PLAYER *ply = GetPlayer(0);
 	FURNITURE *fnt = GetFurniture(0);
-	int no = -1;
-	
-	// ボタン入力
-	if (GetKeyboardTrigger(DIK_E))
+
+	// 所持数チェック、カバンの中で空いている場所を探す
+	int space = -1;
+	space = BagCheck(0);
+
+	if ((space >= 0 && space < HAVE_MAX) &&	// 所持数チェック、カバンの中で空いている場所を探す
+		WeightCheck(no) == TRUE)			// 所持重量チェック
 	{
-		no = FurnitureColi();
-		if (no != -1 &&
-			BagCheck() == TRUE &&		// 所持数チェック
-			WeightCheck(no) == TRUE)	// 所持重量チェック
-		{
-			// カバンの中で空いている場所を探す
-			for (int i = 0; i < HAVE_MAX; i++)
-			{
-				if (ply->havenum[i] == -1)
-				{
-					// 所持数処理（カバンに入れる）
-					ply->havenum[i] = (fnt + no)->type;
-					break;
-				}
-			}
-			// 所持重量処理
-			ply->weight += (fnt + no)->weight;
+		// カバンに入れる
+		ply->havenum[space] = (fnt + no)->id;
 
-		}
+		// 所持重量処理
+		ply->weight += (fnt + no)->weight;
 
+		// フィールド上のオブジェクトを削除
+		(fnt + no)->use = FALSE;
 	}
 
 }
 
 //=============================================================================
-// 家具
+// 所持品チェック
+// 引数：0 取る 1 手放す
 //=============================================================================
-bool BagCheck()
+int BagCheck(int func)
 {
 	PLAYER *ply = GetPlayer(0);
-	int cnt = 0;
-	for (int i = 0; i < HAVE_MAX; i++)
-	{
-		if (ply->havenum[i] != -1)
-		{
-			cnt++;
-		}
-	}
+	int no = -1;
 
-	if (cnt < HAVE_MAX)
+	switch (func)
 	{
-		return TRUE;
+	case 0:
+		// カバンの中で空いている場所を探す
+		for (int i = 0; i < HAVE_MAX; i++)
+		{
+			if (ply->havenum[i] == -1)
+			{
+				no = i;
+				break;
+			}
+		}
+		break;
+
+	case 1:
+		// カバンの中で一番上のアイテムを探す
+		for (int i = 0; i < HAVE_MAX; i++)
+		{
+			if (ply->havenum[i] != -1)
+			{
+				no = i;
+			}
+		}
+		break;
+
 	}
-	else
-	{
-		return FALSE;
-	}
+	
+	return no;
 
 }
 
 //=============================================================================
-// 家具
+// 所持重量チェック
 //=============================================================================
 bool WeightCheck(int no)
 {
@@ -426,67 +435,46 @@ bool WeightCheck(int no)
 }
 
 //=============================================================================
-// 家具
+// 家具を置く
 //=============================================================================
 void FurniturePut()
 {
 	PLAYER *ply = GetPlayer(0);
 	FURNITURE *fnt = GetFurniture(0);
+	int no = -1;
+	int id = -1;
 
 	// ボタン入力
-	if (GetKeyboardTrigger(DIK_G))
+	if (GetKeyboardTrigger(DIK_B))
 	{
 		// 置ける場所チェック（いらない）
 
+		// カバンの中身を取得
+		no = BagCheck(1);
 
-	}
+		// 所持品チェック
+		if (no != -1)
+		{
+			// カバンの中身を取得
+			id = ply->havenum[no];
 
+			// プレイヤー位置を取得、プット
+			(fnt + id)->pos = ply->Eye;
+			(fnt + id)->house_num = GetStage();
+			(fnt + id)->use = TRUE;
 
-	
+			// 所持品処理
+			ply->havenum[no] = -1;
 
-	// カバンの中身を取得
+			// 所持重量処理
+			ply->weight -= (fnt + id)->weight;
 
-	// プレイヤー位置を取得
-
-	// プット
-
-	// 所持数処理
-
-	// 所持重量処理
-	
-}
-
-
-//=============================================================================
-// 家具の重量の処理
-//=============================================================================
-void FurnitureWt()
-{
-	PLAYER *player = GetPlayer(0);
-	FURNITURE *fnt = GetFurniture(0);
-
-	player->weight = 0;
-
-	for (int i = 0; i < HAVE_MAX; i++)
-	{
-		if (player->havenum[i] != -1) continue;
-		
-		int type_tem = player->havenum[i];
-
-		player->weight += (fnt + type_tem)->weight;
-
-		//for (int j = 0; j < FURNITURE_TYPE_MAX; j++)
-		//{
-		//	if (player->havenum[i] == (fnt + j)->type)
-		//	{
-		//		player->weight += (fnt + j)->weight;
-		//	}
-
-		//}
+		}
 
 	}
 
 }
+
 //=============================================================================
 // 家具の移動
 //=============================================================================

@@ -285,6 +285,13 @@ void UpdatePlayer(void)
 	//PrintDebugProc("camera rotDest: %f\n", camera->rotDest);
 	//PrintDebugProc("\n");
 
+	PrintDebugProc("space 0: %d\n", player->havenum[0]);
+	PrintDebugProc("space 1: %d\n", player->havenum[1]);
+	PrintDebugProc("space 2: %d\n", player->havenum[2]);
+	PrintDebugProc("space 3: %d\n", player->havenum[3]);
+	PrintDebugProc("space 4: %d\n", player->havenum[4]);
+	PrintDebugProc("wt: %d\n", player->weight);
+
 #endif
 
 	// Šp“x‚ğC³
