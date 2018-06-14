@@ -57,7 +57,7 @@ public:
 	int			type;				// 種類
 	int			house_num;			// 所属している家の番号
 	int			weight;				// 重さ
-	int			price;				// 金額
+	long long	price;				// 金額
 	int			ratio;				// 確率
 
 	char		name[64];			// CSVファイルの家具の名前

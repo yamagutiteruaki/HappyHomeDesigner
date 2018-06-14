@@ -8,6 +8,7 @@
 #include "weight.h"
 #include "input.h"
 #include "clock.h"
+#include "player.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -29,6 +30,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWeight = NULL;		// 頂点バッファインターフェ
 LPDIRECT3DTEXTURE9		g_pD3DTextureWeightMeter = NULL;		// テクスチャへのポリゴン
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffWeightMeter = NULL;		// 頂点バッファインターフェースへのポインタ
 float					Power;
+float					PowerDest;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -38,6 +40,7 @@ HRESULT InitWeight(int type)
 
 	//use = true;										// 使用
 	Power = 0.0f;
+	PowerDest = 0.0f;
 	MakeVertexWeight(pDevice);										// 頂点情報の作成
 
 										// テクスチャーの初期化を行う
@@ -92,18 +95,26 @@ void UninitWeight(void)
 //=============================================================================
 void UpdateWeight(void)
 {
-	if (GetKeyboardPress(DIK_P))
-	{
-		if (Power < 1.0)
-		{
-			Power = Power + 0.01f;
-		}
-		else
-		{
-			Power = 0.0f;
-		}
-		SetVertexWeight();
-	}
+	PLAYER *player = GetPlayer(0);
+
+	PowerDest = ((float)player->weight/WT_MAX)-Power;
+
+	Power += (float)(PowerDest / 30);
+
+
+	//if (GetKeyboardPress(DIK_P))
+	//{
+	//	if (Power < 1.0)
+	//	{
+	//		Power = Power + 0.01f;
+	//	}
+	//	else
+	//	{
+	//		Power = 0.0f;
+	//	}
+	//}
+	SetVertexWeight();
+
 }
 
 //=============================================================================
@@ -199,7 +210,7 @@ HRESULT MakeVertexWeight(LPDIRECT3DDEVICE9 pDevice)
 		D3DUSAGE_WRITEONLY,			// 頂点バッファの使用法　
 		FVF_VERTEX_2D,				// 使用する頂点フォーマット
 		D3DPOOL_MANAGED,			// リソースのバッファを保持するメモリクラスを指定
-		&g_pD3DVtxBuffWeightMeter,		// 頂点バッファインターフェースへのポインタ
+		&g_pD3DVtxBuffWeightMeter,	// 頂点バッファインターフェースへのポインタ
 		NULL)))						// NULLに設定
 	{
 		return E_FAIL;
@@ -272,3 +283,4 @@ void SetVertexWeight(void)
 	g_pD3DVtxBuffWeightMeter->Unlock();
 
 }
+

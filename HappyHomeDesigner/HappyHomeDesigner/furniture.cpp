@@ -15,6 +15,7 @@
 #include "write_csv.h"
 #include "camera.h"
 #include "calculate.h"
+
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -28,7 +29,7 @@ void FurniturePut(void);
 int BagCheck(int func);
 bool WeightCheck(int no);
 
-void FurnitureWt(void);
+//void FurnitureWt(void);
 void FurnitureMove(int no);
 void FurnitureRotate(int no);
 void FurnitureScaling(int no);
@@ -326,6 +327,8 @@ int FurnitureColi()
 			// ”Ô†‚ğæ“¾
 			#ifdef _DEBUG
 			PrintDebugProc("‰Æ‹ïID: %d\n", fnt->id);
+			PrintDebugProc("‰Æ‹ï‹àŠz: %g\n", fnt->price);
+
 			#endif
 
 			no = i;
@@ -336,6 +339,7 @@ int FurnitureColi()
 				FurnitureGetDAZE(no);
 				//fnt = GetFurniture(0);
 				//(fnt + no)->use = FALSE;
+				
 			}
 
 		}
@@ -463,6 +467,11 @@ void FurniturePut()
 			(fnt + id)->house_num = GetStage();
 			(fnt + id)->use = TRUE;
 
+			//”íŠQ‹àŠz‰ÁZ
+			if (GetStage() == STAGE_MYHOUSE)
+			{
+				AddPrice((fnt + id)->price);
+			}
 			// Š•iˆ—
 			ply->havenum[no] = -1;
 

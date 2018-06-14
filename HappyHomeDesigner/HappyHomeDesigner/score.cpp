@@ -28,8 +28,8 @@ D3DXVECTOR3				g_rotScore;						// 向き
 long long			g_score;						// 表示スコア
 long long			g_maxscore;						//取得スコア
 
-int slotTimer = 0;									//スロットタイマー
-int slotCount = 0;									//スロット桁数
+int slotTimer ;									//スロットタイマー
+int slotCount ;									//スロット桁数
 
 
 //=============================================================================
@@ -45,6 +45,10 @@ HRESULT InitScore(void)
 	// スコアの初期化
 	g_score = 0;
 	g_maxscore = 0;
+
+	slotTimer = 0;
+	slotCount = 0;
+
 
 	// 頂点情報の作成
 	MakeVertexScore(pDevice);
@@ -112,7 +116,7 @@ void UpdateScore(void)
 	number = (g_score % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));	//指定桁確認
 	number2 = (g_maxscore % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));//指定桁確認
 
-	if (slotTimer > 60 && number == number2)//演出ストップ処理
+	if (slotTimer > SLOT_INTERVAL && number == number2)//演出ストップ処理
 	{
 		slotCount++;
 		slotTimer = 0;
@@ -131,6 +135,7 @@ void UpdateScore(void)
 	}
 	
 	PrintDebugProc("[スコア ：(%g)]\n", g_score);
+	PrintDebugProc("[被害総額 ：(%g)]\n", g_maxscore);
 
 }
 
