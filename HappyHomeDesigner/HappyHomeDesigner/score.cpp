@@ -30,7 +30,7 @@ long long			g_maxscore;						//取得スコア
 
 int slotTimer ;									//スロットタイマー
 int slotCount ;									//スロット桁数
-
+bool slotStart;
 
 //=============================================================================
 // 初期化処理
@@ -48,7 +48,7 @@ HRESULT InitScore(void)
 
 	slotTimer = 0;
 	slotCount = 0;
-
+	slotStart = false;
 
 	// 頂点情報の作成
 	MakeVertexScore(pDevice);
@@ -96,44 +96,51 @@ void UpdateScore(void)
 
 	slotTimer++;				//タイマー加算
 	
-	for (int i=0; i < NUM_PLACE-slotCount; i++)
+	if(slotTimer>60)
 	{
-
-		slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//加算演出
-		g_score += slotadd;
-
-		if (GetKeyboardTrigger(DIK_LSHIFT))//演出スキップ
-		{
-			g_score = g_maxscore;
-			slotCount = NUM_PLACE;
-		}
-
-	}
-
-	int number;
-	int number2;
-
-	number = (g_score % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));	//指定桁確認
-	number2 = (g_maxscore % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));//指定桁確認
-
-	if (slotTimer > SLOT_INTERVAL && number == number2)//演出ストップ処理
-	{
-		slotCount++;
+		slotStart = true;
 		slotTimer = 0;
 	}
-	else if (slotTimer == NUM_PLACE)
+	if (slotStart == true)
 	{
-		g_score = g_maxscore;
-	}
+		for (int i = 0; i < NUM_PLACE - slotCount; i++)
+		{
 
-	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
-	{
+			slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//加算演出
+			g_score += slotadd;
+
+			if (GetKeyboardTrigger(DIK_LSHIFT))//演出スキップ
+			{
+				g_score = g_maxscore;
+				slotCount = NUM_PLACE;
+			}
+
+		}
+
 		int number;
+		int number2;
 
-		number = (g_score % (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
-		SetTextureScore(nCntPlace, number);
+		number = (g_score % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));	//指定桁確認
+		number2 = (g_maxscore % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));//指定桁確認
+
+		if (slotTimer > SLOT_INTERVAL && number == number2)//演出ストップ処理
+		{
+			slotCount++;
+			slotTimer = 0;
+		}
+		else if (slotTimer == NUM_PLACE)
+		{
+			g_score = g_maxscore;
+		}
+
+		for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
+		{
+			int number;
+
+			number = (g_score % (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
+			SetTextureScore(nCntPlace, number);
+		}
 	}
-	
 	PrintDebugProc("[スコア ：(%g)]\n", g_score);
 	PrintDebugProc("[被害総額 ：(%g)]\n", g_maxscore);
 
@@ -208,7 +215,7 @@ HRESULT MakeVertexScore(LPDIRECT3DDEVICE9 pDevice)
 			pVtx[0].diffuse = 
 			pVtx[1].diffuse = 
 			pVtx[2].diffuse = 
-			pVtx[3].diffuse = SetColorPallet(COLOR_PALLET_ORANGE);
+			pVtx[3].diffuse = SetColorPallet(COLOR_PALLET_CYAN);
 
 			// テクスチャ座標の設定
 			pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
