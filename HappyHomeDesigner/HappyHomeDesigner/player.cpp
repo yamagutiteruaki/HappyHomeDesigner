@@ -60,6 +60,11 @@ const char *FileNamePlayer[PLAYER_ANIM_MAX] =					// ƒ‚ƒfƒ‹“Ç‚Ýž‚Þ
 
 };
 
+bool dash = FALSE;
+int dashTimer = 0;
+float vel = 0.0f;
+const float velRate = 0.4f;
+
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
@@ -269,7 +274,6 @@ void UpdatePlayer(void)
 	PlayerBorder();
 	PlayerEntrance();
 
-
 #ifdef _DEBUG
 	CAMERA *camera = GetCamera();
 
@@ -291,6 +295,32 @@ void UpdatePlayer(void)
 	PrintDebugProc("space 3: %d\n", player->havenum[3]);
 	PrintDebugProc("space 4: %d\n", player->havenum[4]);
 	PrintDebugProc("wt: %d\n", player->weight);
+	PrintDebugProc("dash: %f\n", vel);
+
+	if (GetKeyboardTrigger(DIK_V))
+	{
+		dash = TRUE;
+		dashTimer = 0;
+		vel = 16.0f;
+
+
+	}
+
+	if (dash == TRUE)
+	{
+		player->move.x = -sinf(player->rot.y) * vel;
+		player->move.z = -cosf(player->rot.y) * vel;
+
+		dashTimer++;
+		vel -= velRate;
+
+		if (dashTimer >= 10)
+		{
+			dash = FALSE;
+			dashTimer = 0;
+		}
+	}
+
 
 #endif
 
