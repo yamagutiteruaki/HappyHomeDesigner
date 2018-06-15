@@ -135,16 +135,16 @@ void UpdateClock(void)
 		{
 			// アニメーション
 
-			clock->rot.z += 0.001f*D3DX_PI;
-			clock->rot.z = PiCalculate360(clock->rot.z);
+			clock->rot.z += D3DX_PI/(60*3*60/2);
 			SetVertexClockHand(i);		// 移動後の座標で頂点を設定
 			PrintDebugProc("[針の角度  ：(%f)]\n", clock->rot.z);
 
 		}
-		//if (clock->rot.z > D3DX_PI * 2)
+		if (clock->rot.z > D3DX_PI * 2)
 		{
-			//SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
+			clock->rot.z = PiCalculate360(clock->rot.z);
 
 	}
 

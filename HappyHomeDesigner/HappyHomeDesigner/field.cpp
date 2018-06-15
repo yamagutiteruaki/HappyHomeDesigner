@@ -167,6 +167,7 @@ HRESULT InitField(void)
 		door->Scl.z = 1.0f;
 
 		door->Homeno = STAGE_HOUSE1 + i;
+		door->Use = true;
 
 
 	}
@@ -273,7 +274,40 @@ void UpdateField(void)
 		SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 	}
 
-	//HOME *House = GetHome(0);
+	DOOR *door = GetDoor(0);
+	HOME *home = GetHome(0);
+	if (GetStage() == STAGE_GAME)
+	{
+		for (int i = 0; i < HOME_MAX; i++, home++, door++)
+		{
+			door->Pos.x = home->Pos.x + 70.0f*home->Scl.x;	//X座標の設定
+			door->Pos.y = home->Pos.y;		//Y座標の設定
+			door->Pos.z = home->Pos.z - 75.0f*home->Scl.z;	//Z座標の設定
+			door->Use = true;
+		}
+	}
+	else if (GetStage() == STAGE_HOUSE1
+		|| GetStage() == STAGE_HOUSE2
+		|| GetStage() == STAGE_HOUSE3
+		|| GetStage() == STAGE_MYHOUSE)
+	{
+		for (int i = 0; i < HOME_MAX; i++, door++)
+		{
+			door->Pos = D3DXVECTOR3(90.0f, 0.0f, -125.0f);
+			door->Rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			if (GetStage() == i + 4)
+			{
+				door->Use = true;
+				PrintDebugProc("DOORNO: %d\n", door->Homeno);
+
+			}
+			else
+			{
+				door->Use = false;
+			}
+		}
+	}
+		//HOME *House = GetHome(0);
 	//PrintDebugProc("House 0: %f, %f\n", (House + 0)->Pos.x, (House + 0)->Pos.z);
 	//PrintDebugProc("House 1: %f, %f\n", (House + 1)->Pos.x, (House + 1)->Pos.z);
 	//PrintDebugProc("House 2: %f, %f\n", (House + 2)->Pos.x, (House + 2)->Pos.z);
@@ -338,7 +372,7 @@ void DrawField(void)
 		for (int i = 0; i < HOME_MAX; i++, home++)
 		{
 			// ライトをon
-			pDevice->SetRenderState(D3DRS_LIGHTING,TRUE);
+			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
 			// ワールドマトリックスの初期化
 			D3DXMatrixIdentity(&home->world);
@@ -394,70 +428,72 @@ void DrawField(void)
 			// マテリアルをデフォルトに戻す
 			pDevice->SetMaterial(&matDef.MatD3D);
 		}
-
+	}
 
 		DOOR *door = GetDoor(0);
 		for (int i = 0; i < HOME_MAX; i++, home++, door++)
 		{
-			// ライトをon
-			pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
-
-			// ワールドマトリックスの初期化
-			D3DXMatrixIdentity(&door->world);
-
-			// スケールを反映
-			D3DXMatrixScaling(&mtxScale, door->Scl.x,
-				door->Scl.y,
-				door->Scl.z);
-			D3DXMatrixMultiply(&door->world,
-				&door->world, &mtxScale);
-
-
-			// 回転を反映
-			D3DXMatrixRotationYawPitchRoll(&mtxRot, door->Rot.y, door->Rot.x, door->Rot.z);
-			D3DXMatrixMultiply(&door->world, &door->world, &mtxRot);
-
-			// 移動を反映
-			D3DXMatrixTranslation(&mtxTranslate, door->Pos.x, door->Pos.y, door->Pos.z);
-			D3DXMatrixMultiply(&door->world, &door->world, &mtxTranslate);
-
-			// ワールドマトリックスの設定
-			pDevice->SetTransform(D3DTS_WORLD, &door->world);
-
-			// 現在のマテリアルを取得
-			pDevice->GetMaterial(&matDef.MatD3D);
-
-
-
-			// マテリアル情報に対するポインタを取得
-			pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatDoor[i]->GetBufferPointer();
-
-			for (int j = 0; j < (int)g_nNumMatDoor[i]; j++)
+			if (door->Use == true)
 			{
-				// マテリアルの設定
-				pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+				// ライトをon
+				pDevice->SetRenderState(D3DRS_LIGHTING, TRUE);
 
-				// テクスチャの設定
-				pDevice->SetTexture(0, g_pD3DTextureDoor[i]);
+				// ワールドマトリックスの初期化
+				D3DXMatrixIdentity(&door->world);
 
-				// 描画
-				g_pD3DXMeshDoor[i]->DrawSubset(j);
+				// スケールを反映
+				D3DXMatrixScaling(&mtxScale, door->Scl.x,
+					door->Scl.y,
+					door->Scl.z);
+				D3DXMatrixMultiply(&door->world,
+					&door->world, &mtxScale);
+
+
+				// 回転を反映
+				D3DXMatrixRotationYawPitchRoll(&mtxRot, door->Rot.y, door->Rot.x, door->Rot.z);
+				D3DXMatrixMultiply(&door->world, &door->world, &mtxRot);
+
+				// 移動を反映
+				D3DXMatrixTranslation(&mtxTranslate, door->Pos.x, door->Pos.y, door->Pos.z);
+				D3DXMatrixMultiply(&door->world, &door->world, &mtxTranslate);
+
+				// ワールドマトリックスの設定
+				pDevice->SetTransform(D3DTS_WORLD, &door->world);
+
+				// 現在のマテリアルを取得
+				pDevice->GetMaterial(&matDef.MatD3D);
+
+
+
+				// マテリアル情報に対するポインタを取得
+				pD3DXMat = (D3DXMATERIAL*)g_pD3DXBuffMatDoor[i]->GetBufferPointer();
+
+				for (int j = 0; j < (int)g_nNumMatDoor[i]; j++)
+				{
+					// マテリアルの設定
+					pDevice->SetMaterial(&pD3DXMat[j].MatD3D);
+
+					// テクスチャの設定
+					pDevice->SetTexture(0, g_pD3DTextureDoor[i]);
+
+					// 描画
+					g_pD3DXMeshDoor[i]->DrawSubset(j);
+				}
+
+				// ライトをoff
+				pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
+
+
+				//D3DXMATERIAL mat;
+				//
+				//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
+				//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+				//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
+
+				// マテリアルをデフォルトに戻す
+				pDevice->SetMaterial(&matDef.MatD3D);
 			}
-
-			// ライトをoff
-			pDevice->SetRenderState(D3DRS_LIGHTING, FALSE);
-
-
-			//D3DXMATERIAL mat;
-			//
-			//mat.MatD3D.Diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 0.0f);
-			//mat.MatD3D.Ambient = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-			//mat.MatD3D.Emissive = D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f);
-
-			// マテリアルをデフォルトに戻す
-			pDevice->SetMaterial(&matDef.MatD3D);
 		}
-	}
 }
 
 //=============================================================================
