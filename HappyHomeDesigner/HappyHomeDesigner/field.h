@@ -57,6 +57,7 @@ typedef struct // ÉhÉAÇÃç\ë¢ëÃ
 	D3DXVECTOR3		Rot;
 	D3DXVECTOR3		Scl;
 	int				Homeno;
+	bool			Use;
 }DOOR;
 
 

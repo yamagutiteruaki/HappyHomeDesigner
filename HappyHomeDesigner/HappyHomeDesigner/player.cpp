@@ -64,6 +64,8 @@ bool dash = FALSE;
 int dashTimer = 0;
 float vel = 0.0f;
 const float velRate = 0.4f;
+int exitno = 0;
+
 
 //=============================================================================
 // ‰Šú‰»ˆ—
@@ -544,7 +546,7 @@ void PlayerMoveWt()
 
 //=============================================================================
 // ‰Æ‚É“ü‚éˆ—
-//=================================pl============================================
+//=============================================================================
 void PlayerEntrance(void)
 {
 	PLAYER *player = &playerWk[0];
@@ -553,16 +555,53 @@ void PlayerEntrance(void)
 	bool hitflag = false;
 	for (int i = 0; i < HOME_MAX; i++, door++)
 	{
-		D3DXVECTOR3 doorpos(door->Pos.x-16, door->Pos.y, door->Pos.z);
-		if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
+		if (door->Use == true)
 		{
-			if (GetKeyboardTrigger(DIK_SPACE))
+			D3DXVECTOR3 doorpos(door->Pos.x - 16, door->Pos.y, door->Pos.z);
+			if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
 			{
-				SetFade(FADE_OUT, door->Homeno, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+				if (GetKeyboardTrigger(DIK_SPACE))
+				{
+					if (GetStage() == STAGE_GAME)
+					{
+						SetFade(FADE_OUT, door->Homeno, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+					}
+					else if (GetStage() == STAGE_HOUSE1
+						|| GetStage() == STAGE_HOUSE2
+						|| GetStage() == STAGE_HOUSE3
+						|| GetStage() == STAGE_MYHOUSE)
+					{
+						SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+						exitno = door->Homeno-4;
+					}
+
+				}
+				hitflag = true;
+
 			}
-			hitflag = true;
-			
 		}
+	}
+
+	if (GetFade() == FADE_IN)
+	{
+		if (GetStage() == STAGE_GAME)
+		{
+			door = GetDoor(exitno);
+			player->Eye = D3DXVECTOR3(door->Pos.x-10.0f, 0.0f, door->Pos.z-10.0f);
+			player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+			player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+
+		}
+		else if (GetStage() == STAGE_HOUSE1
+			|| GetStage() == STAGE_HOUSE2
+			|| GetStage() == STAGE_HOUSE3
+			|| GetStage() == STAGE_MYHOUSE)
+		{
+			player->Eye = D3DXVECTOR3(100.0f, 0.0f, -110.0f);
+			player->rot = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
+			player->rotDest = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
+		}
+
 	}
 
 	Button(hitflag);
