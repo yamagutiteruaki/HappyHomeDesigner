@@ -103,7 +103,6 @@ HRESULT InitFurniture(int type)
 
 	//}
 
-
 	LoadCsv();			// CSVファイル読み込み
 
 	FurnitureNum = 0;
@@ -173,39 +172,45 @@ void UpdateFurniture(void)
 	// 指定したスケール拡大・縮小
 	FurnitureScaling(FurnitureNum);
 
-	// 現在のposをcsvファイルに上書き
+	// csvファイル新規作成
+	if (GetKeyboardTrigger(DIK_M))
+	{
+		WriteCsv(CREATE);
+	}
+	// csvファイルに上書き
 	if (GetKeyboardTrigger(DIK_Q))
 	{
-		WriteCsv();
+		WriteCsv(OVERWRITE);
 	}
 
 	// デバッグフォント表示
-	//PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
-	//PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
-	//PrintDebugProc("家具のpos:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].pos.x,
-	//	furnitureWk[FurnitureNum].pos.y,
-	//	furnitureWk[FurnitureNum].pos.z);
-	//PrintDebugProc("家具のrot:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].rot.x,
-	//	furnitureWk[FurnitureNum].rot.y,
-	//	furnitureWk[FurnitureNum].rot.z);
-	//PrintDebugProc("家具のscl:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].scl.x,
-	//	furnitureWk[FurnitureNum].scl.y,
-	//	furnitureWk[FurnitureNum].scl.z);
-	//PrintDebugProc("家具のuse:       [%d]\n", furnitureWk[FurnitureNum].use);
-	//PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
-	//PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
-	//PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
-	//PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
-	//PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
-	//PrintDebugProc("\n家具の操作方法一覧\n");
-	//PrintDebugProc("家具を選択:               [KキーorLキー]\n");
-	//PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
-	//PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
-	//PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
-	//PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
+	PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
+	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
+	PrintDebugProc("家具のpos:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].pos.x,
+		furnitureWk[FurnitureNum].pos.y,
+		furnitureWk[FurnitureNum].pos.z);
+	PrintDebugProc("家具のrot:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].rot.x,
+		furnitureWk[FurnitureNum].rot.y,
+		furnitureWk[FurnitureNum].rot.z);
+	PrintDebugProc("家具のscl:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].scl.x,
+		furnitureWk[FurnitureNum].scl.y,
+		furnitureWk[FurnitureNum].scl.z);
+	PrintDebugProc("家具のid:        [%d]\n", furnitureWk[FurnitureNum].id);
+	PrintDebugProc("家具のuse:       [%d]\n", furnitureWk[FurnitureNum].use);
+	PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
+	PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
+	PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
+	PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
+	PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
+	PrintDebugProc("\n家具の操作方法一覧\n");
+	PrintDebugProc("家具を選択:               [KキーorLキー]\n");
+	PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
+	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
+	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
+	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
 #endif
 }
 

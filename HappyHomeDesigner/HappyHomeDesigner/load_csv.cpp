@@ -12,7 +12,7 @@
 #include "debugproc.h"
 #include "stage.h"
 #include "load_csv.h"
-
+#include "write_csv.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -56,12 +56,12 @@ void LoadCsv(void)
 	FURNITURE *furniture = GetFurniture(0);		// ポインターを初期化
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
 	Cnt = 0;									// カウンタ初期化
-
 	char fname[64];								// ファイル名生成用
 
-	// 読み込むファイル名を生成する(後でランダム化を想定)
-	int i = 0;
-	sprintf(fname, "data/EXCEL_DATA/set_furniture.csv", i);
+	// 読み込むファイル名をランダム生成する
+	//int n = rand() % GetCsvCnt(__argc, __argv);		// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
+	//sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n);
+	sprintf(fname, "data/EXCEL_DATA/set_furniture0.csv");
 
 	if ((fp = fopen(fname, "r")) != NULL)
 	{
@@ -105,7 +105,7 @@ void LoadCsv(void)
 			furniture->type = atoi(tkn[LOAD_CSV_TYPE]);
 			furniture->house_num = atoi(tkn[LOAD_CSV_HOUSE_NUM]);
 			furniture->weight = atoi(tkn[LOAD_CSV_WEIGHT]);
-			furniture->price = (long long)_atoi64(tkn[LOAD_CSV_PRICE]);
+			furniture->price = (long long)atoll(tkn[LOAD_CSV_PRICE]);
 			furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
 			
 			Cnt++;			// 読み込んだ家具の数カウント
@@ -130,14 +130,14 @@ void ResetCsv(int no)
 	FILE *fp;
 	char buf[BUFC_MAX];							// 一時保存用（一行）
 	char *tkn[LOAD_CSV_MAX];					// 一時保存用（分割した配列）
-	FURNITURE *furniture = GetFurniture(no);		// ポインターを初期化
+	FURNITURE *furniture = GetFurniture(no);	// ポインターを初期化
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
 
 	char fname[64];								// ファイル名生成用
 
-												// 読み込むファイル名を生成する(後でランダム化を想定)
-	int i = 0;
-	sprintf(fname, "data/EXCEL_DATA/set_furniture.csv", i);
+	// 読み込むファイル名をランダム生成する
+	//int n = rand() % GetCsvCnt(__argc, __argv);		// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
+	//sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n);
 
 	if ((fp = fopen(fname, "r")) != NULL)
 	{
@@ -173,3 +173,6 @@ void ResetCsv(int no)
 		fclose(fp);
 	}
 }
+//=============================================================================
+// ファイル名取得(決定)関数
+//=============================================================================
