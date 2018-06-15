@@ -7,11 +7,9 @@
 //=============================================================================
 #include "workSon.h"
 #include "stage.h"
-#include "input.h"
-#include "fade.h"
-#include "Light.h"
 
 #include "player.h"
+#include "wwwwwwww.h"
 
 // 宋担当分で必要なインクルード
 
@@ -35,6 +33,7 @@
 HRESULT InitWorkSon(int nType)
 {
 	InitPlayer(nType);
+	InitWWWW();
 
 	return S_OK;
 }
@@ -45,6 +44,7 @@ HRESULT InitWorkSon(int nType)
 void UninitWorkSon(void)
 {
 	UninitPlayer();
+	UninitWWWW();
 
 }
 
@@ -57,8 +57,10 @@ void UpdateWorkSon(void)
 	{
 	case STAGE_TITLE:
 		break;
-
 	case STAGE_GAME:
+		UpdatePlayer();
+		UpdateWWWW();
+		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
@@ -81,6 +83,9 @@ void DrawWorkSon(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
+		DrawPlayer();
+		DrawWWWW();
+		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
