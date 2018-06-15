@@ -188,6 +188,7 @@
     <ClCompile Include="workSon.cpp" />
     <ClCompile Include="workYamaguchi.cpp" />
     <ClCompile Include="write_csv.cpp" />
+    <ClCompile Include="wwwwwwww.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h" />
@@ -227,6 +228,7 @@
     <ClInclude Include="workSon.h" />
     <ClInclude Include="workYamaguchi.h" />
     <ClInclude Include="write_csv.h" />
+    <ClInclude Include="wwwwwwww.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
