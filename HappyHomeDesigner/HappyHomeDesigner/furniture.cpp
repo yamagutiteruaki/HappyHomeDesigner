@@ -174,10 +174,10 @@ void UpdateFurniture(void)
 	FurnitureScaling(FurnitureNum);
 
 	// 現在のposをcsvファイルに上書き
-	if (GetKeyboardTrigger(DIK_Q))
-	{
-		WriteCsv();
-	}
+	//if (GetKeyboardTrigger(DIK_Q))
+	//{
+	//	WriteCsv();
+	//}
 
 	// デバッグフォント表示
 	//PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
