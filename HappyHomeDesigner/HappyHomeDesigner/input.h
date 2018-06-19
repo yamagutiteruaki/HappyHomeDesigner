@@ -41,6 +41,11 @@
 #define BUTTON_POV_LEFT		0x00010000l	// POV方向キー左
 #define BUTTON_POV_RIGHT	0x00020000l	// POV方向キー右
 
+#define BUTTON_LZ_DOWN		0x00040000l
+#define BUTTON_LZ_UP		0x00080000l
+#define BUTTON_LRZ_DOWN		0x00100000l
+#define BUTTON_LRZ_UP		0x00200000l
+
 #define GAMEPADMAX		4			// 同時に接続するジョイパッドの最大数をセット
 
 

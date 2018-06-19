@@ -537,6 +537,15 @@ void UpdatePad(void)
 		if (dijs.lX < 0)					padState[i] |= BUTTON_LEFT;
 		//* x-axis (right)
 		if (dijs.lX > 0)					padState[i] |= BUTTON_RIGHT;
+		//*z-axis
+		if (dijs.lZ < 5000)				padState[i] |= BUTTON_LZ_DOWN;
+		//*z-axis
+		if (dijs.lZ > 60000)				padState[i] |= BUTTON_LZ_UP;
+		//*z-axis
+		if (dijs.lRz < 5000)				padState[i] |= BUTTON_LRZ_DOWN;
+		//*z-axis
+		if (dijs.lRz > 60000)				padState[i] |= BUTTON_LRZ_UP;
+
 		//* ‚`ƒ{ƒ^ƒ“
 		if (dijs.rgbButtons[0] & 0x80)	padState[i] |= BUTTON_A;
 		//* ‚aƒ{ƒ^ƒ“

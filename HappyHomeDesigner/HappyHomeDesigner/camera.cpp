@@ -168,7 +168,7 @@ FIELD *field = GetField(fieldnum);
 
 
 	//デバッグ時にZCでカメラ回転
-	if (GetKeyboardPress(DIK_Z))
+	if (GetKeyboardPress(DIK_Z) || IsButtonPressed(0, BUTTON_LZ_UP))
 	{// 視点旋回「左」
 		camera->rotCamera.y += VALUE_ROTATE_CAMERA;
 		if (camera->rotCamera.y > D3DX_PI)
@@ -181,7 +181,7 @@ FIELD *field = GetField(fieldnum);
 
 		CameraReset = false;
 	}
-	if (GetKeyboardPress(DIK_C))
+	if (GetKeyboardPress(DIK_C) || IsButtonPressed(0, BUTTON_LZ_DOWN))
 	{// 視点旋回「右」
 		camera->rotCamera.y -= VALUE_ROTATE_CAMERA;
 		if (camera->rotCamera.y < -D3DX_PI)
@@ -198,7 +198,7 @@ FIELD *field = GetField(fieldnum);
 	if (camera->fLength >= CAMERA_LENGTH_MIN
 		&&camera->fLength <= CAMERA_LENGTH_MAX)
 	{
-		if (GetKeyboardPress(DIK_W))
+		if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
 		{// 視点移動「ズームイン」
 			//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
 			camera->fChaseLength -= CAMERA_MOVE_SPEED;
@@ -213,7 +213,7 @@ FIELD *field = GetField(fieldnum);
 		}
 		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)
 		{
-			if (GetKeyboardPress(DIK_S))
+			if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
 			{// 視点移動「ズームアウト」
 			 //camera->posCameraEye.y += CAMERA_MOVE_SPEED;
 				camera->fChaseLength += CAMERA_MOVE_SPEED;

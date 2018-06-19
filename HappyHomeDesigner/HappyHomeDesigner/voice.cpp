@@ -124,15 +124,11 @@ void UpdateVoice(void)
 				{
 					SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 					voice->count++;
-
+					SetResetno(3);
 				}
 			}
 			if (GetFade() == FADE_IN)
 			{
-				// ‰Šú‰»ˆ—
-				player->Eye = D3DXVECTOR3(275.0f, 0.0f, -330.0f);
-				player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-				player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
 				for (int j = 0; j < HAVE_MAX; j++)
 				{
 					if (player->havenum[j] > -1)

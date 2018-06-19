@@ -63,5 +63,7 @@ void DrawPlayer(void);
 void UpdatePlayer(void);
 
 PLAYER *GetPlayer(int no);
+void SetResetno(int no);
+
 
 #endif

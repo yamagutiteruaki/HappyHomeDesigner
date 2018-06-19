@@ -334,7 +334,7 @@ int FurnitureColi()
 			no = i;
 
 			// ボタン入力
-			if (GetKeyboardTrigger(DIK_E))
+			if (GetKeyboardTrigger(DIK_E) || IsButtonTriggered(0, BUTTON_X))
 			{
 				FurnitureGetDAZE(no);
 				//fnt = GetFurniture(0);
@@ -449,7 +449,7 @@ void FurniturePut()
 	int id = -1;
 
 	// ボタン入力
-	if (GetKeyboardTrigger(DIK_B))
+	if (GetKeyboardTrigger(DIK_B) || IsButtonTriggered(0, BUTTON_B))
 	{
 		// 置ける場所チェック（いらない）
 

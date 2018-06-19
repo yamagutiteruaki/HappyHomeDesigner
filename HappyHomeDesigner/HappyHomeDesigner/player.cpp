@@ -40,6 +40,7 @@ void PlayerMove(void);
 void PlayerMoveWt(void);
 void PlayerBorder(void);
 void PlayerEntrance(void);
+void PlayerPosReset(void);
 
 
 //*****************************************************************************
@@ -64,7 +65,7 @@ bool dash = FALSE;
 int dashTimer = 0;
 float vel = 0.0f;
 const float velRate = 0.4f;
-int exitno = 0;
+int resetno = 3;
 
 
 //=============================================================================
@@ -350,16 +351,16 @@ void PlayerMove(void)
 
 	float fDiffRotY;
 
-	if (GetKeyboardPress(DIK_LEFT))
+	if (GetKeyboardPress(DIK_LEFT)||IsButtonPressed(0,BUTTON_LEFT) || IsButtonPressed(0, BUTTON_POV_LEFT))
 	{
-		if (GetKeyboardPress(DIK_UP))
+		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
 		{// 左前移動
 			player->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN))
+		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
 		{// 左後移動
 			player->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -375,16 +376,16 @@ void PlayerMove(void)
 
 		}
 	}
-	else if (GetKeyboardPress(DIK_RIGHT))
+	else if (GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(0, BUTTON_RIGHT) || IsButtonPressed(0, BUTTON_POV_RIGHT))
 	{
-		if (GetKeyboardPress(DIK_UP))
+		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
 		{// 右前移動
 			player->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN))
+		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
 		{// 右後移動
 			player->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -399,14 +400,14 @@ void PlayerMove(void)
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
 		}
 	}
-	else if (GetKeyboardPress(DIK_UP))
+	else if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
 	{// 前移動
 		player->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 
 		player->rotDest.y = D3DX_PI + camera->rotCamera.y;
 	}
-	else if (GetKeyboardPress(DIK_DOWN))
+	else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
 	{// 後移動
 		player->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
@@ -545,7 +546,7 @@ void PlayerMoveWt()
 //}
 
 //=============================================================================
-// 家に入る処理
+// 家の入出処理
 //=============================================================================
 void PlayerEntrance(void)
 {
@@ -560,11 +561,12 @@ void PlayerEntrance(void)
 			D3DXVECTOR3 doorpos(door->Pos.x - 16, door->Pos.y, door->Pos.z);
 			if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
 			{
-				if (GetKeyboardTrigger(DIK_SPACE))
+				if (GetKeyboardTrigger(DIK_SPACE) || IsButtonTriggered(0, BUTTON_C))
 				{
 					if (GetStage() == STAGE_GAME)
 					{
 						SetFade(FADE_OUT, door->Homeno, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+
 					}
 					else if (GetStage() == STAGE_HOUSE1
 						|| GetStage() == STAGE_HOUSE2
@@ -572,37 +574,56 @@ void PlayerEntrance(void)
 						|| GetStage() == STAGE_MYHOUSE)
 					{
 						SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-						exitno = door->Homeno-4;
 					}
+					
+					resetno = i;
 
 				}
 				hitflag = true;
-
 			}
 		}
+
 	}
 
 	if (GetFade() == FADE_IN)
 	{
-		if (GetStage() == STAGE_GAME)
-		{
-			door = GetDoor(exitno);
-			player->Eye = D3DXVECTOR3(door->Pos.x-10.0f, 0.0f, door->Pos.z-10.0f);
-			player->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-			player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-
-		}
-		else if (GetStage() == STAGE_HOUSE1
-			|| GetStage() == STAGE_HOUSE2
-			|| GetStage() == STAGE_HOUSE3
-			|| GetStage() == STAGE_MYHOUSE)
-		{
-			player->Eye = D3DXVECTOR3(100.0f, 0.0f, -110.0f);
-			player->rot = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
-			player->rotDest = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
-		}
-
+		PlayerPosReset();
 	}
 
 	Button(hitflag);
+}
+
+//=================================================================
+//プレーヤーポジションの再セット関数
+//=================================================================
+void PlayerPosReset(void)
+{
+	DOOR *door = GetDoor(resetno);
+	PLAYER *player = GetPlayer(0);
+	
+
+	if (GetStage() == STAGE_GAME)
+	{
+		player->rot =
+			player->rotDest = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		player->Eye = D3DXVECTOR3(door->Pos.x - 10.0f, door->Pos.y, door->Pos.z - 10.0f);
+
+	}
+	else
+	{
+		player->rot =
+			player->rotDest = D3DXVECTOR3(0.0f, D3DX_PI, 0.0f);
+		player->Eye = D3DXVECTOR3(door->Pos.x - 5.0f, door->Pos.y, door->Pos.z + 25.0f);
+
+	}
+
+
+}
+
+//================================================================-
+//リセットナンバーの設定(番号の玄関の前にセットされる)
+//================================================================
+void SetResetno(int no)
+{
+	resetno = no;
 }
