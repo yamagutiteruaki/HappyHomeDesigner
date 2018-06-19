@@ -105,8 +105,9 @@ void LoadCsv(void)
 			furniture->type = atoi(tkn[LOAD_CSV_TYPE]);
 			furniture->house_num = atoi(tkn[LOAD_CSV_HOUSE_NUM]);
 			furniture->weight = atoi(tkn[LOAD_CSV_WEIGHT]);
+			
 			furniture->price = (long long)atoll(tkn[LOAD_CSV_PRICE]);
-			furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
+			//furniture->ratio = atoi(tkn[LOAD_CSV_RATIO]);
 			
 			Cnt++;			// 読み込んだ家具の数カウント
 			furniture++;	// 次のデータに

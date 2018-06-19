@@ -150,6 +150,9 @@
     <ClCompile Include="write_csv.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="wwwwwwww.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -262,6 +265,9 @@
     </ClInclude>
     <ClInclude Include="write_csv.h">
       <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="wwwwwwww.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

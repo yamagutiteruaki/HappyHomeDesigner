@@ -182,7 +182,6 @@ void UpdateFurniture(void)
 	{
 		WriteCsv(OVERWRITE);
 	}
-
 	// デバッグフォント表示
 	PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
 	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);

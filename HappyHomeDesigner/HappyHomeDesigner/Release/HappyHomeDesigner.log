@@ -1,26 +1,17 @@
-﻿2018/06/14 18:20:22 にビルドを開始しました。
+﻿2018/06/14 18:52:55 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
      1>ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt arrest.cpp button.cpp calculate.cpp camera.cpp clock.cpp collision.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp input.cpp Light.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp sound.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp weight.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt Light.cpp arrest.cpp button.cpp camera.cpp clock.cpp fade.cpp field.cpp furniture.cpp game.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp
+         Light.cpp
+     1>Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
          arrest.cpp
          button.cpp
-         calculate.cpp
-     1>calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
-     1>calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
          camera.cpp
          clock.cpp
-         collision.cpp
-         debugproc.cpp
-     1>debugproc.cpp(78): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
-     1>debugproc.cpp(78): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
          fade.cpp
          field.cpp
          furniture.cpp
          game.cpp
-         input.cpp
-     1>input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
-         Light.cpp
-     1>Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
          load_csv.cpp
      1>load_csv.cpp(92): warning C4800: 'int': ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
      1>load_csv.cpp(64): warning C4474: 'sprintf': 書式文字列に渡された引数の数が多すぎます
@@ -37,20 +28,18 @@
          result.cpp
          resultlogo.cpp
          score.cpp
-     1>score.cpp(196): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
-     1>score.cpp(197): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
-     1>score.cpp(198): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
-     1>score.cpp(199): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
-         コンパイル中...
+     1>score.cpp(203): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(204): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(205): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(206): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
          search.cpp
-         sound.cpp
          stage.cpp
          timeeffect.cpp
          title.cpp
+         コンパイル中...
          titlelogo.cpp
          voice.cpp
          wall.cpp
-         weight.cpp
          workChisaka.cpp
          workImagawa.cpp
          workMatsuo.cpp
@@ -102,17 +91,13 @@
          Release\workYamaguchi.obj
          Release\write_csv.obj
          コード生成しています。
-     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(735): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
-     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(743): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
-     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(762): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
-     1>c:\users\ths70348\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(770): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
-         291 of 294 functions (99.0%) were compiled, the rest were copied from previous compilation.
-           31 functions were new in current compilation
-           0 functions had inline decision re-evaluated but remain unchanged
+         56 of 294 functions (19.0%) were compiled, the rest were copied from previous compilation.
+           0 functions were new in current compilation
+           50 functions had inline decision re-evaluated but remain unchanged
          コード生成が終了しました。
          HappyHomeDesigner.vcxproj -> C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
      1>プロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
-経過時間 00:00:25.18
+経過時間 00:00:19.09
