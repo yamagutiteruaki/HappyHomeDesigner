@@ -153,6 +153,9 @@
     <ClCompile Include="wwwwwwww.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
+    <ClCompile Include="loadWwwwDB.cpp">
+      <Filter>ソース ファイル\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -268,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="wwwwwwww.h">
       <Filter>ソース ファイル\stage\game</Filter>
+    </ClInclude>
+    <ClInclude Include="loadWwwwDB.h">
+      <Filter>ソース ファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -8,6 +8,7 @@
 #include "camera.h"
 #include "stage.h"
 #include "calculate.h"
+#include "loadWwwwDB.h"
 
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -61,33 +62,49 @@ HRESULT InitWWWW(void)
 		MakeVertexWWWW(Device, i);
 	}
 
+	// LoadWWWWDB();
+
 	SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
-	SetUseWWWW(1, TRUE);	SetPosWWWW(1, 130, 20, 60);
-	SetUseWWWW(2, TRUE);	SetPosWWWW(2, 180, 20, 60);
-	SetUseWWWW(3, TRUE);	SetPosWWWW(3, 230, 20, 60);
-	SetUseWWWW(4, FALSE);	SetPosWWWW(4, 280, 20, 60);
-	SetUseWWWW(5, TRUE);	SetPosWWWW(5, 330, 20, 60);
+	//SetUseWWWW(1, TRUE);	SetPosWWWW(1, 130, 20, 60);
+	//SetUseWWWW(2, TRUE);	SetPosWWWW(2, 180, 20, 60);
+	//SetUseWWWW(3, TRUE);	SetPosWWWW(3, 230, 20, 60);
+	//SetUseWWWW(4, FALSE);	SetPosWWWW(4, 280, 20, 60);
+	//SetUseWWWW(5, TRUE);	SetPosWWWW(5, 330, 20, 60);
 
-	SetUseWWWW(6, TRUE);	SetPosWWWW(6, 80, 20, 60);		SetRotWWWW(6, -(D3DX_PI / 2), D3DX_PI, 0);
-	SetUseWWWW(7, TRUE);	SetPosWWWW(7, 130, 20, 60);		SetRotWWWW(7, -(D3DX_PI / 2), D3DX_PI, 0);
-	SetUseWWWW(8, TRUE);	SetPosWWWW(8, 180, 20, 60);		SetRotWWWW(8, -(D3DX_PI / 2), D3DX_PI, 0);
-	SetUseWWWW(9, TRUE);	SetPosWWWW(9, 230, 20, 60);		SetRotWWWW(9, -(D3DX_PI / 2), D3DX_PI, 0);
-	SetUseWWWW(10, FALSE);	SetPosWWWW(10, 280, 20, 60);	SetRotWWWW(10, -(D3DX_PI / 2), D3DX_PI, 0);
-	SetUseWWWW(11, TRUE);	SetPosWWWW(11, 330, 20, 60);	SetRotWWWW(11, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(6, TRUE);	SetPosWWWW(6, 80, 20, 60);		SetRotWWWW(6, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(7, TRUE);	SetPosWWWW(7, 130, 20, 60);		SetRotWWWW(7, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(8, TRUE);	SetPosWWWW(8, 180, 20, 60);		SetRotWWWW(8, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(9, TRUE);	SetPosWWWW(9, 230, 20, 60);		SetRotWWWW(9, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(10, FALSE);	SetPosWWWW(10, 280, 20, 60);	SetRotWWWW(10, -(D3DX_PI / 2), D3DX_PI, 0);
+	//SetUseWWWW(11, TRUE);	SetPosWWWW(11, 330, 20, 60);	SetRotWWWW(11, -(D3DX_PI / 2), D3DX_PI, 0);
 
-	SetUseWWWW(12, TRUE);	SetPosWWWW(12, 55, 20, 85);		SetRotWWWW(12, -(D3DX_PI / 2), D3DX_PI / 2, 0);
-	SetUseWWWW(13, TRUE);	SetPosWWWW(13, 55, 20, 135);	SetRotWWWW(13, -(D3DX_PI / 2), D3DX_PI / 2, 0);
-	SetUseWWWW(14, TRUE);	SetPosWWWW(14, 55, 20, 185);	SetRotWWWW(14, -(D3DX_PI / 2), D3DX_PI / 2, 0);
-	SetUseWWWW(15, TRUE);	SetPosWWWW(15, 55, 20, 235);	SetRotWWWW(15, -(D3DX_PI / 2), D3DX_PI / 2, 0);
-	SetUseWWWW(16, TRUE);	SetPosWWWW(16, 55, 20, 285);	SetRotWWWW(16, -(D3DX_PI / 2), D3DX_PI / 2, 0);
-	SetUseWWWW(17, TRUE);	SetPosWWWW(17, 55, 20, 335);	SetRotWWWW(17, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(12, TRUE);	SetPosWWWW(12, 55, 20, 85);		SetRotWWWW(12, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(13, TRUE);	SetPosWWWW(13, 55, 20, 135);	SetRotWWWW(13, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(14, TRUE);	SetPosWWWW(14, 55, 20, 185);	SetRotWWWW(14, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(15, TRUE);	SetPosWWWW(15, 55, 20, 235);	SetRotWWWW(15, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(16, TRUE);	SetPosWWWW(16, 55, 20, 285);	SetRotWWWW(16, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(17, TRUE);	SetPosWWWW(17, 55, 20, 335);	SetRotWWWW(17, -(D3DX_PI / 2), D3DX_PI / 2, 0);
 
-	SetUseWWWW(18, TRUE);	SetPosWWWW(18, 55, 20, 85);		SetRotWWWW(18, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
-	SetUseWWWW(19, TRUE);	SetPosWWWW(19, 55, 20, 135);	SetRotWWWW(19, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
-	SetUseWWWW(20, TRUE);	SetPosWWWW(20, 55, 20, 185);	SetRotWWWW(20, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
-	SetUseWWWW(21, TRUE);	SetPosWWWW(21, 55, 20, 235);	SetRotWWWW(21, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
-	SetUseWWWW(22, TRUE);	SetPosWWWW(22, 55, 20, 285);	SetRotWWWW(22, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
-	SetUseWWWW(23, TRUE);	SetPosWWWW(23, 55, 20, 335);	SetRotWWWW(23, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(18, TRUE);	SetPosWWWW(18, 55, 20, 85);		SetRotWWWW(18, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(19, TRUE);	SetPosWWWW(19, 55, 20, 135);	SetRotWWWW(19, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(20, TRUE);	SetPosWWWW(20, 55, 20, 185);	SetRotWWWW(20, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(21, TRUE);	SetPosWWWW(21, 55, 20, 235);	SetRotWWWW(21, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(22, TRUE);	SetPosWWWW(22, 55, 20, 285);	SetRotWWWW(22, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+	//SetUseWWWW(23, TRUE);	SetPosWWWW(23, 55, 20, 335);	SetRotWWWW(23, -(D3DX_PI / 2), -D3DX_PI / 2, 0);
+
+	//SetUseWWWW(24, TRUE);	SetPosWWWW(24, 80, 20, 360);
+	//SetUseWWWW(25, TRUE);	SetPosWWWW(25, 130, 20, 360);
+	//SetUseWWWW(26, TRUE);	SetPosWWWW(26, 180, 20, 360);
+	//SetUseWWWW(27, TRUE);	SetPosWWWW(27, 230, 20, 360);
+	//SetUseWWWW(28, TRUE);	SetPosWWWW(28, 280, 20, 360);
+	//SetUseWWWW(29, TRUE);	SetPosWWWW(29, 330, 20, 360);
+
+	//SetUseWWWW(30, TRUE);	SetPosWWWW(30, 355, 20, 85);		SetRotWWWW(30, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(31, TRUE);	SetPosWWWW(31, 355, 20, 135);	SetRotWWWW(31, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(32, TRUE);	SetPosWWWW(32, 355, 20, 185);	SetRotWWWW(32, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(33, TRUE);	SetPosWWWW(33, 355, 20, 235);	SetRotWWWW(33, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(34, TRUE);	SetPosWWWW(34, 355, 20, 285);	SetRotWWWW(34, -(D3DX_PI / 2), D3DX_PI / 2, 0);
+	//SetUseWWWW(35, TRUE);	SetPosWWWW(35, 355, 20, 335);	SetRotWWWW(35, -(D3DX_PI / 2), D3DX_PI / 2, 0);
 
 
 	return S_OK;
