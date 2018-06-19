@@ -165,6 +165,7 @@
     <ClCompile Include="house.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
+    <ClCompile Include="loadWwwwDB.cpp" />
     <ClCompile Include="load_csv.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
@@ -188,6 +189,7 @@
     <ClCompile Include="workSon.cpp" />
     <ClCompile Include="workYamaguchi.cpp" />
     <ClCompile Include="write_csv.cpp" />
+    <ClCompile Include="wwwwwwww.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h" />
@@ -204,6 +206,7 @@
     <ClInclude Include="house.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
+    <ClInclude Include="loadWwwwDB.h" />
     <ClInclude Include="load_csv.h" />
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
@@ -227,6 +230,7 @@
     <ClInclude Include="workSon.h" />
     <ClInclude Include="workYamaguchi.h" />
     <ClInclude Include="write_csv.h" />
+    <ClInclude Include="wwwwwwww.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
