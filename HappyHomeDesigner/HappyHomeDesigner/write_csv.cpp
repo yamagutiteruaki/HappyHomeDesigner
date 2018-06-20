@@ -60,9 +60,8 @@ void WriteCsv(int no)
 	// set_furnitureに上書きする場合(Qキー)
 	if (no == OVERWRITE)
 	{
-		// 読み込むファイル名を生成する
-		int i = 0;
-		sprintf(fname, "data/EXCEL_DATA/set_furniture0.csv", i);
+		// 上書き対象のファイル名を取得する
+		sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", GetfinalCsvNum());
 		// csvファイル上書き
 		if ((fp = fopen(fname, "w")) != NULL)	// 書き込み用
 		{
@@ -72,7 +71,8 @@ void WriteCsv(int no)
 			for (int i = 0; i < GetFurnitureCnt(); i++, furniture++)
 			{	// 読み込んだ家具の数分だけループ
 				// 家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio
-				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,%d\n", furniture->name, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
+				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,%d\n",
+					furniture->name, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
 					furniture->rot.x, furniture->rot.y, furniture->rot.z,
 					furniture->scl.x, furniture->scl.y, furniture->scl.z,
 					furniture->type, furniture->house_num, furniture->weight, furniture->price, furniture->ratio);
