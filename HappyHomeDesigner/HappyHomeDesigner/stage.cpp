@@ -148,6 +148,7 @@ void UpdateStage(void)
 		{
 			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
+
 		break;
 
 	case STAGE_HOUSE1:
@@ -165,10 +166,6 @@ void UpdateStage(void)
 
 	case STAGE_RESULT:
 		PrintDebugProc("%s (%d)\n", STR(STAGE_RESULT), g_nStage);
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-		}
 
 		break;
 	}
@@ -214,10 +211,23 @@ void UpdateStage(void)
 	case STAGE_MYHOUSE:
 		UpdateGame();				// ゲーム
 		SetSoundBgm(SOUND_BGM_GAME);
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+
+
+
 		break;
 	case STAGE_RESULT:
 		UpdateResult();				//リザルト
 		SetSoundBgm(SOUND_BGM_RESULT);
+
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+
 		break;
 	}
 	UpdateCamera();					// カメラ

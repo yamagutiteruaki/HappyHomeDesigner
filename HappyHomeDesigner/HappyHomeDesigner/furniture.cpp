@@ -15,6 +15,7 @@
 #include "write_csv.h"
 #include "camera.h"
 #include "calculate.h"
+#include "button.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -305,6 +306,7 @@ int FurnitureColi()
 	int no = -1;
 	float dist = 0.0;
 	const float distCheck = 32.0f;
+	bool getflag = false;
 
 	for (int i = 0; i < MAX_FURNITURE; i++, fnt++)
 	{
@@ -343,14 +345,17 @@ int FurnitureColi()
 				//(fnt + no)->use = FALSE;
 				
 			}
-
+			
+			getflag = true;
 		}
 		else
 		{
 			no = -1;
+
 		}
 
 	}
+	Button(getflag, GET_BUTTON);
 
 	return no;
 }
