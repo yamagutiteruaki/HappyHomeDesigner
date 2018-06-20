@@ -19,6 +19,6 @@
 //*****************************************************************************
 void LoadCsv(void);
 int GetFurnitureCnt(void);
-
+int GetfinalCsvNum(void);
 void ResetCsv(int no);
 #endif

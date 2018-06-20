@@ -97,15 +97,9 @@ HRESULT InitFurniture(int type)
 		}
 	}
 
-	// 家具の初期化処理
-	//for (int i = 0; i <MAX_FURNITURE; i++, furniture++)
-	//{
-
-	//}
-
 	LoadCsv();			// CSVファイル読み込み
 
-	FurnitureNum = 0;
+	FurnitureNum = 0;	// 操作する家具番号初期化
 
 	return S_OK;
 }
@@ -172,18 +166,22 @@ void UpdateFurniture(void)
 	// 指定したスケール拡大・縮小
 	FurnitureScaling(FurnitureNum);
 
-	// csvファイル新規作成
-	if (GetKeyboardTrigger(DIK_M))
-	{
-		WriteCsv(CREATE);
-	}
-	// csvファイルに上書き
-	if (GetKeyboardTrigger(DIK_Q))
-	{
-		WriteCsv(OVERWRITE);
+	if (GetKeyboardPress(DIK_LCONTROL))
+	{	// ctrlキーを押している間のみ
+		// Mキーでcsvファイル新規作成
+		if (GetKeyboardTrigger(DIK_M))
+		{
+			WriteCsv(CREATE);
+		}
+		// Qキーでcsvファイルに上書き
+		if (GetKeyboardTrigger(DIK_Q))
+		{
+			WriteCsv(OVERWRITE);
+		}
 	}
 	// デバッグフォント表示
-	PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
+	PrintDebugProc("\n\n現在読み込んでいるcsvファイル番号: [%d]\n", GetfinalCsvNum());
+	PrintDebugProc("現在の家番号:       %d \n", GetStage());
 	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
 	PrintDebugProc("家具のpos:       [%f %f %f]\n",
 		furnitureWk[FurnitureNum].pos.x,

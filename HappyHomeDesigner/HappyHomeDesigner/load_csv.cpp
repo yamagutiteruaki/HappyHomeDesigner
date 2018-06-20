@@ -21,7 +21,7 @@
 // グローバル変数
 //*****************************************************************************
 int Cnt;								// 読み込んだ家具の数
-
+int CsvFileNum;							// csvファイルの末尾の番号
 //*****************************************************************************
 // 列挙型
 //*****************************************************************************
@@ -57,18 +57,19 @@ void LoadCsv(void)
 	int skip = 1;								// 行数を指定して飛ばす(最初の一行)
 	Cnt = 0;									// カウンタ初期化
 	char fname[64];								// ファイル名生成用
+	CsvFileNum = 0;								// csvファイルの末尾番号初期化
 
 	// 読み込むファイル名をランダム生成する
-	//int n = rand() % GetCsvCnt(__argc, __argv);		// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
-	//sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n);
-	sprintf(fname, "data/EXCEL_DATA/set_furniture0.csv");
+	srand((unsigned)time(NULL));				// ランダムの初期化
+	CsvFileNum = rand() % (GetCsvCnt(__argc, __argv) - DEFAULT_FILE_CNT);	// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
+	sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", CsvFileNum);
+	//sprintf(fname, "data/EXCEL_DATA/set_furniture0.csv");
 
 	if ((fp = fopen(fname, "r")) != NULL)
 	{
 		// ファイルの終わりまで繰り返し読み込む
 		while (fgets(buf, BUFC_MAX, fp) != NULL)
 		{	// カンマで分割
-
 			for (int i = 0; i < LOAD_CSV_MAX; i++)
 			{
 				if (i == 0)
@@ -122,7 +123,13 @@ int GetFurnitureCnt(void)
 {
 	return (Cnt);
 }
-
+//=============================================================================
+// 読み込んだcsvファイルの末尾番号取得関数
+//=============================================================================
+int GetfinalCsvNum(void)
+{
+	return (CsvFileNum);
+}
 //=============================================================================
 // 指定のデータをリセット
 //=============================================================================
@@ -136,9 +143,9 @@ void ResetCsv(int no)
 
 	char fname[64];								// ファイル名生成用
 
-	// 読み込むファイル名をランダム生成する
-	//int n = rand() % GetCsvCnt(__argc, __argv);		// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
-	//sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n);
+	// ファイル名を取得
+	sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", GetfinalCsvNum);
+	//sprintf(fname, "data/EXCEL_DATA/set_furniture0.csv");
 
 	if ((fp = fopen(fname, "r")) != NULL)
 	{

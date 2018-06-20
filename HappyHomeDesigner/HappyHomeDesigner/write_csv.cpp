@@ -32,14 +32,14 @@ void WriteCsv(int no)
 	int n = 0;										// csvファイル数格納用
 
 
-	// 新たにcsvファイルを作成する場合(M)キー
+	// 新たにcsvファイルを作成する場合(Mキー)
 	if (no == CREATE)
 	{
 		// 既存のファイル名と被らない出力ファイル名を生成する処理
 		// EXCEL_DATAフォルダにあるcsvファイルの数を求める
 		n = GetCsvCnt(__argc, __argv) - DEFAULT_FILE_CNT;
 		// ファイル名の末尾の数字を求めたファイル数+1としてファイル名を生成する
-		sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n + 1);
+		sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", n);
 		// csvファイル新規作成
 		if ((fp = fopen(fname, "w")) != NULL)	// 書き込み用
 		{
@@ -88,7 +88,7 @@ int GetCsvCnt(int argc, char *argv[])
 {
 	WIN32_FIND_DATA FindFileData;
 	HANDLE hFind;
-	TCHAR *dir = "data/EXCEL_DATA/*.csv";					// 拡張子がcsvのファイルを指定
+	TCHAR *dir = "data/EXCEL_DATA/set_furniture*.csv";		// 拡張子がcsvのファイルを指定
 	int fileCount = 0;										// ファイル数カウント初期化
 
 	hFind = FindFirstFile(dir, &FindFileData);
