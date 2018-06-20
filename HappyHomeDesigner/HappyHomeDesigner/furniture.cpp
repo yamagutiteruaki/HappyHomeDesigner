@@ -15,6 +15,7 @@
 #include "write_csv.h"
 #include "camera.h"
 #include "calculate.h"
+#include "button.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -97,15 +98,9 @@ HRESULT InitFurniture(int type)
 		}
 	}
 
-	// 家具の初期化処理
-	//for (int i = 0; i <MAX_FURNITURE; i++, furniture++)
-	//{
-
-	//}
-
 	LoadCsv();			// CSVファイル読み込み
 
-	FurnitureNum = 0;
+	FurnitureNum = 0;	// 操作する家具番号初期化
 
 	return S_OK;
 }
@@ -172,44 +167,48 @@ void UpdateFurniture(void)
 	// 指定したスケール拡大・縮小
 	FurnitureScaling(FurnitureNum);
 
-	// csvファイル新規作成
-	if (GetKeyboardTrigger(DIK_M))
-	{
-		WriteCsv(CREATE);
-	}
-	// csvファイルに上書き
-	if (GetKeyboardTrigger(DIK_Q))
-	{
-		WriteCsv(OVERWRITE);
+	if (GetKeyboardPress(DIK_LCONTROL))
+	{	// ctrlキーを押している間のみ
+		// Mキーでcsvファイル新規作成
+		if (GetKeyboardTrigger(DIK_M))
+		{
+			WriteCsv(CREATE);
+		}
+		// Qキーでcsvファイルに上書き
+		if (GetKeyboardTrigger(DIK_Q))
+		{
+			WriteCsv(OVERWRITE);
+		}
 	}
 	// デバッグフォント表示
-	//PrintDebugProc("\n\n現在の家番号:       %d \n", GetStage());
-	//PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
-	//PrintDebugProc("家具のpos:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].pos.x,
-	//	furnitureWk[FurnitureNum].pos.y,
-	//	furnitureWk[FurnitureNum].pos.z);
-	//PrintDebugProc("家具のrot:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].rot.x,
-	//	furnitureWk[FurnitureNum].rot.y,
-	//	furnitureWk[FurnitureNum].rot.z);
-	//PrintDebugProc("家具のscl:       [%f %f %f]\n",
-	//	furnitureWk[FurnitureNum].scl.x,
-	//	furnitureWk[FurnitureNum].scl.y,
-	//	furnitureWk[FurnitureNum].scl.z);
-	//PrintDebugProc("家具のid:        [%d]\n", furnitureWk[FurnitureNum].id);
-	//PrintDebugProc("家具のuse:       [%d]\n", furnitureWk[FurnitureNum].use);
-	//PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
-	//PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
-	//PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
-	//PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
-	//PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
-	//PrintDebugProc("\n家具の操作方法一覧\n");
-	//PrintDebugProc("家具を選択:               [KキーorLキー]\n");
-	//PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
-	//PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
-	//PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
-	//PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
+	PrintDebugProc("\n\n現在読み込んでいるcsvファイル番号: [%d]\n", GetfinalCsvNum());
+	PrintDebugProc("現在の家番号:       %d \n", GetStage());
+	PrintDebugProc("編集中の家具の名前: %s \n\n", furnitureWk[FurnitureNum].name);
+	PrintDebugProc("家具のpos:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].pos.x,
+		furnitureWk[FurnitureNum].pos.y,
+		furnitureWk[FurnitureNum].pos.z);
+	PrintDebugProc("家具のrot:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].rot.x,
+		furnitureWk[FurnitureNum].rot.y,
+		furnitureWk[FurnitureNum].rot.z);
+	PrintDebugProc("家具のscl:       [%f %f %f]\n",
+		furnitureWk[FurnitureNum].scl.x,
+		furnitureWk[FurnitureNum].scl.y,
+		furnitureWk[FurnitureNum].scl.z);
+	PrintDebugProc("家具のid:        [%d]\n", furnitureWk[FurnitureNum].id);
+	PrintDebugProc("家具のuse:       [%d]\n", furnitureWk[FurnitureNum].use);
+	PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
+	PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
+	PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
+	PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
+	PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
+	PrintDebugProc("\n家具の操作方法一覧\n");
+	PrintDebugProc("家具を選択:               [KキーorLキー]\n");
+	PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
+	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
+	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
+	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
 #endif
 }
 
@@ -307,6 +306,7 @@ int FurnitureColi()
 	int no = -1;
 	float dist = 0.0;
 	const float distCheck = 32.0f;
+	bool getflag = false;
 
 	for (int i = 0; i < MAX_FURNITURE; i++, fnt++)
 	{
@@ -345,14 +345,17 @@ int FurnitureColi()
 				//(fnt + no)->use = FALSE;
 				
 			}
-
+			
+			getflag = true;
 		}
 		else
 		{
 			no = -1;
+
 		}
 
 	}
+	Button(getflag, GET_BUTTON);
 
 	return no;
 }

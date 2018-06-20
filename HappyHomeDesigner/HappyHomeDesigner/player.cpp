@@ -277,10 +277,11 @@ void UpdatePlayer(void)
 	PlayerBorder();
 	PlayerEntrance();
 
+	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y, player->Eye.z);
+
 #ifdef _DEBUG
 	CAMERA *camera = GetCamera();
 
-	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y , player->Eye.z);
 	//PrintDebugProc("\n");
 
 	//PrintDebugProc("player rot: %f\n", player->rotDest.y);
@@ -590,7 +591,7 @@ void PlayerEntrance(void)
 		PlayerPosReset();
 	}
 
-	Button(hitflag);
+	Button(hitflag,ENTER_BUTTON);
 }
 
 //=================================================================

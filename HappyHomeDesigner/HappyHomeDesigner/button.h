@@ -19,12 +19,9 @@
 #define TEXTURE_BUTTON_SIZE_X	(1000/6*SCREEN_SCALE)		// テクスチャサイズ
 #define TEXTURE_BUTTON_SIZE_Y	(300/6*SCREEN_SCALE)		// 同上
 
-#define TEXTURE_PATTERN_DIVIDE_X_BUTTON	(1)	// アニメパターンのテクスチャ内分割数（X)
-#define TEXTURE_PATTERN_DIVIDE_Y_BUTTON	(1)	// アニメパターンのテクスチャ内分割数（Y)
-#define ANIM_PATTERN_NUM_BUTTON			(TEXTURE_PATTERN_DIVIDE_X_BUTTON*TEXTURE_PATTERN_DIVIDE_Y_BUTTON)	// アニメーションパターン数
 #define TIME_ANIMATION_BUTTON			(1)	// アニメーションの切り替わるカウント
 
-#define BUTTON_MAX						(1) // 見つかれる最大数
+#define BUTTON_MAX						(3) // 見つかれる最大数
 #define BUTTON_SPEED						(300) //声のスピード
 //*****************************************************************************
 // 構造体宣言
@@ -42,9 +39,17 @@ typedef struct	// エネミー構造体
 	float			Radius;						// エネミーの半径
 	float			BaseAngle;					// エネミーの角度
 
+	float rate;
+
+
 } BUTTON;
 
-
+enum
+{
+	ENTER_BUTTON,
+	PUT_BUTTON,
+	GET_BUTTON
+};
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -54,7 +59,7 @@ void UninitButton(void);
 void UpdateButton(void);
 void DrawButton(void);
 BUTTON *GetButton(int no);
-void Button(bool flag);
+void Button(bool flag,int no);
 
 
 #endif

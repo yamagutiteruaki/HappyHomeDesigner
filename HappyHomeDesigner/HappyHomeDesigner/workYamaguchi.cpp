@@ -10,7 +10,7 @@
 #include "fade.h"
 
 // 山口担当分で必要なインクルード
-#include "house.h"
+#include "ranking.h"
 #include "timeeffect.h"
 
 // デバッグ用

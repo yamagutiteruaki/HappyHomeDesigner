@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ﻿2018/6/20 上午 10:18:19 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
      1>ClCompile:
@@ -120,3 +121,14 @@
 ビルドに成功しました。
 
 経過時間 00:00:17.44
+=======
+﻿  button.cpp
+  field.cpp
+  コード生成しています。
+  7 of 308 functions ( 2.3%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    29 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+  HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)
+>>>>>>> 753ed0c39d37db227057bf26caa2d1640c954985
