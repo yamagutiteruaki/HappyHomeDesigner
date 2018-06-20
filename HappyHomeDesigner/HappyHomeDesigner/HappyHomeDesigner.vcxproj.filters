@@ -66,9 +66,6 @@
     <ClCompile Include="game.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
-    <ClCompile Include="house.cpp">
-      <Filter>ソース ファイル\stage\game</Filter>
-    </ClCompile>
     <ClCompile Include="player.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
@@ -156,6 +153,9 @@
     <ClCompile Include="loadWwwwDB.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -183,9 +183,6 @@
       <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="game.h">
-      <Filter>ソース ファイル\stage\game</Filter>
-    </ClInclude>
-    <ClInclude Include="house.h">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
@@ -274,6 +271,9 @@
     </ClInclude>
     <ClInclude Include="loadWwwwDB.h">
       <Filter>ソース ファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

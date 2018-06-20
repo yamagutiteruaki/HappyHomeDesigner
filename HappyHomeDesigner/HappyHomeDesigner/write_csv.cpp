@@ -71,7 +71,7 @@ void WriteCsv(int no)
 			for (int i = 0; i < GetFurnitureCnt(); i++, furniture++)
 			{	// “Ç‚Ýž‚ñ‚¾‰Æ‹ï‚Ì”•ª‚¾‚¯ƒ‹[ƒv
 				// ‰Æ‹ï‚ÌŽí—Þ,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio
-				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,%d\n",
+				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%ll,%d\n",
 					furniture->name, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
 					furniture->rot.x, furniture->rot.y, furniture->rot.z,
 					furniture->scl.x, furniture->scl.y, furniture->scl.z,
