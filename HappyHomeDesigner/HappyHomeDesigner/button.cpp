@@ -24,16 +24,21 @@
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexButton(int no);
-void SetTextureButton(int no, int cntPattern);
 void SetVertexButton(int no);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		g_pD3DTextureButton = NULL;		// テクスチャへのポリゴン
+LPDIRECT3DTEXTURE9		g_pD3DTextureButton[BUTTON_MAX] = { NULL ,NULL,NULL };		// テクスチャへのポリゴン
 
 BUTTON					buttonWk[BUTTON_MAX];				// エネミー構造体
-float rate;
+
+const char *FileNameButton[BUTTON_MAX] =
+{
+	TEXTURE_GAME_BUTTON_0,
+	TEXTURE_GAME_BUTTON_1,
+	TEXTURE_GAME_BUTTON_2,
+};
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -42,45 +47,38 @@ HRESULT InitButton(int type)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
 
-											// テクスチャーの初期化を行う？
-	if (button->kind == 0)
-	{
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-			TEXTURE_GAME_BUTTON_0,				// ファイルの名前
-			&g_pD3DTextureButton);			// 読み込むメモリのポインタ
-	}
-	if (button->kind == 1)
-	{
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-			TEXTURE_GAME_BUTTON_1,				// ファイルの名前
-			&g_pD3DTextureButton);			// 読み込むメモリのポインタ
-	}
-	if (button->kind == 2)
-	{
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-			TEXTURE_GAME_BUTTON_2,				// ファイルの名前
-			&g_pD3DTextureButton);			// 読み込むメモリのポインタ
-	}
 
-	rate = 10;
 
-	// エネミーの初期化処理
+	for (int i = 0; i < BUTTON_MAX; i++)
+	{
+		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
+			FileNameButton[i],				// ファイルの名前
+			&g_pD3DTextureButton[i]);			// 読み込むメモリのポインタ
+
+	}
+											// エネミーの初期化処理
 	for (int i = 0; i < BUTTON_MAX; i++, button++)
 	{
 		button->use = false;										// 使用
-		button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X,SCREEN_HEIGHT-TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
+		button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
 		button->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 回転データを初期化
 		button->kind = 0;									// フレームを数えたい
 		D3DXVECTOR2 temp = D3DXVECTOR2(TEXTURE_BUTTON_SIZE_X, TEXTURE_BUTTON_SIZE_Y);
 		button->Radius = D3DXVec2Length(&temp);					// エネミーの半径を初期化
 		button->BaseAngle = atan2f(TEXTURE_BUTTON_SIZE_Y, TEXTURE_BUTTON_SIZE_X);	// エネミーの角度を初期化
 
-		button->Texture = g_pD3DTextureButton;					// テクスチャ情報
+		button->Texture = g_pD3DTextureButton[i];					// テクスチャ情報
+		
+		button->rate = 10;
+
+																	// テクスチャの読み込み
+
+
 		MakeVertexButton(i);										// 頂点情報の作成
 	}
+
+
+
 
 
 
@@ -92,11 +90,16 @@ HRESULT InitButton(int type)
 //=============================================================================
 void UninitButton(void)
 {
-	if (g_pD3DTextureButton != NULL)
-	{	// テクスチャの開放
-		g_pD3DTextureButton->Release();
-		g_pD3DTextureButton = NULL;
+	for (int i = 0; i < BUTTON_MAX; i++)
+	{
+		if (g_pD3DTextureButton != NULL)
+		{	// テクスチャの開放
+			g_pD3DTextureButton[i]->Release();
+			g_pD3DTextureButton[i] = NULL;
+		}
 	}
+
+
 }
 
 //=============================================================================
@@ -112,18 +115,18 @@ void UpdateButton(void)
 
 		if (button->use == true)
 		{
-			if (rate > 0)
+			if (button->rate > 0)
 			{
-				rate -= 0.5f;
+				button->rate -= 0.5f;
 			}
 			if (button->pos.x < SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
 			{
 				button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;
-				rate = 0;
+				button->rate = 0;
 			}
 			else
 			{
-				button->pos.x -= 5 * rate;
+				button->pos.x -= 5 * button->rate;
 			}
 
 		}
@@ -131,7 +134,7 @@ void UpdateButton(void)
 		{
 
 			button->use = false;
-			rate = 10;
+			button->rate = 10;
 
 			button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
 		}
@@ -148,6 +151,7 @@ void DrawButton(void)
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
 	VOICE *voice = GetVoice(0);
+
 
 	// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
@@ -180,43 +184,20 @@ HRESULT MakeVertexButton(int no)
 		button->vertexWk[3].rhw = 1.0f;
 
 	// 反射光の設定
-	button->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	button->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	button->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	button->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	button->vertexWk[0].diffuse =
+		button->vertexWk[1].diffuse =
+		button->vertexWk[2].diffuse =
+		button->vertexWk[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 
 	// テクスチャ座標の設定
 	button->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	button->vertexWk[1].tex = D3DXVECTOR2(1.0f / TEXTURE_PATTERN_DIVIDE_X_BUTTON, 0.0f);
-	button->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f / TEXTURE_PATTERN_DIVIDE_Y_BUTTON);
-	button->vertexWk[3].tex = D3DXVECTOR2(1.0f / TEXTURE_PATTERN_DIVIDE_X_BUTTON, 1.0f / TEXTURE_PATTERN_DIVIDE_Y_BUTTON);
-
-	//button->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	//button->vertexWk[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	//button->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	//button->vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	button->vertexWk[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	button->vertexWk[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	button->vertexWk[3].tex = D3DXVECTOR2(1.0f, 1.0f);
 
 	return S_OK;
 }
 
-//=============================================================================
-// テクスチャ座標の設定
-//=============================================================================
-void SetTextureButton(int no, int cntPattern)
-{
-	BUTTON *button = &buttonWk[no];			// エネミーのポインターを初期化
-
-											// テクスチャ座標の設定
-	int x = cntPattern % TEXTURE_PATTERN_DIVIDE_X_BUTTON;
-	int y = cntPattern / TEXTURE_PATTERN_DIVIDE_X_BUTTON;
-	float sizeX = 1.0f / TEXTURE_PATTERN_DIVIDE_X_BUTTON;
-	float sizeY = 1.0f / TEXTURE_PATTERN_DIVIDE_Y_BUTTON;
-
-	button->vertexWk[0].tex = D3DXVECTOR2((float)(x)* sizeX, (float)(y)* sizeY);
-	button->vertexWk[1].tex = D3DXVECTOR2((float)(x)* sizeX + sizeX, (float)(y)* sizeY);
-	button->vertexWk[2].tex = D3DXVECTOR2((float)(x)* sizeX, (float)(y)* sizeY + sizeY);
-	button->vertexWk[3].tex = D3DXVECTOR2((float)(x)* sizeX + sizeX, (float)(y)* sizeY + sizeY);
-}
 
 //=============================================================================
 // 頂点座標の設定
@@ -254,9 +235,9 @@ BUTTON *GetButton(int no)
 //========================================================
 // ボタンの表示　falseならtrueを、trueならfalseを。
 //========================================================
-void Button(bool flag)
+void Button(bool flag,int no)
 {
-	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
+	BUTTON *button = &buttonWk[no];				// エネミーのポインターを初期化
 
 	button->use = flag;
 }
