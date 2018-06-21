@@ -16,6 +16,8 @@
 #include "camera.h"
 #include "calculate.h"
 #include "button.h"
+#include "stage.h"
+#include "debugproc.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -357,6 +359,9 @@ int FurnitureColi()
 	}
 	Button(getflag, GET_BUTTON);
 
+	PrintDebugProc("[クリア状況  ：(%g)]\n", GetPrice());
+
+
 	return no;
 }
 
@@ -383,6 +388,12 @@ void FurnitureGetDAZE(int no)
 
 		// フィールド上のオブジェクトを削除
 		(fnt + no)->use = FALSE;
+
+		if (GetStage() == STAGE_MYHOUSE)
+		{
+			AddPrice(-(fnt + no)->price);
+		}
+
 	}
 
 }
@@ -455,40 +466,42 @@ void FurniturePut()
 	int no = -1;
 	int id = -1;
 
-	// ボタン入力
-	if (GetKeyboardTrigger(DIK_B) || IsButtonTriggered(0, BUTTON_B))
+	if (GetStage() != STAGE_GAME)
 	{
-		// 置ける場所チェック（いらない）
-
-		// カバンの中身を取得
-		no = BagCheck(1);
-
-		// 所持品チェック
-		if (no != -1)
+		// ボタン入力
+		if (GetKeyboardTrigger(DIK_B) || IsButtonTriggered(0, BUTTON_B))
 		{
+			// 置ける場所チェック（いらない）
+
 			// カバンの中身を取得
-			id = ply->havenum[no];
+			no = BagCheck(1);
 
-			// プレイヤー位置を取得、プット
-			(fnt + id)->pos = ply->Eye;
-			(fnt + id)->house_num = GetStage();
-			(fnt + id)->use = TRUE;
-
-			//被害金額加算
-			if (GetStage() == STAGE_MYHOUSE)
+			// 所持品チェック
+			if (no != -1)
 			{
-				AddPrice((fnt + id)->price);
-			}
-			// 所持品処理
-			ply->havenum[no] = -1;
+				// カバンの中身を取得
+				id = ply->havenum[no];
 
-			// 所持重量処理
-			ply->weight -= (fnt + id)->weight;
+				// プレイヤー位置を取得、プット
+				(fnt + id)->pos = ply->Eye;
+				(fnt + id)->house_num = GetStage();
+				(fnt + id)->use = TRUE;
+
+				//被害金額加算
+				if (GetStage() == STAGE_MYHOUSE)
+				{
+					AddPrice((fnt + id)->price);
+				}
+				// 所持品処理
+				ply->havenum[no] = -1;
+
+				// 所持重量処理
+				ply->weight -= (fnt + id)->weight;
+
+			}
 
 		}
-
 	}
-
 }
 
 //=============================================================================
