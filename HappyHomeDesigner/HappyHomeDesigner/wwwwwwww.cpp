@@ -21,7 +21,7 @@
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
 #define	MAGICWALL	(20)
-#define	MAGICSIZE0	(150.0)
+#define	MAGICSIZE0	(8.0)
 #define	MAGICSIZE1	(8.0)
 
 //*****************************************************************************
@@ -411,22 +411,22 @@ void SetSizeWWWWC(void)
 	{
 		if (i % 48 >= 0 && i % 48 <= 5)
 		{
-			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size2 = MAGICSIZE1;
 		}
 		if (i % 48 >= 12 && i % 48 <= 17)
 		{
-			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size1 = MAGICSIZE1;
 		}
 		if (i % 48 >= 24 && i % 48 <= 29)
 		{
-			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size2 = MAGICSIZE1;
 		}
 		if (i % 48 >= 36 && i % 48 <= 41)
 		{
-			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size1 = MAGICSIZE1;
 		}
 	}

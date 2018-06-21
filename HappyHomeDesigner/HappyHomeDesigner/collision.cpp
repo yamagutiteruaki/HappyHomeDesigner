@@ -115,25 +115,44 @@ bool CollisionRayToSphere(D3DXVECTOR3 posRay, D3DXVECTOR3 vecRay, D3DXVECTOR3 po
 //=============================================================================
 void CBTP_resetPos(D3DXVECTOR3 *slfPos, D3DXVECTOR3 slfPosTmp, D3DXVECTOR3 tgtPos, float tgtLen, float tgtWid)
 {
+	int check = 0;
+
 	// âEë§
 	if (slfPosTmp.x >= tgtPos.x + tgtLen)
 	{
-		slfPos->x = slfPosTmp.x;
+		check += 1;
 	}
 	// ç∂ë§
-	else if (slfPosTmp.x <= tgtPos.x - tgtLen)
+	if (slfPosTmp.x <= tgtPos.x - tgtLen)
 	{
-		slfPos->x = slfPosTmp.x;
+		check += 2;
 	}
 	// å„ÇÎë§
 	if (slfPosTmp.z <= tgtPos.z - tgtWid)
 	{
-		slfPos->z = slfPosTmp.z;
+		check += 4;
 	}
 	// ëOë§
-	else if (slfPosTmp.z >= tgtPos.z + tgtWid)
+	if (slfPosTmp.z >= tgtPos.z + tgtWid)
 	{
-		slfPos->z = slfPosTmp.z;
+		check += 8;
 	}
 
+	switch (check)
+	{
+	case 0:
+		break;
+	case 1:
+		slfPos->x = slfPosTmp.x;
+		break;
+	case 2:
+		slfPos->x = slfPosTmp.x;
+		break;
+	case 4:
+		slfPos->z = slfPosTmp.z;
+		break;
+	case 8:
+		slfPos->z = slfPosTmp.z;
+		break;
+	}
 }
