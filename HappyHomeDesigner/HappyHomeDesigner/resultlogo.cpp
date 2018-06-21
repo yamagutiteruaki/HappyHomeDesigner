@@ -14,6 +14,9 @@
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice);
+void SetVertexTexture(void);
+
+
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
@@ -53,7 +56,7 @@ HRESULT InitResultLogo(void)
 
 												// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,			// デバイスへのポインタ
-		TEXTURE_RESULT_GAMEOVER,					// ファイルの名前
+		TEXTURE_RESULT_CLEAR,					// ファイルの名前
 		&g_pD3DTextureResultGameOver);				// 読み込むメモリー
 
 
@@ -273,10 +276,11 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[3].diffuse = D3DXCOLOR(0.0f, 0.9f, 0.9f, 1.0f);
 
 		// テクスチャ座標の設定
-		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		//pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		//pVtx[1].tex = D3DXVECTOR2(0.5f, 0.0f);
+		//pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		//pVtx[3].tex = D3DXVECTOR2(0.5f, 1.0f);
+		SetVertexTexture();
 
 		// 頂点データをアンロックする
 		g_pD3DVtxBuffResultGameOver->Unlock();
@@ -330,3 +334,25 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 	return S_OK;
 }
 	
+void SetVertexTexture(void)
+{
+	int Texptern=GetGameEnd();
+
+
+	{//頂点バッファの中身を埋める
+		VERTEX_2D *pVtx;
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffResultGameOver->Lock(0, 0, (void**)&pVtx, 0);
+
+		pVtx[0].tex = D3DXVECTOR2(Texptern*0.5f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(Texptern*0.5f + 0.5f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(Texptern*0.5f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(Texptern*0.5f + 0.5f, 1.0f);
+
+
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffResultGameOver->Unlock();
+	}
+}
