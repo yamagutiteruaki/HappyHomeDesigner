@@ -22,7 +22,7 @@
 //*****************************************************************************
 #define	MAGICWALL	(20)
 #define	MAGICSIZE0	(150.0)
-#define	MAGICSIZE1	(4.0)
+#define	MAGICSIZE1	(8.0)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -421,13 +421,13 @@ void SetSizeWWWWC(void)
 		}
 		if (i % 48 >= 24 && i % 48 <= 29)
 		{
-			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
-			(wwww + i)->size1 = MAGICSIZE1;
+			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size2 = MAGICSIZE1;
 		}
 		if (i % 48 >= 36 && i % 48 <= 41)
 		{
-			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
-			(wwww + i)->size2 = MAGICSIZE1;
+			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + 0.0f;
+			(wwww + i)->size1 = MAGICSIZE1;
 		}
 	}
 
@@ -443,7 +443,7 @@ void JudgeWWWWC(void)
 
 	for (int i = 0; i < WWWW_MAX; i++, wwww++)
 	{
-		if (wwww->size1 == 0.0f) continue;
+		if (wwww->use == FALSE) continue;
 
 		if (CollisionBoxToPos(wwww->wwww.Pos, player->Eye, D3DXVECTOR2(wwww->size1, wwww->size2)) == TRUE)
 		{
