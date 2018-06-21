@@ -93,12 +93,17 @@ void UninitSearch(void)
 //=============================================================================
 void UpdateSearch(void)
 {
+	PLAYER *player = GetPlayer(0);
 	// õ“G”ÍˆÍ‚ÌˆÚ“®
 	SearchMove();
 	// õ“G”ÍˆÍ‚Ì‰ñ“]
 	SearchRotation();
-	// õ“Gˆ—
-	SearchCollision();
+
+	if (player->weight > 0)
+	{
+		// õ“Gˆ—
+		SearchCollision();
+	}
 	// ’¸“_‚Ìì¬
 	MakeVertexSearch();
 }
@@ -295,7 +300,7 @@ void SearchCollision(void)
 				police = GetPolice(0);
 				for (int k = 0; k < POLICE_MAX; k++, police++)
 				{	// ƒ|ƒŠƒX‚ÌˆÚ“®ƒtƒ‰ƒO‚ğfalse‚É
-					//police->movef = false;
+					police->movef = false;
 				}
 			}
 		}

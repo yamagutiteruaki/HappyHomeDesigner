@@ -9,6 +9,8 @@
 #include "stage.h"
 #include "calculate.h"
 #include "loadWwwwDB.h"
+#include "player.h"
+#include "collision.h"
 
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -18,6 +20,9 @@
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+#define	MAGICWALL	(20)
+#define	MAGICSIZE0	(0.0)
+#define	MAGICSIZE1	(8.0)
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -26,6 +31,8 @@ HRESULT MakeVertexWWWW(LPDIRECT3DDEVICE9 Device, int no);
 void SetUseWWWW(int no, bool use);
 void SetPosWWWW(int no, float x, float y, float z);
 void SetRotWWWW(int no, float x, float y, float z);
+void SetSizeWWWWC(void);
+void JudgeWWWWC(void);
 
 //*****************************************************************************
 // グローバル変数
@@ -34,9 +41,11 @@ LPDIRECT3DTEXTURE9		TextureWWWW[WWWW_MAX];		// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 VtxBuffWWWW[WWWW_MAX];		// 頂点バッファへのポインタ
 WWWW					wwwwWk[WWWW_MAX];			// ワーク
 
-const char *FileNameWWWW[1] =
+const char *FileNameWWWW[3] =
 {
-	"data/TEXTURE/glass_wall00.png"
+	"data/TEXTURE/glass_wall00.png",
+	"data/TEXTURE/glass_wall01.png",
+	"data/TEXTURE/glass_wall02.png"
 };
 
 //=============================================================================
@@ -49,22 +58,30 @@ HRESULT InitWWWW(void)
 
 	for (int i = 0; i < WWWW_MAX; i++)
 	{
-		(wwww + i)->use = FALSE;
+		(wwww + i)->use = TRUE;
 		(wwww + i)->wwww.Pos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
 		(wwww + i)->wwww.Rot = D3DXVECTOR3(-(D3DX_PI / 2), 0.0f, 0.0f);
-		(wwww + i)->wwww.Size = D3DXVECTOR3(50.0f, 0.0f, 50.0f);
+		(wwww + i)->wwww.Size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		(wwww + i)->type = 0;
+		(wwww + i)->size1 = 0.0f;
+		(wwww + i)->size2 = 0.0f;
+	}
 
+	LoadWWWWDB();
+	SetSizeWWWWC();
+
+	for (int i = 0; i < WWWW_MAX; i++)
+	{
 		D3DXCreateTextureFromFile(
-		Device,						// デバイスへのポインタ
-		FileNameWWWW[0],			// ファイルの名前
-		&TextureWWWW[i]);			// 読み込むメモリー
+			Device,								// デバイスへのポインタ
+			FileNameWWWW[(wwww + i)->type],		// ファイルの名前
+			&TextureWWWW[i]);					// 読み込むメモリー
 
 		MakeVertexWWWW(Device, i);
 	}
 
-	// LoadWWWWDB();
 
-	SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
+	//SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
 	//SetUseWWWW(1, TRUE);	SetPosWWWW(1, 130, 20, 60);
 	//SetUseWWWW(2, TRUE);	SetPosWWWW(2, 180, 20, 60);
 	//SetUseWWWW(3, TRUE);	SetPosWWWW(3, 230, 20, 60);
@@ -139,6 +156,8 @@ void UpdateWWWW(void)
 {
 	WWWW *wwww = GetWWWW(0);
 
+	JudgeWWWWC();
+
 #ifdef _DEBUG
 
 	PrintDebugProc("Pos: %f, %f, %f\n", wwww->wwww.Pos.x, wwww->wwww.Pos.y, wwww->wwww.Pos.z);
@@ -194,7 +213,49 @@ void UpdateWWWW(void)
 	{
 		wwww->wwww.Rot.y += (D3DX_PI / 180);
 	}
+
+
 #endif
+
+	//D3DXVECTOR3 wall02SP = D3DXVECTOR3(55.0f, 0.0f, 360.0f);
+	//D3DXVECTOR3 wall02EP = D3DXVECTOR3(55.0f, 0.0f, 60.0f);
+	//D3DXVECTOR3 wall02;
+	//wall02.x = wall02EP.x - wall02SP.x;
+	//wall02.y = wall02EP.y - wall02SP.y;
+	//wall02.z = wall02EP.z - wall02SP.z;
+
+	//D3DXVECTOR3 wallStoP;
+	//wallStoP.x = player->Eye.x - wall02SP.x;
+	//wallStoP.y = player->Eye.y - wall02SP.y;
+	//wallStoP.z = player->Eye.z - wall02SP.z;
+
+	//float wall02Val = D3DXVec3Length(&wall02);
+	//float wallStoPVal = D3DXVec3Length(&wallStoP);
+
+	//D3DXVECTOR3 wall02X;
+	//D3DXVec3Cross(&wall02X, &wallStoP, &wall02);
+
+	//float wall02XLength;
+	//wall02XLength = D3DXVec3Length(&wall02X);
+
+	//if (wall02XLength == 0 || wallStoPVal <= wall02Val)
+	//{
+	//	player->Eye = player->posTmp;
+	//}
+
+
+	//if (CollisionBoxToPos(wall02, player->Eye, wall02Size) == TRUE)
+	//{
+	//	PrintDebugProc("T\n");
+
+	//	CBTP_resetPos(
+	//		&(player->Eye),
+	//		player->posTmp,
+	//		wall02,
+	//		wall02Size.x,
+	//		wall02Size.y
+	//		);
+	//}
 
 }
 
@@ -310,7 +371,6 @@ WWWW *GetWWWW(int no)
 	return &wwwwWk[no];
 }
 
-
 //=============================================================================
 // 
 //=============================================================================
@@ -340,4 +400,52 @@ void SetRotWWWW(int no, float x, float y, float z)
 	wwww->wwww.Rot.x = x;
 	wwww->wwww.Rot.y = y;
 	wwww->wwww.Rot.z = z;
+}
+
+//=============================================================================
+// 衝突判定：オブジェクトの大小を設定
+//=============================================================================
+void SetSizeWWWWC(void)
+{
+	WWWW *wwww = GetWWWW(0);
+
+	for (int i = 0; i < WWWW_MAX; i++)
+	{
+		if (i % 10 >= 0 && i % 10 <= 5)
+		{
+			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
+			(wwww + i)->size2 = MAGICSIZE1;
+		}
+		if (i % 10 >= 6 && i % 10 <= 9)
+		{
+			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
+			(wwww + i)->size1 = MAGICSIZE1;
+		}
+	}
+
+}
+
+//=============================================================================
+// 衝突判定
+//=============================================================================
+void JudgeWWWWC(void)
+{
+	WWWW *wwww = GetWWWW(0);
+	PLAYER *player = GetPlayer(0);
+
+	for (int i = 0; i < WWWW_MAX; i++, wwww++)
+	{
+		if (wwww->use == FALSE) continue;
+
+		if (CollisionBoxToPos(wwww->wwww.Pos, player->Eye, D3DXVECTOR2(wwww->size1, wwww->size2)) == TRUE)
+		{
+			CBTP_resetPos(
+				&(player->Eye),
+				player->posTmp,
+				wwww->wwww.Pos,
+				wwww->size1,
+				wwww->size2
+				);
+		}
+	}
 }
