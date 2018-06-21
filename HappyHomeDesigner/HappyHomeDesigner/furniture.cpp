@@ -201,7 +201,7 @@ void UpdateFurniture(void)
 	PrintDebugProc("家具のtype:      [%d]\n", furnitureWk[FurnitureNum].type);
 	PrintDebugProc("家具のhouse_num: [%d]\n", furnitureWk[FurnitureNum].house_num);
 	PrintDebugProc("家具のweight:    [%f]\n", furnitureWk[FurnitureNum].weight);
-	PrintDebugProc("家具のprice:     [%d]\n", furnitureWk[FurnitureNum].price);
+	PrintDebugProc("家具のprice:     [%g]\n", furnitureWk[FurnitureNum].price);
 	PrintDebugProc("家具のratio:     [%d]\n", furnitureWk[FurnitureNum].ratio);
 	PrintDebugProc("\n家具の操作方法一覧\n");
 	PrintDebugProc("家具を選択:               [KキーorLキー]\n");

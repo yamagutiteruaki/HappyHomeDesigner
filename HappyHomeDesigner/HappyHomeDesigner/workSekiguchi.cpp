@@ -71,6 +71,7 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_MYHOUSE:
 
 		UpdateClock();
+		UpdateScore();
 
 		break;
 	case STAGE_RESULT:

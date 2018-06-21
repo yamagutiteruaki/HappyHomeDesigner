@@ -9,6 +9,7 @@
 #include "calculate.h"
 #include "debugproc.h"
 #include "input.h"
+#include "ranking.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -144,6 +145,11 @@ void UpdateScore(void)
 	PrintDebugProc("[スコア ：(%g)]\n", g_score);
 	PrintDebugProc("[被害総額 ：(%g)]\n", g_maxscore);
 
+	if (GetKeyboardTrigger(DIK_4))
+	{
+		// ランキングcsv更新
+		Ranking();
+	}
 }
 
 //=============================================================================
