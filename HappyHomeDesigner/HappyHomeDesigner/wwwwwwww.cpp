@@ -21,7 +21,7 @@
 // マクロ定義
 //*****************************************************************************
 #define	MAGICWALL	(20)
-#define	MAGICSIZE0	(8.0)
+#define	MAGICSIZE0	(0.0)
 #define	MAGICSIZE1	(8.0)
 
 //*****************************************************************************
@@ -41,13 +41,12 @@ LPDIRECT3DTEXTURE9		TextureWWWW[WWWW_MAX];		// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 VtxBuffWWWW[WWWW_MAX];		// 頂点バッファへのポインタ
 WWWW					wwwwWk[WWWW_MAX];			// ワーク
 
-const char *FileNameWWWW[1] =
+const char *FileNameWWWW[3] =
 {
-	"data/TEXTURE/glass_wall00.png"
+	"data/TEXTURE/glass_wall00.png",
+	"data/TEXTURE/glass_wall01.png",
+	"data/TEXTURE/glass_wall02.png"
 };
-
-D3DXVECTOR3 wall02 = D3DXVECTOR3(55.0f, 0.0f, 210.0f);
-D3DXVECTOR2 wall02Size = D3DXVECTOR2(4.0f, 150.0f);
 
 //=============================================================================
 // 初期化処理
@@ -59,27 +58,30 @@ HRESULT InitWWWW(void)
 
 	for (int i = 0; i < WWWW_MAX; i++)
 	{
-		(wwww + i)->use = FALSE;
+		(wwww + i)->use = TRUE;
 		(wwww + i)->wwww.Pos = D3DXVECTOR3(0.0f, 20.0f, 0.0f);
 		(wwww + i)->wwww.Rot = D3DXVECTOR3(-(D3DX_PI / 2), 0.0f, 0.0f);
-		(wwww + i)->wwww.Size = D3DXVECTOR3(50.0f, 0.0f, 50.0f);
+		(wwww + i)->wwww.Size = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
+		(wwww + i)->type = 0;
 		(wwww + i)->size1 = 0.0f;
 		(wwww + i)->size2 = 0.0f;
+	}
 
+	LoadWWWWDB();
+	SetSizeWWWWC();
+
+	for (int i = 0; i < WWWW_MAX; i++)
+	{
 		D3DXCreateTextureFromFile(
-		Device,						// デバイスへのポインタ
-		FileNameWWWW[0],			// ファイルの名前
-		&TextureWWWW[i]);			// 読み込むメモリー
+			Device,								// デバイスへのポインタ
+			FileNameWWWW[(wwww + i)->type],		// ファイルの名前
+			&TextureWWWW[i]);					// 読み込むメモリー
 
 		MakeVertexWWWW(Device, i);
 	}
 
-	LoadWWWWDB();
 
-	SetSizeWWWWC();
-
-
-	SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
+	//SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
 	//SetUseWWWW(1, TRUE);	SetPosWWWW(1, 130, 20, 60);
 	//SetUseWWWW(2, TRUE);	SetPosWWWW(2, 180, 20, 60);
 	//SetUseWWWW(3, TRUE);	SetPosWWWW(3, 230, 20, 60);
@@ -409,22 +411,12 @@ void SetSizeWWWWC(void)
 
 	for (int i = 0; i < WWWW_MAX; i++)
 	{
-		if (i % 48 >= 0 && i % 48 <= 5)
+		if (i % 10 >= 0 && i % 10 <= 5)
 		{
 			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size2 = MAGICSIZE1;
 		}
-		if (i % 48 >= 12 && i % 48 <= 17)
-		{
-			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
-			(wwww + i)->size1 = MAGICSIZE1;
-		}
-		if (i % 48 >= 24 && i % 48 <= 29)
-		{
-			(wwww + i)->size1 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
-			(wwww + i)->size2 = MAGICSIZE1;
-		}
-		if (i % 48 >= 36 && i % 48 <= 41)
+		if (i % 10 >= 6 && i % 10 <= 9)
 		{
 			(wwww + i)->size2 = (wwww + i)->wwww.Size.x / 2 + float(MAGICSIZE0);
 			(wwww + i)->size1 = MAGICSIZE1;
