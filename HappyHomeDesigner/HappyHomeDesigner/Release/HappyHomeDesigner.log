@@ -1,8 +1,15 @@
 <<<<<<< HEAD
+﻿2018/06/20 10:10:06 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt arrest.cpp button.cpp camera.cpp clock.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp input.cpp loadWwwwDB.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp weight.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp wwwwwwww.cpp
+=======
+<<<<<<< HEAD
 ﻿2018/6/20 上午 10:18:19 にビルドを開始しました。
      1>ノード 2 上のプロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
      1>ClCompile:
          C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt arrest.cpp button.cpp calculate.cpp camera.cpp clock.cpp collision.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp input.cpp Light.cpp loadWwwwDB.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp sound.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp weight.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp wwwwwwww.cpp
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
          arrest.cpp
          button.cpp
          calculate.cpp
@@ -10,7 +17,10 @@
      1>calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
          camera.cpp
          clock.cpp
+<<<<<<< HEAD
+=======
          collision.cpp
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
          debugproc.cpp
      1>debugproc.cpp(78): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
      1>debugproc.cpp(78): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
@@ -20,8 +30,11 @@
          game.cpp
          input.cpp
      1>input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+<<<<<<< HEAD
+=======
          Light.cpp
      1>Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
          loadWwwwDB.cpp
      1>loadWwwwDB.cpp(74): warning C4800: 'int': ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
          load_csv.cpp
@@ -44,6 +57,7 @@
          search.cpp
          sound.cpp
          stage.cpp
+         コンパイル中...
          timeeffect.cpp
          title.cpp
          titlelogo.cpp
@@ -107,6 +121,11 @@
          Release\write_csv.obj
          Release\wwwwwwww.obj
          コード生成しています。
+<<<<<<< HEAD
+         79 of 308 functions (25.6%) were compiled, the rest were copied from previous compilation.
+           12 functions were new in current compilation
+           73 functions had inline decision re-evaluated but remain unchanged
+=======
      1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(735): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
      1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(743): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
      1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(762): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
@@ -114,12 +133,16 @@
          305 of 308 functions (99.0%) were compiled, the rest were copied from previous compilation.
            38 functions were new in current compilation
            0 functions had inline decision re-evaluated but remain unchanged
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
          コード生成が終了しました。
          HappyHomeDesigner.vcxproj -> C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
      1>プロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
 
 ビルドに成功しました。
 
+<<<<<<< HEAD
+経過時間 00:00:33.51
+=======
 経過時間 00:00:17.44
 =======
 ﻿  button.cpp
@@ -132,3 +155,4 @@
   HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
   HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)
 >>>>>>> 753ed0c39d37db227057bf26caa2d1640c954985
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
