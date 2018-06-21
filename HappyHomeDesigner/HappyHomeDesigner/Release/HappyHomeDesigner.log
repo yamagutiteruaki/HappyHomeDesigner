@@ -1,3 +1,150 @@
+<<<<<<< HEAD
+﻿2018/06/20 10:10:06 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\ths70348\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt arrest.cpp button.cpp camera.cpp clock.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp input.cpp loadWwwwDB.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp weight.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp wwwwwwww.cpp
+=======
+<<<<<<< HEAD
+﻿2018/6/20 上午 10:18:19 にビルドを開始しました。
+     1>ノード 2 上のプロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
+     1>ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\CL.exe /c /Zi /nologo /W3 /WX- /O2 /Oi /Oy- /GL /D WIN32 /D NDEBUG /D _WINDOWS /D _MBCS /Gm- /EHsc /MT /GS /Gy /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Release\\" /Fd"Release\vc140.pdb" /Gd /TP /analyze- /errorReport:prompt arrest.cpp button.cpp calculate.cpp camera.cpp clock.cpp collision.cpp debugproc.cpp fade.cpp field.cpp furniture.cpp game.cpp input.cpp Light.cpp loadWwwwDB.cpp load_csv.cpp main.cpp player.cpp police.cpp result.cpp resultlogo.cpp score.cpp search.cpp sound.cpp stage.cpp timeeffect.cpp title.cpp titlelogo.cpp voice.cpp wall.cpp weight.cpp workChisaka.cpp workImagawa.cpp workMatsuo.cpp workSekiguchi.cpp workSon.cpp workYamaguchi.cpp write_csv.cpp wwwwwwww.cpp
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
+         arrest.cpp
+         button.cpp
+         calculate.cpp
+     1>calculate.cpp(52): warning C4305: '+=': 'double' から 'float' へ切り詰めます。
+     1>calculate.cpp(56): warning C4244: '初期化中': 'double' から 'float' への変換です。データが失われる可能性があります。
+         camera.cpp
+         clock.cpp
+<<<<<<< HEAD
+=======
+         collision.cpp
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
+         debugproc.cpp
+     1>debugproc.cpp(78): warning C4838: 'float' から 'LONG' への変換には縮小変換が必要です
+     1>debugproc.cpp(78): warning C4244: '初期化中': 'float' から 'LONG' への変換です。データが失われる可能性があります。
+         fade.cpp
+         field.cpp
+         furniture.cpp
+         game.cpp
+         input.cpp
+     1>input.cpp(316): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+<<<<<<< HEAD
+=======
+         Light.cpp
+     1>Light.cpp : warning C4819: ファイルは、現在のコード ページ (932) で表示できない文字を含んでいます。データの損失を防ぐために、ファイルを Unicode 形式で保存してください。
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
+         loadWwwwDB.cpp
+     1>loadWwwwDB.cpp(74): warning C4800: 'int': ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+         load_csv.cpp
+     1>load_csv.cpp(92): warning C4800: 'int': ブール値を 'true' または 'false' に強制的に設定します (警告の処理)
+         main.cpp
+     1>main.cpp(80): warning C4244: '引数': 'float' から 'int' への変換です。データが失われる可能性があります。
+     1>main.cpp(240): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+     1>main.cpp(241): warning C4244: '=': 'float' から 'UINT' への変換です。データが失われる可能性があります。
+         player.cpp
+         police.cpp
+     1>police.cpp(186): warning C4305: '引数': 'double' から 'FLOAT' へ切り詰めます。
+         result.cpp
+         resultlogo.cpp
+         コンパイル中...
+         score.cpp
+     1>score.cpp(203): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(204): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(205): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+     1>score.cpp(206): warning C4244: '引数': 'double' から 'FLOAT' への変換です。データが失われる可能性があります。
+         search.cpp
+         sound.cpp
+         stage.cpp
+         コンパイル中...
+         timeeffect.cpp
+         title.cpp
+         titlelogo.cpp
+         voice.cpp
+         wall.cpp
+         weight.cpp
+         workChisaka.cpp
+         workImagawa.cpp
+         workMatsuo.cpp
+         workSekiguchi.cpp
+         workSon.cpp
+         workYamaguchi.cpp
+         write_csv.cpp
+     1>write_csv.cpp(55): warning C4477: 'fprintf' : format string '%d' requires an argument of type 'int', but variadic argument 15 has type '__int64'
+         write_csv.cpp(55): note: consider using '%lld' in the format string
+         write_csv.cpp(55): note: consider using '%I64d' in the format string
+     1>write_csv.cpp(65): warning C4474: 'sprintf': 書式文字列に渡された引数の数が多すぎます
+         write_csv.cpp(65): note: placeholders and their parameters expect 0 variadic arguments, but 1 were provided
+     1>write_csv.cpp(78): warning C4477: 'fprintf' : format string '%d' requires an argument of type 'int', but variadic argument 15 has type '__int64'
+         write_csv.cpp(78): note: consider using '%lld' in the format string
+         write_csv.cpp(78): note: consider using '%I64d' in the format string
+         wwwwwwww.cpp
+       Link:
+         C:\Program Files (x86)\Microsoft Visual Studio 14.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /Debug /PDB:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb" /SUBSYSTEM:WINDOWS /OPT:REF /OPT:ICF /LTCG:incremental /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.lib" /MACHINE:X86 /SAFESEH Release\arrest.obj
+         Release\button.obj
+         Release\calculate.obj
+         Release\camera.obj
+         Release\clock.obj
+         Release\collision.obj
+         Release\debugproc.obj
+         Release\fade.obj
+         Release\field.obj
+         Release\furniture.obj
+         Release\game.obj
+         Release\house.obj
+         Release\input.obj
+         Release\Light.obj
+         Release\loadWwwwDB.obj
+         Release\load_csv.obj
+         Release\main.obj
+         Release\player.obj
+         Release\police.obj
+         Release\result.obj
+         Release\resultlogo.obj
+         Release\score.obj
+         Release\search.obj
+         Release\sound.obj
+         Release\stage.obj
+         Release\timeeffect.obj
+         Release\title.obj
+         Release\titlelogo.obj
+         Release\voice.obj
+         Release\wall.obj
+         Release\weight.obj
+         Release\workChisaka.obj
+         Release\workImagawa.obj
+         Release\workMatsuo.obj
+         Release\workSekiguchi.obj
+         Release\workSon.obj
+         Release\workYamaguchi.obj
+         Release\write_csv.obj
+         Release\wwwwwwww.obj
+         コード生成しています。
+<<<<<<< HEAD
+         79 of 308 functions (25.6%) were compiled, the rest were copied from previous compilation.
+           12 functions were new in current compilation
+           73 functions had inline decision re-evaluated but remain unchanged
+=======
+     1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(735): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
+     1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(743): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
+     1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(762): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
+     1>c:\users\acetwo\desktop\happyhomedesigner\happyhomedesigner\happyhomedesigner\police.cpp(770): warning C4723: 除算の 2 番目のオペランドは、コンパイル時に 0 と評価され、不定の結果を返します。
+         305 of 308 functions (99.0%) were compiled, the rest were copied from previous compilation.
+           38 functions were new in current compilation
+           0 functions had inline decision re-evaluated but remain unchanged
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38
+         コード生成が終了しました。
+         HappyHomeDesigner.vcxproj -> C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+     1>プロジェクト "C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
+
+ビルドに成功しました。
+
+<<<<<<< HEAD
+経過時間 00:00:33.51
+=======
+経過時間 00:00:17.44
+=======
 ﻿  button.cpp
   field.cpp
   コード生成しています。
@@ -7,3 +154,5 @@
   コード生成が終了しました。
   HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
   HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)
+>>>>>>> 753ed0c39d37db227057bf26caa2d1640c954985
+>>>>>>> 534556a66c92bc708fb6826cef845b26cc9bbc38

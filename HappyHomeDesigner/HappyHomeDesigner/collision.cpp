@@ -126,7 +126,7 @@ void CBTP_resetPos(D3DXVECTOR3 *slfPos, D3DXVECTOR3 slfPosTmp, D3DXVECTOR3 tgtPo
 		slfPos->x = slfPosTmp.x;
 	}
 	// Œã‚ë‘¤
-	else if (slfPosTmp.z <= tgtPos.z - tgtWid)
+	if (slfPosTmp.z <= tgtPos.z - tgtWid)
 	{
 		slfPos->z = slfPosTmp.z;
 	}

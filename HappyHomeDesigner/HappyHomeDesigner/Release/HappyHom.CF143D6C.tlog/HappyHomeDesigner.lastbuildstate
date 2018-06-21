@@ -1,2 +1,7 @@
+<<<<<<< HEAD
+#TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit
+Release|Win32|C:\Users\Acetwo\Desktop\HappyHomeDesigner\HappyHomeDesigner\|
+=======
 #TargetFrameworkVersion=v4.0:PlatformToolSet=v140:EnableManagedIncrementalBuild=false:VCToolArchitecture=Native32Bit:WindowsTargetPlatformVersion=8.1
 Release|Win32|C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\|
+>>>>>>> 753ed0c39d37db227057bf26caa2d1640c954985
