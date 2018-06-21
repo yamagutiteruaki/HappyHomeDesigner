@@ -273,6 +273,8 @@ void UpdateField(void)
 	{
 		SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 	}
+#endif
+
 
 	DOOR *door = GetDoor(0);
 	HOME *home = GetHome(0);
@@ -314,7 +316,6 @@ void UpdateField(void)
 	//PrintDebugProc("House 3: %f, %f\n", (House + 3)->Pos.x, (House + 3)->Pos.z);
 	//PrintDebugProc("\n");
 
-#endif
 
 }
 
