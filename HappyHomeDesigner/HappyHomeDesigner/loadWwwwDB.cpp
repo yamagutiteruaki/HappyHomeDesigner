@@ -26,13 +26,16 @@ enum
 {
 	LOAD_CSV_ID = 0,
 	LOAD_CSV_NAME,
-	LOAD_CSV_USE,
 	LOAD_CSV_POS_X,
 	LOAD_CSV_POS_Y,
 	LOAD_CSV_POS_Z,
 	LOAD_CSV_ROT_X,
 	LOAD_CSV_ROT_Y,
 	LOAD_CSV_ROT_Z,
+	LOAD_CSV_SIZE_X,
+	LOAD_CSV_SIZE_Y,
+	LOAD_CSV_SIZE_Z,
+	LOAD_CSV_TYPE,
 	LOAD_CSV_MAX,
 };
 //=============================================================================
@@ -71,13 +74,16 @@ void LoadWWWWDB(void)
 				continue;
 			}
 			// char‚ğint, double‚É•ÏŠ·‚·‚é
-			wwww->use = atoi(tkn[LOAD_CSV_USE]);
 			wwww->wwww.Pos.x = (float)atof(tkn[LOAD_CSV_POS_X]);
 			wwww->wwww.Pos.y = (float)atof(tkn[LOAD_CSV_POS_Y]);
 			wwww->wwww.Pos.z = (float)atof(tkn[LOAD_CSV_POS_Z]);
 			wwww->wwww.Rot.x = (float)atof(tkn[LOAD_CSV_ROT_X]) * (D3DX_PI / 180);
 			wwww->wwww.Rot.y = (float)atof(tkn[LOAD_CSV_ROT_Y]) * (D3DX_PI / 180);
 			wwww->wwww.Rot.z = (float)atof(tkn[LOAD_CSV_ROT_Z]) * (D3DX_PI / 180);
+			wwww->wwww.Size.x = (float)atof(tkn[LOAD_CSV_SIZE_X]);
+			wwww->wwww.Size.y = (float)atof(tkn[LOAD_CSV_SIZE_Y]);
+			wwww->wwww.Size.z = (float)atof(tkn[LOAD_CSV_SIZE_Z]);
+			wwww->type = atoi(tkn[LOAD_CSV_TYPE]);
 
 			wwww++;	// Ÿ‚Ìƒf[ƒ^‚É
 		}
