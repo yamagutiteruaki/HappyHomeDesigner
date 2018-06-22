@@ -33,7 +33,7 @@
 HRESULT InitWorkSon(int nType)
 {
 	InitPlayer(nType);
-	InitWWWW();
+	InitWWWW(nType);
 
 	return S_OK;
 }

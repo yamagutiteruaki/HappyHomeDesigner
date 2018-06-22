@@ -28,7 +28,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitScore(void);
+HRESULT InitScore(int nType);
 void UninitScore(void);
 void UpdateScore(void);
 void DrawScore(void);

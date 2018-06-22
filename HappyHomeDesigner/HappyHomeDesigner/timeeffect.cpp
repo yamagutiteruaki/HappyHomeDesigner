@@ -31,7 +31,7 @@ bool					g_bUseEffect;
 //***********************************************************
 // 初期化処理
 //***********************************************************
-HRESULT InitTimeeffect(void)
+HRESULT InitTimeeffect(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -39,12 +39,13 @@ HRESULT InitTimeeffect(void)
 
 	MakeVertexTimeeffect(pDevice);							//頂点情報の作成
 
-
-															// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
-		TEXTURE_TIME_EFF,				// ファイルの名前
-		&g_pD3DTextureTimeeff);		// 読み込むメモリー
-
+	if (nType == STAGE_INIT_FAST)
+	{
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
+			TEXTURE_TIME_EFF,				// ファイルの名前
+			&g_pD3DTextureTimeeff);		// 読み込むメモリー
+	}
 	g_fAlpha = 0.0f;
 	g_bAlpha = false;
 	g_bUseEffect = false;

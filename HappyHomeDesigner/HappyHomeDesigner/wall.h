@@ -38,7 +38,7 @@ typedef struct // フィールド構造体
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitWall(void);
+HRESULT InitWall(int nType);
 void UninitWall(void);
 void UpdateWall(void);
 void DrawWall(void);

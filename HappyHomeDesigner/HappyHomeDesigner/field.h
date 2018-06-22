@@ -64,7 +64,7 @@ typedef struct // ドアの構造体
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitField(void);
+HRESULT InitField(int nType);
 void UninitField(void);
 void UpdateField(void);
 void DrawField(void);

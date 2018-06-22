@@ -31,7 +31,7 @@ typedef struct
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitWWWW(void);
+HRESULT InitWWWW(int nType);
 void UninitWWWW(void);
 void UpdateWWWW(void);
 void DrawWWWW(void);

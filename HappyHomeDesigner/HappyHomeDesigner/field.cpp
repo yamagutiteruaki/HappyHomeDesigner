@@ -79,7 +79,7 @@ const char *FileNameField[FIELD_MAX] =
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitField(void)
+HRESULT InitField(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	FIELD *field = GetField(0);
@@ -87,12 +87,13 @@ HRESULT InitField(void)
 
 	for (int i = 0; i < FIELD_MAX; i++, field++)
 	{
-
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-			FileNameField[i],			// ファイルの名前
-			&g_pD3DTextureField[i]);	// 読み込むメモリー
-
+		if (nType == STAGE_INIT_FAST)
+		{
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
+				FileNameField[i],			// ファイルの名前
+				&g_pD3DTextureField[i]);	// 読み込むメモリー
+		}
 
 		field->Pos.x = 0.0f;	//X座標の設定
 		field->Pos.y = 0.0f;//Y座標は0固定
@@ -107,18 +108,20 @@ HRESULT InitField(void)
 	//家の設定
 	for (int i = 0; i < HOME_MAX; i++, home++)
 	{
-
-		// Xファイルの読み込み
-		if (FAILED(D3DXLoadMeshFromX(FileNameHome[i],
-			D3DXMESH_SYSTEMMEM,
-			pDevice,
-			NULL,
-			&g_pD3DXBuffMatHome[i],
-			NULL,
-			&g_nNumMatHome[i],
-			&g_pD3DXMeshHome[i])))
+		if (nType == STAGE_INIT_FAST)
 		{
-			return E_FAIL;
+			// Xファイルの読み込み
+			if (FAILED(D3DXLoadMeshFromX(FileNameHome[i],
+				D3DXMESH_SYSTEMMEM,
+				pDevice,
+				NULL,
+				&g_pD3DXBuffMatHome[i],
+				NULL,
+				&g_nNumMatHome[i],
+				&g_pD3DXMeshHome[i])))
+			{
+				return E_FAIL;
+			}
 		}
 
 		home->Pos.x = -(HOME_DISTANCE) + i % 2 * (HOME_DISTANCE*2);	//X座標の設定
@@ -141,20 +144,21 @@ HRESULT InitField(void)
 	//ドアの設定
 	for (int i = 0; i < HOME_MAX; i++, door++ ,home++)
 	{
-
-		// Xファイルの読み込み
-		if (FAILED(D3DXLoadMeshFromX(FileNameDoor[i],
-			D3DXMESH_SYSTEMMEM,
-			pDevice,
-			NULL,
-			&g_pD3DXBuffMatDoor[i],
-			NULL,
-			&g_nNumMatDoor[i],
-			&g_pD3DXMeshDoor[i])))
+		if (nType == STAGE_INIT_FAST)
 		{
-			return E_FAIL;
+			// Xファイルの読み込み
+			if (FAILED(D3DXLoadMeshFromX(FileNameDoor[i],
+				D3DXMESH_SYSTEMMEM,
+				pDevice,
+				NULL,
+				&g_pD3DXBuffMatDoor[i],
+				NULL,
+				&g_nNumMatDoor[i],
+				&g_pD3DXMeshDoor[i])))
+			{
+				return E_FAIL;
+			}
 		}
-
 		door->Pos.x = home->Pos.x+70.0f*home->Scl.x;	//X座標の設定
 		door->Pos.y = home->Pos.y;		//Y座標の設定
 		door->Pos.z = home->Pos.z -75.0f*home->Scl.z;	//Z座標の設定

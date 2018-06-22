@@ -50,7 +50,7 @@ HRESULT InitClock(int type)
 		&g_pD3DTextureClockHand02);		// 読み込むメモリのポインタ
 
 	// タイマーの初期化処理
-	if (type == 0)
+	if (type == STAGE_INIT_FAST)
 	{
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,		// デバイスのポインタ

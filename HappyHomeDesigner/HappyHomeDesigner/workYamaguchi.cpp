@@ -32,7 +32,7 @@
 //=============================================================================
 HRESULT InitWorkYamaguchi(int nType)
 {
-	InitTimeeffect();
+	InitTimeeffect(nType);
 	return S_OK;
 }
 

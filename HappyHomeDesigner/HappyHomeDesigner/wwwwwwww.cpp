@@ -51,7 +51,7 @@ const char *FileNameWWWW[] =
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitWWWW(void)
+HRESULT InitWWWW(int nType)
 {
 	LPDIRECT3DDEVICE9 Device = GetDevice();
 	WWWW *wwww = GetWWWW(0);
@@ -70,16 +70,18 @@ HRESULT InitWWWW(void)
 	LoadWWWWDB();
 	SetSizeWWWWC();
 
-	for (int i = 0; i < WWWW_MAX; i++)
+	if (nType == STAGE_INIT_FAST)
 	{
-		D3DXCreateTextureFromFile(
-			Device,						// デバイスへのポインタ
-			FileNameWWWW[0],			// ファイルの名前
-			&TextureWWWW[i]);			// 読み込むメモリー
+		for (int i = 0; i < WWWW_MAX; i++)
+		{
+			D3DXCreateTextureFromFile(
+				Device,						// デバイスへのポインタ
+				FileNameWWWW[0],			// ファイルの名前
+				&TextureWWWW[i]);			// 読み込むメモリー
 
-		MakeVertexWWWW(Device, i);
+			MakeVertexWWWW(Device, i);
+		}
 	}
-
 
 	//SetUseWWWW(0, TRUE);	SetPosWWWW(0, 80, 20, 60);
 	//SetUseWWWW(1, TRUE);	SetPosWWWW(1, 130, 20, 60);

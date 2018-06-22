@@ -36,7 +36,7 @@ bool slotStart;
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitScore(void)
+HRESULT InitScore(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
@@ -53,12 +53,14 @@ HRESULT InitScore(void)
 
 	// 頂点情報の作成
 	MakeVertexScore(pDevice);
-
-	// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-		TEXTURE_SCORE,			// ファイルの名前
-		&g_pD3DTextureScore[0]);	// 読み込むメモリー
-
+	
+	if (nType == STAGE_INIT_FAST)
+	{
+		// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
+			TEXTURE_SCORE,			// ファイルの名前
+			&g_pD3DTextureScore[0]);	// 読み込むメモリー
+	}
 	return S_OK;
 }
 

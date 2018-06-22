@@ -34,11 +34,11 @@
 HRESULT InitWorkSekiguchi(int nType)
 {
 
-	InitClock(0);
+	InitClock(nType);
 
-	InitResultLogo();
+	InitResultLogo(nType);
 
-	InitScore();
+	InitScore(nType);
 
 	return S_OK;
 }

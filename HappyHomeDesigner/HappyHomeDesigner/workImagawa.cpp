@@ -31,8 +31,8 @@
 //=============================================================================
 HRESULT InitWorkImagawa(int nType)
 {
-	InitField();
-	InitWall();
+	InitField(nType);
+	InitWall(nType);
 	return S_OK;
 }
 
