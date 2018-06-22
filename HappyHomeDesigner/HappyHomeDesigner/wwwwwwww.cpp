@@ -37,15 +37,15 @@ void JudgeWWWWC(void);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		TextureWWWW[WWWW_MAX];		// テクスチャへのポインタ
-LPDIRECT3DVERTEXBUFFER9 VtxBuffWWWW[WWWW_MAX];		// 頂点バッファへのポインタ
-WWWW					wwwwWk[WWWW_MAX];			// ワーク
+LPDIRECT3DTEXTURE9		TextureWWWW[WWWW_MAX] = { NULL };	// テクスチャへのポインタ
+LPDIRECT3DVERTEXBUFFER9 VtxBuffWWWW[WWWW_MAX] = { NULL };	// 頂点バッファへのポインタ
+WWWW					wwwwWk[WWWW_MAX];					// ワーク
 
-const char *FileNameWWWW[3] =
+const char *FileNameWWWW[] =
 {
 	"data/TEXTURE/glass_wall00.png",
 	"data/TEXTURE/glass_wall01.png",
-	"data/TEXTURE/glass_wall02.png"
+	"data/TEXTURE/glass_wall02.png",
 };
 
 //=============================================================================
@@ -73,9 +73,9 @@ HRESULT InitWWWW(void)
 	for (int i = 0; i < WWWW_MAX; i++)
 	{
 		D3DXCreateTextureFromFile(
-			Device,								// デバイスへのポインタ
-			FileNameWWWW[(wwww + i)->type],		// ファイルの名前
-			&TextureWWWW[i]);					// 読み込むメモリー
+			Device,						// デバイスへのポインタ
+			FileNameWWWW[0],			// ファイルの名前
+			&TextureWWWW[i]);			// 読み込むメモリー
 
 		MakeVertexWWWW(Device, i);
 	}
