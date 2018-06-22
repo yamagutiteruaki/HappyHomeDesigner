@@ -299,6 +299,10 @@ long long GetPrice(void)
 void AddPrice(long long price)
 {
 	g_nPrice += price;
+	if (g_nPrice > MAX_PRICE)
+	{
+		g_nPrice = MAX_PRICE;
+	}
 }
 
 //==============================================================================

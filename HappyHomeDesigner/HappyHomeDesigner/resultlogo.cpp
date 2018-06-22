@@ -125,6 +125,7 @@ void UninitResultLogo(void)
 //=============================================================================
 void UpdateResultLogo(void)
 {
+	SetVertexTexture();
 
 	PrintDebugProc("[クリア状況  ：(%d)]\n", GetGameEnd());
 
@@ -335,7 +336,10 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 
 	return S_OK;
 }
-	
+
+//================================================================
+//テクスチャ座標の設定
+//================================================================
 void SetVertexTexture(void)
 {
 	int Texptern=GetGameEnd();
