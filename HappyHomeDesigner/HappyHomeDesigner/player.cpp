@@ -14,6 +14,7 @@
 #include "collision.h"
 #include "fade.h"
 #include "button.h"
+#include "shadow.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -331,6 +332,23 @@ void UpdatePlayer(void)
 	// 角度を修正
 	player->rot.y = PiCalculate360(player->rot.y);
 	player->rotDest.y = PiCalculate360(player->rotDest.y);
+
+	// シャドウ
+	if (!player->bShadow)
+	{	// シャドウ設置
+		player->nIdxShadow = CreateShadow(player->Eye, 25.0f, 25.0f);
+		player->fSizeShadow = PLAYER_SHADOW_SIZE;
+		player->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
+		player->bShadow = true;
+	}
+	else
+	{
+		// シャドウ管理
+		SetPositionShadow(player->nIdxShadow, D3DXVECTOR3(player->Eye.x, 0.2f, player->Eye.z));
+		SetVertexShadow(player->nIdxShadow, player->fSizeShadow, player->fSizeShadow);
+		SetColorShadow(player->nIdxShadow, player->colShadow);
+	}
+
 
 }
 

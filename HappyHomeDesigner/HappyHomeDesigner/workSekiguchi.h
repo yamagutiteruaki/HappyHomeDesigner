@@ -23,7 +23,7 @@
 HRESULT InitWorkSekiguchi(int nType);
 void UninitWorkSekiguchi(void);
 void UpdateWorkSekiguchi(void);
-void DrawWorkSekiguchi(void);
+void DrawWorkSekiguchi(int no);
 
 #endif
 

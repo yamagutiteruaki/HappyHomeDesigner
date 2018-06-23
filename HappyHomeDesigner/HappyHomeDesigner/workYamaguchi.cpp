@@ -8,10 +8,12 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "game.h"
 
 // 山口担当分で必要なインクルード
 #include "ranking.h"
 #include "timeeffect.h"
+#include "shadow.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -33,6 +35,7 @@
 HRESULT InitWorkYamaguchi(int nType)
 {
 	InitTimeeffect(nType);
+	InitShadow(nType);
 	return S_OK;
 }
 
@@ -42,6 +45,7 @@ HRESULT InitWorkYamaguchi(int nType)
 void UninitWorkYamaguchi(void)
 {
 	UninitTimeeffect();
+	UninitShadow();
 
 }
 
@@ -59,6 +63,7 @@ void UpdateWorkYamaguchi(void)
 	case STAGE_MYHOUSE:
 
 		UpdateTimeeffect();
+		UpdateShadow();
 		break;
 	}
 
@@ -67,7 +72,7 @@ void UpdateWorkYamaguchi(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkYamaguchi(void)
+void DrawWorkYamaguchi(int no)
 {
 	switch (GetStage())
 	{
@@ -76,8 +81,8 @@ void DrawWorkYamaguchi(void)
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
-
-		DrawTimeeffect();
+		if (no == GAME_SHADOW)	DrawShadow();
+		if (no == GAME_TIMEEFF)	DrawTimeeffect();
 		break;
 	}
 }

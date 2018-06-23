@@ -77,7 +77,7 @@ void UpdateCamera(void)
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
 	
-	D3DXVECTOR3 limit;
+	D3DXVECTOR3 limit;//ƒJƒƒ‰‚ªêŠO‚Éo‚½Žž‚ÉŽg—p
 	int fieldnum;
 
 	if (GetStage() == STAGE_HOUSE1
@@ -91,79 +91,10 @@ void UpdateCamera(void)
 	{
 		fieldnum = 0;
 	}
-FIELD *field = GetField(fieldnum);
+	FIELD *field = GetField(fieldnum);
 
-	float limitpos_x=field->Size.x/2;
-	float limitpos_z=field->Size.z/2;
-
-	if (fabs(camera->posCameraEye.z) > limitpos_z
-		|| fabs(camera->posCameraEye.x) > limitpos_x)
-
-	{
-		if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))
-		{
-			if (camera->posCameraEye.x < -limitpos_x)
-			{
-
-				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
-				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
-				camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
-				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
-																				//ˆÈ‰º‚R‚Â“¯—l
-			}
-			else if (camera->posCameraEye.x > limitpos_x)
-			{
-
-				limit = camera->posCameraEye - player->Eye;
-				D3DXVec3Normalize(&limit, &limit);
-				camera->fLength = (limitpos_x - player->Eye.x) / limit.x;
-				camera->posCameraEye = camera->fLength*limit;
-
-			}
-			else
-			{
-				//camera->fLength = camera->fChaseLength;
-			}
-
-		}
-
-		else if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))
-		{
-			if (camera->posCameraEye.z < -limitpos_z)
-			{
-
-				limit = camera->posCameraEye - player->Eye;
-				D3DXVec3Normalize(&limit, &limit);
-				camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;
-				camera->posCameraEye = camera->fLength*limit;
-
-			}
-			else if (camera->posCameraEye.z > limitpos_z)
-			{
-
-				limit = camera->posCameraEye - player->Eye;
-				D3DXVec3Normalize(&limit, &limit);
-				camera->fLength = (limitpos_z - player->Eye.z) / limit.z;
-				camera->posCameraEye = camera->fLength*limit;
-
-			}
-			else
-			{
-				camera->fLength = camera->fChaseLength;
-			}
-
-		}
-	}
-	else if (fabs(camera->posCameraEye.z) < limitpos_z
-		&& fabs(camera->posCameraEye.x) < limitpos_x)
-	{
-		camera->fLength = camera->fChaseLength;
-
-	}
-	if (camera->fLength > camera->fChaseLength)
-	{
-		camera->fLength = camera->fChaseLength;
-	}
+	float limitpos_x=field->Size.x/2;//x‚ÌŒÀŠE“_
+	float limitpos_z=field->Size.z/2;//z‚ÌŒÀŠE“_
 
 
 
@@ -200,39 +131,43 @@ FIELD *field = GetField(fieldnum);
 	{
 		if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
 		{// Ž‹“_ˆÚ“®uƒY[ƒ€ƒCƒ“v
-			//camera->posCameraEye.y -= CAMERA_MOVE_SPEED;
-			camera->fChaseLength -= CAMERA_MOVE_SPEED;
+
+			camera->fChaseLength = camera->fLength;//•Û‘¶‚³‚ê‚Ä‚é‹——£‚Æˆê’v‚³‚¹‚é
+
+			camera->fChaseLength -= CAMERA_MOVE_SPEED;//‹——£‚ð‹l‚ß‚é
 
 			// ˆÚ“®§ŒÀ
-			if (camera->fChaseLength < CAMERA_LENGTH_MIN)
+			if (camera->fChaseLength < CAMERA_LENGTH_MIN)//ˆê’èˆÈã‹ß‚Ã‚¢‚½‚ç
 			{
-				camera->fChaseLength = CAMERA_LENGTH_MIN;
+				camera->fChaseLength = CAMERA_LENGTH_MIN;//ˆê’è’l‚ÅŽ~‚ß‚é
 			}
-		camera->fLength = camera->fChaseLength;
+		camera->fLength = camera->fChaseLength;//•Û‘¶
 
 		}
 		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)
 		{
 			if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
 			{// Ž‹“_ˆÚ“®uƒY[ƒ€ƒAƒEƒgv
-			 //camera->posCameraEye.y += CAMERA_MOVE_SPEED;
-				camera->fChaseLength += CAMERA_MOVE_SPEED;
+				camera->fChaseLength = camera->fLength;//•Û‘¶‚³‚ê‚Ä‚é‹——£‚Æˆê’v‚³‚¹‚é
+
+				camera->fChaseLength += CAMERA_MOVE_SPEED;//‹——£‚ðŠJ‚¯‚é
 
 				// ˆÚ“®§ŒÀ
-				if (camera->fChaseLength > CAMERA_LENGTH_MAX)
+				if (camera->fChaseLength > CAMERA_LENGTH_MAX)//ˆê’èˆÈã‹ß‚Ã‚¢‚½‚ç
 				{
-					camera->fChaseLength = CAMERA_LENGTH_MAX;
+					camera->fChaseLength = CAMERA_LENGTH_MAX;//ˆê’è’l‚ÅŽ~‚ß‚é
 				}
-				camera->fLength = camera->fChaseLength;
+				camera->fLength = camera->fChaseLength;//•Û‘¶
 
 			}
 		}
 	}
 
+
 	// ƒJƒƒ‰ƒŠƒZƒbƒg
 	if (GetKeyboardTrigger(DIK_X))
 	{
-		camera->rotDest = player->rot.y + D3DX_PI;
+		camera->rotDest = player->rot.y + D3DX_PI;//ƒvƒŒƒCƒ„[‚ÌŒã‚ë‚ÉƒZƒbƒg‚µ‚È‚¨‚·
 
 		CameraReset = true;
 	}
@@ -243,6 +178,62 @@ FIELD *field = GetField(fieldnum);
 		CameraWorkReset();
 	}
 
+	if (fabs(camera->posCameraEye.z) > limitpos_z
+		|| fabs(camera->posCameraEye.x) > limitpos_x)//ƒJƒƒ‰À•W‚ªŒÀŠE“_‚ð‰z‚µ‚½ê‡
+
+	{
+		if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))//XÀ•W‚Ì‚Ù‚¤‚ª‘å‚«‚©‚Á‚½‚ç
+		{
+			if (camera->posCameraEye.x < -limitpos_x)
+			{
+
+				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
+				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
+				camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+																				//ˆÈ‰º‚R‚Â“¯—l
+			}
+			else if (camera->posCameraEye.x > limitpos_x)
+			{
+
+				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
+				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
+				camera->fLength = (limitpos_x - player->Eye.x) / limit.x;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+
+			}
+
+		}
+
+		else if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))//ZÀ•W‚Ì‚Ù‚¤‚ª‘å‚«‚©‚Á‚½‚ç
+		{
+			if (camera->posCameraEye.z < -limitpos_z)
+			{
+
+				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
+				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
+				camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+
+			}
+			else if (camera->posCameraEye.z > limitpos_z)
+			{
+
+				limit = camera->posCameraEye - player->Eye;						//limit‚ÉÀ•W·Ši”[
+				D3DXVec3Normalize(&limit, &limit);								//limit‚ð³‹K‰»
+				camera->fLength = (limitpos_z - player->Eye.z) / limit.z;		//³‹K‰»‚µ‚½limit‚©‚ç•Ç‚ÌŠO‚Éo‚È‚¢‚æ‚¤‚Élength‚ÌC³
+				camera->posCameraEye = camera->fLength*limit;					//ÄÝ’è‚µ‚½length‚©‚çƒJƒƒ‰À•W‚ÌÄÝ’è
+
+			}
+		}
+
+	}
+	if (camera->fLength > camera->fChaseLength)//•Û‘¶‚µ‚½‹——£ˆÈã‚É‚È‚Á‚Ä‚¢‚½‚ç
+	{
+		camera->fLength = camera->fChaseLength;//•Û‘¶‚µ‚½‹——£‚ÉÝ’è
+	}
+
+
 	// ƒJƒƒ‰ƒ[ƒN
 	CameraWork(&(player->Eye));
 
@@ -251,13 +242,15 @@ FIELD *field = GetField(fieldnum);
 	camera->rotDest = PiCalculate360(camera->rotDest);
 
 #ifdef _DEBUG
-	//PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
+	PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
 	//PrintDebugProc("CameraReset: %d\n", CameraReset);
 	//PrintDebugProc("CameraLength: %f\n", camera->fLength);
 	//PrintDebugProc("\n");
 
 #endif
 	
+	PrintDebugProc("ƒJƒƒ‰‚Ì‹——£[%f] \n", camera->fLength);
+	PrintDebugProc("ƒJƒƒ‰‚Ì‹——£[%f] \n", camera->fChaseLength);
 
 
 }

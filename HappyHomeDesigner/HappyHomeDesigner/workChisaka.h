@@ -23,6 +23,6 @@
 HRESULT InitWorkChisaka(int nType);
 void UninitWorkChisaka(void);
 void UpdateWorkChisaka(void);
-void DrawWorkChisaka(void);
+void DrawWorkChisaka(int no);
 
 #endif

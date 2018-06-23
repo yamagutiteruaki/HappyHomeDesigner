@@ -9,6 +9,7 @@
 #include "fade.h"
 #include "debugproc.h"
 #include "stage.h"
+#include "score.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -126,6 +127,14 @@ void UninitResultLogo(void)
 void UpdateResultLogo(void)
 {
 	SetVertexTexture();
+
+	if (GetSlotCount() == NUM_PLACE)
+	{
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+	}
 
 	PrintDebugProc("[クリア状況  ：(%d)]\n", GetGameEnd());
 

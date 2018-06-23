@@ -24,6 +24,6 @@
 HRESULT InitWorkMatsuo(int nType);
 void UninitWorkMatsuo(void);
 void UpdateWorkMatsuo(void);
-void DrawWorkMatsuo(void);
+void DrawWorkMatsuo(int no);
 
 #endif

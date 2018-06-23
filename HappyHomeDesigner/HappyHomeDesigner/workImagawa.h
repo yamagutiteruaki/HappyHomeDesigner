@@ -23,6 +23,6 @@
 HRESULT InitWorkImagawa(int nType);
 void UninitWorkImagawa(void);
 void UpdateWorkImagawa(void);
-void DrawWorkImagawa(void);
+void DrawWorkImagawa(int no);
 
 #endif

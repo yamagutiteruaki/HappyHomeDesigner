@@ -8,6 +8,8 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "game.h"
+
 
 // 今川担当分で必要なインクルード
 #include "field.h"
@@ -71,7 +73,7 @@ void UpdateWorkImagawa(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkImagawa(void)
+void DrawWorkImagawa(int no)
 {
 	switch (GetStage())
 	{
@@ -82,8 +84,9 @@ void DrawWorkImagawa(void)
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
-		DrawField();
-		DrawWall();
+
+		if (no==GAME_FIELD)		DrawField();
+		if (no == GAME_WALL)	DrawWall();
 		break;
 	case STAGE_RESULT:
 		break;

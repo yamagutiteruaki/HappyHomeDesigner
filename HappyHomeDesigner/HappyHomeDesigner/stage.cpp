@@ -223,10 +223,6 @@ void UpdateStage(void)
 		UpdateResult();				//ƒŠƒUƒ‹ƒg
 		SetSoundBgm(SOUND_BGM_RESULT);
 
-		if (GetKeyboardTrigger(DIK_RETURN))
-		{
-			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-		}
 
 		break;
 	}

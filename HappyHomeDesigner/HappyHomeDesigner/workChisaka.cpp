@@ -8,6 +8,7 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "game.h"
 
 // 千坂担当分で必要なインクルード
 #include "police.h"
@@ -77,22 +78,21 @@ void UpdateWorkChisaka(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkChisaka(void)
+void DrawWorkChisaka(int no)
 {
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
-		DrawPolice();
-		DrawSearch();
-		DrawFurniture();
+		if (no == GAME_POLICE)	DrawPolice();
+		if (no == GAME_SEARCH)	DrawSearch();
 		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
-		DrawFurniture();
+		if (no == GAME_FURNITURE)	DrawFurniture();
 		break;
 	case STAGE_RESULT:
 		break;

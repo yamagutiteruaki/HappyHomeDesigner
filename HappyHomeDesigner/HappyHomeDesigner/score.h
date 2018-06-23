@@ -32,5 +32,6 @@ HRESULT InitScore(int nType);
 void UninitScore(void);
 void UpdateScore(void);
 void DrawScore(void);
+int GetSlotCount(void);
 
 #endif

@@ -17,6 +17,26 @@
 * 構造体定義
 *******************************************************************************/
 
+enum
+{
+	GAME_SHADOW,
+	GAME_FIELD,
+	GAME_WALL,
+	GAME_POLICE,
+	GAME_SEARCH,
+	GAME_FURNITURE,
+	GAME_PLAYER,
+	GAME_WWWW,
+	GAME_TIMEEFF,
+	GAME_CLOCK,
+	GAME_WEIGHT,
+	GAME_VOICE,
+	GAME_ARREST,
+	GAME_BUTTON,
+	GAME_DRAW_MAX,
+
+};
+
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************

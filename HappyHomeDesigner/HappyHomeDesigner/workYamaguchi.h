@@ -23,6 +23,6 @@
 HRESULT InitWorkYamaguchi(int nType);
 void UninitWorkYamaguchi(void);
 void UpdateWorkYamaguchi(void);
-void DrawWorkYamaguchi(void);
+void DrawWorkYamaguchi(int no);
 
 #endif

@@ -20,6 +20,8 @@
 #define HAVE_MAX			(5)			// 家具を持てる最大数
 #define WT_MAX				(5)			// 所持重量制限
 
+#define PLAYER_SHADOW_SIZE	(23.0f)			// プレイヤーの影サイズ
+
 //*****************************************************************************
 // 構造体宣言
 //*****************************************************************************
@@ -50,6 +52,11 @@ typedef struct		// プレイヤー構造体
 	int				weight;
 
 	int				havenum[HAVE_MAX];	
+
+	int				nIdxShadow;
+	float			fSizeShadow;
+	D3DXCOLOR		colShadow;
+	bool			bShadow;
 
 } PLAYER;
 

@@ -174,6 +174,7 @@
     <ClCompile Include="resultlogo.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="search.cpp" />
+    <ClCompile Include="shadow.cpp" />
     <ClCompile Include="sound.cpp" />
     <ClCompile Include="stage.cpp" />
     <ClCompile Include="timeeffect.cpp" />
@@ -215,6 +216,7 @@
     <ClInclude Include="resultlogo.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="search.h" />
+    <ClInclude Include="shadow.h" />
     <ClInclude Include="sound.h" />
     <ClInclude Include="stage.h" />
     <ClInclude Include="timeeffect.h" />

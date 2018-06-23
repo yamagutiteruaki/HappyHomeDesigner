@@ -101,15 +101,15 @@ void UpdateScore(void)
 	
 	if(slotTimer>60)
 	{
-		slotStart = true;
+		slotStart = true;//一定時間でスロットスタート
 		slotTimer = 0;
 	}
-	if (slotStart == true)
+	if (slotStart == true)//スロットが動いてるとき
 	{
-		for (int i = 0; i < NUM_PLACE - slotCount; i++)
+		for (int i = 0; i < NUM_PLACE - slotCount; i++)//指定の桁をスロット
 		{
 
-			slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//加算演出
+			slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//スロット演出
 			g_score += slotadd;
 
 			if (GetKeyboardTrigger(DIK_LSHIFT))//演出スキップ
@@ -126,12 +126,12 @@ void UpdateScore(void)
 		number = (g_score % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));	//指定桁確認
 		number2 = (g_maxscore % (long long)(powf(10.0f, (float)(slotCount + 1)))) / (long long)(powf(10.0f, (float)(slotCount)));//指定桁確認
 
-		if (slotTimer > SLOT_INTERVAL && number == number2)//演出ストップ処理
+		if (slotTimer > SLOT_INTERVAL && number == number2 && slotCount < NUM_PLACE)//演出ストップ処理
 		{
 			slotCount++;
 			slotTimer = 0;
 		}
-		else if (slotTimer == NUM_PLACE)
+		else if (slotCount == NUM_PLACE)
 		{
 			g_score = g_maxscore;
 		}
@@ -262,3 +262,7 @@ void SetTextureScore(int idx, int number)
 	g_pD3DVtxBuffScore->Unlock();
 }
 
+int GetSlotCount(void)
+{
+	return slotCount;
+}

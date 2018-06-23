@@ -68,11 +68,11 @@ void UpdateTitle(void)
 //=============================================================================
 void DrawTitle(void)
 {
-	DrawWorkChisaka();
-	DrawWorkSon();
-	DrawWorkSekiguchi();
-	DrawWorkMatsuo();
-	DrawWorkImagawa();
-	DrawWorkYamaguchi();
+	DrawWorkChisaka(0);
+	DrawWorkSon(0);
+	DrawWorkSekiguchi(0);
+	DrawWorkMatsuo(0);
+	DrawWorkImagawa(0);
+	DrawWorkYamaguchi(0);
 }
 
