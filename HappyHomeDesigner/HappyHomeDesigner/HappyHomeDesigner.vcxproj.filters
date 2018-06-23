@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\stage\game\effect">
       <UniqueIdentifier>{807c772c-cbb3-462a-ad38-17fc2c3d75e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\stage\result\ranking">
+      <UniqueIdentifier>{0931cbf5-70c6-4e52-b9d9-baa5782ee0b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="workChisaka.cpp">

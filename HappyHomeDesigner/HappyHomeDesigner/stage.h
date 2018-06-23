@@ -35,6 +35,7 @@ enum
 	STAGE_HOUSE2,		//家2
 	STAGE_HOUSE3,		//家3
 	STAGE_MYHOUSE,		//家4
+	STAGE_RANKING,		//ランキング用ステージ
 	STAGE_MAX
 };
 
