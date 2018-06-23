@@ -162,6 +162,9 @@
     <ClCompile Include="shadow.cpp">
       <Filter>ソース ファイル\stage\game\effect</Filter>
     </ClCompile>
+    <ClCompile Include="home.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -283,6 +286,9 @@
     </ClInclude>
     <ClInclude Include="shadow.h">
       <Filter>ソース ファイル\stage\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="home.h">
+      <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
