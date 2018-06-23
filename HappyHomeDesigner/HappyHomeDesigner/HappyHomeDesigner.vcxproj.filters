@@ -37,6 +37,9 @@
     <Filter Include="ソース ファイル\stage\game\effect">
       <UniqueIdentifier>{807c772c-cbb3-462a-ad38-17fc2c3d75e6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ソース ファイル\stage\result\ranking">
+      <UniqueIdentifier>{0931cbf5-70c6-4e52-b9d9-baa5782ee0b4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="workChisaka.cpp">
@@ -156,6 +159,12 @@
     <ClCompile Include="ranking.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClCompile>
+    <ClCompile Include="shadow.cpp">
+      <Filter>ソース ファイル\stage\game\effect</Filter>
+    </ClCompile>
+    <ClCompile Include="home.cpp">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -273,6 +282,12 @@
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
     <ClInclude Include="ranking.h">
+      <Filter>ソース ファイル\stage\game</Filter>
+    </ClInclude>
+    <ClInclude Include="shadow.h">
+      <Filter>ソース ファイル\stage\game\effect</Filter>
+    </ClInclude>
+    <ClInclude Include="home.h">
       <Filter>ソース ファイル\stage\game</Filter>
     </ClInclude>
   </ItemGroup>

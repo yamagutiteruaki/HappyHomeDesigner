@@ -8,6 +8,8 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "game.h"
+
 
 // 関口担当分で必要なインクルード
 #include "clock.h"
@@ -34,11 +36,11 @@
 HRESULT InitWorkSekiguchi(int nType)
 {
 
-	InitClock(0);
+	InitClock(nType);
 
-	InitResultLogo();
+	InitResultLogo(nType);
 
-	InitScore();
+	InitScore(nType);
 
 	return S_OK;
 }
@@ -71,7 +73,7 @@ void UpdateWorkSekiguchi(void)
 	case STAGE_MYHOUSE:
 
 		UpdateClock();
-		UpdateScore();
+		//UpdateScore();
 
 		break;
 	case STAGE_RESULT:
@@ -87,7 +89,7 @@ void UpdateWorkSekiguchi(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkSekiguchi(void)
+void DrawWorkSekiguchi(int no)
 {
 	switch (GetStage())
 	{
@@ -99,7 +101,7 @@ void DrawWorkSekiguchi(void)
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
 
-		DrawClock();
+		if (no == GAME_CLOCK)	DrawClock();
 
 		break;
 	case STAGE_RESULT:

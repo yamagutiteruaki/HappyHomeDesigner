@@ -25,7 +25,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitResultLogo(void);
+HRESULT InitResultLogo(int nType);
 void UninitResultLogo(void);
 void UpdateResultLogo(void);
 void DrawResultLogo(void);

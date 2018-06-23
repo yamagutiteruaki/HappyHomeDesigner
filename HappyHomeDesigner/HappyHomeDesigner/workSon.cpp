@@ -7,11 +7,13 @@
 //=============================================================================
 #include "workSon.h"
 #include "stage.h"
+#include "game.h"
+
+// 宋担当分で必要なインクルード
 
 #include "player.h"
 #include "wwwwwwww.h"
 
-// 宋担当分で必要なインクルード
 
 // デバッグ用
 #ifdef _DEBUG
@@ -33,7 +35,7 @@
 HRESULT InitWorkSon(int nType)
 {
 	InitPlayer(nType);
-	InitWWWW();
+	InitWWWW(nType);
 
 	return S_OK;
 }
@@ -76,21 +78,21 @@ void UpdateWorkSon(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkSon(void)
+void DrawWorkSon(int no)
 {
 	switch (GetStage())
 	{
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
-		DrawPlayer();
-		DrawWWWW();
+		if (no == GAME_PLAYER)	DrawPlayer();
+		if (no == GAME_WWWW)	DrawWWWW();
 		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
-		DrawPlayer();
+		if (no == GAME_PLAYER)	DrawPlayer();
 		break;
 	case STAGE_RESULT:
 		break;

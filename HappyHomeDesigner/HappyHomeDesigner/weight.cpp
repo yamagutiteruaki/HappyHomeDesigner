@@ -9,6 +9,7 @@
 #include "input.h"
 #include "clock.h"
 #include "player.h"
+#include "stage.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -43,17 +44,19 @@ HRESULT InitWeight(int type)
 	PowerDest = 0.0f;
 	MakeVertexWeight(pDevice);										// 頂点情報の作成
 
-										// テクスチャーの初期化を行う
-		// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-		TEXTURE_WEIGHT,				// ファイルの名前
-		&g_pD3DTextureWeight);			// 読み込むメモリのポインタ
+	if (type == STAGE_INIT_FAST)
+	{
+		// テクスチャーの初期化を行う
+// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
+			TEXTURE_WEIGHT,				// ファイルの名前
+			&g_pD3DTextureWeight);			// 読み込むメモリのポインタ
 
-											// テクスチャの読み込み
-	D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-		TEXTURE_WEIGHT2,				// ファイルの名前
-		&g_pD3DTextureWeightMeter);			// 読み込むメモリのポインタ
-
+												// テクスチャの読み込み
+		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
+			TEXTURE_WEIGHT2,				// ファイルの名前
+			&g_pD3DTextureWeightMeter);			// 読み込むメモリのポインタ
+	}
 
 
 	return S_OK;

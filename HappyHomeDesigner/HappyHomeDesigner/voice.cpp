@@ -47,7 +47,7 @@ HRESULT InitVoice(int type)
 	VOICE *voice = voiceWk;				// エネミーのポインターを初期化
 
 										// テクスチャーの初期化を行う？
-	if (type == 0)
+	if (type == STAGE_INIT_FAST)
 	{
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ

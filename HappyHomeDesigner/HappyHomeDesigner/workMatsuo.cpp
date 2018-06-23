@@ -8,6 +8,8 @@
 #include "stage.h"
 #include "input.h"
 #include "fade.h"
+#include "game.h"
+
 
 // 松尾担当分で必要なインクルード
 #include "title.h"
@@ -87,7 +89,7 @@ void UpdateWorkMatsuo(void)
 //=============================================================================
 // 描画処理
 //=============================================================================
-void DrawWorkMatsuo(void)
+void DrawWorkMatsuo(int no)
 {
 	switch (GetStage())
 	{
@@ -95,15 +97,15 @@ void DrawWorkMatsuo(void)
 		DrawTitlelogo();
 		break;
 	case STAGE_GAME:
+		if (no == GAME_VOICE)	DrawVoice();
+		if (no == GAME_ARREST)	DrawArrest();
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
 
-		DrawWeight();
-		DrawVoice();
-		DrawArrest();
-		DrawButton();
+		if (no == GAME_WEIGHT)	DrawWeight();
+		if (no == GAME_BUTTON)	DrawButton();
 		break;
 	case STAGE_RESULT:
 		break;

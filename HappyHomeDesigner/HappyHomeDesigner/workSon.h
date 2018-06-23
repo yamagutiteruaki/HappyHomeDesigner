@@ -23,6 +23,6 @@
 HRESULT InitWorkSon(int nType);
 void UninitWorkSon(void);
 void UpdateWorkSon(void);
-void DrawWorkSon(void);
+void DrawWorkSon(int no);
 
 #endif

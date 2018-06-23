@@ -9,6 +9,7 @@
 #include "fade.h"
 #include "debugproc.h"
 #include "stage.h"
+#include "score.h"
 
 //*****************************************************************************
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
@@ -32,33 +33,35 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffResultGameOver = NULL;	// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ
 //=============================================================================
 // ‰Šú‰»ˆ—
 //=============================================================================
-HRESULT InitResultLogo(void)
+HRESULT InitResultLogo(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
 	// ’¸“_î•ñ‚Ìì¬
 	MakeVertexResultLogo(pDevice);
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		TEXTURE_RESULT,							// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&g_pD3DTextureResult);					// “Ç‚İ‚Şƒƒ‚ƒŠ[
+	if (nType == STAGE_INIT_FAST)
+	{
+		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			TEXTURE_RESULT,							// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			&g_pD3DTextureResult);					// “Ç‚İ‚Şƒƒ‚ƒŠ[
 
-	// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		TEXTURE_RESULT_LOGO2,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&g_pD3DTextureResultLogo2);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
+		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			TEXTURE_RESULT_LOGO2,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			&g_pD3DTextureResultLogo2);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
 
-												// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	//D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-	//	TEXTURE_RESULT_CLEAR,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-	//	&g_pD3DTextureResultClear);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
+													// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		//D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		//	TEXTURE_RESULT_CLEAR,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+		//	&g_pD3DTextureResultClear);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
 
-												// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
-	D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
-		TEXTURE_RESULT_CLEAR,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
-		&g_pD3DTextureResultGameOver);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
-
+													// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		D3DXCreateTextureFromFile(pDevice,			// ƒfƒoƒCƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+			TEXTURE_RESULT_CLEAR,					// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			&g_pD3DTextureResultGameOver);				// “Ç‚İ‚Şƒƒ‚ƒŠ[
+	}
 
 	return S_OK;
 }
@@ -123,6 +126,15 @@ void UninitResultLogo(void)
 //=============================================================================
 void UpdateResultLogo(void)
 {
+	SetVertexTexture();
+
+	if (GetSlotCount() == NUM_PLACE)
+	{
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
+	}
 
 	PrintDebugProc("[ƒNƒŠƒAó‹µ  F(%d)]\n", GetGameEnd());
 	SetVertexTexture();
@@ -334,7 +346,10 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 
 	return S_OK;
 }
-	
+
+//================================================================
+//ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+//================================================================
 void SetVertexTexture(void)
 {
 	int Texptern=GetGameEnd();

@@ -22,7 +22,7 @@
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
-HRESULT InitTimeeffect(void);
+HRESULT InitTimeeffect(int nType);
 void UninitTimeeffect(void);
 void UpdateTimeeffect(void);
 void DrawTimeeffect(void);

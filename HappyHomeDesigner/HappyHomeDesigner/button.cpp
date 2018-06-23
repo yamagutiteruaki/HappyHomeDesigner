@@ -48,15 +48,16 @@ HRESULT InitButton(int type)
 	BUTTON *button = buttonWk;				// エネミーのポインターを初期化
 
 
-
-	for (int i = 0; i < BUTTON_MAX; i++)
+	if (type == STAGE_INIT_FAST)
 	{
-		D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
-			FileNameButton[i],				// ファイルの名前
-			&g_pD3DTextureButton[i]);			// 読み込むメモリのポインタ
+		for (int i = 0; i < BUTTON_MAX; i++)
+		{
+			D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
+				FileNameButton[i],				// ファイルの名前
+				&g_pD3DTextureButton[i]);			// 読み込むメモリのポインタ
 
-	}
-											// エネミーの初期化処理
+		}
+	}										// エネミーの初期化処理
 	for (int i = 0; i < BUTTON_MAX; i++, button++)
 	{
 		button->use = false;										// 使用

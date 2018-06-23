@@ -71,12 +71,17 @@ void UpdateGame(void)
 //=============================================================================
 void DrawGame(void)
 {
-	DrawWorkImagawa();
 
-	DrawWorkChisaka();
-	DrawWorkSon();
-	DrawWorkYamaguchi();
-	DrawWorkSekiguchi();
-	DrawWorkMatsuo();
+	for (int i = 0; i < GAME_DRAW_MAX; i++)
+	{
+		DrawWorkImagawa(i);
+
+		DrawWorkChisaka(i);
+		DrawWorkSon(i);
+		DrawWorkYamaguchi(i);
+
+		DrawWorkSekiguchi(i);
+		DrawWorkMatsuo(i);
+	}
 }
 

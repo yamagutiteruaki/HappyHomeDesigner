@@ -79,8 +79,8 @@ typedef struct
 	float				fVAngle;
 	float				fHAngleDiff;
 	float				fVAngleDiff;
-	float				fLength;
-	float				fChaseLength;
+	float				fLength;				//注視点とカメラの距離
+	float				fChaseLength;			//fLengthを保存するため　カメラの制限時に使用
 	float				fLengthTemp;
 	float				fMoveSpeed;
 	float				fRotSpeed;

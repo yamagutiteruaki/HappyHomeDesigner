@@ -45,7 +45,7 @@ const char *FileNameWall[WALL_KIND] =
 //=============================================================================
 // 初期化処理
 //=============================================================================
-HRESULT InitWall(void)
+HRESULT InitWall(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	WALL *wall = GetWall(0);
@@ -67,16 +67,20 @@ HRESULT InitWall(void)
 		wall->Size.z = wall->Pos.z*2;
 
 	}
-		for(int i=0;i<WALL_KIND*WALL_MAX;i++)
+
+	if (nType == STAGE_INIT_FAST)
 	{
+		for (int i = 0; i < WALL_KIND*WALL_MAX; i++)
+		{
 
-		// テクスチャの読み込み
-		D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
-			FileNameWall[i/4],			// ファイルの名前
-			&g_pD3DTextureWall[i]);	// 読み込むメモリー
+			// テクスチャの読み込み
+			D3DXCreateTextureFromFile(pDevice,					// デバイスへのポインタ
+				FileNameWall[i / 4],			// ファイルの名前
+				&g_pD3DTextureWall[i]);	// 読み込むメモリー
 
-		MakeVertexWall(pDevice,i);
+			MakeVertexWall(pDevice, i);
 
+		}
 	}
 		return S_OK;
 }
