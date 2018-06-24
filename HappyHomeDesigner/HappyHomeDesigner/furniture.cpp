@@ -468,6 +468,16 @@ void FurniturePut()
 
 	if (GetStage() != STAGE_GAME)
 	{
+
+		if (ply->weight > 0)
+		{
+			Button(true, PUT_BUTTON);
+		}
+		else
+		{
+			Button(false, PUT_BUTTON);
+		}
+
 		// ƒ{ƒ^ƒ““ü—Í
 		if (GetKeyboardTrigger(DIK_B) || IsButtonTriggered(0, BUTTON_B))
 		{
@@ -501,6 +511,10 @@ void FurniturePut()
 			}
 
 		}
+	}
+	else
+	{
+		Button(false, PUT_BUTTON);
 	}
 }
 

@@ -66,7 +66,7 @@ bool dash = FALSE;
 int dashTimer = 0;
 float vel = 0.0f;
 const float velRate = 0.4f;
-int resetno = 3;
+int resetno ;
 
 
 //=============================================================================
@@ -154,6 +154,8 @@ HRESULT InitPlayer(int nType)
 		}
 
 	}
+
+	resetno = 3;
 
 	return S_OK;
 
@@ -348,7 +350,6 @@ void UpdatePlayer(void)
 		SetVertexShadow(player->nIdxShadow, player->fSizeShadow, player->fSizeShadow);
 		SetColorShadow(player->nIdxShadow, player->colShadow);
 	}
-
 
 }
 

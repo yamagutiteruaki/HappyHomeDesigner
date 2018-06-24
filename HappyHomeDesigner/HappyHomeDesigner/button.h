@@ -39,7 +39,7 @@ typedef struct	// エネミー構造体
 	float			Radius;						// エネミーの半径
 	float			BaseAngle;					// エネミーの角度
 
-	float rate;
+	D3DXVECTOR2		rate;
 
 
 } BUTTON;

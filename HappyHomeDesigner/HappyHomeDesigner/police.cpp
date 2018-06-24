@@ -13,6 +13,7 @@
 #include "field.h"
 #include "collision.h"
 #include "calculate.h"
+#include "shadow.h"
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -392,6 +393,32 @@ void UpdatePolice(void)
 	//PrintDebugProc("[右腕の回転角度  ：(%f)]\n", policeArm->fangleXZ);
 	PrintDebugProc("[ポリスの当たり判定有効状態  ：(%d)]\n", police->able_hit);
 #endif
+
+	police = &policeWk[0];
+
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		if (GetStage() == STAGE_GAME)
+		{
+			// シャドウ
+			if (!police->bShadow)
+			{	// シャドウ設置
+				police->nIdxShadow = CreateShadow(police->Eye, 25.0f, 25.0f);
+				police->fSizeShadow = PLAYER_SHADOW_SIZE;
+				police->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
+				police->bShadow = true;
+			}
+			else
+			{
+				// シャドウ管理
+				SetPositionShadow(police->nIdxShadow, D3DXVECTOR3(police->Eye.x, 0.2f, police->Eye.z));
+				SetVertexShadow(police->nIdxShadow, police->fSizeShadow, police->fSizeShadow);
+				SetColorShadow(police->nIdxShadow, police->colShadow);
+			}
+		}
+		
+	}
+
 }
 //=============================================================================
 // 描画処理

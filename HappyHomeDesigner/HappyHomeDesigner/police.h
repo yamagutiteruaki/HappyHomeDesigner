@@ -76,6 +76,13 @@ public:
 	int				key2;							// 移動フラグ切り替えカウント用
 	int				num;							// 親子関係識別用
 	int				type;							// 本体の種類(今は使わないのでNULL)
+
+
+	int				nIdxShadow;
+	float			fSizeShadow;
+	D3DXCOLOR		colShadow;
+	bool			bShadow;
+
 };
 class POLICE_ARM :public POLICE		// ポリスアームクラス
 {
