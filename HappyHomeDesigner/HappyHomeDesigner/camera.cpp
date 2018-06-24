@@ -13,6 +13,7 @@
 #include "stage.h"
 #include "field.h"
 #include "furniture.h"
+#include "fade.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -30,6 +31,8 @@ void CameraWorkReset();
 //*****************************************************************************
 CAMERA	cameraWk;
 bool	CameraReset = false;	// カメラリセットのスイッチ
+float	fieldLength;
+
 
 //=============================================================================
 // 初期化処理
@@ -53,7 +56,7 @@ HRESULT InitCamera(int nType)
 
 	camera->rotDest = 0.0f;
 
-
+	fieldLength = camera->fLength;
 	return S_OK;
 }
 
@@ -232,7 +235,17 @@ void UpdateCamera(void)
 	{
 		camera->fLength = camera->fChaseLength;//保存した距離に設定
 	}
-
+	if (GetStage() == STAGE_GAME)
+	{
+		if (GetFade() == FADE_OUT)
+		{
+			fieldLength = camera->fLength;//フェードアウト時にフィールドで使用したlengthを保存
+		}
+		else if (GetFade() == FADE_IN)
+		{
+			camera->fLength = fieldLength;//フェードイン時にフィールドで使用してたlengthを呼び出す
+		}
+	}
 
 	// カメラワーク
 	CameraWork(&(player->Eye));
@@ -246,11 +259,10 @@ void UpdateCamera(void)
 	//PrintDebugProc("CameraReset: %d\n", CameraReset);
 	//PrintDebugProc("CameraLength: %f\n", camera->fLength);
 	//PrintDebugProc("\n");
-
-#endif
-	
 	PrintDebugProc("カメラの距離[%f] \n", camera->fLength);
 	PrintDebugProc("カメラの距離[%f] \n", camera->fChaseLength);
+	PrintDebugProc("保存されたlength[%f] \n", fieldLength);
+#endif
 
 
 }
