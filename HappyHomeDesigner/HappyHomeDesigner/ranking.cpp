@@ -38,6 +38,14 @@ enum
 	RANKING_CSV_SCORE,		// スコア(被害総額)
 	RANKING_CSV_MAX,
 };
+enum
+{	// 順位
+	FIRST=0,				// 一位
+	SECOND,					// 二位
+	THIRD,					// 三位
+	FOURTH					// 四位
+};
+
 //=============================================================================
 // ランキング処理
 //=============================================================================
@@ -45,13 +53,23 @@ void Ranking(void)
 {
 	// ランキング用csvファイル読み込み
 	LoadRankingCsv();
-	// スコアをもとに3位のスコアと比較し、3位のスコアより低ければランキング更新しない→ランキング表示にスキップ
-
-	// 3位よりスコア高ければランキング更新処理を行う(ソート)
-	RankingSort();
-	// 最新のランキング用csvファイル作成
-	WriteRankingCsv();
-	// ランキング表示
+	// IDの最大値を抽出する
+	int max = rankingWk[0].id;	// id最大値格納用
+	for (int i = 1; i < RANKING_MAX - 1; i++)
+	{
+		if (max < rankingWk[i].id) max = rankingWk[i].id;
+	}
+	// 被害金額(スコア)を取得(一時的に四位のスコアとする)
+	rankingWk[FOURTH].score = GetPrice();
+	rankingWk[FOURTH].id = max + 1;			// ID付与(既存のIDの最大値+1のID)
+	// スコアをもとに3位のスコアと比較し、3位のスコアより低ければランキング更新しない
+	if (rankingWk[FOURTH].score > rankingWk[THIRD].score)
+	{	// 3位よりスコア高ければランキング更新処理を行う(ソート)
+		RankingSort();
+		// 最新のランキング用csvファイル作成
+		WriteRankingCsv();
+	}
+	// ランキング表示？
 
 }
 //=============================================================================
@@ -127,8 +145,8 @@ void WriteRankingCsv(void)
 		// 一行目を出力
 		fprintf(fp, "id,rank,score\n");
 		// 各データをカンマ区切りで出力
-		for (int i = 0; i < GetRankingCnt(); i++, ranking++)
-		{	// 読み込んだ数だけループ
+		for (int i = 0; i < RANKING_MAX - 1; i++, ranking++)
+		{	// 3位までのデータを書き込む
 			fprintf(fp, "%d,%d,%lld\n", ranking->id, ranking->rank, ranking->score);
 		}
 		fclose(fp);
