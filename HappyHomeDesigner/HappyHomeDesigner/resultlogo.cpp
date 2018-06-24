@@ -137,6 +137,7 @@ void UpdateResultLogo(void)
 	}
 
 	PrintDebugProc("[ƒNƒŠƒAó‹µ  F(%d)]\n", GetGameEnd());
+	SetVertexTexture();
 
 }
 

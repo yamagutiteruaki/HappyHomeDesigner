@@ -156,14 +156,14 @@
     <ClCompile Include="loadWwwwDB.cpp">
       <Filter>ソース ファイル\system</Filter>
     </ClCompile>
-    <ClCompile Include="ranking.cpp">
-      <Filter>ソース ファイル\stage\game</Filter>
-    </ClCompile>
     <ClCompile Include="shadow.cpp">
       <Filter>ソース ファイル\stage\game\effect</Filter>
     </ClCompile>
     <ClCompile Include="home.cpp">
       <Filter>ソース ファイル\stage\game</Filter>
+    </ClCompile>
+    <ClCompile Include="ranking.cpp">
+      <Filter>ソース ファイル\stage\result\ranking</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -281,14 +281,14 @@
     <ClInclude Include="loadWwwwDB.h">
       <Filter>ソース ファイル\system</Filter>
     </ClInclude>
-    <ClInclude Include="ranking.h">
-      <Filter>ソース ファイル\stage\game</Filter>
-    </ClInclude>
     <ClInclude Include="shadow.h">
       <Filter>ソース ファイル\stage\game\effect</Filter>
     </ClInclude>
     <ClInclude Include="home.h">
       <Filter>ソース ファイル\stage\game</Filter>
+    </ClInclude>
+    <ClInclude Include="ranking.h">
+      <Filter>ソース ファイル\stage\result\ranking</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
