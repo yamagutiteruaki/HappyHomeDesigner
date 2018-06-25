@@ -14,6 +14,7 @@
 #include "collision.h"
 #include "calculate.h"
 #include "shadow.h"
+#include "fade.h"
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -423,11 +424,6 @@ void UpdatePolice(void)
 				SetVertexShadow(police->nIdxShadow, police->fSizeShadow, police->fSizeShadow);
 				SetColorShadow(police->nIdxShadow, police->colShadow);
 			}
-		}
-		else if (GetStage() != STAGE_GAME)
-		{
-			ReleaseShadow(police->nIdxShadow);
-			police->bShadow = false;
 		}
 
 		

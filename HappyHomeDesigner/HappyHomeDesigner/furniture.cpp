@@ -324,7 +324,7 @@ int FurnitureColi()
 		#endif
 
 		// 取れる範囲内かとうか
-		if (dist <= distCheck)
+		if (dist <= distCheck&&ply->weight+fnt->weight<=WT_MAX)
 		{
 			// メッセージ表示
 			#ifdef _DEBUG
