@@ -153,6 +153,11 @@ HRESULT InitPlayer(int nType)
 			player->havenum[j] = -1;
 		}
 
+		player->nIdxShadow = -1;
+		player->fSizeShadow= PLAYER_SHADOW_SIZE;
+		player->colShadow= D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
+		player->bShadow=false;
+
 	}
 
 	resetno = 3;
@@ -335,22 +340,33 @@ void UpdatePlayer(void)
 	player->rot.y = PiCalculate360(player->rot.y);
 	player->rotDest.y = PiCalculate360(player->rotDest.y);
 
-	// シャドウ
-	if (!player->bShadow)
-	{	// シャドウ設置
-		player->nIdxShadow = CreateShadow(player->Eye, 25.0f, 25.0f);
-		player->fSizeShadow = PLAYER_SHADOW_SIZE;
-		player->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
-		player->bShadow = true;
-	}
-	else
+	if (GetStage() == STAGE_GAME
+		||GetStage() == STAGE_HOUSE1
+		||GetStage() == STAGE_HOUSE2
+		||GetStage() == STAGE_HOUSE3
+		||GetStage() == STAGE_MYHOUSE)
 	{
-		// シャドウ管理
-		SetPositionShadow(player->nIdxShadow, D3DXVECTOR3(player->Eye.x, 0.2f, player->Eye.z));
-		SetVertexShadow(player->nIdxShadow, player->fSizeShadow, player->fSizeShadow);
-		SetColorShadow(player->nIdxShadow, player->colShadow);
+		// シャドウ
+		if (!player->bShadow)
+		{	// シャドウ設置
+			player->nIdxShadow = CreateShadow(player->Eye, 25.0f, 25.0f);
+			player->fSizeShadow = PLAYER_SHADOW_SIZE;
+			player->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
+			player->bShadow = true;
+		}
+		else
+		{
+			// シャドウ管理
+			SetPositionShadow(player->nIdxShadow, D3DXVECTOR3(player->Eye.x, 0.2f, player->Eye.z));
+			SetVertexShadow(player->nIdxShadow, player->fSizeShadow, player->fSizeShadow);
+			SetColorShadow(player->nIdxShadow, player->colShadow);
+		}
 	}
-
+	else if (GetStage() == STAGE_RESULT)
+	{
+		ReleaseShadow(player->nIdxShadow);
+		player->bShadow = false;
+	}
 }
 
 //=============================================================================

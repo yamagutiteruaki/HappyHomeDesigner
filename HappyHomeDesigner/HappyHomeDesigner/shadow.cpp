@@ -5,6 +5,7 @@
 //
 //=============================================================================
 #include "shadow.h"
+#include "stage.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -35,7 +36,7 @@ HRESULT InitShadow(int nType)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	if (nType == 0)
+	if (nType == STAGE_INIT_FAST)
 	{
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
