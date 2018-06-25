@@ -295,9 +295,17 @@ HRESULT InitPolice(int nType)
 		// 親子関係識別番号の初期設定(未使用:0番,使用：本体と同じ番号)
 		policeLeg->num = 0;
 	}
-
 	// 親子関係設定処理
 	SetParts();
+
+	police = &policeWk[0];
+	for (int i = 0; i < POLICE_MAX; i++, police++)
+	{
+		police->nIdxShadow = -1;;
+		police->fSizeShadow = PLAYER_SHADOW_SIZE;
+		police->colShadow = D3DXCOLOR(0.7f, 0.7f, 0.7f, 0.7f);
+		police->bShadow = false;
+	}
 
 	return S_OK;
 }
@@ -416,6 +424,12 @@ void UpdatePolice(void)
 				SetColorShadow(police->nIdxShadow, police->colShadow);
 			}
 		}
+		else if (GetStage() != STAGE_GAME)
+		{
+			ReleaseShadow(police->nIdxShadow);
+			police->bShadow = false;
+		}
+
 		
 	}
 
