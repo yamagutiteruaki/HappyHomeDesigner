@@ -74,9 +74,6 @@ void UninitCamera(void)
 void UpdateCamera(void)
 {
 
-#ifdef _DEBUG
-#endif
-
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
 	
@@ -110,8 +107,8 @@ void UpdateCamera(void)
 			camera->rotCamera.y -= D3DX_PI * 2.0f;
 		}
 
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fChaseLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fChaseLength;
+		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
+		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
 
 		CameraReset = false;
 	}
@@ -123,8 +120,8 @@ void UpdateCamera(void)
 			camera->rotCamera.y += D3DX_PI * 2.0f;
 		}
 
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fChaseLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fChaseLength;
+		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
+		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
 
 		CameraReset = false;
 	}
@@ -135,32 +132,32 @@ void UpdateCamera(void)
 		if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
 		{// 視点移動「ズームイン」
 
-			camera->fChaseLength = camera->fLength;//保存されてる距離と一致させる
+			camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
 
-			camera->fChaseLength -= CAMERA_MOVE_SPEED;//距離を詰める
+			camera->fLength -= CAMERA_MOVE_SPEED;//距離を詰める
 
 			// 移動制限
-			if (camera->fChaseLength < CAMERA_LENGTH_MIN)//一定以上近づいたら
+			if (camera->fLength < CAMERA_LENGTH_MIN)//一定以上近づいたら
 			{
-				camera->fChaseLength = CAMERA_LENGTH_MIN;//一定値で止める
+				camera->fLength = CAMERA_LENGTH_MIN;//一定値で止める
 			}
-		camera->fLength = camera->fChaseLength;//保存
+		camera->fChaseLength = camera->fLength;//保存
 
 		}
-		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)
+		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)//カメラが壁の外にある際はズームアウト出来ない
 		{
 			if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
 			{// 視点移動「ズームアウト」
-				camera->fChaseLength = camera->fLength;//保存されてる距離と一致させる
+				camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
 
-				camera->fChaseLength += CAMERA_MOVE_SPEED;//距離を開ける
+				camera->fLength += CAMERA_MOVE_SPEED;//距離を開ける
 
 				// 移動制限
-				if (camera->fChaseLength > CAMERA_LENGTH_MAX)//一定以上近づいたら
+				if (camera->fLength > CAMERA_LENGTH_MAX)//一定以上近づいたら
 				{
-					camera->fChaseLength = CAMERA_LENGTH_MAX;//一定値で止める
+					camera->fLength = CAMERA_LENGTH_MAX;//一定値で止める
 				}
-				camera->fLength = camera->fChaseLength;//保存
+				camera->fChaseLength = camera->fLength;//保存
 
 			}
 		}
@@ -229,6 +226,11 @@ void UpdateCamera(void)
 
 			}
 		}
+
+	}
+	else
+	{
+		camera->fLength = camera->fChaseLength;//保存した距離に設定
 
 	}
 	if (camera->fLength > camera->fChaseLength)//保存した距離以上になっていたら
