@@ -170,7 +170,7 @@ void UpdateFurniture(void)
 	FurnitureScaling(FurnitureNum);
 
 	if (GetKeyboardPress(DIK_LCONTROL))
-	{	// ctrlキーを押している間のみ
+	{	// 左ctrlキーを押している間のみ
 		// Mキーでcsvファイル新規作成
 		if (GetKeyboardTrigger(DIK_M))
 		{
@@ -210,7 +210,8 @@ void UpdateFurniture(void)
 	PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
 	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
 	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
-	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
+	PrintDebugProc("CSVファイルの上書き保存:  [左ctrlキー押しながらQキー]\n\n");
+	PrintDebugProc("CSVファイル新規作成:　　  [左ctrlキー押しながらMキー]\n\n");
 #endif
 }
 
