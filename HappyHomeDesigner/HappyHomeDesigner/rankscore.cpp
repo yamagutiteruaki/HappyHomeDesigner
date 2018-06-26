@@ -25,6 +25,7 @@ LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffRankscore = NULL;		// í∏ì_ÉoÉbÉtÉ@ÉCÉìÉ^Å[É
 
 RANKSCORE			rankscoreWk[RANKSCORE_MAX];
 
+bool				g_bCheckScore;
 
 //=============================================================================
 // èâä˙âªèàóù
@@ -45,7 +46,7 @@ HRESULT InitRankscore(int nType)
 	for (int i = 0; i < RANKSCORE_MAX; i++, rankscore++)
 	{
 		// ÉXÉRÉAÇÃèâä˙âª
-		rankscore->rankscore = 0;
+		rankscore->rankscore = 1234567890+i;
 		rankscore->maxrankscore = 0;
 
 		switch (i)
@@ -63,6 +64,7 @@ HRESULT InitRankscore(int nType)
 		}
 	}
 
+	g_bCheckScore=false;
 
 	// í∏ì_èÓïÒÇÃçÏê¨
 	MakeVertexRankscore(pDevice);
@@ -98,6 +100,33 @@ void UninitRankscore(void)
 //=============================================================================
 void UpdateRankscore(void)
 {
+	RANKSCORE *ras = &rankscoreWk[0];
+	RANKING *rank = GetRanking(0);
+
+	if (g_bCheckScore == false)
+	{
+		Ranking();
+		g_bCheckScore = true;
+	}
+
+	for (int i = 0; i < RANKSCORE_MAX; i++, ras++,rank++)
+	{
+		ras->rankscore = rank->score;
+		for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++)
+		{
+			int number;
+
+			number = (ras->rankscore % (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace)))) / (long long)(powf(10.0f, (float)(NUM_PLACE - nCntPlace - 1)));
+
+			nCntPlace += NUM_PLACE*i;
+			SetTextureRankscore(nCntPlace, number);
+			nCntPlace -= NUM_PLACE*i;
+
+		}
+
+		PrintDebugProc("[ÉXÉRÉA %dà ÅF(%g)]\n",i+1,ras->rankscore );
+	}
+
 }
 
 //=============================================================================
