@@ -18,8 +18,7 @@
 #include "button.h"
 #include "stage.h"
 #include "debugproc.h"
-#include "GetUI.h"
-
+#include "GetUI.h"#include "sound.h"
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -365,6 +364,8 @@ int FurnitureColi()
 				SetGetUI(ply->Eye);
 				//fnt = GetFurniture(0);
 				//(fnt + no)->use = FALSE;
+
+				SetSe(SE_TAKE, E_DS8_FLAG_NONE, CONTINUITY_ON);
 				
 			}
 			

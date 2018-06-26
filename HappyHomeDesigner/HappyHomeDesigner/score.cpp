@@ -112,7 +112,7 @@ void UpdateScore(void)
 			slotadd = (long long)(powf(10.0f, (float)(NUM_PLACE - i - 1)));//スロット演出
 			g_score += slotadd;
 
-			if (GetKeyboardTrigger(DIK_LSHIFT))//演出スキップ
+			if (GetKeyboardTrigger(DIK_LSHIFT || IsButtonTriggered(0, BUTTON_C)))//演出スキップ
 			{
 				g_score = g_maxscore;
 				slotCount = NUM_PLACE;

@@ -18,6 +18,7 @@
 #include "weight.h"
 #include "furniture.h"
 #include "load_csv.h"
+#include "sound.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -111,6 +112,8 @@ void UpdateVoice(void)
 #endif
 		if (voice->use == true)			// 使用している状態なら更新する
 		{
+			SetSe(SE_VOICE, E_DS8_FLAG_NONE, CONTINUITY_OFF);
+
 			//フレームを数える
 			voice->cnt_frame++;
 			if (voice->cnt_frame == 60)

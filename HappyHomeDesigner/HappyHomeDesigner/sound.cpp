@@ -39,13 +39,13 @@ long g_nVol[SOUND_BGM_MAX];
 const TCHAR* c_soundFilename[] = {
 	// BGM
 	_T("data/SOUND/BGM/bgm_maoudamashii_ethnic25.wav"),
-	_T("data/SOUND/BGM/bgm_maoudamashii_ethnic13.wav"),
+	_T("data/SOUND/BGM/Stage_bgm_maoudamashii_fantasy05.wav"),
 	_T("data/SOUND/BGM/bgm_maoudamashii_ethnic31.wav"),
 	// SE
-	_T("data/SOUND/SE/decision26.wav"),
-	_T("data/SOUND/SE/decision15.wav"),
-	_T("data/SOUND/SE/punch-swing1.wav"),
-	_T("data/SOUND/SE/bomb2.wav"),
+	_T("data/SOUND/SE/Take_se_maoudamashii_system45.wav"),
+	_T("data/SOUND/SE/Time_se_maoudamashii_chime14.wav"),
+	_T("data/SOUND/SE/Deci_se_maoudamashii_system22.wav"),
+	_T("data/SOUND/SE/Voice_00_se_maoudamashii_onepoint03.wav"),
 	_T("data/SOUND/SE/nyu3.wav"),
 	_T("data/SOUND/SE/robot - footstep2.wav")
 };
