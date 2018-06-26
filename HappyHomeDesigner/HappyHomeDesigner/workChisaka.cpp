@@ -70,6 +70,7 @@ void UpdateWorkChisaka(void)
 		UpdateFurniture();
 		break;
 	case STAGE_RESULT:
+		UpdateFurniture();
 		break;
 	}
 
@@ -95,6 +96,7 @@ void DrawWorkChisaka(int no)
 		if (no == GAME_FURNITURE)	DrawFurniture();
 		break;
 	case STAGE_RESULT:
+		DrawFurniture();
 		break;
 	}
 }
