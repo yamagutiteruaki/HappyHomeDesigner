@@ -10,6 +10,7 @@
 #include "debugproc.h"
 #include "stage.h"
 #include "score.h"
+#include "sound.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -130,8 +131,9 @@ void UpdateResultLogo(void)
 
 	if (GetSlotCount() == NUM_PLACE)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN))
+		if (GetKeyboardTrigger(DIK_RETURN || IsButtonTriggered(0, BUTTON_C)))
 		{
+			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
 			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
 	}
