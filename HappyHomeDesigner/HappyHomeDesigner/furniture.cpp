@@ -144,6 +144,23 @@ void UpdateFurniture(void)
 	//FurnitureGetDAZE();
 	FurniturePut();
 
+
+	FURNITURE *fun=GetFurniture(0);
+	
+	if (GetStage() == STAGE_RESULT)
+	{
+		for (int i = 0; i < MAX_FURNITURE; i++, fun++)
+		{
+			if (fun->house_num == STAGE_MYHOUSE)
+			{
+				fun->house_num = STAGE_RESULT;
+			}
+
+		}
+
+	}
+
+
 #ifdef _DEBUG
 	// “®‚©‚·‰Æ‹ï‚ðŒˆ’è
 	if (GetKeyboardTrigger(DIK_L))

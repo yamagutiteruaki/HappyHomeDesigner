@@ -1,9 +1,8 @@
-﻿2018/06/26 10:43:53 にビルドを開始しました。
-     1>ノード 2 上のプロジェクト "C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット)。
-     1>Link:
-         HappyHomeDesigner.vcxproj -> C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
-     1>プロジェクト "C:\Users\imagawa.nairu\Desktop\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner\HappyHomeDesigner.vcxproj" (Build ターゲット) のビルドが完了しました。
-
-ビルドに成功しました。
-
-経過時間 00:00:01.92
+﻿  workChisaka.cpp
+  コード生成しています。
+  10 of 335 functions ( 3.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    2 functions had inline decision re-evaluated but remain unchanged
+  コード生成が終了しました。
+  HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.exe
+  HappyHomeDesigner.vcxproj -> C:\Users\user\Desktop\HappyHomeDesigner\HappyHomeDesigner\Release\HappyHomeDesigner.pdb (Full PDB)
