@@ -69,6 +69,12 @@ void UpdateWorkImagawa(void)
 		UpdateHome();
 		break;
 	case STAGE_RESULT:
+
+		if (GetGameEnd() == GAME_CLEAR)
+		{
+			UpdateField();
+			UpdateWall();
+		}
 		break;
 	}
 
@@ -89,11 +95,17 @@ void DrawWorkImagawa(int no)
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
 
-		if (no==GAME_FIELD)		DrawField();
+		if (no == GAME_FIELD)	DrawField();
 		if (no == GAME_WALL)	DrawWall();
 		if (no == GAME_HOME)	DrawHome();
 		break;
 	case STAGE_RESULT:
+		if (GetGameEnd() == GAME_CLEAR)
+		{
+			DrawField(); 
+			DrawWall();
+		}
+
 		break;
 	}
 }

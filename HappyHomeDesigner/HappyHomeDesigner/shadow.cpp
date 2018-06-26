@@ -85,14 +85,18 @@ void UpdateShadow(void)
 {
 	SHADOW *shadow = &g_aShadow[0];
 
+#ifdef _DEBUG
+	PrintDebugProc("使用シャドウ:");
+
 	for (int i = 0; i < MAX_SHADOW; i++, shadow++)
 	{
 		if (shadow->bUse == true)
 		{
-			PrintDebugProc("使用シャドウ:[%d]\n", i);
+			PrintDebugProc("[%d]", i);
 		}
 	}
-
+	PrintDebugProc("\n");
+#endif
 	POLICE *police = GetPolice(0);
 
 	for (int i = 0; i < POLICE_MAX; i++, police++)
