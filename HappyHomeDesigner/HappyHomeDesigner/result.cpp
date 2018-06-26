@@ -68,11 +68,11 @@ void UpdateResult(void)
 //=============================================================================
 void DrawResult(void)
 {
+	DrawWorkImagawa(0);
 	DrawWorkChisaka(0);
 	DrawWorkSon(0);
 	DrawWorkSekiguchi(0);
 	DrawWorkMatsuo(0);
-	DrawWorkImagawa(0);
 	DrawWorkYamaguchi(0);
 }
 

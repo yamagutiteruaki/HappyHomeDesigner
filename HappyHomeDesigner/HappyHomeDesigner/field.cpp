@@ -155,7 +155,8 @@ void DrawField(void)
 	else if (GetStage() == STAGE_HOUSE1
 		|| GetStage() == STAGE_HOUSE2
 		|| GetStage() == STAGE_HOUSE3
-		|| GetStage() == STAGE_MYHOUSE)
+		|| GetStage() == STAGE_MYHOUSE
+		|| GetStage() == STAGE_RESULT)
 	{
 		fieldnum = 1;
 	}

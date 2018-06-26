@@ -38,6 +38,11 @@ HRESULT InitClock(int type)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 	CLOCK *clock = clockWk;				// タイマーのポインターを初期化
+	
+										
+	// タイマーの初期化処理
+	if (type == STAGE_INIT_FAST)
+	{
 
 	// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,	// デバイスのポインタ
@@ -49,9 +54,6 @@ HRESULT InitClock(int type)
 		TEXTURE_GAME_CLOCKHAND02,		// ファイルの名前
 		&g_pD3DTextureClockHand02);		// 読み込むメモリのポインタ
 
-	// タイマーの初期化処理
-	if (type == STAGE_INIT_FAST)
-	{
 		// テクスチャの読み込み
 		D3DXCreateTextureFromFile(pDevice,		// デバイスのポインタ
 			TEXTURE_GAME_CLOCKHAND,				// ファイルの名前

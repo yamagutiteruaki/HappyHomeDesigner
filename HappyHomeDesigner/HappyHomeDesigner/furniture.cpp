@@ -144,6 +144,23 @@ void UpdateFurniture(void)
 	//FurnitureGetDAZE();
 	FurniturePut();
 
+
+	FURNITURE *fun=GetFurniture(0);
+	
+	if (GetStage() == STAGE_RESULT)
+	{
+		for (int i = 0; i < MAX_FURNITURE; i++, fun++)
+		{
+			if (fun->house_num == STAGE_MYHOUSE)
+			{
+				fun->house_num = STAGE_RESULT;
+			}
+
+		}
+
+	}
+
+
 #ifdef _DEBUG
 	// 動かす家具を決定
 	if (GetKeyboardTrigger(DIK_L))
@@ -170,7 +187,7 @@ void UpdateFurniture(void)
 	FurnitureScaling(FurnitureNum);
 
 	if (GetKeyboardPress(DIK_LCONTROL))
-	{	// ctrlキーを押している間のみ
+	{	// 左ctrlキーを押している間のみ
 		// Mキーでcsvファイル新規作成
 		if (GetKeyboardTrigger(DIK_M))
 		{
@@ -210,7 +227,8 @@ void UpdateFurniture(void)
 	PrintDebugProc("家具の移動:               [前移動Tキー], [後移動Gキー], [左移動Fキー], [右移動Hキー]\n");
 	PrintDebugProc("家具のY軸回転:            [RキーorEキー]\n");
 	PrintDebugProc("家具のスケール拡大と縮小: [IキーorJキー]\n\n");
-	PrintDebugProc("CSVファイルの上書き保存:  [Qキー]\n\n");
+	PrintDebugProc("CSVファイルの上書き保存:  [左ctrlキー押しながらQキー]\n\n");
+	PrintDebugProc("CSVファイル新規作成:　　  [左ctrlキー押しながらMキー]\n\n");
 #endif
 }
 
@@ -323,7 +341,7 @@ int FurnitureColi()
 		#endif
 
 		// 取れる範囲内かとうか
-		if (dist <= distCheck)
+		if (dist <= distCheck&&ply->weight+fnt->weight<=WT_MAX)
 		{
 			// メッセージ表示
 			#ifdef _DEBUG

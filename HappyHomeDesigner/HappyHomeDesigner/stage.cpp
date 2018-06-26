@@ -218,11 +218,13 @@ void UpdateStage(void)
 	case STAGE_MYHOUSE:
 		UpdateGame();				// ÉQÅ[ÉÄ
 		SetSoundBgm(SOUND_BGM_GAME);
+
+#ifdef _DEBUG
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
 			SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
-
+#endif
 
 
 		break;

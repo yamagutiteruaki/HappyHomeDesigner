@@ -44,12 +44,12 @@ void WriteCsv(int no)
 		if ((fp = fopen(fname, "w")) != NULL)	// 書き込み用
 		{
 			// 一行目を出力
-			fprintf(fp, "家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio\n");
+			fprintf(fp, "家具の種類,id,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio\n");
 			// 各データをカンマ区切りで出力
 			for (int i = 0; i < GetFurnitureCnt(); i++, furniture++)
 			{	// 読み込んだ家具の数分だけループ
 				// 家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio
-				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,%d\n", furniture->name, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
+				fprintf(fp, "%s,%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%d,%d\n", furniture->name, furniture->id, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
 					furniture->rot.x, furniture->rot.y, furniture->rot.z,
 					furniture->scl.x, furniture->scl.y, furniture->scl.z,
 					furniture->type, furniture->house_num, furniture->weight, furniture->price, furniture->ratio);
@@ -66,13 +66,13 @@ void WriteCsv(int no)
 		if ((fp = fopen(fname, "w")) != NULL)	// 書き込み用
 		{
 			// 一行目を出力
-			fprintf(fp, "家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio\n");
+			fprintf(fp, "家具の種類,id,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio\n");
 			// 各データをカンマ区切りで出力
 			for (int i = 0; i < GetFurnitureCnt(); i++, furniture++)
 			{	// 読み込んだ家具の数分だけループ
 				// 家具の種類,use,pos.x,pos.y,pos.z,rot.x,rot.y,rot.z,scl.x,scl.y,scl.z,type,house_num,weight,price,ratio
-				fprintf(fp, "%s,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%ll,%d\n",
-					furniture->name, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
+				fprintf(fp, "%s,%d,%d,%f,%f,%f,%f,%f,%f,%f,%f,%f,%d,%d,%d,%ll,%d\n",
+					furniture->name, furniture->id, furniture->use, furniture->pos.x, furniture->pos.y, furniture->pos.z,
 					furniture->rot.x, furniture->rot.y, furniture->rot.z,
 					furniture->scl.x, furniture->scl.y, furniture->scl.z,
 					furniture->type, furniture->house_num, furniture->weight, furniture->price, furniture->ratio);
