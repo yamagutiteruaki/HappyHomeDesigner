@@ -80,193 +80,207 @@ void UpdateCamera(void)
 	D3DXVECTOR3 limit;//カメラが場外に出た時に使用
 	int fieldnum;
 
-	if (GetStage() == STAGE_HOUSE1
-		|| GetStage() == STAGE_HOUSE2
-		|| GetStage() == STAGE_HOUSE3
-		|| GetStage() == STAGE_MYHOUSE)
+	if (GetStage() == STAGE_RESULT)
 	{
-		fieldnum = 1;
+		camera->posCameraEye = D3DXVECTOR3(0.0f, POS_Y_CAM, 0.0f);
+
+		camera->rotCamera.y += (VALUE_ROTATE_CAMERA/5);
+		camera->fLength = CAMERA_LENGTH;
+
+
+		camera->posCameraAt.x = camera->posCameraEye.x - sinf(camera->rotCamera.y)*camera->fLength;
+		camera->posCameraAt.z = camera->posCameraEye.z - cosf(camera->rotCamera.y)*camera->fLength;
+		camera->posCameraAt.y = 10.0f;
 	}
 	else
 	{
-		fieldnum = 0;
-	}
-	FIELD *field = GetField(fieldnum);
-
-	float limitpos_x=field->Size.x/2;//xの限界点
-	float limitpos_z=field->Size.z/2;//zの限界点
-
-
-
-	//デバッグ時にZCでカメラ回転
-	if (GetKeyboardPress(DIK_Z) || IsButtonPressed(0, BUTTON_LZ_UP))
-	{// 視点旋回「左」
-		camera->rotCamera.y += VALUE_ROTATE_CAMERA;
-		if (camera->rotCamera.y > D3DX_PI)
+		if (GetStage() == STAGE_HOUSE1
+			|| GetStage() == STAGE_HOUSE2
+			|| GetStage() == STAGE_HOUSE3
+			|| GetStage() == STAGE_MYHOUSE)
 		{
-			camera->rotCamera.y -= D3DX_PI * 2.0f;
+			fieldnum = 1;
 		}
-
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
-
-		CameraReset = false;
-	}
-	if (GetKeyboardPress(DIK_C) || IsButtonPressed(0, BUTTON_LZ_DOWN))
-	{// 視点旋回「右」
-		camera->rotCamera.y -= VALUE_ROTATE_CAMERA;
-		if (camera->rotCamera.y < -D3DX_PI)
+		else
 		{
-			camera->rotCamera.y += D3DX_PI * 2.0f;
+			fieldnum = 0;
 		}
+		FIELD *field = GetField(fieldnum);
 
-		camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
-		camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+		float limitpos_x = field->Size.x / 2;//xの限界点
+		float limitpos_z = field->Size.z / 2;//zの限界点
 
-		CameraReset = false;
-	}
 
-	if (camera->fLength >= CAMERA_LENGTH_MIN
-		&&camera->fLength <= CAMERA_LENGTH_MAX)
-	{
-		if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
-		{// 視点移動「ズームイン」
 
-			camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
-
-			camera->fLength -= CAMERA_MOVE_SPEED;//距離を詰める
-
-			// 移動制限
-			if (camera->fLength < CAMERA_LENGTH_MIN)//一定以上近づいたら
+		//デバッグ時にZCでカメラ回転
+		if (GetKeyboardPress(DIK_Z) || IsButtonPressed(0, BUTTON_LZ_UP))
+		{// 視点旋回「左」
+			camera->rotCamera.y += VALUE_ROTATE_CAMERA;
+			if (camera->rotCamera.y > D3DX_PI)
 			{
-				camera->fLength = CAMERA_LENGTH_MIN;//一定値で止める
+				camera->rotCamera.y -= D3DX_PI * 2.0f;
 			}
-		camera->fChaseLength = camera->fLength;//保存
 
+			camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
+			camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+			CameraReset = false;
 		}
-		if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)//カメラが壁の外にある際はズームアウト出来ない
+		if (GetKeyboardPress(DIK_C) || IsButtonPressed(0, BUTTON_LZ_DOWN))
+		{// 視点旋回「右」
+			camera->rotCamera.y -= VALUE_ROTATE_CAMERA;
+			if (camera->rotCamera.y < -D3DX_PI)
+			{
+				camera->rotCamera.y += D3DX_PI * 2.0f;
+			}
+
+			camera->posCameraEye.x = camera->posCameraAt.x - sinf(camera->rotCamera.y) * camera->fLength;
+			camera->posCameraEye.z = camera->posCameraAt.z - cosf(camera->rotCamera.y) * camera->fLength;
+
+			CameraReset = false;
+		}
+
+		if (camera->fLength >= CAMERA_LENGTH_MIN
+			&&camera->fLength <= CAMERA_LENGTH_MAX)
 		{
-			if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
-			{// 視点移動「ズームアウト」
+			if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
+			{// 視点移動「ズームイン」
+
 				camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
 
-				camera->fLength += CAMERA_MOVE_SPEED;//距離を開ける
+				camera->fLength -= CAMERA_MOVE_SPEED;//距離を詰める
 
 				// 移動制限
-				if (camera->fLength > CAMERA_LENGTH_MAX)//一定以上近づいたら
+				if (camera->fLength < CAMERA_LENGTH_MIN)//一定以上近づいたら
 				{
-					camera->fLength = CAMERA_LENGTH_MAX;//一定値で止める
+					camera->fLength = CAMERA_LENGTH_MIN;//一定値で止める
 				}
 				camera->fChaseLength = camera->fLength;//保存
 
 			}
-		}
-	}
-
-
-	// カメラリセット
-	if (GetKeyboardTrigger(DIK_X))
-	{
-		camera->rotDest = player->rot.y + D3DX_PI;//プレイヤーの後ろにセットしなおす
-
-		CameraReset = true;
-	}
-
-	// カメラリセットの演出
-	if (CameraReset == true)
-	{
-		CameraWorkReset();
-	}
-
-	if (fabs(camera->posCameraEye.z) > limitpos_z
-		|| fabs(camera->posCameraEye.x) > limitpos_x)//カメラ座標が限界点を越した場合
-
-	{
-		if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))//X座標のほうが大きかったら
-		{
-			if (camera->posCameraEye.x < -limitpos_x)
+			if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)//カメラが壁の外にある際はズームアウト出来ない
 			{
+				if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
+				{// 視点移動「ズームアウト」
+					camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
 
-				limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
-				D3DXVec3Normalize(&limit, &limit);								//limitを正規化
-				camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//正規化したlimitから壁の外に出ないようにlengthの修正
-				camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
-																				//以下３つ同様
-			}
-			else if (camera->posCameraEye.x > limitpos_x)
-			{
+					camera->fLength += CAMERA_MOVE_SPEED;//距離を開ける
 
-				limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
-				D3DXVec3Normalize(&limit, &limit);								//limitを正規化
-				camera->fLength = (limitpos_x - player->Eye.x) / limit.x;		//正規化したlimitから壁の外に出ないようにlengthの修正
-				camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
+					// 移動制限
+					if (camera->fLength > CAMERA_LENGTH_MAX)//一定以上近づいたら
+					{
+						camera->fLength = CAMERA_LENGTH_MAX;//一定値で止める
+					}
+					camera->fChaseLength = camera->fLength;//保存
 
-			}
-
-		}
-
-		else if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))//Z座標のほうが大きかったら
-		{
-			if (camera->posCameraEye.z < -limitpos_z)
-			{
-
-				limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
-				D3DXVec3Normalize(&limit, &limit);								//limitを正規化
-				camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;		//正規化したlimitから壁の外に出ないようにlengthの修正
-				camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
-
-			}
-			else if (camera->posCameraEye.z > limitpos_z)
-			{
-
-				limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
-				D3DXVec3Normalize(&limit, &limit);								//limitを正規化
-				camera->fLength = (limitpos_z - player->Eye.z) / limit.z;		//正規化したlimitから壁の外に出ないようにlengthの修正
-				camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
-
+				}
 			}
 		}
 
-	}
-	else
-	{
-		camera->fLength = camera->fChaseLength;//保存した距離に設定
 
-	}
-	if (camera->fLength > camera->fChaseLength)//保存した距離以上になっていたら
-	{
-		camera->fLength = camera->fChaseLength;//保存した距離に設定
-	}
-	if (GetStage() == STAGE_GAME)
-	{
-		if (GetFade() == FADE_OUT)
+		// カメラリセット
+		if (GetKeyboardTrigger(DIK_X))
 		{
-			fieldLength = camera->fLength;//フェードアウト時にフィールドで使用したlengthを保存
+			camera->rotDest = player->rot.y + D3DX_PI;//プレイヤーの後ろにセットしなおす
+
+			CameraReset = true;
 		}
-		else if (GetFade() == FADE_IN)
+
+		// カメラリセットの演出
+		if (CameraReset == true)
 		{
-			camera->fLength = fieldLength;//フェードイン時にフィールドで使用してたlengthを呼び出す
+			CameraWorkReset();
 		}
-	}
 
-	// カメラワーク
-	CameraWork(&(player->Eye));
+		if (fabs(camera->posCameraEye.z) > limitpos_z
+			|| fabs(camera->posCameraEye.x) > limitpos_x)//カメラ座標が限界点を越した場合
 
-	// 角度の修正
-	camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
-	camera->rotDest = PiCalculate360(camera->rotDest);
+		{
+			if (fabs(camera->posCameraEye.x) > fabs(camera->posCameraEye.z))//X座標のほうが大きかったら
+			{
+				if (camera->posCameraEye.x < -limitpos_x)
+				{
+
+					limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
+					D3DXVec3Normalize(&limit, &limit);								//limitを正規化
+					camera->fLength = (-limitpos_x - player->Eye.x) / limit.x;		//正規化したlimitから壁の外に出ないようにlengthの修正
+					camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
+																					//以下３つ同様
+				}
+				else if (camera->posCameraEye.x > limitpos_x)
+				{
+
+					limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
+					D3DXVec3Normalize(&limit, &limit);								//limitを正規化
+					camera->fLength = (limitpos_x - player->Eye.x) / limit.x;		//正規化したlimitから壁の外に出ないようにlengthの修正
+					camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
+
+				}
+
+			}
+
+			else if (fabs(camera->posCameraEye.x) < fabs(camera->posCameraEye.z))//Z座標のほうが大きかったら
+			{
+				if (camera->posCameraEye.z < -limitpos_z)
+				{
+
+					limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
+					D3DXVec3Normalize(&limit, &limit);								//limitを正規化
+					camera->fLength = (-limitpos_z - player->Eye.z) / limit.z;		//正規化したlimitから壁の外に出ないようにlengthの修正
+					camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
+
+				}
+				else if (camera->posCameraEye.z > limitpos_z)
+				{
+
+					limit = camera->posCameraEye - player->Eye;						//limitに座標差格納
+					D3DXVec3Normalize(&limit, &limit);								//limitを正規化
+					camera->fLength = (limitpos_z - player->Eye.z) / limit.z;		//正規化したlimitから壁の外に出ないようにlengthの修正
+					camera->posCameraEye = camera->fLength*limit;					//再設定したlengthからカメラ座標の再設定
+
+				}
+			}
+
+		}
+		else
+		{
+			camera->fLength = camera->fChaseLength;//保存した距離に設定
+
+		}
+		if (camera->fLength > camera->fChaseLength)//保存した距離以上になっていたら
+		{
+			camera->fLength = camera->fChaseLength;//保存した距離に設定
+		}
+		if (GetStage() == STAGE_GAME)
+		{
+			if (GetFade() == FADE_OUT)
+			{
+				fieldLength = camera->fLength;//フェードアウト時にフィールドで使用したlengthを保存
+			}
+			else if (GetFade() == FADE_IN)
+			{
+				camera->fLength = fieldLength;//フェードイン時にフィールドで使用してたlengthを呼び出す
+			}
+		}
+
+		// カメラワーク
+		CameraWork(&(player->Eye));
+
+		// 角度の修正
+		camera->rotCamera.y = PiCalculate360(camera->rotCamera.y);
+		camera->rotDest = PiCalculate360(camera->rotDest);
 
 #ifdef _DEBUG
-	PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
-	//PrintDebugProc("CameraReset: %d\n", CameraReset);
-	//PrintDebugProc("CameraLength: %f\n", camera->fLength);
-	//PrintDebugProc("\n");
-	PrintDebugProc("カメラの距離[%f] \n", camera->fLength);
-	PrintDebugProc("カメラの距離[%f] \n", camera->fChaseLength);
-	PrintDebugProc("保存されたlength[%f] \n", fieldLength);
+		PrintDebugProc("Camera[pos]: %f,%f,%f\n", camera->posCameraEye.x, camera->posCameraEye.y, camera->posCameraEye.z);
+		//PrintDebugProc("CameraReset: %d\n", CameraReset);
+		//PrintDebugProc("CameraLength: %f\n", camera->fLength);
+		//PrintDebugProc("\n");
+		PrintDebugProc("カメラの距離[%f] \n", camera->fLength);
+		PrintDebugProc("カメラの距離[%f] \n", camera->fChaseLength);
+		PrintDebugProc("保存されたlength[%f] \n", fieldLength);
 #endif
 
-
+	}
 }
 
 //=============================================================================
