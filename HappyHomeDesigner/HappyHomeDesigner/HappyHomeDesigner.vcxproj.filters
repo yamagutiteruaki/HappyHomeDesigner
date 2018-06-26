@@ -165,6 +165,9 @@
     <ClCompile Include="ranking.cpp">
       <Filter>ソース ファイル\stage\result\ranking</Filter>
     </ClCompile>
+    <ClCompile Include="GetUI.cpp">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="workChisaka.h">
@@ -289,6 +292,9 @@
     </ClInclude>
     <ClInclude Include="ranking.h">
       <Filter>ソース ファイル\stage\result\ranking</Filter>
+    </ClInclude>
+    <ClInclude Include="GetUI.h">
+      <Filter>ソース ファイル\stage\game\UI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
