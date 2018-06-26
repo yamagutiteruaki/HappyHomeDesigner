@@ -18,8 +18,7 @@
 #include "button.h"
 #include "stage.h"
 #include "debugproc.h"
-#include "sound.h"
-
+#include "GetUI.h"#include "sound.h"
 //*****************************************************************************
 // ƒ}ƒNƒ’è‹`
 //*****************************************************************************
@@ -362,6 +361,7 @@ int FurnitureColi()
 			if (GetKeyboardTrigger(DIK_E) || IsButtonTriggered(0, BUTTON_X))
 			{
 				FurnitureGetDAZE(no);
+				SetGetUI(ply->Eye);
 				//fnt = GetFurniture(0);
 				//(fnt + no)->use = FALSE;
 

@@ -14,6 +14,7 @@
 #include "ranking.h"
 #include "timeeffect.h"
 #include "shadow.h"
+#include "GetUI.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -36,6 +37,7 @@ HRESULT InitWorkYamaguchi(int nType)
 {
 	InitTimeeffect(nType);
 	InitShadow(nType);
+	InitGetUI(nType);
 	return S_OK;
 }
 
@@ -46,6 +48,7 @@ void UninitWorkYamaguchi(void)
 {
 	UninitTimeeffect();
 	UninitShadow();
+	UninitGetUI();
 
 }
 
@@ -64,6 +67,7 @@ void UpdateWorkYamaguchi(void)
 
 		UpdateTimeeffect();
 		UpdateShadow();
+		UpdateGetUI();
 		break;
 	}
 
@@ -83,6 +87,7 @@ void DrawWorkYamaguchi(int no)
 	case STAGE_MYHOUSE:
 		if (no == GAME_SHADOW)	DrawShadow();
 		if (no == GAME_TIMEEFF)	DrawTimeeffect();
+		if (no == GAME_GETUI)	DrawGetUI();
 		break;
 	}
 }

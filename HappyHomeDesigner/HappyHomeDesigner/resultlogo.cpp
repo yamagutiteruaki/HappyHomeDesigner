@@ -133,9 +133,7 @@ void UpdateResultLogo(void)
 	{
 		if (GetKeyboardTrigger(DIK_RETURN || IsButtonTriggered(0, BUTTON_C)))
 		{
-			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
-			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-		}
+			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);		}
 	}
 
 	PrintDebugProc("[ÉNÉäÉAèÛãµ  ÅF(%d)]\n", GetGameEnd());
