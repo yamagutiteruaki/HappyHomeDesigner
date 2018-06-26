@@ -60,11 +60,11 @@ void LoadCsv(void)
 	CsvFileNum = 0;								// csvファイルの末尾番号初期化
 
 	// 読み込むファイル名をランダム生成する
-	//srand((unsigned)time(NULL));				// ランダムの初期化
-	//CsvFileNum = rand() % (GetCsvCnt(__argc, __argv) - DEFAULT_FILE_CNT);	// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
+	srand((unsigned)time(NULL));				// ランダムの初期化
+	CsvFileNum = rand() % (GetCsvCnt(__argc, __argv) - DEFAULT_FILE_CNT);	// ランダムで読み込むファイルを決定(範囲はEXCEL_DATA内にあるcsvファイル数)
 
 	// 手動でファイルの末尾番号入力(ここで読み込みたい・イジりたいcsvファイルを指定してね）
-	CsvFileNum = 6;
+	//CsvFileNum = 6;
 	sprintf(fname, "data/EXCEL_DATA/set_furniture%d.csv", CsvFileNum);
 
 	if ((fp = fopen(fname, "r")) != NULL)
