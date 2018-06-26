@@ -13,6 +13,8 @@
 #include "game.h"
 #include "title.h"
 #include "result.h"
+#include "rankpaper.h"
+#include "rankscore.h"
 
 /* Camera */
 #include "camera.h"
@@ -85,6 +87,8 @@ HRESULT InitStageEach(int nType)
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
 	InitResult();				//リザルト
+	InitRankpaper();
+	InitRankscore(0);
 
 
 	InitWorkChisaka(nType);
@@ -110,6 +114,9 @@ void UninitStage(void)
 	UninitGame();					// ゲーム
 	UninitTitle();					// タイトル
 	UninitResult();					//リザルト
+	UninitRankpaper();
+	UninitRankscore();
+
 
 	UninitWorkChisaka();
 	UninitWorkSon();
@@ -215,7 +222,7 @@ void UpdateStage(void)
 #ifdef _DEBUG
 		if (GetKeyboardTrigger(DIK_RETURN))
 		{
-			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
 #endif
 
@@ -224,6 +231,14 @@ void UpdateStage(void)
 	case STAGE_RESULT:
 		UpdateResult();				//リザルト
 		SetSoundBgm(SOUND_BGM_RESULT);
+
+	case STAGE_RANKING:
+		UpdateRankpaper();			//ランキング
+
+		if (GetKeyboardTrigger(DIK_RETURN))
+		{
+			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
 
 
 		break;
@@ -255,6 +270,12 @@ void DrawStage(void)
 	case STAGE_RESULT:
 		DrawResult();				//リザルト
 		break;
+	case STAGE_RANKING:
+		DrawRankpaper();
+		DrawRankscore();
+
+		break;
+
 	}
 
 	DrawFade();						// フェード

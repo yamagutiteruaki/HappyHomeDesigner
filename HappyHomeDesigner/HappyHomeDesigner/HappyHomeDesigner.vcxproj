@@ -175,6 +175,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="police.cpp" />
+    <ClCompile Include="rankpaper.cpp" />
+    <ClCompile Include="rankscore.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="resultlogo.cpp" />
     <ClCompile Include="score.cpp" />
@@ -219,6 +221,8 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="police.h" />
+    <ClInclude Include="rankpaper.h" />
+    <ClInclude Include="rankscore.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="resultlogo.h" />
     <ClInclude Include="score.h" />
