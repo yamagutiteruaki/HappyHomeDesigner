@@ -602,7 +602,7 @@ void PlayerEntrance(void)
 			D3DXVECTOR3 doorpos(door->Pos.x - 16, door->Pos.y, door->Pos.z);
 			if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
 			{
-				if (GetKeyboardTrigger(DIK_SPACE) || IsButtonTriggered(0, BUTTON_C))
+				if (GetKeyboardTrigger(kb->NEXTDOOR) || IsButtonTriggered(0, gp->DECIDE))
 				{
 					if (GetStage() == STAGE_GAME)
 					{
