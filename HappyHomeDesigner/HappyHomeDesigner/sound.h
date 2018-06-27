@@ -54,10 +54,10 @@ enum
 
 enum
 {
-	SE_BUTTON,
-	SE_BULLET,
-	SE_MISS,
-	SE_BOMB,
+	SE_TAKE,
+	SE_CHIME,
+	SE_DECI,
+	SE_VOICE,
 	SE_ITEM,
 	SE_ENEMY_WALK
 };

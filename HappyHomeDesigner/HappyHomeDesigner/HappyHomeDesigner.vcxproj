@@ -165,6 +165,7 @@
     <ClCompile Include="field.cpp" />
     <ClCompile Include="furniture.cpp" />
     <ClCompile Include="game.cpp" />
+    <ClCompile Include="GetUI.cpp" />
     <ClCompile Include="home.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="input.cpp" />
@@ -174,6 +175,8 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="player.cpp" />
     <ClCompile Include="police.cpp" />
+    <ClCompile Include="rankpaper.cpp" />
+    <ClCompile Include="rankscore.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="resultlogo.cpp" />
     <ClCompile Include="score.cpp" />
@@ -208,6 +211,7 @@
     <ClInclude Include="field.h" />
     <ClInclude Include="furniture.h" />
     <ClInclude Include="game.h" />
+    <ClInclude Include="GetUI.h" />
     <ClInclude Include="home.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="input.h" />
@@ -217,6 +221,8 @@
     <ClInclude Include="main.h" />
     <ClInclude Include="player.h" />
     <ClInclude Include="police.h" />
+    <ClInclude Include="rankpaper.h" />
+    <ClInclude Include="rankscore.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="resultlogo.h" />
     <ClInclude Include="score.h" />

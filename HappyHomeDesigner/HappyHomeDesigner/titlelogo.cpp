@@ -10,6 +10,7 @@
 #include "input.h"
 #include "fade.h"
 #include "stage.h"
+#include "sound.h"
 
 //***********************************************************
 // プロトタイプ宣言
@@ -185,7 +186,7 @@ void UpdateTitlelogo(void)
 	{
 		g_bStamp = g_bStamp ? false : true;
 	}
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
 	{
 
 		if (g_nCountAppearStart == 0)
@@ -198,6 +199,7 @@ void UpdateTitlelogo(void)
 		else
 		{// ゲームへ
 			g_bStamp = true;
+			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
 
 		}
 	}

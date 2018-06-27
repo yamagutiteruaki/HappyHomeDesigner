@@ -18,6 +18,7 @@
 #include "voice.h"
 #include "arrest.h"
 #include "button.h"
+#include "rankscore.h"
 // デバッグ用
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -42,6 +43,7 @@ HRESULT InitWorkMatsuo(int nType)
 	InitVoice(0);
 	InitArrest(0);
 	InitButton(0);
+	InitRankscore(0);
 	return S_OK;
 }
 
@@ -55,6 +57,7 @@ void UninitWorkMatsuo(void)
 	UninitVoice();
 	UninitArrest();
 	UninitButton();
+
 }
 
 //=============================================================================
@@ -80,6 +83,9 @@ void UpdateWorkMatsuo(void)
 		UpdateButton();
 		break;
 	case STAGE_RESULT:
+
+	case STAGE_RANKING:
+		UpdateRankscore();
 
 		break;
 	}
@@ -109,6 +115,10 @@ void DrawWorkMatsuo(int no)
 		break;
 	case STAGE_RESULT:
 		break;
+	case STAGE_RANKING:
+
+		break;
+
 	}
 }
 

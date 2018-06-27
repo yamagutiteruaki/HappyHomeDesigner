@@ -10,6 +10,7 @@
 #include "fade.h"
 #include "stage.h"
 #include "clock.h"
+#include "sound.h"
 
 //***********************************************************
 // プロトタイプ宣言
@@ -111,6 +112,8 @@ void UpdateTimeeffect(void)
 				g_bAlpha = true;
 			}
 		}
+
+		SetSe(SE_CHIME, E_DS8_FLAG_NONE, CONTINUITY_ON);
 	}
 
 	SetColor();

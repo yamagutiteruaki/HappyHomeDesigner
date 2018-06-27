@@ -13,6 +13,8 @@
 #include "game.h"
 #include "title.h"
 #include "result.h"
+#include "rankpaper.h"
+#include "rankscore.h"
 
 /* Camera */
 #include "camera.h"
@@ -85,6 +87,8 @@ HRESULT InitStageEach(int nType)
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
 	InitResult();				//リザルト
+	InitRankpaper();
+	InitRankscore(0);
 
 
 	InitWorkChisaka(nType);
@@ -110,6 +114,9 @@ void UninitStage(void)
 	UninitGame();					// ゲーム
 	UninitTitle();					// タイトル
 	UninitResult();					//リザルト
+	UninitRankpaper();
+	UninitRankscore();
+
 
 	UninitWorkChisaka();
 	UninitWorkSon();
@@ -224,6 +231,11 @@ void UpdateStage(void)
 	case STAGE_RESULT:
 		UpdateResult();				//リザルト
 		SetSoundBgm(SOUND_BGM_RESULT);
+		break;
+
+	case STAGE_RANKING:
+		UpdateRankpaper();			//ランキング
+		UpdateRankscore();
 
 
 		break;
@@ -255,6 +267,12 @@ void DrawStage(void)
 	case STAGE_RESULT:
 		DrawResult();				//リザルト
 		break;
+	case STAGE_RANKING:
+		DrawRankpaper();
+		DrawRankscore();
+
+		break;
+
 	}
 
 	DrawFade();						// フェード
