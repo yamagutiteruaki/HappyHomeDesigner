@@ -36,6 +36,7 @@ BUTTON					buttonWk[BUTTON_MAX];				// エネミー構造体
 const char *FileNameButton[BUTTON_MAX] =
 {
 	TEXTURE_GAME_BUTTON_0,
+	TEXTURE_GAME_BUTTON_3,
 	TEXTURE_GAME_BUTTON_1,
 	TEXTURE_GAME_BUTTON_2,
 };
@@ -133,17 +134,28 @@ void UpdateButton(void)
 		}
 		else
 		{
+			if (button->rate.x < 10)
+			{
+				button->rate.x += 0.5f;
+			}
+			if (button->pos.x > SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
+			{
+				button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;
+				button->rate.x = 10;
+				button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
+			}
+			else
+			{
+				button->pos.x += 5 * button->rate.x;
+			}
 
-			button->use = false;
-			button->rate.x = 10;
 
-			button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
 		}
 		SetVertexButton(i);	// 移動後の座標で頂点を設定
 	}
 
 
-	if (buttonWk[ENTER_BUTTON].use == true || buttonWk[GET_BUTTON].use == true)
+	if (buttonWk[ENTER_BUTTON].use == true || buttonWk[GET_BUTTON].use == true|| buttonWk[EXIT_BUTTON].use == true)
 	{
 		if (buttonWk[PUT_BUTTON].rate.y > 0)
 		{
@@ -162,10 +174,21 @@ void UpdateButton(void)
 	}
 	else if (buttonWk[ENTER_BUTTON].use == false && buttonWk[GET_BUTTON].use == false)
 	{
+		if (buttonWk[PUT_BUTTON].rate.y < 10)
+		{
+			buttonWk[PUT_BUTTON].rate.y += 0.5f;
+		}
+		if (buttonWk[PUT_BUTTON].pos.y >= SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)
+		{
+			buttonWk[PUT_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
+			buttonWk[PUT_BUTTON].rate.y = 10;
+		}
+		else
+		{
+			buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
+		}
 
-		buttonWk[PUT_BUTTON].rate.y = 10;
 
-		buttonWk[PUT_BUTTON].pos.y =  SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;	// 座標データを初期化
 	}
 	SetVertexButton(PUT_BUTTON);	// 移動後の座標で頂点を設定
 
