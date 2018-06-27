@@ -88,8 +88,6 @@ HRESULT InitStageEach(int nType)
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
 	InitResult();				//リザルト
-	InitRankpaper();
-	InitRankscore(0);
 
 
 	InitWorkChisaka(nType);
@@ -115,8 +113,6 @@ void UninitStage(void)
 	UninitGame();					// ゲーム
 	UninitTitle();					// タイトル
 	UninitResult();					//リザルト
-	UninitRankpaper();
-	UninitRankscore();
 
 
 	UninitWorkChisaka();
@@ -209,14 +205,12 @@ void UpdateStage(void)
 
 		break;
 	case STAGE_RESULT:
+	case STAGE_RANKING:
+
 		UpdateResult();				//リザルト
 		SetSoundBgm(SOUND_BGM_RESULT);
-		break;
 
-	case STAGE_RANKING:
-		UpdateRankpaper();			//ランキング
-		UpdateRankscore();
-		UpdateRun();
+
 
 
 		break;
@@ -246,12 +240,8 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
-		DrawResult();				//リザルト
-		break;
 	case STAGE_RANKING:
-		DrawRankpaper();
-		DrawRankscore();
-		DrawRun();
+		DrawResult();				//リザルト
 		break;
 
 	}

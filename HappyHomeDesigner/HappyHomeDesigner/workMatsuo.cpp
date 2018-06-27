@@ -46,6 +46,9 @@ HRESULT InitWorkMatsuo(int nType)
 	InitButton(nType);
 	InitRankscore(nType);
 	InitRun(nType);
+	InitRankpaper();
+	InitRankscore(nType);
+
 	return S_OK;
 }
 
@@ -61,6 +64,9 @@ void UninitWorkMatsuo(void)
 	UninitButton();
 	UninitRankscore();
 	UninitRun();
+	UninitRankpaper();
+	UninitRankscore();
+
 }
 
 //=============================================================================
@@ -86,9 +92,13 @@ void UpdateWorkMatsuo(void)
 		UpdateButton();
 		break;
 	case STAGE_RESULT:
-
+		break;
 	case STAGE_RANKING:
+		UpdateRankpaper();
 		UpdateRankscore();
+		UpdateRun();
+
+
 		break;
 	}
 
@@ -118,7 +128,10 @@ void DrawWorkMatsuo(int no)
 	case STAGE_RESULT:
 		break;
 	case STAGE_RANKING:
+		DrawRankpaper();
+		DrawRankscore();
 		DrawRun();
+
 		break;
 
 	}
