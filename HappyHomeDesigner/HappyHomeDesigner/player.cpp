@@ -15,6 +15,7 @@
 #include "fade.h"
 #include "button.h"
 #include "shadow.h"
+#include "inputCtrl.h"
 
 //*****************************************************************************
 // É}ÉNÉçíËã`
@@ -384,6 +385,8 @@ void PlayerMove(void)
 {
 	PLAYER *player = &playerWk[0];
 	CAMERA *camera = GetCamera();
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 
 	float fDiffRotY;
 
@@ -588,6 +591,8 @@ void PlayerEntrance(void)
 {
 	PLAYER *player = &playerWk[0];
 	DOOR *door = GetDoor(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 
 	bool hitflag = false;
 	for (int i = 0; i < HOME_MAX; i++, door++)

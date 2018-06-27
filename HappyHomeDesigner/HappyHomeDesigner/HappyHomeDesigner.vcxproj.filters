@@ -133,6 +133,9 @@
     <ClCompile Include="write_csv.cpp">
       <Filter>ソースファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="inputCtrl.cpp">
+      <Filter>ソースファイル\system</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h">
@@ -265,6 +268,9 @@
       <Filter>ソースファイル\stage\title</Filter>
     </ClInclude>
     <ClInclude Include="write_csv.h">
+      <Filter>ソースファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="inputCtrl.h">
       <Filter>ソースファイル\system</Filter>
     </ClInclude>
   </ItemGroup>
