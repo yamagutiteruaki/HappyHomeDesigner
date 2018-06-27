@@ -390,16 +390,16 @@ void PlayerMove(void)
 
 	float fDiffRotY;
 
-	if (GetKeyboardPress(DIK_LEFT)||IsButtonPressed(0,BUTTON_LEFT) || IsButtonPressed(0, BUTTON_POV_LEFT))
+	if (GetKeyboardPress(kb->LEFT)||IsButtonPressed(0, gp->LEFT) || IsButtonPressed(0, gp->LEFT_POV))
 	{
-		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+		if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 		{// 左前移動
 			player->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+		else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 		{// 左後移動
 			player->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -415,16 +415,16 @@ void PlayerMove(void)
 
 		}
 	}
-	else if (GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(0, BUTTON_RIGHT) || IsButtonPressed(0, BUTTON_POV_RIGHT))
+	else if (GetKeyboardPress(kb->RIGHT) || IsButtonPressed(0, gp->RIGHT) || IsButtonPressed(0, gp->RIGHT_POV))
 	{
-		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+		if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 		{// 右前移動
 			player->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+		else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 		{// 右後移動
 			player->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -439,14 +439,14 @@ void PlayerMove(void)
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
 		}
 	}
-	else if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+	else if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 	{// 前移動
 		player->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 
 		player->rotDest.y = D3DX_PI + camera->rotCamera.y;
 	}
-	else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+	else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 	{// 後移動
 		player->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
@@ -545,7 +545,7 @@ void PlayerBorder(void)
 //=============================================================================
 // プレイヤーの移動速度の修正
 //=============================================================================
-void PlayerMoveWt()
+void PlayerMoveWt(void)
 {
 	PLAYER *player = GetPlayer(0);
 
