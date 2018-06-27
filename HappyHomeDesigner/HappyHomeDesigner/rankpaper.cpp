@@ -162,7 +162,7 @@ void UninitRankpaper(void)
 //=============================================================================
 void UpdateRankpaper(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN))
+	if (GetKeyboardTrigger(DIK_RETURN)||IsButtonTriggered(0,BUTTON_C))
 	{
 		SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 	}

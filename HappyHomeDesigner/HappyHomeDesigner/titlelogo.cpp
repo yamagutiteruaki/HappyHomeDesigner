@@ -186,7 +186,7 @@ void UpdateTitlelogo(void)
 	{
 		g_bStamp = g_bStamp ? false : true;
 	}
-	if (GetKeyboardTrigger(DIK_RETURN || IsButtonTriggered(0, BUTTON_C)))
+	if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
 	{
 
 		if (g_nCountAppearStart == 0)
