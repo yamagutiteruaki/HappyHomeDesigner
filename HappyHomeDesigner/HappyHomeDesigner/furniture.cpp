@@ -18,7 +18,8 @@
 #include "button.h"
 #include "stage.h"
 #include "debugproc.h"
-#include "GetUI.h"#include "sound.h"
+#include "GetUI.h"
+#include "sound.h"
 //*****************************************************************************
 // É}ÉNÉçíËã`
 //*****************************************************************************
