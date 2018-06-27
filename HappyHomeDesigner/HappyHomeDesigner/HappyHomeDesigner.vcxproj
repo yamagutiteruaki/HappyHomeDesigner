@@ -180,6 +180,7 @@
     <ClCompile Include="rankscore.cpp" />
     <ClCompile Include="result.cpp" />
     <ClCompile Include="resultlogo.cpp" />
+    <ClCompile Include="run.cpp" />
     <ClCompile Include="score.cpp" />
     <ClCompile Include="search.cpp" />
     <ClCompile Include="shadow.cpp" />
@@ -227,6 +228,7 @@
     <ClInclude Include="rankscore.h" />
     <ClInclude Include="result.h" />
     <ClInclude Include="resultlogo.h" />
+    <ClInclude Include="run.h" />
     <ClInclude Include="score.h" />
     <ClInclude Include="search.h" />
     <ClInclude Include="shadow.h" />
