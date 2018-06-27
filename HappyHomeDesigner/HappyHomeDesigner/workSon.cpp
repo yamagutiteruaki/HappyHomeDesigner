@@ -13,7 +13,7 @@
 
 #include "player.h"
 #include "wwwwwwww.h"
-
+#include "inputCtrl.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -36,6 +36,7 @@ HRESULT InitWorkSon(int nType)
 {
 	InitPlayer(nType);
 	InitWWWW(nType);
+	InitInputDevice();
 
 	return S_OK;
 }

@@ -14,6 +14,7 @@
 #include "field.h"
 #include "furniture.h"
 #include "fade.h"
+#include "inputCtrl.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -73,9 +74,10 @@ void UninitCamera(void)
 //=============================================================================
 void UpdateCamera(void)
 {
-
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 	
 	D3DXVECTOR3 limit;//カメラが場外に出た時に使用
 	int fieldnum;
