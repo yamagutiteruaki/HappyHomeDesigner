@@ -136,6 +136,9 @@
     <ClCompile Include="inputCtrl.cpp">
       <Filter>ソースファイル\system</Filter>
     </ClCompile>
+    <ClCompile Include="run.cpp">
+      <Filter>ソースファイル\stage\result</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h">
@@ -272,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="inputCtrl.h">
       <Filter>ソースファイル\system</Filter>
+    </ClInclude>
+    <ClInclude Include="run.h">
+      <Filter>ソースファイル\stage\result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

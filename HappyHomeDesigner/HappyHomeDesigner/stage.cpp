@@ -15,6 +15,7 @@
 #include "result.h"
 #include "rankpaper.h"
 #include "rankscore.h"
+#include "run.h"
 
 /* Camera */
 #include "camera.h"
@@ -215,6 +216,7 @@ void UpdateStage(void)
 	case STAGE_RANKING:
 		UpdateRankpaper();			//ƒ‰ƒ“ƒLƒ“ƒO
 		UpdateRankscore();
+		UpdateRun();
 
 
 		break;
@@ -249,7 +251,7 @@ void DrawStage(void)
 	case STAGE_RANKING:
 		DrawRankpaper();
 		DrawRankscore();
-
+		DrawRun();
 		break;
 
 	}
