@@ -631,7 +631,16 @@ void PlayerEntrance(void)
 		PlayerPosReset();
 	}
 
-	Button(hitflag,ENTER_BUTTON);
+	if (GetStage() == STAGE_GAME)
+	{
+		Button(hitflag, ENTER_BUTTON);
+		Button(false, EXIT_BUTTON);
+	}
+	else
+	{
+		Button(hitflag, EXIT_BUTTON);
+		Button(false, ENTER_BUTTON);
+	}
 }
 
 //=================================================================

@@ -15,13 +15,14 @@
 #define TEXTURE_GAME_BUTTON_0		("data/TEXTURE/入る.png")	// 画像
 #define TEXTURE_GAME_BUTTON_1		("data/TEXTURE/置く.png")	// 画像
 #define TEXTURE_GAME_BUTTON_2		("data/TEXTURE/掴む.png")	// 画像
+#define TEXTURE_GAME_BUTTON_3		("data/TEXTURE/出る.png")
 
 #define TEXTURE_BUTTON_SIZE_X	(1000/6*SCREEN_SCALE)		// テクスチャサイズ
 #define TEXTURE_BUTTON_SIZE_Y	(300/6*SCREEN_SCALE)		// 同上
 
 #define TIME_ANIMATION_BUTTON			(1)	// アニメーションの切り替わるカウント
 
-#define BUTTON_MAX						(3) // 見つかれる最大数
+#define BUTTON_MAX						(4) // 見つかれる最大数
 #define BUTTON_SPEED						(300) //声のスピード
 //*****************************************************************************
 // 構造体宣言
@@ -47,6 +48,7 @@ typedef struct	// エネミー構造体
 enum
 {
 	ENTER_BUTTON,
+	EXIT_BUTTON,
 	PUT_BUTTON,
 	GET_BUTTON
 };
