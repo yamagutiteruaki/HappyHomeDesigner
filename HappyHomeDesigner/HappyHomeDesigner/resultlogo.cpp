@@ -131,9 +131,11 @@ void UpdateResultLogo(void)
 
 	if (GetSlotCount() == NUM_PLACE)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN || IsButtonTriggered(0, BUTTON_C)))
+		if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
 		{
-			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);		}
+			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
+			SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
 	}
 
 	PrintDebugProc("[ÉNÉäÉAèÛãµ  ÅF(%d)]\n", GetGameEnd());
