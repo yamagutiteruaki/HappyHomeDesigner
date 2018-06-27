@@ -45,6 +45,8 @@ typedef struct
 	int DECIDE;
 	int CANCEL;
 
+	int NEXTDOOR;
+
 	int TAKE;
 	int PUT;
 

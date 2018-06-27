@@ -52,6 +52,8 @@ void InitInputDevice(void)
 		b->DECIDE = -1;
 		b->CANCEL = -1;
 
+		b->NEXTDOOR = -1;
+
 		b->TAKE = -1;
 		b->PUT = -1;
 
@@ -91,8 +93,10 @@ void InitInputKeyboard(void)
 
 	kb->DECIDE =			DIK_RETURN;
 
+	kb->NEXTDOOR =			DIK_SPACE;
+
 	kb->TAKE =				DIK_E;
-	kb->PUT =				DIK_G;
+	kb->PUT =				DIK_B;
 
 }
 
