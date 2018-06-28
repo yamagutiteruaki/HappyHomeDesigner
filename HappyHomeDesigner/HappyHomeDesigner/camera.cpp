@@ -82,7 +82,8 @@ void UpdateCamera(void)
 	D3DXVECTOR3 limit;//カメラが場外に出た時に使用
 	int fieldnum;
 
-	if (GetStage() == STAGE_RESULT)
+	if (GetStage() == STAGE_RESULT
+		||GetStage()==STAGE_RANKING)
 	{
 		camera->posCameraEye = D3DXVECTOR3(0.0f, POS_Y_CAM, 0.0f);
 

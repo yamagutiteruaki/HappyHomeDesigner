@@ -77,7 +77,7 @@ void UpdateWorkSekiguchi(void)
 
 		break;
 	case STAGE_RESULT:
-
+	case STAGE_RANKING:
 		 UpdateResultLogo();
 
 		 UpdateScore();
@@ -105,6 +105,7 @@ void DrawWorkSekiguchi(int no)
 
 		break;
 	case STAGE_RESULT:
+	case STAGE_RANKING:
 
 		 DrawResultLogo();
 

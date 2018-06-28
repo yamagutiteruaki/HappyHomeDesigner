@@ -10,12 +10,15 @@
 #include "debugproc.h"
 #include "input.h"
 #include "ranking.h"
+#include "rankpaper.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexRankscore(LPDIRECT3DDEVICE9 pDevice);
 void SetTextureRankscore(int idx, int number);
+void SetVertexRankScore(int no);
+
 
 //*****************************************************************************
 // グローバル変数宣言
@@ -46,22 +49,10 @@ HRESULT InitRankscore(int nType)
 	for (int i = 0; i < RANKSCORE_MAX; i++, rankscore++)
 	{
 		// スコアの初期化
-		rankscore->rankscore = 1234567890+i;
+		rankscore->rankscore = 0;
 		rankscore->maxrankscore = 0;
 
-		switch (i)
-		{
-		case 0:
-			rankscore->pos = D3DXVECTOR3(500.0f, 280.0f, 0.0f);
-			break;
-		case 1:
-			rankscore->pos = D3DXVECTOR3(90.0f, 520.0f, 0.0f);
-			break;
-
-		case 2:
-			rankscore->pos = D3DXVECTOR3(930.0f, 520.0f, 0.0f);
-			break;
-		}
+		rankscore->pos = D3DXVECTOR3(0.0f,0.0f, 0.0f);
 	}
 
 	g_bCheckScore=false;
@@ -123,6 +114,7 @@ void UpdateRankscore(void)
 			nCntPlace -= NUM_PLACE*i;
 
 		}
+		SetVertexRankScore(i);
 
 		PrintDebugProc("[スコア %d位：(%g)]\n",i+1,ras->rankscore );
 	}
@@ -244,4 +236,40 @@ void SetTextureRankscore(int idx, int number)
 
 	// 頂点データをアンロックする
 	g_pD3DVtxBuffRankscore->Unlock();
+}
+
+
+
+void SetVertexRankScore(int no)
+{
+
+
+	RANKSCORE *ras = &rankscoreWk[no];
+	RANKPAPER *paper = GetRankPaper(no);
+
+	ras->pos.x = paper->pos.x + RANKSCORE_POS_X;
+	ras->pos.y = paper->pos.y + RANKSCORE_POS_Y;
+
+	VERTEX_2D *pVtx;
+
+	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	g_pD3DVtxBuffRankscore->Lock(0, 0, (void**)&pVtx, 0);
+
+	pVtx += (no * 4*11);
+
+	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++, pVtx += 4)
+	{
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(ras->pos.x + nCntPlace * RANKSCORE_SIZE_X + RANKSCORE_INTERVAL_X, ras->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(ras->pos.x + nCntPlace * (RANKSCORE_INTERVAL_X + RANKSCORE_SIZE_X) + RANKSCORE_SIZE_X, ras->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(ras->pos.x + nCntPlace * RANKSCORE_SIZE_X + RANKSCORE_INTERVAL_X, ras->pos.y + RANKSCORE_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(ras->pos.x + nCntPlace * (RANKSCORE_INTERVAL_X + RANKSCORE_SIZE_X) + RANKSCORE_SIZE_X, ras->pos.y + RANKSCORE_SIZE_Y, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffRankscore->Unlock();
+
+	}
+
+	PrintDebugProc("[スコア座標 %d位：X(%f) Y(%f) Z(%f)]\n", no+1, ras->pos.x,ras->pos.y,ras->pos.z);
+
 }
