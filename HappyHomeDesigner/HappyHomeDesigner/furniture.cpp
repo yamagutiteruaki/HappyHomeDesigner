@@ -20,6 +20,8 @@
 #include "debugproc.h"
 #include "GetUI.h"
 #include "sound.h"
+#include "inputCtrl.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
@@ -317,6 +319,7 @@ int GetFurnitureNum(void)
 {
 	return FurnitureNum;
 }
+
 //=============================================================================
 // 家具の当たり判定処理
 //=============================================================================
@@ -324,6 +327,8 @@ int FurnitureColi()
 {
 	PLAYER *ply = GetPlayer(0);
 	FURNITURE *fnt = GetFurniture(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 	int no = -1;
 	float dist = 0.0;
 	const float distCheck = 32.0f;
@@ -359,7 +364,7 @@ int FurnitureColi()
 			no = i;
 
 			// ボタン入力
-			if (GetKeyboardTrigger(DIK_E) || IsButtonTriggered(0, BUTTON_X))
+			if (GetKeyboardTrigger(kb->TAKE) || IsButtonTriggered(0, gp->TAKE))
 			{
 				FurnitureGetDAZE(no);
 				SetGetUI(ply->Eye);
@@ -388,7 +393,7 @@ int FurnitureColi()
 }
 
 //=============================================================================
-// 家具
+// 家具を取る
 //=============================================================================
 void FurnitureGetDAZE(int no)
 {
@@ -485,6 +490,8 @@ void FurniturePut()
 {
 	PLAYER *ply = GetPlayer(0);
 	FURNITURE *fnt = GetFurniture(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 	int no = -1;
 	int id = -1;
 
@@ -501,7 +508,7 @@ void FurniturePut()
 		}
 
 		// ボタン入力
-		if (GetKeyboardTrigger(DIK_B) || IsButtonTriggered(0, BUTTON_B))
+		if (GetKeyboardTrigger(kb->PUT) || IsButtonTriggered(0, gp->PUT))
 		{
 			// 置ける場所チェック（いらない）
 
@@ -519,7 +526,7 @@ void FurniturePut()
 				(fnt + id)->house_num = GetStage();
 				(fnt + id)->use = TRUE;
 
-				//被害金額加算
+				// 被害金額加算
 				if (GetStage() == STAGE_MYHOUSE)
 				{
 					AddPrice((fnt + id)->price);

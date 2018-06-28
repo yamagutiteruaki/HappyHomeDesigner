@@ -15,6 +15,7 @@
 #include "fade.h"
 #include "button.h"
 #include "shadow.h"
+#include "inputCtrl.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -384,19 +385,21 @@ void PlayerMove(void)
 {
 	PLAYER *player = &playerWk[0];
 	CAMERA *camera = GetCamera();
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 
 	float fDiffRotY;
 
-	if (GetKeyboardPress(DIK_LEFT)||IsButtonPressed(0,BUTTON_LEFT) || IsButtonPressed(0, BUTTON_POV_LEFT))
+	if (GetKeyboardPress(kb->LEFT)||IsButtonPressed(0, gp->LEFT) || IsButtonPressed(0, gp->LEFT_POV))
 	{
-		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+		if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 		{// 左前移動
 			player->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+		else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 		{// 左後移動
 			player->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -412,16 +415,16 @@ void PlayerMove(void)
 
 		}
 	}
-	else if (GetKeyboardPress(DIK_RIGHT) || IsButtonPressed(0, BUTTON_RIGHT) || IsButtonPressed(0, BUTTON_POV_RIGHT))
+	else if (GetKeyboardPress(kb->RIGHT) || IsButtonPressed(0, gp->RIGHT) || IsButtonPressed(0, gp->RIGHT_POV))
 	{
-		if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+		if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 		{// 右前移動
 			player->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 		
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
 		}
-		else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+		else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 		{// 右後移動
 			player->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
 			player->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_PLAYER;
@@ -436,14 +439,14 @@ void PlayerMove(void)
 			player->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
 		}
 	}
-	else if (GetKeyboardPress(DIK_UP) || IsButtonPressed(0, BUTTON_UP) || IsButtonPressed(0, BUTTON_POV_UP))
+	else if (GetKeyboardPress(kb->UP) || IsButtonPressed(0, gp->UP) || IsButtonPressed(0, gp->UP_POV))
 	{// 前移動
 		player->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 
 		player->rotDest.y = D3DX_PI + camera->rotCamera.y;
 	}
-	else if (GetKeyboardPress(DIK_DOWN) || IsButtonPressed(0, BUTTON_DOWN) || IsButtonPressed(0, BUTTON_POV_DOWN))
+	else if (GetKeyboardPress(kb->DOWN) || IsButtonPressed(0, gp->DOWN) || IsButtonPressed(0, gp->DOWN_POV))
 	{// 後移動
 		player->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
 		player->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_PLAYER;
@@ -542,7 +545,7 @@ void PlayerBorder(void)
 //=============================================================================
 // プレイヤーの移動速度の修正
 //=============================================================================
-void PlayerMoveWt()
+void PlayerMoveWt(void)
 {
 	PLAYER *player = GetPlayer(0);
 
@@ -588,6 +591,8 @@ void PlayerEntrance(void)
 {
 	PLAYER *player = &playerWk[0];
 	DOOR *door = GetDoor(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 
 	bool hitflag = false;
 	for (int i = 0; i < HOME_MAX; i++, door++)
@@ -597,7 +602,7 @@ void PlayerEntrance(void)
 			D3DXVECTOR3 doorpos(door->Pos.x - 16, door->Pos.y, door->Pos.z);
 			if (CollisionBoxToPos(doorpos, player->Eye, D3DXVECTOR2(20.0f, 15.0f)) == true)
 			{
-				if (GetKeyboardTrigger(DIK_SPACE) || IsButtonTriggered(0, BUTTON_C))
+				if (GetKeyboardTrigger(kb->NEXTDOOR) || IsButtonTriggered(0, gp->DECIDE))
 				{
 					if (GetStage() == STAGE_GAME)
 					{
@@ -626,7 +631,16 @@ void PlayerEntrance(void)
 		PlayerPosReset();
 	}
 
-	Button(hitflag,ENTER_BUTTON);
+	if (GetStage() == STAGE_GAME)
+	{
+		Button(hitflag, ENTER_BUTTON);
+		Button(false, EXIT_BUTTON);
+	}
+	else
+	{
+		Button(hitflag, EXIT_BUTTON);
+		Button(false, ENTER_BUTTON);
+	}
 }
 
 //=================================================================

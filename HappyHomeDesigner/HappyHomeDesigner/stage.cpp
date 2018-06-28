@@ -15,6 +15,7 @@
 #include "result.h"
 #include "rankpaper.h"
 #include "rankscore.h"
+#include "run.h"
 
 /* Camera */
 #include "camera.h"
@@ -87,8 +88,6 @@ HRESULT InitStageEach(int nType)
 	InitTitle();				// タイトル
 	InitGame(nType);			// ゲーム
 	InitResult();				//リザルト
-	InitRankpaper();
-	InitRankscore(0);
 
 
 	InitWorkChisaka(nType);
@@ -114,8 +113,6 @@ void UninitStage(void)
 	UninitGame();					// ゲーム
 	UninitTitle();					// タイトル
 	UninitResult();					//リザルト
-	UninitRankpaper();
-	UninitRankscore();
 
 
 	UninitWorkChisaka();
@@ -177,27 +174,6 @@ void UpdateStage(void)
 		break;
 	}
 	PrintDebugProc("\n");
-	// SEテスト（sound.hをincludeして関数を呼ぶ）
-	//if (GetKeyboardTrigger(DIK_1))
-	//{	// タイトル・リザルト画面の決定ボタン
-	//	SetSe(SE_BUTTON, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	//}
-	//if (GetKeyboardTrigger(DIK_2))
-	//{	// バレット発射音
-	//	SetSe(SE_BULLET, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	//}
-	//if (GetKeyboardTrigger(DIK_3))
-	//{	// ゲージが足りないときにMISS音
-	//	SetSe(SE_MISS, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	//}
-	//if (GetKeyboardTrigger(DIK_4))
-	//{	// エネミーと衝突時の爆発音
-	//	SetSe(SE_BOMB, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	//}
-	//if (GetKeyboardTrigger(DIK_5))
-	//{	// アイテム取得音
-	//	SetSe(SE_ITEM, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	//}
 #endif
 
 	UpdateInput();					// 入力
@@ -229,13 +205,12 @@ void UpdateStage(void)
 
 		break;
 	case STAGE_RESULT:
+	case STAGE_RANKING:
+
 		UpdateResult();				//リザルト
 		SetSoundBgm(SOUND_BGM_RESULT);
-		break;
 
-	case STAGE_RANKING:
-		UpdateRankpaper();			//ランキング
-		UpdateRankscore();
+
 
 
 		break;
@@ -265,12 +240,8 @@ void DrawStage(void)
 		DrawGame();					// ゲーム
 		break;
 	case STAGE_RESULT:
-		DrawResult();				//リザルト
-		break;
 	case STAGE_RANKING:
-		DrawRankpaper();
-		DrawRankscore();
-
+		DrawResult();				//リザルト
 		break;
 
 	}
