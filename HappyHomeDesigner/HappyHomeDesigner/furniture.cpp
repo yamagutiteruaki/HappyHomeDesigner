@@ -548,7 +548,7 @@ void FurnitureMove(int no)
 	FURNITURE *furniture = &furnitureWk[no];
 	CAMERA *camera = GetCamera();
 
-	float fDiffRotY;
+	float fDiffRotY = 0;
 
 	if (furniture == NULL)
 	{
@@ -562,22 +562,45 @@ void FurnitureMove(int no)
 			furniture->move.x -= cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 			furniture->move.z += sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
+			//furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.75f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 		else if (GetKeyboardPress(DIK_G))
 		{// ¶ŒãˆÚ“®
 			furniture->move.x -= cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 			furniture->move.z += sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.25f;
+			//furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.25f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 		else
 		{// ¶ˆÚ“®
 			furniture->move.x -= cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 			furniture->move.z += sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
-
+			//furniture->rotDest.y = camera->rotCamera.y + D3DX_PI * 0.50f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 	}
 	else if (GetKeyboardPress(DIK_H))
@@ -587,21 +610,45 @@ void FurnitureMove(int no)
 			furniture->move.x += cosf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 			furniture->move.z -= sinf(camera->rotCamera.y - D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
+			//furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.75f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 		else if (GetKeyboardPress(DIK_G))
 		{// ‰EŒãˆÚ“®
 			furniture->move.x += cosf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 			furniture->move.z -= sinf(camera->rotCamera.y + D3DX_PI * 0.25f) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.25f;
+			//furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.25f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 		else
 		{// ‰EˆÚ“®
 			furniture->move.x += cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 			furniture->move.z -= sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 
-			furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
+			//furniture->rotDest.y = camera->rotCamera.y - D3DX_PI * 0.50f;
+			//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+			//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+			//// Šp“x‚ðC³
+			//fDiffRotY = PiCalculate360(fDiffRotY);
+			//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+			//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+			//// Šp“x‚ðC³
+			//furniture->rot.y = PiCalculate360(furniture->rot.y);
 		}
 	}
 	else if (GetKeyboardPress(DIK_T))
@@ -609,14 +656,30 @@ void FurnitureMove(int no)
 		furniture->move.x += sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 		furniture->move.z += cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 
-		furniture->rotDest.y = D3DX_PI + camera->rotCamera.y;
+		//furniture->rotDest.y = D3DX_PI + camera->rotCamera.y;
+		//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+		//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+		//// Šp“x‚ðC³
+		//fDiffRotY = PiCalculate360(fDiffRotY);
+		//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+		//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+		//// Šp“x‚ðC³
+		//furniture->rot.y = PiCalculate360(furniture->rot.y);
 	}
 	else if (GetKeyboardPress(DIK_G))
 	{// ŒãˆÚ“®
 		furniture->move.x -= sinf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 		furniture->move.z -= cosf(camera->rotCamera.y) * VALUE_MOVE_FURNITURE;
 
-		furniture->rotDest.y = camera->rotCamera.y;
+		//furniture->rotDest.y = camera->rotCamera.y;
+		//// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+		//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+		//// Šp“x‚ðC³
+		//fDiffRotY = PiCalculate360(fDiffRotY);
+		//// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+		//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+		//// Šp“x‚ðC³
+		//furniture->rot.y = PiCalculate360(furniture->rot.y);
 	}
 
 	// ˆÚ“®—Ê‚ÉŠµ«‚ð‚©‚¯‚é
@@ -630,29 +693,31 @@ void FurnitureMove(int no)
 	furniture->pos.z += furniture->move.z;
 
 	// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
-	fDiffRotY = furniture->rotDest.y - furniture->rot.y;
-	if (fDiffRotY > D3DX_PI)
-	{
-		fDiffRotY -= D3DX_PI * 2.0f;
-	}
-	if (fDiffRotY < -D3DX_PI)
-	{
-		fDiffRotY += D3DX_PI * 2.0f;
-	}
+	//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+	//if (fDiffRotY > D3DX_PI * 2.0f)
+	//{
+	//	fDiffRotY -= D3DX_PI * 2.0f;
+	//}
+	//if (fDiffRotY < -D3DX_PI * 2.0f)
+	//{
+	//	fDiffRotY += D3DX_PI * 2.0f;
+	//}
+	// Šp“x‚ðC³
+	//fDiffRotY = PiCalculate360(fDiffRotY);
 
 	// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
-	furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
-	if (furniture->rot.y > D3DX_PI)
-	{
-		furniture->rot.y -= D3DX_PI * 2.0f;
-	}
-	if (furniture->rot.y < -D3DX_PI)
-	{
-		furniture->rot.y += D3DX_PI * 2.0f;
-	}
+	//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+	//if (furniture->rot.y > D3DX_PI)
+	//{
+	//	furniture->rot.y -= D3DX_PI * 2.0f;
+	//}
+	//if (furniture->rot.y < -D3DX_PI)
+	//{
+	//	furniture->rot.y += D3DX_PI * 2.0f;
+	//}
 
 	// Šp“x‚ðC³
-	furniture->rot.y = PiCalculate360(furniture->rot.y);
+	//furniture->rot.y = PiCalculate360(furniture->rot.y);
 
 }
 //=============================================================================
@@ -673,44 +738,61 @@ void FurnitureRotate(int no)
 	if (GetKeyboardPress(DIK_E))
 	{// ¶‰ñ“]
 		furniture->rotDest.y -= VALUE_ROTATE_FURNITURE;
-		if (furniture->rotDest.y < -D3DX_PI)
+		if (furniture->rotDest.y < 0.0f)
 		{
 			furniture->rotDest.y += D3DX_PI * 2.0f;
 		}
+		// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+		fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+		// Šp“x‚ðC³
+		fDiffRotY = PiCalculate360(fDiffRotY);
+		// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+		furniture->rot.y -= fDiffRotY * RATE_ROTATE_FURNITURE;
+		// Šp“x‚ðC³
+		furniture->rot.y = PiCalculate360(furniture->rot.y);
 	}
 	if (GetKeyboardPress(DIK_R))
 	{// ‰E‰ñ“]
 		furniture->rotDest.y += VALUE_ROTATE_FURNITURE;
-		if (furniture->rotDest.y > D3DX_PI)
+		if (furniture->rotDest.y > D3DX_PI * 2.0f)
 		{
 			furniture->rotDest.y -= D3DX_PI * 2.0f;
 		}
+		// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
+		fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+		// Šp“x‚ðC³
+		fDiffRotY = PiCalculate360(fDiffRotY);
+		// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
+		furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+		// Šp“x‚ðC³
+		furniture->rot.y = PiCalculate360(furniture->rot.y);
 	}
 
 	// –Ú“I‚ÌŠp“x‚Ü‚Å‚Ì·•ª
-	fDiffRotY = furniture->rotDest.y - furniture->rot.y;
-	if (fDiffRotY > D3DX_PI)
-	{
-		fDiffRotY -= D3DX_PI * 2.0f;
-	}
-	if (fDiffRotY < -D3DX_PI)
-	{
-		fDiffRotY += D3DX_PI * 2.0f;
-	}
+	//fDiffRotY = furniture->rotDest.y - furniture->rot.y;
+	//if (fDiffRotY > D3DX_PI * 2.0f)
+	//{
+	//	fDiffRotY -= D3DX_PI * 2.0f;
+	//}
+	//if (fDiffRotY < -D3DX_PI * 2.0f)
+	//{
+	//	fDiffRotY += D3DX_PI * 2.0f;
+	//}
+	//fDiffRotY = PiCalculate360(fDiffRotY);
 
 	// –Ú“I‚ÌŠp“x‚Ü‚ÅŠµ«‚ð‚©‚¯‚é
-	furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
-	if (furniture->rot.y > D3DX_PI)
-	{
-		furniture->rot.y -= D3DX_PI * 2.0f;
-	}
-	if (furniture->rot.y < -D3DX_PI)
-	{
-		furniture->rot.y += D3DX_PI * 2.0f;
-	}
+	//furniture->rot.y += fDiffRotY * RATE_ROTATE_FURNITURE;
+	//if (furniture->rot.y > D3DX_PI)
+	//{
+	//	furniture->rot.y -= D3DX_PI * 2.0f;
+	//}
+	//if (furniture->rot.y < -D3DX_PI)
+	//{
+	//	furniture->rot.y += D3DX_PI * 2.0f;
+	//}
 
 	// Šp“x‚ðC³
-	furniture->rot.y = PiCalculate360(furniture->rot.y);
+	//furniture->rot.y = PiCalculate360(furniture->rot.y);
 
 }
 //=============================================================================

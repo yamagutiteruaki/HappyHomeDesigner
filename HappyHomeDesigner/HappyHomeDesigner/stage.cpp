@@ -178,26 +178,26 @@ void UpdateStage(void)
 	}
 	PrintDebugProc("\n");
 	// SEテスト（sound.hをincludeして関数を呼ぶ）
-	if (GetKeyboardTrigger(DIK_1))
-	{	// タイトル・リザルト画面の決定ボタン
-		SetSe(SE_BUTTON, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	}
-	if (GetKeyboardTrigger(DIK_2))
-	{	// バレット発射音
-		SetSe(SE_BULLET, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	}
-	if (GetKeyboardTrigger(DIK_3))
-	{	// ゲージが足りないときにMISS音
-		SetSe(SE_MISS, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	}
-	if (GetKeyboardTrigger(DIK_4))
-	{	// エネミーと衝突時の爆発音
-		SetSe(SE_BOMB, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	}
-	if (GetKeyboardTrigger(DIK_5))
-	{	// アイテム取得音
-		SetSe(SE_ITEM, E_DS8_FLAG_NONE, CONTINUITY_ON);
-	}
+	//if (GetKeyboardTrigger(DIK_1))
+	//{	// タイトル・リザルト画面の決定ボタン
+	//	SetSe(SE_BUTTON, E_DS8_FLAG_NONE, CONTINUITY_ON);
+	//}
+	//if (GetKeyboardTrigger(DIK_2))
+	//{	// バレット発射音
+	//	SetSe(SE_BULLET, E_DS8_FLAG_NONE, CONTINUITY_ON);
+	//}
+	//if (GetKeyboardTrigger(DIK_3))
+	//{	// ゲージが足りないときにMISS音
+	//	SetSe(SE_MISS, E_DS8_FLAG_NONE, CONTINUITY_ON);
+	//}
+	//if (GetKeyboardTrigger(DIK_4))
+	//{	// エネミーと衝突時の爆発音
+	//	SetSe(SE_BOMB, E_DS8_FLAG_NONE, CONTINUITY_ON);
+	//}
+	//if (GetKeyboardTrigger(DIK_5))
+	//{	// アイテム取得音
+	//	SetSe(SE_ITEM, E_DS8_FLAG_NONE, CONTINUITY_ON);
+	//}
 #endif
 
 	UpdateInput();					// 入力
