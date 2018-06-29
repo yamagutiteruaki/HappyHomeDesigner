@@ -8,6 +8,7 @@
 #include "run.h"
 #include "input.h"
 #include "stage.h"
+#include "rankpaper.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -83,25 +84,30 @@ void UninitRun(void)
 //=============================================================================
 void UpdateRun(void)
 {
-	RUN *run = &runWk[0];
+	D3DXVECTOR3 Bgpos = GetRankBackPos();
 
-	for (int i = 0; i < RUN_MAX; i++, run++)
+	if (Bgpos.y >= 0)
 	{
-		if (run->use == true)			// 使用している状態なら更新する
-		{
-			run->pos.x -= 20;
-			// アニメーション
-			run->CountAnim++;
-			if ((run->CountAnim % TIME_ANIMATION) == 0)
-			{
-				// パターンの切り替え
-				run->PatternAnim = (run->PatternAnim + 1) % ANIM_PATTERN_NUM;
+		RUN *run = &runWk[0];
 
-				// テクスチャ座標を設定
-				SetTextureRun(i, run->PatternAnim);
+		for (int i = 0; i < RUN_MAX; i++, run++)
+		{
+			if (run->use == true)			// 使用している状態なら更新する
+			{
+				run->pos.x -= 20;
+				// アニメーション
+				run->CountAnim++;
+				if ((run->CountAnim % TIME_ANIMATION) == 0)
+				{
+					// パターンの切り替え
+					run->PatternAnim = (run->PatternAnim + 1) % ANIM_PATTERN_NUM;
+
+					// テクスチャ座標を設定
+					SetTextureRun(i, run->PatternAnim);
+				}
+				// 移動後の座標で頂点を設定
+				SetVertexRun(i);
 			}
-			// 移動後の座標で頂点を設定
-			SetVertexRun(i);
 		}
 	}
 }

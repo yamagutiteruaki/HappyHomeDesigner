@@ -9,12 +9,24 @@
 #include "input.h"
 #include "fade.h"
 #include "stage.h"
+#include "debugproc.h"
 
 //***********************************************************
 // プロトタイプ宣言
 //***********************************************************
 HRESULT MakeVertexRankpaper(LPDIRECT3DDEVICE9 pDevice);
 void SetColorRankpaper(void);
+
+void SetVertexRankPaper(int no);
+void SetVertexRank(int no);
+void SetPaperPos(int no);
+void SetRankPos(int no);
+void SetVertexBg(void);
+
+
+
+
+
 //***********************************************************
 //グローバル宣言
 //***********************************************************
@@ -35,6 +47,12 @@ LPDIRECT3DTEXTURE9		g_pD3DTextureThird = NULL;		// テクスチャへのポインタ
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffThird = NULL;		// 頂点バッファインターフェースへのポインタ
 
 
+RANKPAPER				rankpaperWk[RANKPAPER_MAX];
+RANKINGNO				rankingnoWk[RANK_NO_MAX];
+
+
+D3DXVECTOR3				rankbackpos;
+
 //***********************************************************
 // 初期化処理
 //***********************************************************
@@ -42,7 +60,6 @@ HRESULT InitRankpaper(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
 
-	MakeVertexRankpaper(pDevice);							//頂点情報の作成
 
 
 	// テクスチャの読み込み
@@ -74,6 +91,21 @@ HRESULT InitRankpaper(void)
 	D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
 		TEXTURE_THIRD,			// ファイルの名前
 		&g_pD3DTextureThird);		// 読み込むメモリー
+
+
+	rankbackpos = D3DXVECTOR3(RANKPAPERBACK_POS_X, RANKPAPERBACK_POS_Y,0.0f);
+
+	RANKPAPER *rankpaper = GetRankPaper(0);
+	RANKINGNO *rankno = GetRankingNo(0);
+	
+	for (int i = 0; i < RANKPAPER_MAX; i++, rankpaper++, rankno++)
+	{
+		rankpaper->pos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+		rankno->pos = D3DXVECTOR3(0.0f,0.0f,0.0f);
+	}
+
+	MakeVertexRankpaper(pDevice);							//頂点情報の作成
+
 
 	return S_OK;
 }
@@ -162,10 +194,33 @@ void UninitRankpaper(void)
 //=============================================================================
 void UpdateRankpaper(void)
 {
-	if (GetKeyboardTrigger(DIK_RETURN)||IsButtonTriggered(0,BUTTON_C))
+
+	if (rankbackpos.y >= 0)
 	{
-		SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
+		{
+			SetFade(FADE_OUT, STAGE_TITLE, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+		}
 	}
+
+	rankbackpos.y+=10.0f;
+
+	if (rankbackpos.y >= 0)
+	{
+		rankbackpos.y = 0;
+	}
+
+	for (int i = 0; i < RANKPAPER_MAX; i++)
+	{
+		SetPaperPos(i);
+		SetRankPos(i);
+		
+		SetVertexRankPaper(i);
+		SetVertexRank(i);
+
+
+	}
+	SetVertexBg();
 
 }
 
@@ -348,6 +403,8 @@ HRESULT MakeVertexRankpaper(LPDIRECT3DDEVICE9 pDevice)
 		pVtx[2].vtx = D3DXVECTOR3(RANKPAPER0_POS_X, RANKPAPER0_POS_Y + RANKPAPER0_HEIGHT, 0.0f);
 		pVtx[3].vtx = D3DXVECTOR3(RANKPAPER0_POS_X + RANKPAPER0_WIDTH, RANKPAPER0_POS_Y + RANKPAPER0_HEIGHT, 0.0f);
 
+		
+		
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
 			pVtx[1].rhw =
@@ -605,6 +662,216 @@ HRESULT MakeVertexRankpaper(LPDIRECT3DDEVICE9 pDevice)
 	return S_OK;
 }
 
+//=============================================================================
+// テクスチャ座標の設定  ※手配書
+//=============================================================================
+void SetVertexRankPaper(int no)
+{
+
+	RANKPAPER *rankpaper = GetRankPaper(no);
+	VERTEX_2D *pVtx;
+
+	switch (no)
+	{
+	case 0:
+
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffRankpaper0->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER0_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER0_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER0_WIDTH / 2, rankpaper->pos.y + RANKPAPER0_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER0_WIDTH / 2, rankpaper->pos.y + RANKPAPER0_HEIGHT, 0.0f);
+
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffRankpaper0->Unlock();
+
+
+		break;
+
+	case 1:
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffRankpaper1->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER1_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER1_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER1_WIDTH / 2, rankpaper->pos.y + RANKPAPER1_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER1_WIDTH / 2, rankpaper->pos.y + RANKPAPER1_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffRankpaper1->Unlock();
+		break;
+
+
+	case 2:
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffRankpaper2->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER2_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER2_WIDTH / 2, rankpaper->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankpaper->pos.x - RANKPAPER2_WIDTH / 2, rankpaper->pos.y + RANKPAPER2_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankpaper->pos.x + RANKPAPER2_WIDTH / 2, rankpaper->pos.y + RANKPAPER2_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffRankpaper2->Unlock();
+		break;
+
+
+	}
+}
+//=============================================================================
+// テクスチャ座標の設定　　※手配書
+//=============================================================================
+void SetPaperPos(int no)
+{
+
+	RANKPAPER *rankpaper = GetRankPaper(no);
+	D3DXVECTOR3 BGpos = GetRankBackPos();
+
+	switch (no)
+	{
+	case 0:
+		rankpaper->pos.x = BGpos.x + RANKPAPER0_POS_X;
+		rankpaper->pos.y = BGpos.y + RANKPAPER0_POS_Y;
+		rankpaper->pos.z = BGpos.z;
+		break;
+
+	case 1:
+		rankpaper->pos.x = BGpos.x + RANKPAPER1_POS_X;
+		rankpaper->pos.y = BGpos.y + RANKPAPER1_POS_Y;
+		rankpaper->pos.z = BGpos.z;
+		break;
+
+	case 2:
+		rankpaper->pos.x = BGpos.x + RANKPAPER2_POS_X;
+		rankpaper->pos.y = BGpos.y + RANKPAPER2_POS_Y;
+		rankpaper->pos.z = BGpos.z;
+		break;
+
+	}
+	PrintDebugProc("[手配書座標%d ：X(%f) Y(%f) Z(%f)]\n", no, rankpaper->pos.x, rankpaper->pos.y, rankpaper->pos.z);
+
+
+}
+
+//=============================================================================
+// テクスチャ座標の設定　　※順位
+//=============================================================================
+void SetVertexRank(int no)
+{
+	VERTEX_2D *pVtx;
+
+	RANKINGNO *rankingno = GetRankingNo(no);
+
+	switch (no)
+	{
+	case 0:
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffFirst->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_FIRST_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_FIRST_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_FIRST_WIDTH / 2, rankingno->pos.y + RANKPAPER_FIRST_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_FIRST_WIDTH / 2, rankingno->pos.y + RANKPAPER_FIRST_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffFirst->Unlock();
+		break;
+
+	case 1:
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffSecond->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_SECOND_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_SECOND_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_SECOND_WIDTH / 2, rankingno->pos.y + RANKPAPER_SECOND_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_SECOND_WIDTH / 2, rankingno->pos.y + RANKPAPER_SECOND_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffSecond->Unlock();
+		break;
+
+
+	case 2:
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffThird->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_THIRD_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_THIRD_WIDTH / 2, rankingno->pos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankingno->pos.x - RANKPAPER_THIRD_WIDTH / 2, rankingno->pos.y + RANKPAPER_THIRD_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankingno->pos.x + RANKPAPER_THIRD_WIDTH / 2, rankingno->pos.y + RANKPAPER_THIRD_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffThird->Unlock();
+		break;
+
+
+	}
+}
+
+//=============================================================================
+// テクスチャ座標の設定
+//=============================================================================
+void SetRankPos(int no)
+{
+
+	RANKPAPER *rankpaper = GetRankPaper(no);
+	RANKINGNO *rankingno = GetRankingNo(no);
+
+	switch (no)
+	{
+	case 0:
+		rankingno->pos.x = rankpaper->pos.x;
+		rankingno->pos.y = rankpaper->pos.y + RANKPAPER_FIRST_POS_Y;
+		rankingno->pos.z = rankpaper->pos.z;
+		break;
+	case 1:
+		rankingno->pos.x = rankpaper->pos.x;
+		rankingno->pos.y = rankpaper->pos.y + RANKPAPER_SECOND_POS_Y;
+		rankingno->pos.z = rankpaper->pos.z;
+		break;
+	case 2:
+		rankingno->pos.x = rankpaper->pos.x;
+		rankingno->pos.y = rankpaper->pos.y + RANKPAPER_THIRD_POS_Y;
+		rankingno->pos.z = rankpaper->pos.z;
+		break;
+	}
+	PrintDebugProc("[順位座標%d ：X(%f) Y(%f) Z(%f)]\n", no, rankingno->pos.x, rankingno->pos.y, rankingno->pos.z);
+
+}
+
+//=============================================================================
+// テクスチャ座標の設定
+//=============================================================================
+void SetVertexBg(void)
+{
+	VERTEX_2D *pVtx;
+
+	D3DXVECTOR3 rankbackpos = GetRankBackPos();
+
+
+		// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+		g_pD3DVtxBuffRankpaper_back->Lock(0, 0, (void**)&pVtx, 0);
+
+		// 頂点座標の設定
+		pVtx[0].vtx = D3DXVECTOR3(rankbackpos.x , rankbackpos.y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(rankbackpos.x + RANKPAPERBACK_WIDTH , rankbackpos.y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(rankbackpos.x , rankbackpos.y + RANKPAPERBACK_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(rankbackpos.x + RANKPAPERBACK_WIDTH , rankbackpos.y + RANKPAPERBACK_HEIGHT, 0.0f);
+
+		// 頂点データをアンロックする
+		g_pD3DVtxBuffRankpaper_back->Unlock();
+}
 
 //=============================================================================
 // 頂点の作成
@@ -621,7 +888,7 @@ void SetColorRankpaper(void)
 		pVtx[0].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		pVtx[1].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
 		pVtx[2].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
-		pVtx[3].diffuse = D3DXCOLOR(1.0f, 1.0f, 1.0f, 1.0f);
+		pVtx[3].diffuse = D3DXCOLOR(1.0f, 0.0f, 1.0f, 1.0f);
 
 
 
@@ -629,4 +896,29 @@ void SetColorRankpaper(void)
 		g_pD3DVtxBuffRankpaper_back->Unlock();
 	}
 
+}
+
+//==================================================================================
+//手配書情報取得関数
+//==================================================================================
+RANKPAPER *GetRankPaper(int no)
+{
+	return &rankpaperWk[no];
+}
+
+//==================================================================================
+//順位テクスチャ情報取得関数
+//==================================================================================
+RANKINGNO *GetRankingNo(int no)
+{
+	return &rankingnoWk[no];
+}
+
+
+//==================================================================================
+//BG情報取得関数
+//==================================================================================
+D3DXVECTOR3 GetRankBackPos(void)
+{
+	return rankbackpos;
 }

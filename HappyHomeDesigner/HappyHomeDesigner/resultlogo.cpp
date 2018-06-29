@@ -138,7 +138,9 @@ void UpdateResultLogo(void)
 		if (GetKeyboardTrigger(kb->DECIDE) || IsButtonTriggered(0, gp->DECIDE))
 		{
 			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
-			SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			//SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			SetStage(STAGE_RANKING);
+
 		}
 	}
 

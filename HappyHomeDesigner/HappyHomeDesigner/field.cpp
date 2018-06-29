@@ -152,11 +152,7 @@ void DrawField(void)
 	{
 		fieldnum = 0;
 	}
-	else if (GetStage() == STAGE_HOUSE1
-		|| GetStage() == STAGE_HOUSE2
-		|| GetStage() == STAGE_HOUSE3
-		|| GetStage() == STAGE_MYHOUSE
-		|| GetStage() == STAGE_RESULT)
+	else
 	{
 		fieldnum = 1;
 	}

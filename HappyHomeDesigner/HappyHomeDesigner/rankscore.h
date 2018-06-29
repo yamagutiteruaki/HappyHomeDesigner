@@ -27,8 +27,9 @@
 
 #define	NUM_PLACE			(11)							// スコアの桁数 stage.hのMAX_PRICEと桁数合わせること
 
-#define	RANKSCORE_POS_X			(500)						// スコアの表示基準位置Ｘ座標
+#define	RANKSCORE_POS_X			((float)(-RANKSCORE_SIZE_X*NUM_PLACE/2)+10)						// スコアの表示基準位置Ｘ座標
 #define	RANKSCORE_POS_Y			(280)				// スコアの表示基準位置Ｙ座標
+
 
 #define SLOT_INTERVAL		(30)
 

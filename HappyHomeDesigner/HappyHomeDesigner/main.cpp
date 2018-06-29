@@ -80,7 +80,7 @@ int APIENTRY WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLi
 		NULL);
 
 	// DirectXの初期化(ウィンドウを作成してから行う)
-	if (MessageBox(hWnd, "ウィンドウモードで起動しますか？", "起動確認", MB_YESNO) == IDYES)
+	//if (MessageBox(hWnd, "ウィンドウモードで起動しますか？", "起動確認", MB_YESNO) == IDYES)
 	{
 		modeflag = true;
 	}
@@ -198,7 +198,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 		switch (wParam)
 		{
 		case VK_ESCAPE:
-			if (MessageBox(hWnd, "終了しますか？", "終了確認", MB_YESNO) == IDYES)
+			//if (MessageBox(hWnd, "終了しますか？", "終了確認", MB_YESNO) == IDYES)
 			{
 				DestroyWindow(hWnd);
 			}
