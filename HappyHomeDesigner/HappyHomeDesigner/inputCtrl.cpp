@@ -124,9 +124,9 @@ void InitInputGamepad(void)
 	gp->CAMERA_ZOOMIN =		BUTTON_LRZ_DOWN;
 	gp->CAMERA_ZOOMOUT =	BUTTON_LRZ_UP;
 
-	gp->DECIDE =			BUTTON_C;
+	gp->DECIDE =			BUTTON_B;
 
 	gp->TAKE =				BUTTON_X;
-	gp->PUT =				BUTTON_B;
+	gp->PUT =				BUTTON_A;
 
 }
