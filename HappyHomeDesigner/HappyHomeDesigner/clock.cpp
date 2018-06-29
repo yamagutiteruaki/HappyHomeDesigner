@@ -144,7 +144,7 @@ void UpdateClock(void)
 		}
 		if (clock->rot.z > D3DX_PI * 2)//ŽžŒv‚ªˆêŽü‚µ‚½‚ç
 		{
-			//SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
 		}
 
 	}

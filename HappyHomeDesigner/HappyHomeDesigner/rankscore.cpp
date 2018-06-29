@@ -255,7 +255,7 @@ void SetVertexRankScore(int no)
 	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 	g_pD3DVtxBuffRankscore->Lock(0, 0, (void**)&pVtx, 0);
 
-	pVtx += (no * 4*11);
+	pVtx += (no * 4*NUM_PLACE);
 
 	for (int nCntPlace = 0; nCntPlace < NUM_PLACE; nCntPlace++, pVtx += 4)
 	{

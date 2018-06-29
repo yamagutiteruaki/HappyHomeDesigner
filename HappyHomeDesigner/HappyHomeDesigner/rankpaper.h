@@ -28,18 +28,18 @@
 #define	RANKPAPERBACK_POS_X			(0)								// タイトルロゴの位置(X座標)
 #define	RANKPAPERBACK_POS_Y			(-SCREEN_WIDTH)								// タイトルロゴの位置(Y座標)
 
-#define	RANKPAPER0_WIDTH			(400)							// タイトルロゴの幅
-#define	RANKPAPER0_HEIGHT			(400)							// タイトルロゴの高さ
+#define	RANKPAPER0_WIDTH			(400*SCREEN_SCALE)							// タイトルロゴの幅
+#define	RANKPAPER0_HEIGHT			(400*SCREEN_SCALE)							// タイトルロゴの高さ
 #define	RANKPAPER0_POS_X			(SCREEN_WIDTH/2)				// タイトルロゴの位置(X座標)
 #define	RANKPAPER0_POS_Y			(0)								// タイトルロゴの位置(Y座標)
 
-#define	RANKPAPER1_WIDTH			(400)							// タイトルロゴの幅
-#define	RANKPAPER1_HEIGHT			(400)							// タイトルロゴの高さ
+#define	RANKPAPER1_WIDTH			(400*SCREEN_SCALE)							// タイトルロゴの幅
+#define	RANKPAPER1_HEIGHT			(400*SCREEN_SCALE)							// タイトルロゴの高さ
 #define	RANKPAPER1_POS_X			(20+RANKPAPER1_WIDTH/2)							// タイトルロゴの位置(X座標)
 #define	RANKPAPER1_POS_Y			(SCREEN_HEIGHT/3)				// タイトルロゴの位置(Y座標)
 
-#define	RANKPAPER2_WIDTH			(400)							// タイトルロゴの幅
-#define	RANKPAPER2_HEIGHT			(400)							// タイトルロゴの高さ
+#define	RANKPAPER2_WIDTH			(400*SCREEN_SCALE)							// タイトルロゴの幅
+#define	RANKPAPER2_HEIGHT			(400*SCREEN_SCALE)							// タイトルロゴの高さ
 #define	RANKPAPER2_POS_X			(SCREEN_WIDTH-RANKPAPER2_WIDTH/2-20)		// タイトルロゴの位置(X座標)
 #define	RANKPAPER2_POS_Y			(SCREEN_HEIGHT/3)				// タイトルロゴの位置(Y座標)
 
@@ -47,19 +47,19 @@
 
 
 #define	RANKPAPER_FIRST_POS_X		(RANKPAPER0_POS_X)		// タイトルロゴの位置(X座標)
-#define	RANKPAPER_FIRST_POS_Y		(RANKPAPER0_HEIGHT-80)		// タイトルロゴの位置(Y座標)
-#define	RANKPAPER_FIRST_WIDTH		(200)		// タイトルロゴの幅
-#define	RANKPAPER_FIRST_HEIGHT		(200)		// タイトルロゴの高さ
+#define	RANKPAPER_FIRST_POS_Y		(RANKPAPER0_HEIGHT-80*SCREEN_SCALE)		// タイトルロゴの位置(Y座標)
+#define	RANKPAPER_FIRST_WIDTH		(200*SCREEN_SCALE)		// タイトルロゴの幅
+#define	RANKPAPER_FIRST_HEIGHT		(200*SCREEN_SCALE)		// タイトルロゴの高さ
 
 #define	RANKPAPER_SECOND_POS_X		(RANKPAPER1_POS_X)		// タイトルロゴの位置(X座標)
-#define	RANKPAPER_SECOND_POS_Y		(RANKPAPER1_HEIGHT-80)		// タイトルロゴの位置(Y座標)
-#define	RANKPAPER_SECOND_WIDTH		(200)		// タイトルロゴの幅
-#define	RANKPAPER_SECOND_HEIGHT		(200)		// タイトルロゴの高さ
+#define	RANKPAPER_SECOND_POS_Y		(RANKPAPER1_HEIGHT-80*SCREEN_SCALE)		// タイトルロゴの位置(Y座標)
+#define	RANKPAPER_SECOND_WIDTH		(200*SCREEN_SCALE)		// タイトルロゴの幅
+#define	RANKPAPER_SECOND_HEIGHT		(200*SCREEN_SCALE)		// タイトルロゴの高さ
 
 #define	RANKPAPER_THIRD_POS_X		(RANKPAPER2_POS_X)		// タイトルロゴの位置(X座標)
-#define	RANKPAPER_THIRD_POS_Y		(RANKPAPER2_HEIGHT-75)		// タイトルロゴの位置(Y座標)
-#define	RANKPAPER_THIRD_WIDTH		(200)		// タイトルロゴの幅
-#define	RANKPAPER_THIRD_HEIGHT		(200)		// タイトルロゴの高さ
+#define	RANKPAPER_THIRD_POS_Y		(RANKPAPER2_HEIGHT-80*SCREEN_SCALE)		// タイトルロゴの位置(Y座標)
+#define	RANKPAPER_THIRD_WIDTH		(200*SCREEN_SCALE)		// タイトルロゴの幅
+#define	RANKPAPER_THIRD_HEIGHT		(200*SCREEN_SCALE)		// タイトルロゴの高さ
 
 #define	RANK_NO_MAX					(RANKPAPER_MAX)					//ランキング順位使用数
 

@@ -282,9 +282,9 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 
 		// 頂点座標の設定
 		pVtx[0].vtx = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].vtx = D3DXVECTOR3(850, 0.0f, 0.0f);
-		pVtx[2].vtx = D3DXVECTOR3(0.0f, 240, 0.0f);
-		pVtx[3].vtx = D3DXVECTOR3(850, 240, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(RESULT_LOGO_WIDTH, 0.0f, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(0.0f, RESULT_LOGO_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(RESULT_LOGO_WIDTH, RESULT_LOGO_HEIGHT, 0.0f);
 
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
