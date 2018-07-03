@@ -120,9 +120,11 @@ void DrawGetUI(void)
 		D3DXMatrixIdentity(&g_mtxWorldGetUI);
 
 		// ポリゴンを正面に向ける
-
-
-
+		D3DXMatrixInverse(&g_mtxWorldGetUI, NULL, &mtxView);
+		g_mtxWorldGetUI._41 = 0.0f;
+		g_mtxWorldGetUI._42 = 0.0f;
+		g_mtxWorldGetUI._43 = 0.0f;
+		
 
 		// スケールを反映
 		D3DXMatrixScaling(&mtxScale, g_sclGetUI.x,
@@ -237,4 +239,5 @@ void SetGetUI(D3DXVECTOR3 pos)
 {
 	g_bUse = true;
 	g_posGetUI = D3DXVECTOR3(pos.x, pos.y + 30.0f, pos.z);
+	g_fUIalpha = 1.0f;
 }

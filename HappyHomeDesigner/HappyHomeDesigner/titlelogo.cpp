@@ -11,6 +11,7 @@
 #include "fade.h"
 #include "stage.h"
 #include "sound.h"
+#include "inputCtrl.h"
 
 //***********************************************************
 // プロトタイプ宣言
@@ -145,6 +146,9 @@ void UninitTitlelogo(void)
 //=============================================================================
 void UpdateTitlelogo(void)
 {
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
+
 #if 0
 	if (g_nCountAppearStart >= COUNT_APPERA_START)
 	{
@@ -186,7 +190,7 @@ void UpdateTitlelogo(void)
 	{
 		g_bStamp = g_bStamp ? false : true;
 	}
-	if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
+	if (GetKeyboardTrigger(kb->DECIDE) || IsButtonTriggered(0, gp->DECIDE))
 	{
 
 		if (g_nCountAppearStart == 0)

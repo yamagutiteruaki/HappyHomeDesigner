@@ -18,9 +18,10 @@
 #define	TEXTURE_RESULT_LOGO2	"data/TEXTURE/被害総額.png"			// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULT_GAMEOVER	"data/TEXTURE/GAMEOVER00.png"			// 読み込むテクスチャファイル名
 #define	TEXTURE_RESULT_CLEAR	"data/TEXTURE/GAME_RESULT00.png"			// 読み込むテクスチャファイル名
-#define	RESULT_LOGO2_WIDTH	(1200)				// リザルトロゴの幅
-#define	RESULT_LOGO2_HEIGHT	(480)				// リザルトロゴの高さ
-
+#define	RESULT_LOGO2_WIDTH	(1200*SCREEN_SCALE)				// リザルトロゴの幅
+#define	RESULT_LOGO2_HEIGHT	(480*SCREEN_SCALE)				// リザルトロゴの高さ
+#define RESULT_LOGO_WIDTH	(850*SCREEN_SCALE)
+#define RESULT_LOGO_HEIGHT	(240*SCREEN_SCALE)
 
 //*****************************************************************************
 // プロトタイプ宣言

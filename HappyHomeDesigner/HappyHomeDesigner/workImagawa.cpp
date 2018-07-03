@@ -69,7 +69,7 @@ void UpdateWorkImagawa(void)
 		UpdateHome();
 		break;
 	case STAGE_RESULT:
-
+	case STAGE_RANKING:
 		if (GetGameEnd() == GAME_CLEAR)
 		{
 			UpdateField();
@@ -100,6 +100,7 @@ void DrawWorkImagawa(int no)
 		if (no == GAME_HOME)	DrawHome();
 		break;
 	case STAGE_RESULT:
+	case STAGE_RANKING:
 		if (GetGameEnd() == GAME_CLEAR)
 		{
 			DrawField(); 

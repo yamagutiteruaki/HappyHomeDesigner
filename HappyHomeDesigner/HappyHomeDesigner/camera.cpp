@@ -14,6 +14,7 @@
 #include "field.h"
 #include "furniture.h"
 #include "fade.h"
+#include "inputCtrl.h"
 
 // デバッグ用
 #ifdef _DEBUG
@@ -73,14 +74,16 @@ void UninitCamera(void)
 //=============================================================================
 void UpdateCamera(void)
 {
-
 	CAMERA *camera = GetCamera();
 	PLAYER *player = GetPlayer(0);
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
 	
 	D3DXVECTOR3 limit;//カメラが場外に出た時に使用
 	int fieldnum;
 
-	if (GetStage() == STAGE_RESULT)
+	if (GetStage() == STAGE_RESULT
+		||GetStage()==STAGE_RANKING)
 	{
 		camera->posCameraEye = D3DXVECTOR3(0.0f, POS_Y_CAM, 0.0f);
 
@@ -113,7 +116,7 @@ void UpdateCamera(void)
 
 
 		//デバッグ時にZCでカメラ回転
-		if (GetKeyboardPress(DIK_Z) || IsButtonPressed(0, BUTTON_LZ_UP))
+		if (GetKeyboardPress(kb->CAMERA_LEFT) || IsButtonPressed(0, gp->CAMERA_LEFT))
 		{// 視点旋回「左」
 			camera->rotCamera.y += VALUE_ROTATE_CAMERA;
 			if (camera->rotCamera.y > D3DX_PI)
@@ -126,7 +129,7 @@ void UpdateCamera(void)
 
 			CameraReset = false;
 		}
-		if (GetKeyboardPress(DIK_C) || IsButtonPressed(0, BUTTON_LZ_DOWN))
+		if (GetKeyboardPress(kb->CAMERA_RIGHT) || IsButtonPressed(0, gp->CAMERA_RIGHT))
 		{// 視点旋回「右」
 			camera->rotCamera.y -= VALUE_ROTATE_CAMERA;
 			if (camera->rotCamera.y < -D3DX_PI)
@@ -143,7 +146,7 @@ void UpdateCamera(void)
 		if (camera->fLength >= CAMERA_LENGTH_MIN
 			&&camera->fLength <= CAMERA_LENGTH_MAX)
 		{
-			if (GetKeyboardPress(DIK_W) || IsButtonPressed(0, BUTTON_LRZ_DOWN))
+			if (GetKeyboardPress(kb->CAMERA_ZOOMIN) || IsButtonPressed(0, gp->CAMERA_ZOOMIN))
 			{// 視点移動「ズームイン」
 
 				camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
@@ -160,7 +163,7 @@ void UpdateCamera(void)
 			}
 			if ((float)fabs(camera->posCameraEye.x) < limitpos_x && (float)fabs(camera->posCameraEye.z) < limitpos_z)//カメラが壁の外にある際はズームアウト出来ない
 			{
-				if (GetKeyboardPress(DIK_S) || IsButtonPressed(0, BUTTON_LRZ_UP))
+				if (GetKeyboardPress(kb->CAMERA_ZOOMOUT) || IsButtonPressed(0, gp->CAMERA_ZOOMOUT))
 				{// 視点移動「ズームアウト」
 					camera->fLength = camera->fChaseLength;//保存されてる距離と一致させる
 
@@ -179,7 +182,7 @@ void UpdateCamera(void)
 
 
 		// カメラリセット
-		if (GetKeyboardTrigger(DIK_X))
+		if (GetKeyboardTrigger(kb->CAMERA_RESET))
 		{
 			camera->rotDest = player->rot.y + D3DX_PI;//プレイヤーの後ろにセットしなおす
 

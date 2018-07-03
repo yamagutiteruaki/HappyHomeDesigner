@@ -35,6 +35,8 @@
 #define ANIM_PATTERN_NUM_CLOCKHAND			(TEXTURE_PATTERN_DIVIDE_X_CLOCK*TEXTURE_PATTERN_DIVIDE_Y_CLOCK)	// アニメーションパターン数
 #define TIME_ANIMATION_CLOCKHAND			(4)	// アニメーションの切り替わるカウント
 
+
+#define CLOCK_SPEED						((2*D3DX_PI)/(60*60*3))//一周(2*D3DX_PI)を(60フレーム*60秒*X分)で割る
 #define CLOCK_MAX						(1) 
 
 //*****************************************************************************

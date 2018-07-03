@@ -43,9 +43,9 @@ WWWW					wwwwWk[WWWW_MAX];					// ワーク
 
 const char *FileNameWWWW[] =
 {
-	"data/TEXTURE/glass_wall00.png",
-	"data/TEXTURE/glass_wall01.png",
-	"data/TEXTURE/glass_wall02.png",
+	"data/TEXTURE/glass_wall03.png",
+	"data/TEXTURE/glass_wall04.png",
+	"data/TEXTURE/glass_wall05.png",
 };
 
 //=============================================================================
@@ -76,7 +76,8 @@ HRESULT InitWWWW(int nType)
 		{
 			D3DXCreateTextureFromFile(
 				Device,						// デバイスへのポインタ
-				FileNameWWWW[0],			// ファイルの名前
+				//FileNameWWWW[0],			// ファイルの名前
+				FileNameWWWW[(wwww + i)->type],			// ファイルの名前
 				&TextureWWWW[i]);			// 読み込むメモリー
 
 			MakeVertexWWWW(Device, i);

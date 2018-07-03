@@ -11,6 +11,7 @@
 #include "stage.h"
 #include "score.h"
 #include "sound.h"
+#include "inputCtrl.h"
 
 //*****************************************************************************
 // プロトタイプ宣言
@@ -127,14 +128,19 @@ void UninitResultLogo(void)
 //=============================================================================
 void UpdateResultLogo(void)
 {
+	INPUTDEVICE *kb = GetInputDevice(INPUT_KEY);
+	INPUTDEVICE *gp = GetInputDevice(INPUT_GAMEPAD);
+
 	SetVertexTexture();
 
 	if (GetSlotCount() == NUM_PLACE)
 	{
-		if (GetKeyboardTrigger(DIK_RETURN) || IsButtonTriggered(0, BUTTON_C))
+		if (GetKeyboardTrigger(kb->DECIDE) || IsButtonTriggered(0, gp->DECIDE))
 		{
 			SetSe(SE_DECI, E_DS8_FLAG_NONE, CONTINUITY_OFF);
-			SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			//SetFade(FADE_OUT, STAGE_RANKING, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
+			SetStage(STAGE_RANKING);
+
 		}
 	}
 
@@ -276,9 +282,9 @@ HRESULT MakeVertexResultLogo(LPDIRECT3DDEVICE9 pDevice)
 
 		// 頂点座標の設定
 		pVtx[0].vtx = D3DXVECTOR3(0.0f, 0.0f, 0.0f);
-		pVtx[1].vtx = D3DXVECTOR3(850, 0.0f, 0.0f);
-		pVtx[2].vtx = D3DXVECTOR3(0.0f, 240, 0.0f);
-		pVtx[3].vtx = D3DXVECTOR3(850, 240, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(RESULT_LOGO_WIDTH, 0.0f, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(0.0f, RESULT_LOGO_HEIGHT, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(RESULT_LOGO_WIDTH, RESULT_LOGO_HEIGHT, 0.0f);
 
 		// テクスチャのパースペクティブコレクト用
 		pVtx[0].rhw =
