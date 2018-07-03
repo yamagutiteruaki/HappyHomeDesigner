@@ -71,7 +71,7 @@ HRESULT InitButton(int type)
 
 		button->Texture = g_pD3DTextureButton[i];					// テクスチャ情報
 		
-		button->rate = D3DXVECTOR2(10,10);
+		button->rate = D3DXVECTOR2(2*TEXTURE_BUTTON_SIZE_X, 2*TEXTURE_BUTTON_SIZE_Y);
 
 																	// テクスチャの読み込み
 
@@ -117,35 +117,30 @@ void UpdateButton(void)
 
 		if (button->use == true)
 		{
-			if (button->rate.x > 0)
-			{
-				button->rate.x -= 0.5f;
-			}
-			if (button->pos.x < SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
+			if (button->pos.x <= SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
 			{
 				button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;
 				button->rate.x = 0;
 			}
 			else
 			{
+				button->rate.x -= 0.5f;
+
 				button->pos.x -= 5 * button->rate.x;
 			}
 
 		}
 		else
 		{
-			if (button->rate.x < 10)
-			{
-				button->rate.x += 0.5f;
-			}
-			if (button->pos.x > SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
+			if (button->pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
 			{
 				button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;
 				button->rate.x = 10;
-				button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
+				button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;	// 座標データを初期化
 			}
 			else
 			{
+				button->rate.x += 0.5f;
 				button->pos.x += 5 * button->rate.x;
 			}
 
@@ -154,43 +149,124 @@ void UpdateButton(void)
 		SetVertexButton(i);	// 移動後の座標で頂点を設定
 	}
 
-
-	if (buttonWk[ENTER_BUTTON].use == true || buttonWk[GET_BUTTON].use == true|| buttonWk[EXIT_BUTTON].use == true)
-	{
-		if (buttonWk[PUT_BUTTON].rate.y > 0)
+	{//PUTBUTTONの処理
+		if (buttonWk[PUT_BUTTON].pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
 		{
-			buttonWk[PUT_BUTTON].rate.y -= 0.5f;
-		}
-		if (buttonWk[PUT_BUTTON].pos.y < SCREEN_HEIGHT - (3 * TEXTURE_BUTTON_SIZE_Y))
-		{
-			buttonWk[PUT_BUTTON].pos.y = SCREEN_HEIGHT - (3 * TEXTURE_BUTTON_SIZE_Y);
-			buttonWk[PUT_BUTTON].rate.y = 0;
-		}
-		else
-		{
-			buttonWk[PUT_BUTTON].pos.y -= 5 * buttonWk[PUT_BUTTON].rate.y;
-		}
-
-	}
-	else if (buttonWk[ENTER_BUTTON].use == false && buttonWk[GET_BUTTON].use == false)
-	{
-		if (buttonWk[PUT_BUTTON].rate.y < 10)
-		{
-			buttonWk[PUT_BUTTON].rate.y += 0.5f;
-		}
-		if (buttonWk[PUT_BUTTON].pos.y >= SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)
-		{
-			buttonWk[PUT_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
-			buttonWk[PUT_BUTTON].rate.y = 10;
-		}
-		else
-		{
-			buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
+			if (buttonWk[GET_BUTTON].use == true || buttonWk[EXIT_BUTTON].use == true)
+			{
+				if (buttonWk[GET_BUTTON].use == true)
+				{
+					buttonWk[PUT_BUTTON].pos.y = buttonWk[GET_BUTTON].pos.y - 2*TEXTURE_BUTTON_SIZE_Y;
+				}
+				else
+				{
+					buttonWk[PUT_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2*TEXTURE_BUTTON_SIZE_Y;
+				}
+				buttonWk[PUT_BUTTON].rate.y = 10;
+			}
+			else
+			{
+				buttonWk[PUT_BUTTON].pos.y =  SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
+				buttonWk[PUT_BUTTON].rate.y = 0;
+			}
 		}
 
+		if (buttonWk[PUT_BUTTON].use == true)
+		{
+			if (buttonWk[GET_BUTTON].use == true)
+			{
+				if (buttonWk[PUT_BUTTON].pos.y <= buttonWk[GET_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)
+				{
+					buttonWk[PUT_BUTTON].pos.y = buttonWk[GET_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;
+					buttonWk[PUT_BUTTON].rate.y = 0;
+				}
+				else
+				{
+					buttonWk[PUT_BUTTON].rate.y -= 0.5f;
+					buttonWk[PUT_BUTTON].pos.y -= 5 * buttonWk[PUT_BUTTON].rate.y;
+				}
 
-	}
-	SetVertexButton(PUT_BUTTON);	// 移動後の座標で頂点を設定
+			}
+			else if (buttonWk[EXIT_BUTTON].use == false && buttonWk[GET_BUTTON].use == false)
+			{
+				if (buttonWk[PUT_BUTTON].pos.y >= SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)
+				{
+					buttonWk[PUT_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
+					buttonWk[PUT_BUTTON].rate.y = 10;
+				}
+				else
+				{
+					buttonWk[PUT_BUTTON].rate.y += 0.5f;
+					buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
+				}
+
+			}
+			else if (buttonWk[EXIT_BUTTON].use == true && buttonWk[GET_BUTTON].use == false)
+			{
+				if (buttonWk[PUT_BUTTON].pos.y >= buttonWk[EXIT_BUTTON].pos.y - 2*TEXTURE_BUTTON_SIZE_Y)
+				{
+					buttonWk[PUT_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;
+					buttonWk[PUT_BUTTON].rate.y = 0;
+				}
+				else
+				{
+					buttonWk[PUT_BUTTON].rate.y += 0.5f;
+					buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
+				}
+
+			}
+		}
+		SetVertexButton(PUT_BUTTON);	// 移動後の座標で頂点を設定
+	}//PUTBUTTONの処理
+	
+	{//GETBUTTONの処理
+		if (buttonWk[GET_BUTTON].pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
+		{
+			if (buttonWk[EXIT_BUTTON].use == true)
+			{
+				buttonWk[GET_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2*TEXTURE_BUTTON_SIZE_Y;
+				buttonWk[GET_BUTTON].rate.y = 0;
+			}
+			else
+			{
+				buttonWk[GET_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
+				buttonWk[GET_BUTTON].rate.y = 10;
+			}
+		}
+	
+		if (buttonWk[GET_BUTTON].use == true)
+		{
+			if (buttonWk[EXIT_BUTTON].use == true)
+			{
+				if (buttonWk[GET_BUTTON].pos.y <= buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)
+				{
+					buttonWk[GET_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;
+					buttonWk[GET_BUTTON].rate.y = 0;
+				}
+				else
+				{
+					buttonWk[GET_BUTTON].rate.y -= 0.5f;
+					buttonWk[GET_BUTTON].pos.y -= 5 * buttonWk[GET_BUTTON].rate.y;
+				}
+	
+			}
+			else if (buttonWk[EXIT_BUTTON].use == false)
+			{
+				if (buttonWk[GET_BUTTON].pos.y >= SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)
+				{
+					buttonWk[GET_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;
+					buttonWk[GET_BUTTON].rate.y = 10;
+				}
+				else
+				{
+					buttonWk[GET_BUTTON].rate.y += 0.5f;
+					buttonWk[GET_BUTTON].pos.y += 5 * buttonWk[GET_BUTTON].rate.y;
+				}
+	
+			}
+		}
+		SetVertexButton(GET_BUTTON);	// 移動後の座標で頂点を設定
+	}//GETBUTTONの処理
 
 }
 
