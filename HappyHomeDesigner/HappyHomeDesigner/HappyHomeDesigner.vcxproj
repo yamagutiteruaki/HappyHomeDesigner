@@ -168,6 +168,7 @@
     <ClCompile Include="GetUI.cpp" />
     <ClCompile Include="home.cpp" />
     <ClCompile Include="inputCtrl.cpp" />
+    <ClCompile Include="levelchoice.cpp" />
     <ClCompile Include="ranking.cpp" />
     <ClCompile Include="input.cpp" />
     <ClCompile Include="Light.cpp" />
@@ -216,6 +217,7 @@
     <ClInclude Include="GetUI.h" />
     <ClInclude Include="home.h" />
     <ClInclude Include="inputCtrl.h" />
+    <ClInclude Include="levelchoice.h" />
     <ClInclude Include="ranking.h" />
     <ClInclude Include="input.h" />
     <ClInclude Include="Light.h" />
