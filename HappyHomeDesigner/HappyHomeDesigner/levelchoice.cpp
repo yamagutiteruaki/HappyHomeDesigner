@@ -7,6 +7,7 @@
 #ifndef _VOICE_H_
 #define _VOICE_H_
 
+#include "main.h"
 
 // マクロ定義
 #define	NUM_VOICE				(2)			// ポリゴン数
