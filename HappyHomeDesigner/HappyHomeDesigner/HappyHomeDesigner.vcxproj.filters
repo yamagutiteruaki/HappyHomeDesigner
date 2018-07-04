@@ -142,6 +142,9 @@
     <ClCompile Include="levelchoice.cpp">
       <Filter>ソースファイル\stage\title</Filter>
     </ClCompile>
+    <ClCompile Include="minimap.cpp">
+      <Filter>ソースファイル\stage\game\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h">
@@ -284,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="levelchoice.h">
       <Filter>ソースファイル\stage\title</Filter>
+    </ClInclude>
+    <ClInclude Include="minimap.h">
+      <Filter>ソースファイル\stage\game\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
