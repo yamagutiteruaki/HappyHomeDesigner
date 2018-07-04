@@ -916,7 +916,7 @@ void PlayerMove(void)
 	player->move.z += (0.0f - player->move.z) * RATE_MOVE_PLAYER;
 
 	// ŠŽd—Ê‚É‚æ‚Á‚ÄˆÚ“®‘¬“x‚ÌC³
-	// PlayerMoveWt();
+	PlayerMoveWt();
 
 
 
