@@ -22,6 +22,11 @@
 
 #define TIME_ANIMATION_BUTTON			(1)	// アニメーションの切り替わるカウント
 
+#define RATE_MAX_X					(10.0f)
+#define	RATE_MAX_Y					(7.2f)
+#define RATE_SPEED_X				(0.5f)
+#define RATE_SPEED_Y				(0.3f)
+
 #define BUTTON_MAX						(4) // 見つかれる最大数
 //*****************************************************************************
 // 構造体宣言
@@ -30,6 +35,7 @@
 typedef struct	// エネミー構造体
 {
 	bool			use;						// true:使用  false:未使用
+	int				moveflag;
 	D3DXVECTOR3		pos;						// ポリゴンの移動量
 	D3DXVECTOR3		rot;						// ポリゴンの回転量
 	int				kind;					// 種類
@@ -50,6 +56,13 @@ enum
 	EXIT_BUTTON,
 	PUT_BUTTON,
 	GET_BUTTON
+};
+
+enum
+{
+	PLUS_MOVE,
+	MINUS_MOVE,
+	NONE_MOVE,
 };
 
 //*****************************************************************************
