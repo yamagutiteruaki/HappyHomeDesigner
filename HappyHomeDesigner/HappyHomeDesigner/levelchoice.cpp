@@ -45,6 +45,7 @@ HRESULT InitLevelChice(void)
 
 	MakeVertexTitlelogo(pDevice);							//頂点情報の作成
 
+#include "main.h"
 
 															// テクスチャの読み込み
 	D3DXCreateTextureFromFile(pDevice,						// デバイスへのポインタ
