@@ -139,6 +139,9 @@
     <ClCompile Include="run.cpp">
       <Filter>ソースファイル\stage\result</Filter>
     </ClCompile>
+    <ClCompile Include="levelchoice.cpp">
+      <Filter>ソースファイル\stage\title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="arrest.h">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="run.h">
       <Filter>ソースファイル\stage\result</Filter>
+    </ClInclude>
+    <ClInclude Include="levelchoice.h">
+      <Filter>ソースファイル\stage\title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

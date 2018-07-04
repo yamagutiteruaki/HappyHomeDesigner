@@ -58,11 +58,11 @@ void UninitGame(void)
 void UpdateGame(void)
 {
 
-	UpdateWorkChisaka();
+	UpdateWorkImagawa();
 	UpdateWorkSon();
+	UpdateWorkChisaka();
 	UpdateWorkSekiguchi();
 	UpdateWorkMatsuo();
-	UpdateWorkImagawa();
 	UpdateWorkYamaguchi();
 }
 
@@ -76,8 +76,8 @@ void DrawGame(void)
 	{
 		DrawWorkImagawa(i);
 
-		DrawWorkChisaka(i);
 		DrawWorkSon(i);
+		DrawWorkChisaka(i);
 		DrawWorkYamaguchi(i);
 
 		DrawWorkSekiguchi(i);
