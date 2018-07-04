@@ -436,6 +436,7 @@ void JudgeWWWWC(void)
 	WWWW *wwww = GetWWWW(0);
 	PLAYER *player = GetPlayer(0);
 
+
 	for (int i = 0; i < WWWW_MAX; i++, wwww++)
 	{
 		if (wwww->use == FALSE) continue;
@@ -443,6 +444,7 @@ void JudgeWWWWC(void)
 		if (CollisionBoxToPos(wwww->wwww.Pos, player->Eye, D3DXVECTOR2(wwww->size1, wwww->size2)) == TRUE)
 		{
 			CBTP_resetPos(
+
 				&(player->Eye),
 				player->posTmp,
 				wwww->wwww.Pos,
