@@ -729,19 +729,20 @@ void DrawPlayer(void)
 void UpdatePlayer(void)
 {
 	PLAYER *player = GetPlayer(0);
+	PlayerBorder();
 
 	player->posTmp = player->Eye;
 
 	PlayerMove();
 
 	//AreaHouse(tempPos);
-	PlayerBorder();
 	PlayerEntrance();
 
 	// アニメーション処理
 	PlayerAnimation();
 
 	PrintDebugProc("player pos: %f %f %f\n", player->Eye.x, player->Eye.y, player->Eye.z);
+	PrintDebugProc("player move: %f %f %f\n", player->move.x, player->move.y, player->move.z);
 
 #ifdef _DEBUG
 	CAMERA *camera = GetCamera();
@@ -917,10 +918,14 @@ void PlayerMove(void)
 	// 所持重量によって移動速度の修正
 	// PlayerMoveWt();
 
+
+
 	// 位置移動
 	player->Eye.x += player->move.x;
 	player->Eye.y += player->move.y;
 	player->Eye.z += player->move.z;
+	// プレイヤーのパーツ移動
+	PlayerPartsMove();
 
 	// 目的の角度までの差分
 	fDiffRotY = player->rotDest.y - player->rot.y;
@@ -950,8 +955,6 @@ void PlayerMove(void)
 	// 注視点を向くためのY軸回転角度を求める
 	player->fangleY = player->rot.y;		// 回転角度を求める
 
-	// プレイヤーのパーツ移動
-	PlayerPartsMove();
 }
 
 //=============================================================================

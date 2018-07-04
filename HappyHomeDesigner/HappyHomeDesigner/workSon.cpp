@@ -61,8 +61,8 @@ void UpdateWorkSon(void)
 	case STAGE_TITLE:
 		break;
 	case STAGE_GAME:
-		UpdatePlayer();
 		UpdateWWWW();
+		UpdatePlayer();
 		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
