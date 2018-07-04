@@ -19,8 +19,6 @@
 
 #define TEXTURE_BUTTON_SIZE_X	(1000/6*SCREEN_SCALE)		// テクスチャサイズ
 #define TEXTURE_BUTTON_SIZE_Y	(300/6*SCREEN_SCALE)		// 同上
-#define	BUTTON_SPEED_X			(TEXTURE_BUTTON_SIZE_X/10)
-#define	BUTTON_SPEED_Y			(TEXTURE_BUTTON_SIZE_Y/30)
 
 #define TIME_ANIMATION_BUTTON			(1)	// アニメーションの切り替わるカウント
 
@@ -46,7 +44,7 @@ typedef struct	// エネミー構造体
 
 } BUTTON;
 
-enum
+enum 
 {
 	ENTER_BUTTON,
 	EXIT_BUTTON,

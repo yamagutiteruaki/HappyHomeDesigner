@@ -14,6 +14,7 @@
 #include "stage.h"
 #include "voice.h"
 #include <time.h>
+#include "debugproc.h"
 
 //*****************************************************************************
 // マクロ定義
@@ -29,7 +30,7 @@ void SetVertexButton(int no);
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
-LPDIRECT3DTEXTURE9		g_pD3DTextureButton[BUTTON_MAX] = { NULL ,NULL,NULL };		// テクスチャへのポリゴン
+LPDIRECT3DTEXTURE9		g_pD3DTextureButton[BUTTON_MAX] = { NULL ,NULL,NULL ,NULL};		// テクスチャへのポリゴン
 
 BUTTON					buttonWk[BUTTON_MAX];				// エネミー構造体
 
@@ -62,7 +63,7 @@ HRESULT InitButton(int type)
 	for (int i = 0; i < BUTTON_MAX; i++, button++)
 	{
 		button->use = false;										// 使用
-		button->pos = D3DXVECTOR3(SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
+		button->pos = D3DXVECTOR3(SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X, SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y, 0.0f);	// 座標データを初期化
 		button->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);				// 回転データを初期化
 		button->kind = 0;									// フレームを数えたい
 		D3DXVECTOR2 temp = D3DXVECTOR2(TEXTURE_BUTTON_SIZE_X, TEXTURE_BUTTON_SIZE_Y);
@@ -71,7 +72,7 @@ HRESULT InitButton(int type)
 
 		button->Texture = g_pD3DTextureButton[i];					// テクスチャ情報
 		
-		button->rate = D3DXVECTOR2(2*TEXTURE_BUTTON_SIZE_X, 2*TEXTURE_BUTTON_SIZE_Y);
+		button->rate = D3DXVECTOR2(10.0f, 10.0f);
 
 																	// テクスチャの読み込み
 
@@ -81,11 +82,9 @@ HRESULT InitButton(int type)
 
 
 
-
-
-
 	return S_OK;
 }
+
 
 //=============================================================================
 // 終了処理
@@ -117,36 +116,39 @@ void UpdateButton(void)
 
 		if (button->use == true)
 		{
-			if (button->pos.x <= SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
-			{
-				button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;
-				button->rate.x = 0;
-			}
-			else
+			if (button->pos.x > SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X)
 			{
 				button->rate.x -= 0.5f;
-
 				button->pos.x -= 5 * button->rate.x;
 			}
 
 		}
-		else
+		else if (button->pos.x < SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
 		{
-			if (button->pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)
-			{
-				button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;
-				button->rate.x = 10;
-				button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;	// 座標データを初期化
-			}
-			else
+			if (button->rate.x < 10)
 			{
 				button->rate.x += 0.5f;
 				button->pos.x += 5 * button->rate.x;
 			}
-
-
+		}
+		if (button->pos.x < SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X)
+		{
+			//button->rate.x = 0;
+			button->pos.x = SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X;
+		}
+		else if (button->pos.x > SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)
+		{
+			button->rate.x = 10;
+			button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;
 		}
 		SetVertexButton(i);	// 移動後の座標で頂点を設定
+#ifdef _DEBUG
+		PrintDebugProc("ボタンposx:[%f] posy:[%f] \n", buttonWk[i].pos.x, buttonWk[i].pos.y);
+		PrintDebugProc("ボタンRATE[%f] \n", buttonWk[i].rate.x );
+		PrintDebugProc("ボタンFLAG[%d] NUM[%d]\n", buttonWk[i].use, i);
+
+#endif // _DEBUG
+
 	}
 
 	{//PUTBUTTONの処理
@@ -170,7 +172,7 @@ void UpdateButton(void)
 				buttonWk[PUT_BUTTON].rate.y = 0;
 			}
 		}
-
+	
 		if (buttonWk[PUT_BUTTON].use == true)
 		{
 			if (buttonWk[GET_BUTTON].use == true)
@@ -185,7 +187,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y -= 0.5f;
 					buttonWk[PUT_BUTTON].pos.y -= 5 * buttonWk[PUT_BUTTON].rate.y;
 				}
-
+	
 			}
 			else if (buttonWk[EXIT_BUTTON].use == false && buttonWk[GET_BUTTON].use == false)
 			{
@@ -199,7 +201,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y += 0.5f;
 					buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
 				}
-
+	
 			}
 			else if (buttonWk[EXIT_BUTTON].use == true && buttonWk[GET_BUTTON].use == false)
 			{
@@ -213,7 +215,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y += 0.5f;
 					buttonWk[PUT_BUTTON].pos.y += 5 * buttonWk[PUT_BUTTON].rate.y;
 				}
-
+	
 			}
 		}
 		SetVertexButton(PUT_BUTTON);	// 移動後の座標で頂点を設定
@@ -362,9 +364,8 @@ BUTTON *GetButton(int no)
 //========================================================
 // ボタンの表示　falseならtrueを、trueならfalseを。
 //========================================================
-void Button(bool flag,int no)
+void Button(bool flag, int no)
 {
-	BUTTON *button = &buttonWk[no];				// エネミーのポインターを初期化
-
+	BUTTON *button = &buttonWk[no];				// ボタンのポインターを初期化
 	button->use = flag;
 }
