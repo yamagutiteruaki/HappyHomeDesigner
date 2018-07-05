@@ -1360,7 +1360,7 @@ template <typename CLASS> void SetAnimation(CLASS *pIn, float fAngle, int frame,
 			}
 		}
 		// XZ‰ñ“]Ž²ƒxƒNƒgƒ‹‚ª0‚Ìê‡‚ÌƒGƒ‰[ˆ—
-		if (pIn->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f) || (move < 0.001f))
+		if (pIn->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f) || (move < 0.1f))
 		{	// ‰ñ“]Šp“x‚ð0‚É‚·‚é
 			pIn->fangleXZ = 0.0f;
 		}
