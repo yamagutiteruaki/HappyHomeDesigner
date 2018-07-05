@@ -147,10 +147,10 @@ HRESULT MakeVertexArrest(int no)
 		arrest->vertexWk[3].rhw = 1.0f;
 
 	// 反射光の設定
-	arrest->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 100);
-	arrest->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 100);
-	arrest->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 100);
-	arrest->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 100);
+	arrest->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
 
 	// テクスチャ座標の設定
 	arrest->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);

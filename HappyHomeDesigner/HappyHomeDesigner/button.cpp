@@ -119,27 +119,27 @@ void UpdateButton(void)
 
 		if (button->use == true)//ボタンが使われてたら
 		{
-			if (button->pos.x > SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X)//指定場所についてない場合
+			if (button->pos.x > SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//指定場所についてない場合
 			{
 				button->rate.x -= RATE_SPEED_X;
 				button->pos.x -= 5 * button->rate.x;//指定場所まで動かす
 			}
 
 		}
-		else if (button->pos.x < SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//使われていない場合　かつ指定場所に隠れていない場合
+		else if (button->pos.x < SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)//使われていない場合　かつ指定場所に隠れていない場合
 		{
 				button->rate.x += RATE_SPEED_X;
 				button->pos.x += 5 * button->rate.x;//指定場所に隠す
 		}
-		if (button->pos.x < SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X)//指定場所をオーバーしている場合
+		if (button->pos.x < SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//指定場所をオーバーしている場合
 		{
 			button->rate.x = 0;
-			button->pos.x = SCREEN_WIDTH - 3 * TEXTURE_BUTTON_SIZE_X;//指定箇所に固定
+			button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;//指定箇所に固定
 		}
-		else if (button->pos.x > SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//指定場所に隠れていない場合
+		else if (button->pos.x > SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)//指定場所に隠れていない場合
 		{
 			button->rate.x = RATE_MAX_X;
-			button->pos.x = SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X;//指定場所に隠す
+			button->pos.x = SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X;//指定場所に隠す
 		}
 		SetVertexButton(i);	// 移動後の座標で頂点を設定
 #ifdef _DEBUG
@@ -153,7 +153,7 @@ void UpdateButton(void)
 
 	{//PUTBUTTONの処理
 
-		if (buttonWk[PUT_BUTTON].pos.x >= SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//隠れている場合
+		if (buttonWk[PUT_BUTTON].pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)//隠れている場合
 		{
 			if (buttonWk[GET_BUTTON].use == true || buttonWk[EXIT_BUTTON].use == true)//GETまたはEXITが使われているとき
 			{
@@ -185,14 +185,14 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].pos.y -= 2.5f * buttonWk[PUT_BUTTON].rate.y;//上段に動かす
 				}
 
-				if (buttonWk[PUT_BUTTON].pos.y <= buttonWk[GET_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//もし指定場所を越した場合
+				if (buttonWk[PUT_BUTTON].pos.y < buttonWk[GET_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//もし指定場所を越した場合
 				{
 					buttonWk[PUT_BUTTON].pos.y = buttonWk[GET_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;//指定場所に設置して
 					ButtonMove(PUT_BUTTON, NONE_MOVE);//flagをOFFに
 				}
 
 			}
-			else if ( buttonWk[EXIT_BUTTON].use == true)//EXITが使われていた場合
+			else if ( buttonWk[EXIT_BUTTON].use == true && buttonWk[GET_BUTTON].use == false)//EXITが使われていた場合
 			{
 				if (buttonWk[PUT_BUTTON].pos.y > buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//最下段にいる場合
 				{
@@ -209,7 +209,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y += RATE_SPEED_Y;
 					buttonWk[PUT_BUTTON].pos.y += 2.5f * buttonWk[PUT_BUTTON].rate.y;//下段に動かす
 				
-					if (buttonWk[PUT_BUTTON].pos.y >= buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//指定個所を越した場合
+					if (buttonWk[PUT_BUTTON].pos.y > buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//指定個所を越した場合
 					{
 						buttonWk[PUT_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;//指定箇所に設置して
 						ButtonMove(PUT_BUTTON, NONE_MOVE);//flagをOFFに
@@ -220,7 +220,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y -= RATE_SPEED_Y;
 					buttonWk[PUT_BUTTON].pos.y -= 2.5f * buttonWk[PUT_BUTTON].rate.y;//上段に動かす
 
-					if (buttonWk[PUT_BUTTON].pos.y <= buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//指定個所を越した場合
+					if (buttonWk[PUT_BUTTON].pos.y < buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y)//指定個所を越した場合
 					{
 						buttonWk[PUT_BUTTON].pos.y = buttonWk[EXIT_BUTTON].pos.y - 2 * TEXTURE_BUTTON_SIZE_Y;//指定個所に設置して
 						ButtonMove(PUT_BUTTON, NONE_MOVE);//flagをOFFに
@@ -240,7 +240,7 @@ void UpdateButton(void)
 					buttonWk[PUT_BUTTON].rate.y += RATE_SPEED_Y;
 					buttonWk[PUT_BUTTON].pos.y += 2.5f * buttonWk[PUT_BUTTON].rate.y;//下段に動かす
 
-					if (buttonWk[PUT_BUTTON].pos.y >= SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)//指定個所を越していた場合
+					if (buttonWk[PUT_BUTTON].pos.y > SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y)//指定個所を越していた場合
 					{
 						buttonWk[PUT_BUTTON].pos.y = SCREEN_HEIGHT - TEXTURE_BUTTON_SIZE_Y;//指定個所に設置して
 						ButtonMove(PUT_BUTTON, NONE_MOVE);//flagをOFFに
@@ -261,7 +261,7 @@ void UpdateButton(void)
 	}//PUTBUTTONの処理
 	
 	{//GETBUTTONの処理
-		if (buttonWk[GET_BUTTON].pos.x >= SCREEN_WIDTH - TEXTURE_BUTTON_SIZE_X)//隠れている場合
+		if (buttonWk[GET_BUTTON].pos.x >= SCREEN_WIDTH + TEXTURE_BUTTON_SIZE_X)//隠れている場合
 		{
 			if (buttonWk[EXIT_BUTTON].use == true)//EXITが使われていれば
 			{
@@ -432,9 +432,6 @@ void ButtonMove(int no,int move)
 			button->rate.y = RATE_MAX_Y;//ボタンを上段に動かす準備
 			break;
 
-		case NONE_MOVE:
-			//button->rate.y = 0.0f;
-			break;
 		}
 	}
 	button->moveflag = move;//flagを変更

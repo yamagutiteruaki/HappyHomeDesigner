@@ -116,12 +116,12 @@ void DrawWorkMatsuo(int no)
 		break;
 	case STAGE_GAME:
 		if (no == GAME_VOICE)	DrawVoice();
-		if (no == GAME_ARREST)	DrawArrest();
+
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
 	case STAGE_HOUSE3:
 	case STAGE_MYHOUSE:
-
+		if (no == GAME_ARREST)	DrawArrest();
 		if (no == GAME_WEIGHT)	DrawWeight();
 		if (no == GAME_BUTTON)	DrawButton();
 		break;

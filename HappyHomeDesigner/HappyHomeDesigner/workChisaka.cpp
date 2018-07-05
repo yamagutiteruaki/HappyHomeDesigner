@@ -70,6 +70,7 @@ void UpdateWorkChisaka(void)
 		UpdateFurniture();
 		break;
 	case STAGE_RESULT:
+	case STAGE_RANKING:
 		UpdateFurniture();
 		break;
 	}
