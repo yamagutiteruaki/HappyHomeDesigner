@@ -1,6 +1,6 @@
 //=============================================================================
 //
-// ミニマップ処理 [minimap.cpp]
+// ミニマップ処理 [miniField.cpp]
 // Author : GP12A295-19-千坂浩太
 //
 //=============================================================================
@@ -17,13 +17,20 @@
 // プロトタイプ宣言
 //*****************************************************************************
 HRESULT MakeVertexMinimap(void);
+void SetVertexPlayerPoint(int no);
 
 //*****************************************************************************
 // グローバル変数
 //*****************************************************************************
+// ミニマップフィールド用
 LPDIRECT3DTEXTURE9		g_pD3DTextureMinimapField = NULL;		// テクスチャへのポリゴン
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffMinimapField = NULL;		// 頂点バッファインターフェースへのポインタ
-MINIMAP					minimapWk[MINIMAP_MAX];					// ミニマップ構造体
+MINI_FIELD				miniFieldWk[MINIMAP_FIELD_MAX];			// ミニマップフィールド構造体配列
+// ミニマッププレイヤー座標用
+LPDIRECT3DTEXTURE9		g_pD3DTextureMinimapPlayer = NULL;		// テクスチャへのポリゴン
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffMinimapPlayer = NULL;		// 頂点バッファインターフェースへのポインタ
+MINI_PLAYER				miniPlayerWk[MINIMAP_PLAYER_MAX];		// ミニマッププレイヤー構造体配列
+// その他
 
 //=============================================================================
 // 初期化処理
@@ -31,26 +38,36 @@ MINIMAP					minimapWk[MINIMAP_MAX];					// ミニマップ構造体
 HRESULT InitMinimap(int type)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	MINIMAP *minimap = &minimapWk[0];												// ミニマップのポインターを初期化
-	
-	// ミニマップの初期化処理
+	MINI_FIELD *miniField = &miniFieldWk[0];										// ミニマップフィールドのポインター初期化
+	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];										// ミニマッププレイヤーのポインター初期化
+
 	if (type == STAGE_INIT_FAST)
 	{
 		// テクスチャの読み込み
+		// ミニマップフィールド
 		D3DXCreateTextureFromFile(pDevice,											// デバイスのポインタ
 			TEXTURE_MINIMAP_FIELD,													// ファイルの名前
 			&g_pD3DTextureMinimapField);											// 読み込むメモリのポインタ
-		// フィールド
-		for (int i = 0; i < MINIMAP_MAX; i++, minimap++)
+		// ミニマッププレイヤー座標
+		D3DXCreateTextureFromFile(pDevice,											// デバイスのポインタ
+			TEXTURE_MINIMAP_PLAYER,													// ファイルの名前
+			&g_pD3DTextureMinimapPlayer);											// 読み込むメモリのポインタ
+	}
+		// ミニマップフィールドの初期化処理
+		for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
 		{
-			minimap->use = true;													// 使用
-			minimap->pos = D3DXVECTOR3(MINIMAP_POS_X, MINIMAP_POS_Y, 0.0f);			// 座標データを初期化
-			minimap->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// 回転データを初期化
-			MakeVertexMinimap();													// 頂点情報の作成
+			miniField->use = true;													// 使用
+		}
+		// ミニマッププレイヤーの初期化処理
+		for (int i = 0; i < MINIMAP_PLAYER_MAX; i++, miniPlayer++)
+		{
+			miniPlayer->use = true;													// 使用
+			miniPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						// ミニマッププレイヤー座標の初期化
+			miniPlayer->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						// ミニマッププレイヤー回転の初期化
 		}
 
-	}
 
+	MakeVertexMinimap();															// 頂点情報の作成
 
 	return S_OK;
 }
@@ -59,6 +76,7 @@ HRESULT InitMinimap(int type)
 //=============================================================================
 void UninitMinimap(void)
 {
+	// ミニマップフィールド
 	if (g_pD3DTextureMinimapField != NULL)
 	{	// テクスチャの開放
 		g_pD3DTextureMinimapField->Release();
@@ -69,13 +87,24 @@ void UninitMinimap(void)
 		g_pD3DVtxBuffMinimapField->Release();
 		g_pD3DVtxBuffMinimapField = NULL;
 	}
+	// ミニマッププレイヤー座標
+	if (g_pD3DTextureMinimapPlayer != NULL)
+	{	// テクスチャの開放
+		g_pD3DTextureMinimapPlayer->Release();
+		g_pD3DTextureMinimapPlayer = NULL;
+	}
+	if (g_pD3DVtxBuffMinimapPlayer != NULL)
+	{	// 頂点バッファの開放
+		g_pD3DVtxBuffMinimapPlayer->Release();
+		g_pD3DVtxBuffMinimapPlayer = NULL;
+	}
 }
 //=============================================================================
 // 更新処理
 //=============================================================================
 void UpdateMinimap(void)
 {
-	MINIMAP *minimap = &minimapWk[0];				// ミニマップのポインターを初期化
+	MINI_FIELD *miniField = &miniFieldWk[0];				// ミニマップのポインターを初期化
 
 }
 //=============================================================================
@@ -84,11 +113,13 @@ void UpdateMinimap(void)
 void DrawMinimap(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	MINIMAP *minimap = &minimapWk[0];				// ミニマップのポインターを初期化
+	MINI_FIELD *miniField = &miniFieldWk[0];				// ミニマップのポインターを初期化
+	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];				// ミニマッププレイヤーのポインター初期化
 
-	for (int i = 0; i < MINIMAP_MAX; i++, minimap++)
+	// ミニマップフィールド描画
+	for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
 	{
-		if (minimap->use == true)					// 使用している状態なら描画する
+		if (miniField->use == true)					// 使用している状態なら描画する
 		{
 			// 頂点バッファをデバイスのデータストリームにバインド
 			pDevice->SetStreamSource(0, g_pD3DVtxBuffMinimapField, 0, sizeof(VERTEX_2D));
@@ -97,18 +128,33 @@ void DrawMinimap(void)
 			// テクスチャの設定
 			pDevice->SetTexture(0, g_pD3DTextureMinimapField);
 			// ポリゴンの描画
-			pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_MINIMAP, minimap->vertexWk, sizeof(VERTEX_2D));
+			pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_MINIMAP, miniField->vertexWk, sizeof(VERTEX_2D));
 		}
 	}
-	
+	// ミニマッププレイヤ描画
+	for (int i = 0; i < MINIMAP_PLAYER_MAX; i++, miniPlayer++)
+	{
+		if (miniPlayer->use == true)					// 使用している状態なら描画する
+		{
+			// 頂点バッファをデバイスのデータストリームにバインド
+			pDevice->SetStreamSource(0, g_pD3DVtxBuffMinimapPlayer, 0, sizeof(VERTEX_2D));
+			// 頂点フォーマットの設定
+			pDevice->SetFVF(FVF_VERTEX_2D);
+			// テクスチャの設定
+			pDevice->SetTexture(0, g_pD3DTextureMinimapPlayer);
+			// ポリゴンの描画
+			pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_MINIMAP, miniPlayer->vertexWk, sizeof(VERTEX_2D));
+		}
+	}
+
 
 }
 //=============================================================================
-// ミニマップ取得関数
+// ミニマップフィールド取得関数
 //=============================================================================
-MINIMAP *GetMinimap(int no)
+MINI_FIELD *GetMiniField(int no)
 {
-	return(&minimapWk[no]);
+	return(&miniFieldWk[no]);
 }
 //=============================================================================
 // 頂点の作成
@@ -116,8 +162,9 @@ MINIMAP *GetMinimap(int no)
 HRESULT MakeVertexMinimap(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	VERTEX_2D *pVtx;
 
-	// ミニマップフィールド描画
+	// ミニマップフィールド
 	// オブジェクトの頂点バッファを生成
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
 		D3DUSAGE_WRITEONLY,													// 頂点バッファの使用法　
@@ -128,15 +175,13 @@ HRESULT MakeVertexMinimap(void)
 	{
 		return E_FAIL;
 	}
-	//頂点バッファの中身を埋める
-	VERTEX_2D *pVtx;
 	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 	g_pD3DVtxBuffMinimapField->Lock(0, 0, (void**)&pVtx, 0);
 	// 頂点座標の設定
-	pVtx[0].vtx = D3DXVECTOR3(MINIMAP_POS_X - MINIMAP_WIDTH, MINIMAP_POS_Y - MINIMAP_HEIGHT, 0.0f);
-	pVtx[1].vtx = D3DXVECTOR3(MINIMAP_POS_X + MINIMAP_WIDTH, MINIMAP_POS_Y - MINIMAP_HEIGHT, 0.0f);
-	pVtx[2].vtx = D3DXVECTOR3(MINIMAP_POS_X - MINIMAP_WIDTH, MINIMAP_POS_Y + MINIMAP_HEIGHT, 0.0f);
-	pVtx[3].vtx = D3DXVECTOR3(MINIMAP_POS_X + MINIMAP_WIDTH, MINIMAP_POS_Y + MINIMAP_HEIGHT, 0.0f);
+	pVtx[0].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y - MINIMAP_FIELD_HEIGHT, 0.0f);
+	pVtx[1].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y - MINIMAP_FIELD_HEIGHT, 0.0f);
+	pVtx[2].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y + MINIMAP_FIELD_HEIGHT, 0.0f);
+	pVtx[3].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y + MINIMAP_FIELD_HEIGHT, 0.0f);
 	// テクスチャのパースペクティブコレクト用
 	pVtx[0].rhw =
 	pVtx[1].rhw =
@@ -156,15 +201,54 @@ HRESULT MakeVertexMinimap(void)
 	g_pD3DVtxBuffMinimapField->Unlock();
 
 
+	// ミニマッププレイヤー座標
+	// オブジェクトの頂点バッファを生成
+	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// 頂点データ用に確保するバッファサイズ(バイト単位)
+		D3DUSAGE_WRITEONLY,													// 頂点バッファの使用法　
+		FVF_VERTEX_2D,														// 使用する頂点フォーマット
+		D3DPOOL_MANAGED,													// リソースのバッファを保持するメモリクラスを指定
+		&g_pD3DVtxBuffMinimapPlayer,											// 頂点バッファインターフェースへのポインタ
+		NULL)))																// NULLに設定
+	{
+		return E_FAIL;
+	}
+	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
+	g_pD3DVtxBuffMinimapPlayer->Lock(0, 0, (void**)&pVtx, 0);
+	// 頂点座標の設定
+	pVtx[0].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y - MINIMAP_PLAYER_HEIGHT, 0.0f);
+	pVtx[1].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y - MINIMAP_PLAYER_HEIGHT, 0.0f);
+	pVtx[2].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y + MINIMAP_PLAYER_HEIGHT, 0.0f);
+	pVtx[3].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y + MINIMAP_PLAYER_HEIGHT, 0.0f);
+	// テクスチャのパースペクティブコレクト用
+	pVtx[0].rhw =
+		pVtx[1].rhw =
+		pVtx[2].rhw =
+		pVtx[3].rhw = 1.0f;
+	// 反射光の設定
+	pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	pVtx[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	// テクスチャ座標の設定
+	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+	// 頂点データをアンロックする
+	g_pD3DVtxBuffMinimapPlayer->Unlock();
+
+
+
 	return S_OK;
 }
 //=============================================================================
-// 頂点座標の設定
+// ミニマップ内プレイヤー頂点座標の設定
 //=============================================================================
 void SetVertexPlayerPoint(int no)
 {
 	PLAYER *player = GetPlayer(0);
-	MINIMAP *minimap = &minimapWk[0];				// ミニマップのポインターを初期化
+	MINI_FIELD *miniField = &miniFieldWk[0];				// ミニマップのポインターを初期化
+	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];				// ミニマッププレイヤーのポインター初期化
 
 	// 頂点座標の設定
 	//player->vertexWk[0].vtx.x = player->pos.x - cosf(player->BaseAngle + player->rot.z) * player->Radius;

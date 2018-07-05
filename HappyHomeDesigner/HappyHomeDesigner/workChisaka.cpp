@@ -14,6 +14,7 @@
 #include "police.h"
 #include "search.h"
 #include "furniture.h"
+#include "minimap.h"
 // デバッグ用
 #ifdef _DEBUG
 #include "debugproc.h"
@@ -36,6 +37,7 @@ HRESULT InitWorkChisaka(int nType)
 	InitPolice(nType);
 	InitSearch(nType);
 	InitFurniture(nType);
+	InitMinimap(nType);
 	return S_OK;
 }
 
@@ -47,6 +49,7 @@ void UninitWorkChisaka(void)
 	UninitPolice();
 	UninitSearch();
 	UninitFurniture();
+	UninitMinimap();
 }
 
 //=============================================================================
@@ -62,6 +65,7 @@ void UpdateWorkChisaka(void)
 		UpdatePolice();
 		UpdateSearch();
 		UpdateFurniture();
+		UpdateMinimap();
 		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
@@ -88,6 +92,7 @@ void DrawWorkChisaka(int no)
 	case STAGE_GAME:
 		if (no == GAME_POLICE)	DrawPolice();
 		if (no == GAME_SEARCH)	DrawSearch();
+		if (no == GAME_MINIMAP)	DrawMinimap();
 		break;
 	case STAGE_HOUSE1:
 	case STAGE_HOUSE2:
