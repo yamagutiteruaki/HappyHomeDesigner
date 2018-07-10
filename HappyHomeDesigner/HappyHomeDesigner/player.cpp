@@ -916,7 +916,7 @@ void PlayerMove(void)
 	player->move.z += (0.0f - player->move.z) * RATE_MOVE_PLAYER;
 
 	// 所持重量によって移動速度の修正
-	// PlayerMoveWt();
+	PlayerMoveWt();
 
 
 
@@ -1360,7 +1360,7 @@ template <typename CLASS> void SetAnimation(CLASS *pIn, float fAngle, int frame,
 			}
 		}
 		// XZ回転軸ベクトルが0の場合のエラー処理
-		if (pIn->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f) || (move < 0.001f))
+		if (pIn->axisXZ == D3DXVECTOR3(0.0f, 0.0f, 0.0f) || (move < 0.1f))
 		{	// 回転角度を0にする
 			pIn->fangleXZ = 0.0f;
 		}

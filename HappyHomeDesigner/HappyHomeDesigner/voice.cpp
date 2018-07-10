@@ -118,6 +118,8 @@ void UpdateVoice(void)
 			voice->cnt_frame++;
 			if (voice->cnt_frame == 60)
 			{
+				voice->count++;
+
 				if (voice->count == ARREST_MAX)
 				{
 					SetFade(FADE_OUT, STAGE_RESULT, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
@@ -126,7 +128,6 @@ void UpdateVoice(void)
 				else
 				{
 					SetFade(FADE_OUT, STAGE_GAME, D3DXCOLOR(0.0f, 0.0f, 0.0f, 0.0f));
-					voice->count++;
 					SetResetno(3);
 				}
 			}

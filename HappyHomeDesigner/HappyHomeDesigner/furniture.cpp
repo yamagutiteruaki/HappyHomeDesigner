@@ -347,18 +347,14 @@ int FurnitureColi()
 		#endif
 
 		// 取れる範囲内かとうか
-		if (dist <= distCheck&&ply->weight+fnt->weight<=WT_MAX)
+		if ((dist <= distCheck) && ((ply->weight + fnt->weight) <= WT_MAX))
 		{
 			// メッセージ表示
 			#ifdef _DEBUG
 			PrintDebugProc("取得可能 ");
-			#endif
-
 			// 番号を取得
-			#ifdef _DEBUG
 			PrintDebugProc("家具ID: %d\n", fnt->id);
 			PrintDebugProc("家具金額: %g\n", fnt->price);
-
 			#endif
 
 			no = i;

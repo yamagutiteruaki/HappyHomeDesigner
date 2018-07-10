@@ -26,6 +26,7 @@
 HRESULT MakeVertexArrest(int no);
 void SetTextureArrest(int no, int cntPattern);
 void SetVertexArrest(int no);
+void SetTextureCol(int no);
 
 //*****************************************************************************
 // グローバル変数
@@ -33,7 +34,7 @@ void SetVertexArrest(int no);
 LPDIRECT3DTEXTURE9		g_pD3DTextureArrest = NULL;		// テクスチャへのポリゴン
 
 ARREST					arrestWk[ARREST_MAX];				// エネミー構造体
-
+int						arrestnum;
 //=============================================================================
 // 初期化処理
 //=============================================================================
@@ -66,7 +67,7 @@ HRESULT InitArrest(int type)
 		MakeVertexArrest(i);										// 頂点情報の作成
 	}
 
-
+	arrestnum = 0;
 
 	return S_OK;
 }
@@ -94,6 +95,10 @@ void UpdateArrest(void)
 
 	for (int i = 0; i < ARREST_MAX; i++, arrest++)
 	{
+		for (int j = 0; j < voice->count; j++)
+		{
+			SetTextureCol(j);
+		}
 			SetVertexArrest(i);	// 移動後の座標で頂点を設定
 	}
 
@@ -111,7 +116,7 @@ void DrawArrest(void)
 										// 頂点フォーマットの設定
 	pDevice->SetFVF(FVF_VERTEX_2D);
 
-	for (int i = 0; i < voice->count; i++, arrest++)
+	for (int i = 0; i < ARREST_MAX; i++, arrest++)
 	{
 		if (arrest->use == true)			// 使用している状態なら描画する
 		{
@@ -142,10 +147,10 @@ HRESULT MakeVertexArrest(int no)
 		arrest->vertexWk[3].rhw = 1.0f;
 
 	// 反射光の設定
-	arrest->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	arrest->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	arrest->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	arrest->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	arrest->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
+	arrest->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 90);
 
 	// テクスチャ座標の設定
 	arrest->vertexWk[0].tex = D3DXVECTOR2(0.0f, 0.0f);
@@ -205,6 +210,18 @@ void SetVertexArrest(int no)
 	arrest->vertexWk[3].vtx.z = 0.0f;
 }
 
+void SetTextureCol(int no)
+{
+	ARREST *arrest = &arrestWk[no];			// エネミーのポインターを初期化
+	
+											
+	// 反射光の設定
+	arrest->vertexWk[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	arrest->vertexWk[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	arrest->vertexWk[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+	arrest->vertexWk[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+
+}
 //=============================================================================
 // エネミー取得関数
 //=============================================================================
