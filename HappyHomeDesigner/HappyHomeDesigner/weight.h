@@ -11,8 +11,8 @@
 // マクロ定義
 #define	NUM_WEIGHT				(4)			// ポリゴン数
 
-#define TEXTURE_WEIGHT		("data/TEXTURE/power01.png")	// 画像
-#define TEXTURE_WEIGHT2		("data/TEXTURE/power01.png")	// 画像
+#define TEXTURE_WEIGHT		("data/TEXTURE/power02.png")	// 画像
+#define TEXTURE_WEIGHT2		("data/TEXTURE/power02.png")	// 画像
 #define TEXTURE_WEIGHT_X	(150)		// テクスチャサイズ
 #define TEXTURE_WEIGHT_Y	(150)		// 同上
 #define TEXTURE_WEIGHT_SIZE_X	( TEXTURE_WEIGHT_X*SCREEN_SCALE)		// テクスチャサイズ
