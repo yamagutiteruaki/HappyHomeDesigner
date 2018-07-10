@@ -145,22 +145,6 @@ void DrawMinimap(void)
 	MINI_FIELD *miniField = &miniFieldWk[0];				// ミニマップのポインターを初期化
 	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];				// ミニマッププレイヤーのポインター初期化
 
-	// ミニマップフレーム描画
-	for (int i = 0; i < MINIMAP_FRAME_MAX; i++, miniFrame++)
-	{
-		if (miniFrame->use == true)					// 使用している状態なら描画する
-		{
-			// 頂点バッファをデバイスのデータストリームにバインド
-			pDevice->SetStreamSource(0, g_pD3DVtxBuffMinimapFrame, 0, sizeof(VERTEX_2D));
-			// 頂点フォーマットの設定
-			pDevice->SetFVF(FVF_VERTEX_2D);
-			// テクスチャの設定
-			pDevice->SetTexture(0, g_pD3DTextureMinimapFrame);
-			// ポリゴンの描画
-			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
-
-		}
-	}
 	// ミニマップフィールド描画
 	for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
 	{
@@ -177,6 +161,23 @@ void DrawMinimap(void)
 
 		}
 	}
+	// ミニマップフレーム描画
+	for (int i = 0; i < MINIMAP_FRAME_MAX; i++, miniFrame++)
+	{
+		if (miniFrame->use == true)					// 使用している状態なら描画する
+		{
+			// 頂点バッファをデバイスのデータストリームにバインド
+			pDevice->SetStreamSource(0, g_pD3DVtxBuffMinimapFrame, 0, sizeof(VERTEX_2D));
+			// 頂点フォーマットの設定
+			pDevice->SetFVF(FVF_VERTEX_2D);
+			// テクスチャの設定
+			pDevice->SetTexture(0, g_pD3DTextureMinimapFrame);
+			// ポリゴンの描画
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+
+		}
+	}
+
 	// ミニマッププレイヤ描画
 	for (int i = 0; i < MINIMAP_PLAYER_MAX; i++, miniPlayer++)
 	{
@@ -347,20 +348,20 @@ HRESULT SetVertexPlayerPoint(int no)
 	// 頂点データの範囲をロックし、頂点バッファへのポインタを取得
 	g_pD3DVtxBuffMinimapPlayer->Lock(0, 0, (void**)&pVtx, 0);
 	// 頂点座標の設定
-	pVtx[0].vtx.x = (player->Eye.x * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
-	pVtx[0].vtx.y = (-player->Eye.z * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[0].vtx.x = (player->Eye.x * MINIMAP_FIELD_SCALE) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[0].vtx.y = (-player->Eye.z * MINIMAP_FIELD_SCALE) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y - MINIMAP_PLAYER_RANGE;
 	pVtx[0].vtx.z = 0.0f;
 
-	pVtx[1].vtx.x = (player->Eye.x * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
-	pVtx[1].vtx.y = (-player->Eye.z * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[1].vtx.x = (player->Eye.x * MINIMAP_FIELD_SCALE) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[1].vtx.y = (-player->Eye.z * MINIMAP_FIELD_SCALE) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y - MINIMAP_PLAYER_RANGE;
 	pVtx[1].vtx.z = 0.0f;
 
-	pVtx[2].vtx.x = (player->Eye.x * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
-	pVtx[2].vtx.y = (-player->Eye.z * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[2].vtx.x = (player->Eye.x * MINIMAP_FIELD_SCALE) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[2].vtx.y = (-player->Eye.z * MINIMAP_FIELD_SCALE) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y - MINIMAP_PLAYER_RANGE;
 	pVtx[2].vtx.z = 0.0f;
 
-	pVtx[3].vtx.x = (player->Eye.x * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
-	pVtx[3].vtx.y = (-player->Eye.z * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[3].vtx.x = (player->Eye.x * MINIMAP_FIELD_SCALE) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[3].vtx.y = (-player->Eye.z * MINIMAP_FIELD_SCALE) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y - MINIMAP_PLAYER_RANGE;
 	pVtx[3].vtx.z = 0.0f;
 
 
