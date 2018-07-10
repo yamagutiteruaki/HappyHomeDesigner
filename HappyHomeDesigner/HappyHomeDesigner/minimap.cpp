@@ -17,11 +17,15 @@
 // ƒvƒƒgƒ^ƒCƒvéŒ¾
 //*****************************************************************************
 HRESULT MakeVertexMinimap(void);
-void SetVertexPlayerPoint(int no);
+HRESULT SetVertexPlayerPoint(int no);
 
 //*****************************************************************************
 // ƒOƒ[ƒoƒ‹•Ï”
 //*****************************************************************************
+// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€—p
+LPDIRECT3DTEXTURE9		g_pD3DTextureMinimapFrame = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒŠƒSƒ“
+LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffMinimapFrame = NULL;		// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+MINI_FRAME				miniFrameWk[MINIMAP_FRAME_MAX];			// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh\‘¢‘Ì”z—ñ
 // ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh—p
 LPDIRECT3DTEXTURE9		g_pD3DTextureMinimapField = NULL;		// ƒeƒNƒXƒ`ƒƒ‚Ö‚Ìƒ|ƒŠƒSƒ“
 LPDIRECT3DVERTEXBUFFER9 g_pD3DVtxBuffMinimapField = NULL;		// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
@@ -38,12 +42,17 @@ MINI_PLAYER				miniPlayerWk[MINIMAP_PLAYER_MAX];		// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[\‘¢‘Ì”
 HRESULT InitMinimap(int type)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	MINI_FRAME *miniFrame = &miniFrameWk[0];										// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
 	MINI_FIELD *miniField = &miniFieldWk[0];										// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
 	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];										// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
 
 	if (type == STAGE_INIT_FAST)
 	{
 		// ƒeƒNƒXƒ`ƒƒ‚Ì“Ç‚İ‚İ
+		// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€
+		D3DXCreateTextureFromFile(pDevice,											// ƒfƒoƒCƒX‚Ìƒ|ƒCƒ“ƒ^
+			TEXTURE_MINIMAP_FRAME,													// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
+			&g_pD3DTextureMinimapFrame);											// “Ç‚İ‚Şƒƒ‚ƒŠ‚Ìƒ|ƒCƒ“ƒ^
 		// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh
 		D3DXCreateTextureFromFile(pDevice,											// ƒfƒoƒCƒX‚Ìƒ|ƒCƒ“ƒ^
 			TEXTURE_MINIMAP_FIELD,													// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
@@ -53,19 +62,23 @@ HRESULT InitMinimap(int type)
 			TEXTURE_MINIMAP_PLAYER,													// ƒtƒ@ƒCƒ‹‚Ì–¼‘O
 			&g_pD3DTextureMinimapPlayer);											// “Ç‚İ‚Şƒƒ‚ƒŠ‚Ìƒ|ƒCƒ“ƒ^
 	}
-		// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh‚Ì‰Šú‰»ˆ—
-		for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
-		{
-			miniField->use = true;													// g—p
-		}
-		// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‚Ì‰Šú‰»ˆ—
-		for (int i = 0; i < MINIMAP_PLAYER_MAX; i++, miniPlayer++)
-		{
-			miniPlayer->use = true;													// g—p
-			miniPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[À•W‚Ì‰Šú‰»
-			miniPlayer->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);						// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‰ñ“]‚Ì‰Šú‰»
-		}
-
+	// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€‚Ì‰Šú‰»ˆ—
+	for (int i = 0; i < MINIMAP_FRAME_MAX; i++, miniFrame++)
+	{
+		miniFrame->use = true;														// g—p
+	}
+	// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh‚Ì‰Šú‰»ˆ—
+	for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
+	{
+		miniField->use = true;														// g—p
+	}
+	// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‚Ì‰Šú‰»ˆ—
+	for (int i = 0; i < MINIMAP_PLAYER_MAX; i++, miniPlayer++)
+	{
+		miniPlayer->use = true;														// g—p
+		miniPlayer->pos = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[À•W‚Ì‰Šú‰»
+		miniPlayer->rot = D3DXVECTOR3(0.0f, 0.0f, 0.0f);							// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‰ñ“]‚Ì‰Šú‰»
+	}
 
 	MakeVertexMinimap();															// ’¸“_î•ñ‚Ìì¬
 
@@ -76,6 +89,17 @@ HRESULT InitMinimap(int type)
 //=============================================================================
 void UninitMinimap(void)
 {
+	// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€
+	if (g_pD3DTextureMinimapFrame != NULL)
+	{	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
+		g_pD3DTextureMinimapFrame->Release();
+		g_pD3DTextureMinimapFrame = NULL;
+	}
+	if (g_pD3DVtxBuffMinimapFrame != NULL)
+	{	// ’¸“_ƒoƒbƒtƒ@‚ÌŠJ•ú
+		g_pD3DVtxBuffMinimapFrame->Release();
+		g_pD3DVtxBuffMinimapFrame = NULL;
+	}
 	// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh
 	if (g_pD3DTextureMinimapField != NULL)
 	{	// ƒeƒNƒXƒ`ƒƒ‚ÌŠJ•ú
@@ -106,6 +130,10 @@ void UpdateMinimap(void)
 {
 	MINI_FIELD *miniField = &miniFieldWk[0];				// ƒ~ƒjƒ}ƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚ğ‰Šú‰»
 
+	SetVertexPlayerPoint(0);								// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„‚ÌÀ•WXV
+
+
+
 }
 //=============================================================================
 // •`‰æˆ—
@@ -113,9 +141,26 @@ void UpdateMinimap(void)
 void DrawMinimap(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	MINI_FRAME *miniFrame = &miniFrameWk[0];				// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
 	MINI_FIELD *miniField = &miniFieldWk[0];				// ƒ~ƒjƒ}ƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚ğ‰Šú‰»
 	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];				// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
 
+	// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€•`‰æ
+	for (int i = 0; i < MINIMAP_FRAME_MAX; i++, miniFrame++)
+	{
+		if (miniFrame->use == true)					// g—p‚µ‚Ä‚¢‚éó‘Ô‚È‚ç•`‰æ‚·‚é
+		{
+			// ’¸“_ƒoƒbƒtƒ@‚ğƒfƒoƒCƒX‚Ìƒf[ƒ^ƒXƒgƒŠ[ƒ€‚ÉƒoƒCƒ“ƒh
+			pDevice->SetStreamSource(0, g_pD3DVtxBuffMinimapFrame, 0, sizeof(VERTEX_2D));
+			// ’¸“_ƒtƒH[ƒ}ƒbƒg‚Ìİ’è
+			pDevice->SetFVF(FVF_VERTEX_2D);
+			// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
+			pDevice->SetTexture(0, g_pD3DTextureMinimapFrame);
+			// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+
+		}
+	}
 	// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh•`‰æ
 	for (int i = 0; i < MINIMAP_FIELD_MAX; i++, miniField++)
 	{
@@ -128,7 +173,8 @@ void DrawMinimap(void)
 			// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
 			pDevice->SetTexture(0, g_pD3DTextureMinimapField);
 			// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
-			pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_MINIMAP, miniField->vertexWk, sizeof(VERTEX_2D));
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
+
 		}
 	}
 	// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„•`‰æ
@@ -143,11 +189,9 @@ void DrawMinimap(void)
 			// ƒeƒNƒXƒ`ƒƒ‚Ìİ’è
 			pDevice->SetTexture(0, g_pD3DTextureMinimapPlayer);
 			// ƒ|ƒŠƒSƒ“‚Ì•`‰æ
-			pDevice->DrawPrimitiveUP(D3DPT_TRIANGLESTRIP, NUM_MINIMAP, miniPlayer->vertexWk, sizeof(VERTEX_2D));
+			pDevice->DrawPrimitive(D3DPT_TRIANGLESTRIP, 0, NUM_POLYGON);
 		}
 	}
-
-
 }
 //=============================================================================
 // ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒhæ“¾ŠÖ”
@@ -162,8 +206,45 @@ MINI_FIELD *GetMiniField(int no)
 HRESULT MakeVertexMinimap(void)
 {
 	LPDIRECT3DDEVICE9 pDevice = GetDevice();
-	VERTEX_2D *pVtx;
 
+	// ƒ~ƒjƒ}ƒbƒvƒtƒŒ[ƒ€
+	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
+	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
+		D3DUSAGE_WRITEONLY,													// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
+		FVF_VERTEX_2D,														// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
+		D3DPOOL_MANAGED,													// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
+		&g_pD3DVtxBuffMinimapFrame,											// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		NULL)))																// NULL‚Éİ’è
+	{
+		return E_FAIL;
+	}
+	{
+		VERTEX_2D *pVtx;
+		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		g_pD3DVtxBuffMinimapFrame->Lock(0, 0, (void**)&pVtx, 0);
+		// ’¸“_À•W‚Ìİ’è
+		pVtx[0].vtx = D3DXVECTOR3(MINIMAP_FRAME_POS_X - TEXTURE_MINIMAP_FRAME_SIZE_X, MINIMAP_FRAME_POS_Y - TEXTURE_MINIMAP_FRAME_SIZE_Y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(MINIMAP_FRAME_POS_X + TEXTURE_MINIMAP_FRAME_SIZE_X, MINIMAP_FRAME_POS_Y - TEXTURE_MINIMAP_FRAME_SIZE_Y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(MINIMAP_FRAME_POS_X - TEXTURE_MINIMAP_FRAME_SIZE_X, MINIMAP_FRAME_POS_Y + TEXTURE_MINIMAP_FRAME_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(MINIMAP_FRAME_POS_X + TEXTURE_MINIMAP_FRAME_SIZE_X, MINIMAP_FRAME_POS_Y + TEXTURE_MINIMAP_FRAME_SIZE_Y, 0.0f);
+		// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
+		pVtx[0].rhw =
+			pVtx[1].rhw =
+			pVtx[2].rhw =
+			pVtx[3].rhw = 1.0f;
+		// ”½ËŒõ‚Ìİ’è
+		pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		g_pD3DVtxBuffMinimapFrame->Unlock();
+	}
 	// ƒ~ƒjƒ}ƒbƒvƒtƒB[ƒ‹ƒh
 	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
 	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
@@ -175,31 +256,81 @@ HRESULT MakeVertexMinimap(void)
 	{
 		return E_FAIL;
 	}
-	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
-	g_pD3DVtxBuffMinimapField->Lock(0, 0, (void**)&pVtx, 0);
-	// ’¸“_À•W‚Ìİ’è
-	pVtx[0].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y - MINIMAP_FIELD_HEIGHT, 0.0f);
-	pVtx[1].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y - MINIMAP_FIELD_HEIGHT, 0.0f);
-	pVtx[2].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y + MINIMAP_FIELD_HEIGHT, 0.0f);
-	pVtx[3].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + MINIMAP_FIELD_WIDTH, MINIMAP_FIELD_POS_Y + MINIMAP_FIELD_HEIGHT, 0.0f);
-	// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
-	pVtx[0].rhw =
-	pVtx[1].rhw =
-	pVtx[2].rhw =
-	pVtx[3].rhw = 1.0f;
-	// ”½ËŒõ‚Ìİ’è
-	pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	pVtx[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
-	// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
-	pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
-	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
-	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
-	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
-	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
-	g_pD3DVtxBuffMinimapField->Unlock();
+	{
+		VERTEX_2D *pVtx;
+		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		g_pD3DVtxBuffMinimapField->Lock(0, 0, (void**)&pVtx, 0);
+		// ’¸“_À•W‚Ìİ’è
+		pVtx[0].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - TEXTURE_MINIMAP_FIELD_SIZE_X, MINIMAP_FIELD_POS_Y - TEXTURE_MINIMAP_FIELD_SIZE_Y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + TEXTURE_MINIMAP_FIELD_SIZE_X, MINIMAP_FIELD_POS_Y - TEXTURE_MINIMAP_FIELD_SIZE_Y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X - TEXTURE_MINIMAP_FIELD_SIZE_X, MINIMAP_FIELD_POS_Y + TEXTURE_MINIMAP_FIELD_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(MINIMAP_FIELD_POS_X + TEXTURE_MINIMAP_FIELD_SIZE_X, MINIMAP_FIELD_POS_Y + TEXTURE_MINIMAP_FIELD_SIZE_Y, 0.0f);
+		// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
+		pVtx[0].rhw =
+			pVtx[1].rhw =
+			pVtx[2].rhw =
+			pVtx[3].rhw = 1.0f;
+		// ”½ËŒõ‚Ìİ’è
+		pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		g_pD3DVtxBuffMinimapField->Unlock();
+	}
+	// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[À•W
+	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
+	if (FAILED(pDevice->CreateVertexBuffer(sizeof(VERTEX_2D) * NUM_VERTEX,	// ’¸“_ƒf[ƒ^—p‚ÉŠm•Û‚·‚éƒoƒbƒtƒ@ƒTƒCƒY(ƒoƒCƒg’PˆÊ)
+		D3DUSAGE_WRITEONLY,													// ’¸“_ƒoƒbƒtƒ@‚Ìg—p–@@
+		FVF_VERTEX_2D,														// g—p‚·‚é’¸“_ƒtƒH[ƒ}ƒbƒg
+		D3DPOOL_MANAGED,													// ƒŠƒ\[ƒX‚Ìƒoƒbƒtƒ@‚ğ•Û‚·‚éƒƒ‚ƒŠƒNƒ‰ƒX‚ğw’è
+		&g_pD3DVtxBuffMinimapPlayer,											// ’¸“_ƒoƒbƒtƒ@ƒCƒ“ƒ^[ƒtƒF[ƒX‚Ö‚Ìƒ|ƒCƒ“ƒ^
+		NULL)))																// NULL‚Éİ’è
+	{
+		return E_FAIL;
+	}
+	{
+		VERTEX_2D *pVtx;
+		// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
+		g_pD3DVtxBuffMinimapPlayer->Lock(0, 0, (void**)&pVtx, 0);
+		// ’¸“_À•W‚Ìİ’è
+		pVtx[0].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - TEXTURE_MINIMAP_PLAYER_SIZE_X, MINIMAP_PLAYER_POS_Y - TEXTURE_MINIMAP_PLAYER_SIZE_Y, 0.0f);
+		pVtx[1].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + TEXTURE_MINIMAP_PLAYER_SIZE_X, MINIMAP_PLAYER_POS_Y - TEXTURE_MINIMAP_PLAYER_SIZE_Y, 0.0f);
+		pVtx[2].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - TEXTURE_MINIMAP_PLAYER_SIZE_X, MINIMAP_PLAYER_POS_Y + TEXTURE_MINIMAP_PLAYER_SIZE_Y, 0.0f);
+		pVtx[3].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + TEXTURE_MINIMAP_PLAYER_SIZE_X, MINIMAP_PLAYER_POS_Y + TEXTURE_MINIMAP_PLAYER_SIZE_Y, 0.0f);
+		// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
+		pVtx[0].rhw =
+			pVtx[1].rhw =
+			pVtx[2].rhw =
+			pVtx[3].rhw = 1.0f;
+		// ”½ËŒõ‚Ìİ’è
+		pVtx[0].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[1].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[2].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		pVtx[3].diffuse = D3DCOLOR_RGBA(255, 255, 255, 255);
+		// ƒeƒNƒXƒ`ƒƒÀ•W‚Ìİ’è
+		pVtx[0].tex = D3DXVECTOR2(0.0f, 0.0f);
+		pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
+		pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
+		pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+		// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
+		g_pD3DVtxBuffMinimapPlayer->Unlock();
+	}
 
+	return S_OK;
+}
+//=============================================================================
+// ƒ~ƒjƒ}ƒbƒv“àƒvƒŒƒCƒ„[’¸“_À•W‚Ìİ’è
+//=============================================================================
+HRESULT SetVertexPlayerPoint(int no)
+{
+	LPDIRECT3DDEVICE9 pDevice = GetDevice();
+	PLAYER *player = GetPlayer(0);
 
 	// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[À•W
 	// ƒIƒuƒWƒFƒNƒg‚Ì’¸“_ƒoƒbƒtƒ@‚ğ¶¬
@@ -212,13 +343,28 @@ HRESULT MakeVertexMinimap(void)
 	{
 		return E_FAIL;
 	}
+	VERTEX_2D *pVtx;
 	// ’¸“_ƒf[ƒ^‚Ì”ÍˆÍ‚ğƒƒbƒN‚µA’¸“_ƒoƒbƒtƒ@‚Ö‚Ìƒ|ƒCƒ“ƒ^‚ğæ“¾
 	g_pD3DVtxBuffMinimapPlayer->Lock(0, 0, (void**)&pVtx, 0);
 	// ’¸“_À•W‚Ìİ’è
-	pVtx[0].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y - MINIMAP_PLAYER_HEIGHT, 0.0f);
-	pVtx[1].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y - MINIMAP_PLAYER_HEIGHT, 0.0f);
-	pVtx[2].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X - MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y + MINIMAP_PLAYER_HEIGHT, 0.0f);
-	pVtx[3].vtx = D3DXVECTOR3(MINIMAP_PLAYER_POS_X + MINIMAP_PLAYER_WIDTH, MINIMAP_PLAYER_POS_Y + MINIMAP_PLAYER_HEIGHT, 0.0f);
+	pVtx[0].vtx.x = (player->Eye.x * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[0].vtx.y = (-player->Eye.z * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[0].vtx.z = 0.0f;
+
+	pVtx[1].vtx.x = (player->Eye.x * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[1].vtx.y = (-player->Eye.z * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[1].vtx.z = 0.0f;
+
+	pVtx[2].vtx.x = (player->Eye.x * MAP_RATIO) - TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[2].vtx.y = (-player->Eye.z * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[2].vtx.z = 0.0f;
+
+	pVtx[3].vtx.x = (player->Eye.x * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_X + MINIMAP_FIELD_POS_X ;
+	pVtx[3].vtx.y = (-player->Eye.z * MAP_RATIO) + TEXTURE_MINIMAP_PLAYER_SIZE_Y + MINIMAP_FIELD_POS_Y ;
+	pVtx[3].vtx.z = 0.0f;
+
+
+
 	// ƒeƒNƒXƒ`ƒƒ‚Ìƒp[ƒXƒyƒNƒeƒBƒuƒRƒŒƒNƒg—p
 	pVtx[0].rhw =
 		pVtx[1].rhw =
@@ -234,36 +380,15 @@ HRESULT MakeVertexMinimap(void)
 	pVtx[1].tex = D3DXVECTOR2(1.0f, 0.0f);
 	pVtx[2].tex = D3DXVECTOR2(0.0f, 1.0f);
 	pVtx[3].tex = D3DXVECTOR2(1.0f, 1.0f);
+
 	// ’¸“_ƒf[ƒ^‚ğƒAƒ“ƒƒbƒN‚·‚é
 	g_pD3DVtxBuffMinimapPlayer->Unlock();
 
-
-
+#ifdef _DEBUG
+	PrintDebugProc("[ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„’¸“_À•W0 F(%f : %f : %f)]\n", pVtx[0].vtx.x, pVtx[0].vtx.y, pVtx[0].vtx.z);
+	PrintDebugProc("[ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„’¸“_À•W1 F(%f : %f : %f)]\n", pVtx[1].vtx.x, pVtx[1].vtx.y, pVtx[1].vtx.z);
+	PrintDebugProc("[ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„’¸“_À•W2 F(%f : %f : %f)]\n", pVtx[2].vtx.x, pVtx[2].vtx.y, pVtx[2].vtx.z);
+	PrintDebugProc("[ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„’¸“_À•W3 F(%f : %f : %f)]\n", pVtx[3].vtx.x, pVtx[3].vtx.y, pVtx[3].vtx.z);
+#endif
 	return S_OK;
-}
-//=============================================================================
-// ƒ~ƒjƒ}ƒbƒv“àƒvƒŒƒCƒ„[’¸“_À•W‚Ìİ’è
-//=============================================================================
-void SetVertexPlayerPoint(int no)
-{
-	PLAYER *player = GetPlayer(0);
-	MINI_FIELD *miniField = &miniFieldWk[0];				// ƒ~ƒjƒ}ƒbƒv‚Ìƒ|ƒCƒ“ƒ^[‚ğ‰Šú‰»
-	MINI_PLAYER *miniPlayer = &miniPlayerWk[0];				// ƒ~ƒjƒ}ƒbƒvƒvƒŒƒCƒ„[‚Ìƒ|ƒCƒ“ƒ^[‰Šú‰»
-
-	// ’¸“_À•W‚Ìİ’è
-	//player->vertexWk[0].vtx.x = player->pos.x - cosf(player->BaseAngle + player->rot.z) * player->Radius;
-	//player->vertexWk[0].vtx.y = player->pos.y - sinf(player->BaseAngle + player->rot.z) * player->Radius;
-	//player->vertexWk[0].vtx.z = 0.0f;
-
-	//player->vertexWk[1].vtx.x = player->pos.x + cosf(player->BaseAngle - player->rot.z) * player->Radius;
-	//player->vertexWk[1].vtx.y = player->pos.y - sinf(player->BaseAngle - player->rot.z) * player->Radius;
-	//player->vertexWk[1].vtx.z = 0.0f;
-
-	//player->vertexWk[2].vtx.x = player->pos.x - cosf(player->BaseAngle - player->rot.z) * player->Radius;
-	//player->vertexWk[2].vtx.y = player->pos.y + sinf(player->BaseAngle - player->rot.z) * player->Radius;
-	//player->vertexWk[2].vtx.z = 0.0f;
-
-	//player->vertexWk[3].vtx.x = player->pos.x + cosf(player->BaseAngle + player->rot.z) * player->Radius;
-	//player->vertexWk[3].vtx.y = player->pos.y + sinf(player->BaseAngle + player->rot.z) * player->Radius;
-	//player->vertexWk[3].vtx.z = 0.0f;
 }

@@ -7,37 +7,42 @@
 #ifndef _MINIMAP_H_
 #define _MINIMAP_H_
 
+#include "field.h"
+
 //*****************************************************************************
 // マクロ定義
 //*****************************************************************************
+// ミニマップフレーム
+#define TEXTURE_MINIMAP_FRAME				("data/TEXTURE/スマホ枠.png")	// ミニマップ画像
+#define MINIMAP_FRAME_POS_X					(0 + TEXTURE_MINIMAP_FRAME_SIZE_X)
+#define MINIMAP_FRAME_POS_Y					(SCREEN_HEIGHT - TEXTURE_MINIMAP_FRAME_SIZE_Y)
+#define TEXTURE_MINIMAP_FRAME_SIZE_X		(350 / 2*SCREEN_SCALE)			// テクスチャサイズ
+#define TEXTURE_MINIMAP_FRAME_SIZE_Y		(350 / 2*SCREEN_SCALE)			// 同上
+#define MINIMAP_FRAME_MAX					(1)								// ミニマップ最大数
+
 // ミニマップフィールド
-#define TEXTURE_MINIMAP_FIELD				("data/TEXTURE/スマホ枠.png")	// ミニマップ画像
-#define MINIMAP_FIELD_POS_X					(SCREEN_CENTER_X)
-#define MINIMAP_FIELD_POS_Y					(60)
-#define	MINIMAP_FIELD_WIDTH					(100 / 2*SCREEN_SCALE)			// ミニマップフィールドの幅
-#define	MINIMAP_FIELD_HEIGHT				(100 / 2*SCREEN_SCALE)			// ミニマップフィールドの高さ
-#define TEXTURE_MINIMAP_FIELD_SIZE_X		(100/2)							// テクスチャサイズ
-#define TEXTURE_MINIMAP_FIELD_SIZE_Y		(100/2)							// 同上
+#define TEXTURE_MINIMAP_FIELD				("data/TEXTURE/field_glass.jpg")// ミニマップ画像
+#define MINIMAP_FIELD_POS_X					(20 + TEXTURE_MINIMAP_FIELD_SIZE_X)
+#define MINIMAP_FIELD_POS_Y					(SCREEN_HEIGHT - TEXTURE_MINIMAP_FIELD_SIZE_Y - 0)
+#define TEXTURE_MINIMAP_FIELD_SIZE_X		(152 *SCREEN_SCALE)			// テクスチャサイズ
+#define TEXTURE_MINIMAP_FIELD_SIZE_Y		(152 *SCREEN_SCALE)			// 同上
+#define MAP_RATIO							((float)(TEXTURE_MINIMAP_FIELD_SIZE_X*2)/FIELD_SIZE_X)
 #define MINIMAP_FIELD_MAX					(1)								// ミニマップ最大数
 
 // ミニマッププレイヤー
-#define TEXTURE_MINIMAP_PLAYER				("data/TEXTURE/スマホ枠.png")		// プレイヤー画像
-#define MINIMAP_PLAYER_POS_X				(SCREEN_CENTER_X)
-#define MINIMAP_PLAYER_POS_Y				(160)
-#define	MINIMAP_PLAYER_WIDTH				(100 / 2*SCREEN_SCALE)			// ミニマッププレイヤーの幅
-#define	MINIMAP_PLAYER_HEIGHT				(100 / 2*SCREEN_SCALE)			// ミニマッププレイヤーの高さ
-#define TEXTURE_MINIMAP_PLAYER_SIZE_X		(100/2)							// テクスチャサイズ
-#define TEXTURE_MINIMAP_PLAYER_SIZE_Y		(100/2)							// 同上
+#define TEXTURE_MINIMAP_PLAYER				("data/TEXTURE/プレイヤミニマップ.png")		// プレイヤー画像
+#define MINIMAP_PLAYER_POS_X				(TEXTURE_MINIMAP_PLAYER_SIZE_X)
+#define MINIMAP_PLAYER_POS_Y				(SCREEN_HEIGHT - TEXTURE_MINIMAP_PLAYER_SIZE_Y)
+#define TEXTURE_MINIMAP_PLAYER_SIZE_X		(50 / 2*SCREEN_SCALE)			// テクスチャサイズ
+#define TEXTURE_MINIMAP_PLAYER_SIZE_Y		(50 / 2*SCREEN_SCALE)			// 同上
 #define MINIMAP_PLAYER_MAX					(1)								// ミニマッププレイヤー最大数
 
 // ミニマップポリス
-#define TEXTURE_MINIMAP_POLICE				("data/TEXTURE/スマホ枠.png")		// ポリス画像
+#define TEXTURE_MINIMAP_POLICE				("data/TEXTURE/スマホ枠.png")	// ポリス画像
 #define MINIMAP_POLICE_POS_X				(SCREEN_CENTER_X)
 #define MINIMAP_POLICE_POS_Y				(60)
-#define	MINIMAP_POLICE_WIDTH				(100 / 2*SCREEN_SCALE)			// ミニマップポリスの幅
-#define	MINIMAP_POLICE_HEIGHT				(100 / 2*SCREEN_SCALE)			// ミニマップポリスの高さ
-#define TEXTURE_MINIMAP_POLICE_SIZE_X		(100/2)							// テクスチャサイズ
-#define TEXTURE_MINIMAP_POLICE_SIZE_Y		(100/2)							// 同上
+#define TEXTURE_MINIMAP_POLICE_SIZE_X		(100 / 2*SCREEN_SCALE)			// テクスチャサイズ
+#define TEXTURE_MINIMAP_POLICE_SIZE_Y		(100 / 2*SCREEN_SCALE)			// 同上
 #define MINIMAP_POLICE_MAX					(1)								// ミニマップポリス最大数
 
 // その他
@@ -46,19 +51,21 @@
 //*****************************************************************************
 // 構造体宣言
 //*****************************************************************************
-class MINI_FIELD							// ミニマップフィールドクラス
+class MINI_FRAME							// ミニマップフィールドクラス
 {
 public:
 	bool			use;					// true:使用  false:未使用
-	VERTEX_2D		vertexWk[NUM_VERTEX];	// 頂点情報格納ワーク
 };
-class MINI_PLAYER :public MINI_FIELD		// ミニマッププレイヤークラス
+class MINI_FIELD :public MINI_FRAME			// ミニマップフィールドクラス
+{
+};
+class MINI_PLAYER :public MINI_FRAME		// ミニマッププレイヤークラス
 {
 public:
 	D3DXVECTOR3		pos;					// 位置座標
 	D3DXVECTOR3		rot;					// 回転
 };
-class MINI_POLICE :public MINI_FIELD		// ミニマップポリスクラス
+class MINI_POLICE :public MINI_FRAME		// ミニマップポリスクラス
 {
 public:
 	D3DXVECTOR3		pos;					// 位置座標
